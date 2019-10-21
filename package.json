@@ -1,5 +1,5 @@
 {
-  "name": "api-viewer",
+  "name": "api-viewer-element",
   "version": "0.0.0",
   "description": "Web Components API viewer element",
   "author": "Serhii Kulykov <iamkulykov@gmail.com>",
@@ -19,8 +19,8 @@
     "watch": "tsc-watch"
   },
   "files": [
-    "src",
-    "lib"
+    "lib",
+    "!lib/fixtures"
   ],
   "dependencies": {
     "@types/dompurify": "^0.0.33",
