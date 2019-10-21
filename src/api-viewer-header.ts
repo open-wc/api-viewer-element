@@ -12,8 +12,8 @@ export class ApiViewerHeader extends LitElement {
         justify-content: space-between;
         padding: 0.75rem;
         background: var(--ave-primary-color);
-        border-top-left-radius: 4px;
-        border-top-right-radius: 4px;
+        border-top-left-radius: var(--ave-border-radius);
+        border-top-right-radius: var(--ave-border-radius);
       }
 
       .heading {
