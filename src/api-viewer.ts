@@ -14,11 +14,11 @@ import './api-viewer-docs.js';
 
 @customElement('api-viewer')
 export class ApiViewer extends LitElement {
-  @property({ attribute: 'json-src', type: String }) jsonSrc?: string;
+  @property({ type: String }) src?: string;
 
   private jsonFetched: Promise<ElementInfo[]> = Promise.resolve(EMPTY_ELEMENTS);
 
-  private lastJsonSrc?: string;
+  private lastSrc?: string;
 
   // eslint-disable-next-line class-methods-use-this
   private async renderDocs(
@@ -57,11 +57,11 @@ export class ApiViewer extends LitElement {
   }
 
   render() {
-    const { jsonSrc } = this;
+    const { src } = this;
 
-    if (jsonSrc && this.lastJsonSrc !== jsonSrc) {
-      this.lastJsonSrc = jsonSrc;
-      this.jsonFetched = fetchJson(jsonSrc);
+    if (src && this.lastSrc !== src) {
+      this.lastSrc = src;
+      this.jsonFetched = fetchJson(src);
     }
 
     return html`
