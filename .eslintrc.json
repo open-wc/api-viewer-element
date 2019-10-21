@@ -1,0 +1,43 @@
+{
+  "extends": [
+    "airbnb-base",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/typescript",
+    "plugin:lit/all",
+    "plugin:wc/recommended",
+    "plugin:prettier/recommended",
+    "prettier/@typescript-eslint"
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "wc",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": 2018,
+    "project": "./tsconfig.json"
+  },
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "import/prefer-default-export": "off",
+    "lit/no-template-map": "off",
+    "class-methods-use-this": [
+      "error",
+      {
+        "exceptMethods": ["render"]
+      }
+    ],
+    "no-console": ["error", { "allow": ["error"] }],
+    "no-param-reassign": "off",
+    "no-plusplus": "off",
+    "no-underscore-dangle": "off"
+  }
+}
