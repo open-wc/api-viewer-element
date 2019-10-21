@@ -34,6 +34,7 @@ export class ApiViewerDocs extends LitElement {
         <api-viewer-select
           .options="${tags}"
           .selected="${selected}"
+          @selected-changed="${this._onSelect}"
         ></api-viewer-select>
       </api-viewer-header>
       <api-viewer-description
@@ -41,6 +42,11 @@ export class ApiViewerDocs extends LitElement {
       ></api-viewer-description>
       <api-viewer-content .element="${element}"></api-viewer-content>
     `;
+  }
+
+  private _onSelect(e: CustomEvent) {
+    const { selected } = e.detail;
+    this.selected = this.elements.findIndex(el => el.name === selected);
   }
 }
 

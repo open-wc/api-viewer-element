@@ -39,7 +39,8 @@ const processProps = (
 
 @customElement('api-viewer-content')
 export class ApiViewerContent extends LitElement {
-  @property({ attribute: false }) element: ElementInfo = EMPTY_ELEMENT;
+  @property({ attribute: false, hasChanged: () => true })
+  element: ElementInfo = EMPTY_ELEMENT;
 
   static get styles() {
     return css`
