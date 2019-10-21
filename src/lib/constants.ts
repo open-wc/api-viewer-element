@@ -9,13 +9,13 @@ import {
 
 export const EMPTY_ELEMENTS: ElementInfo[] = [];
 
-const EMPTY_SLOT_INFO: SlotInfo[] = [];
+export const EMPTY_SLOT_INFO: SlotInfo[] = [];
 
-const EMPTY_ATTR_INFO: AttributeInfo[] = [];
+export const EMPTY_ATTR_INFO: AttributeInfo[] = [];
 
-const EMPTY_PROP_INFO: PropertyInfo[] = [];
+export const EMPTY_PROP_INFO: PropertyInfo[] = [];
 
-const EMPTY_EVT_INFO: EventInfo[] = [];
+export const EMPTY_EVT_INFO: EventInfo[] = [];
 
 export const EMPTY_ELEMENT: ElementInfo = {
   name: '',

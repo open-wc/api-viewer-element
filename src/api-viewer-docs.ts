@@ -29,8 +29,17 @@ export class ApiViewerDocs extends LitElement {
       Object.assign(element, elements[selected]);
     }
 
+    const {
+      name,
+      description,
+      properties,
+      attributes,
+      slots,
+      events
+    } = element;
+
     return html`
-      <api-viewer-header .heading="${element.name}">
+      <api-viewer-header .heading="${name}">
         <api-viewer-select
           .options="${tags}"
           .selected="${selected}"
@@ -38,9 +47,15 @@ export class ApiViewerDocs extends LitElement {
         ></api-viewer-select>
       </api-viewer-header>
       <api-viewer-description
-        .description="${element.description}"
+        .description="${description}"
       ></api-viewer-description>
-      <api-viewer-content .element="${element}"></api-viewer-content>
+      <api-viewer-content
+        .name="${name}"
+        .props="${properties}"
+        .attrs="${attributes}"
+        .events="${events}"
+        .slots="${slots}"
+      ></api-viewer-content>
     `;
   }
 

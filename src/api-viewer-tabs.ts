@@ -95,6 +95,27 @@ export class ApiViewerTabs extends LitElement {
     return Array.from(this.querySelectorAll('api-viewer-tab'));
   }
 
+  private _getAvailableIndex(idx: number, increment: number) {
+    const tabs = this._allTabs();
+    const total = tabs.length;
+    for (
+      let i = 0;
+      typeof idx === 'number' && i < total;
+      i++, idx += increment || 1
+    ) {
+      if (idx < 0) {
+        idx = total - 1;
+      } else if (idx >= total) {
+        idx = 0;
+      }
+      const tab = tabs[idx];
+      if (!tab.hasAttribute('hidden')) {
+        return idx;
+      }
+    }
+    return -1;
+  }
+
   private _panelForTab(tab: ApiViewerTab): ApiViewerPanel | null {
     const panelId = tab.getAttribute('aria-controls');
     return this.querySelector(`#${panelId}`);
@@ -102,7 +123,10 @@ export class ApiViewerTabs extends LitElement {
 
   private _prevTab() {
     const tabs = this._allTabs();
-    const newIdx = tabs.findIndex(tab => tab.selected) - 1;
+    const newIdx = this._getAvailableIndex(
+      tabs.findIndex(tab => tab.selected) - 1,
+      -1
+    );
     return tabs[(newIdx + tabs.length) % tabs.length];
   }
 
@@ -118,7 +142,10 @@ export class ApiViewerTabs extends LitElement {
 
   private _nextTab() {
     const tabs = this._allTabs();
-    const newIdx = tabs.findIndex(tab => tab.selected) + 1;
+    const newIdx = this._getAvailableIndex(
+      tabs.findIndex(tab => tab.selected) + 1,
+      1
+    );
     return tabs[newIdx % tabs.length];
   }
 
@@ -136,6 +163,15 @@ export class ApiViewerTabs extends LitElement {
     panels.forEach(panel => {
       panel.hidden = true;
     });
+  }
+
+  /**
+   * `selectFirst()` automatically selects first non-hidden tab.
+   */
+  public selectFirst() {
+    const tabs = this._allTabs();
+    const idx = this._getAvailableIndex(0, 1);
+    this._selectTab(tabs[idx % tabs.length]);
   }
 
   private _selectTab(newTab: ApiViewerTab) {
