@@ -46,6 +46,10 @@ export class ApiViewerContent extends LitElement {
       :host {
         display: block;
       }
+
+      api-viewer-item:not(:first-of-type) {
+        border-top: solid 1px var(--ave-border-color);
+      }
     `;
   }
 

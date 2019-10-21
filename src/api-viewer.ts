@@ -35,6 +35,23 @@ export class ApiViewer extends LitElement {
     return css`
       :host {
         display: block;
+        max-width: 800px;
+        min-width: 360px;
+        font-size: 1rem;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          'Oxygen-Sans', Ubuntu, Cantarell, sans-serif;
+        border: 1px solid var(--ave-border-color);
+        border-radius: 4px;
+
+        --ave-primary-color: #1867c0;
+        --ave-accent-color: #d63200;
+        --ave-border-color: rgba(0, 0, 0, 0.12);
+        --ave-header-color: #fff;
+        --ave-item-color: rgba(0, 0, 0, 0.87);
+        --ave-label-color: #424242;
+        --ave-tab-color: rgba(0, 0, 0, 0.54);
+        --ave-monospace-font: Menlo, 'DejaVu Sans Mono', 'Liberation Mono',
+          Consolas, 'Courier New', monospace;
       }
     `;
   }

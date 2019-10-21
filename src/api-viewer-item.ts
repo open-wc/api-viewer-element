@@ -22,6 +22,45 @@ export class ApiViewerItem extends LitElement {
     return css`
       :host {
         display: block;
+        padding: 0.5rem;
+        color: var(--ave-item-color);
+      }
+
+      .row {
+        display: flex;
+        margin-bottom: 1rem;
+      }
+
+      .col {
+        box-sizing: border-box;
+        flex-basis: 25%;
+        padding-right: 0.5rem;
+      }
+
+      .col-type {
+        flex-basis: 50%;
+      }
+
+      .label {
+        color: var(--ave-label-color);
+        font-size: 0.75rem;
+        line-height: 1rem;
+        letter-spacing: 0.1rem;
+      }
+
+      p {
+        margin: 0.5rem 0;
+        font-size: 0.9375rem;
+      }
+
+      .value {
+        font-family: var(--ave-monospace-font);
+        font-size: 0.875rem;
+        line-height: 1.5rem;
+      }
+
+      .value-name {
+        color: var(--ave-accent-color);
       }
     `;
   }
@@ -30,8 +69,8 @@ export class ApiViewerItem extends LitElement {
   protected renderType(type?: string): TemplateResult {
     return type
       ? html`
-          <span class="type">Type:</span>
-          <span class="type-value">${type}</span>
+          <div class="label">Type</div>
+          <div class="value">${type}</div>
         `
       : NOTHING;
   }
@@ -40,8 +79,8 @@ export class ApiViewerItem extends LitElement {
   protected renderAttr(attr?: string): TemplateResult {
     return attr
       ? html`
-          <span class="attr">Attribute:</span>
-          <span class="attr-value">${attr}</span>
+          <div class="label">Attribute</div>
+          <div class="value">${attr}</div>
         `
       : NOTHING;
   }
@@ -51,19 +90,19 @@ export class ApiViewerItem extends LitElement {
 
     return html`
       <div class="row">
-        <span class="col">
-          <span class="name">Name:</span>
-          <span class="name-value">${name}</span>
-        </span>
-        <span class="col">
-          ${this.renderType(valueType)}
-        </span>
-        <span class="col">
+        <div class="col">
+          <div class="label">Name</div>
+          <div class="value value-name">${name}</div>
+        </div>
+        <div class="col">
           ${this.renderAttr(attribute)}
-        </span>
+        </div>
+        <div class="col col-type">
+          ${this.renderType(valueType)}
+        </div>
       </div>
-      <div class="row">
-        <span class="description">Description:</span>
+      <div>
+        <div class="label">Description</div>
         ${parse(description)}
       </div>
     `;

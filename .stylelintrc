@@ -1,0 +1,25 @@
+{
+  "processors": [
+    [
+      "stylelint-processor-styled-components",
+      {
+        "moduleName": "lit-element",
+        "importName": "css",
+        "strict": true
+      }
+    ]
+  ],
+  "extends": [
+    "stylelint-config-standard",
+    "stylelint-config-prettier",
+    "stylelint-config-styled-components"
+  ],
+  "rules": {
+    "property-no-vendor-prefix": [true, {
+      "ignoreProperties": ["user-select"]
+    }],
+    "selector-type-no-unknown": [true, {
+      "ignoreTypes": ["/^[a-zA-Z]([a-zA-Z0-9]*-[a-zA-Z0-9]+)+/"],
+    }]
+  }
+}

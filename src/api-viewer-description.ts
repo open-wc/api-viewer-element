@@ -9,6 +9,13 @@ export class ApiViewerDescription extends LitElement {
     return css`
       :host {
         display: block;
+        padding: 0.75rem;
+        border-bottom: solid 1px var(--ave-border-color);
+      }
+
+      p {
+        margin: 0.5rem 0;
+        font-size: 0.9375rem;
       }
     `;
   }

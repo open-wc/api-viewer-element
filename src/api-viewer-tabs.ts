@@ -28,6 +28,18 @@ export class ApiViewerTabs extends LitElement {
       .tabs {
         display: block;
       }
+
+      @media (max-width: 600px) {
+        :host {
+          flex-direction: column;
+        }
+
+        .tabs {
+          display: flex;
+          flex-wrap: nowrap;
+          overflow: auto;
+        }
+      }
     `;
   }
 

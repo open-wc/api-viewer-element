@@ -3,6 +3,7 @@ import { ElementInfo } from './lib/types.js';
 import { EMPTY_ELEMENTS, EMPTY_ELEMENT } from './lib/constants.js';
 import './api-viewer-content.js';
 import './api-viewer-description.js';
+import './api-viewer-header.js';
 import './api-viewer-select.js';
 
 @customElement('api-viewer-docs')
@@ -29,10 +30,12 @@ export class ApiViewerDocs extends LitElement {
     }
 
     return html`
-      <api-viewer-select
-        .options="${tags}"
-        .selected="${selected}"
-      ></api-viewer-select>
+      <api-viewer-header .heading="${element.name}">
+        <api-viewer-select
+          .options="${tags}"
+          .selected="${selected}"
+        ></api-viewer-select>
+      </api-viewer-header>
       <api-viewer-description
         .description="${element.description}"
       ></api-viewer-description>
