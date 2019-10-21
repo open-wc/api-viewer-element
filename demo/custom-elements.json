@@ -91,6 +91,86 @@
           "description": "Slot for prefix content"
         }
       ]
+    },
+    {
+      "name": "range-slider",
+      "description": "A custom element wrapping `<input type=\"range\">`.",
+      "jsDoc": "/**\n * A custom element wrapping `<input type=\"range\">`.\n *\n * @element range-slider\n *\n * @fires change - Event fired when value change is committed\n * @fires value-changed - Event fired when value is changed by the user\n */",
+      "attributes": [
+        {
+          "name": "disabled",
+          "description": "Disabled element can not be clicked",
+          "jsDoc": "/**\n   * Disabled element can not be clicked\n   */",
+          "type": "boolean"
+        },
+        {
+          "name": "value",
+          "description": "Value set on the wrapped `<input>` element.",
+          "jsDoc": "/**\n   * Value set on the wrapped `<input>` element.\n   *\n   * @memberof RangeElement\n   */",
+          "type": "number"
+        },
+        {
+          "name": "min",
+          "description": "The minimum permitted value.",
+          "jsDoc": "/**\n   * The minimum permitted value.\n   */",
+          "type": "number"
+        },
+        {
+          "name": "max",
+          "description": "The maximum permitted value.",
+          "jsDoc": "/**\n   * The maximum permitted value.\n   */",
+          "type": "number"
+        },
+        {
+          "name": "step",
+          "description": "The stepping interval.",
+          "jsDoc": "/**\n   * The stepping interval.\n   */",
+          "type": "number"
+        }
+      ],
+      "properties": [
+        {
+          "name": "disabled",
+          "description": "Disabled element can not be clicked",
+          "jsDoc": "/**\n   * Disabled element can not be clicked\n   */",
+          "type": "boolean"
+        },
+        {
+          "name": "value",
+          "description": "Value set on the wrapped `<input>` element.",
+          "jsDoc": "/**\n   * Value set on the wrapped `<input>` element.\n   *\n   * @memberof RangeElement\n   */",
+          "type": "number"
+        },
+        {
+          "name": "min",
+          "description": "The minimum permitted value.",
+          "jsDoc": "/**\n   * The minimum permitted value.\n   */",
+          "type": "number"
+        },
+        {
+          "name": "max",
+          "description": "The maximum permitted value.",
+          "jsDoc": "/**\n   * The maximum permitted value.\n   */",
+          "type": "number"
+        },
+        {
+          "name": "step",
+          "description": "The stepping interval.",
+          "jsDoc": "/**\n   * The stepping interval.\n   */",
+          "type": "number"
+        }
+      ],
+      "events": [
+        {
+          "name": "change",
+          "description": "Event fired when value change is committed"
+        },
+        {
+          "name": "value-changed",
+          "description": "Event fired when value is changed by the user"
+        }
+      ],
+      "slots": []
     }
   ]
 }
