@@ -17,6 +17,7 @@
     "noUnusedParameters": true,
     "strict": true,
     "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
     "importHelpers": true
   },
   "include": [

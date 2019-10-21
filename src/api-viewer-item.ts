@@ -1,5 +1,6 @@
 import { LitElement, html, customElement, css, property } from 'lit-element';
 import { nothing, TemplateResult } from 'lit-html';
+import { parse } from './lib/markdown.js';
 
 const NOTHING = html`
   ${nothing}
@@ -63,7 +64,7 @@ export class ApiViewerItem extends LitElement {
       </div>
       <div class="row">
         <span class="description">Description:</span>
-        <span class="description-value">${description}</span>
+        ${parse(description)}
       </div>
     `;
   }

@@ -3,8 +3,8 @@
   "tags": [
     {
       "name": "input-wrapper",
-      "description": "A custom element with text input, label and slots.",
-      "jsDoc": "/**\n * A custom element with text input, label and slots.\n *\n * @element input-wrapper\n *\n * @fires change - Event fired on value change (blur)\n * @fires input - Event fired on user input (key)\n *\n * @slot prefix - Slot for prefix content\n * @slot suffix - Slot for suffix content\n * @slot helper - Slot for helper content\n *\n * @attr {boolean} has-value - State attribute set when element has value\n * @attr {boolean} has-label - State attribute set when element has label\n */",
+      "description": "A custom element wrapping `<input>` with `<label>` and extra slots.",
+      "jsDoc": "/**\n * A custom element wrapping `<input>` with `<label>` and extra slots.\n *\n * @element input-wrapper\n *\n * @fires change - Event fired on value change (blur)\n * @fires input - Event fired on user input (key)\n *\n * @slot prefix - Slot for prefix content\n * @slot suffix - Slot for suffix content\n * @slot helper - Slot for helper content\n *\n * @attr {boolean} has-value - State attribute set when element has value\n * @attr {boolean} has-label - State attribute set when element has label\n */",
       "attributes": [
         {
           "name": "has-value",
@@ -24,14 +24,14 @@
         },
         {
           "name": "label",
-          "description": "Label of the element.",
-          "jsDoc": "/**\n   * Label of the element.\n   */",
+          "description": "Text content to show in the `<label>` element.",
+          "jsDoc": "/**\n   * Text content to show in the `<label>` element.\n   */",
           "type": "string | undefined"
         },
         {
           "name": "value",
-          "description": "Value of the element.",
-          "jsDoc": "/**\n   * Value of the element.\n   */",
+          "description": "Value to set on the wrapped `<input>` element.",
+          "jsDoc": "/**\n   * Value to set on the wrapped `<input>` element.\n   */",
           "type": "string"
         },
         {
@@ -50,14 +50,14 @@
         },
         {
           "name": "label",
-          "description": "Label of the element.",
-          "jsDoc": "/**\n   * Label of the element.\n   */",
+          "description": "Text content to show in the `<label>` element.",
+          "jsDoc": "/**\n   * Text content to show in the `<label>` element.\n   */",
           "type": "string | undefined"
         },
         {
           "name": "value",
-          "description": "Value of the element.",
-          "jsDoc": "/**\n   * Value of the element.\n   */",
+          "description": "Value to set on the wrapped `<input>` element.",
+          "jsDoc": "/**\n   * Value to set on the wrapped `<input>` element.\n   */",
           "type": "string"
         },
         {

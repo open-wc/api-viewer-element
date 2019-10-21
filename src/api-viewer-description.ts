@@ -1,8 +1,9 @@
 import { LitElement, html, customElement, css, property } from 'lit-element';
+import { parse } from './lib/markdown.js';
 
 @customElement('api-viewer-description')
 export class ApiViewerDescription extends LitElement {
-  @property({ type: String }) description = '';
+  @property({ type: String }) description?: string | undefined;
 
   static get styles() {
     return css`
@@ -14,7 +15,7 @@ export class ApiViewerDescription extends LitElement {
 
   render() {
     return html`
-      ${this.description}
+      ${parse(this.description)}
     `;
   }
 }

@@ -9,7 +9,7 @@ import {
 } from 'lit-element';
 
 /**
- * A custom element with text input, label and slots.
+ * A custom element wrapping `<input>` with `<label>` and extra slots.
  *
  * @element input-wrapper
  *
@@ -31,12 +31,12 @@ class InputWrapper extends LitElement {
   @property({ type: Boolean, reflect: true }) disabled = false;
 
   /**
-   * Label of the element.
+   * Text content to show in the `<label>` element.
    */
   @property({ type: String }) label?: string | undefined;
 
   /**
-   * Value of the element.
+   * Value to set on the wrapped `<input>` element.
    */
   @property({ type: String }) value = '';
 
