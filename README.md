@@ -6,6 +6,9 @@ API viewer for [web-component-analyzer](https://github.com/runem/web-component-a
 
 ```html
 <api-viewer src="./custom-elements.json"></api-viewer>
+<script type="module">
+  import 'api-viewer-element';
+</script>
 ```
 
 [Live Demo ↗](https://api-viewer-element.netlify.com/)
