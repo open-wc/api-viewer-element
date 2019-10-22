@@ -50,6 +50,23 @@ const processProps = (
   });
 };
 
+const renderTab = (
+  heading: string,
+  hidden: boolean,
+  content: TemplateResult
+): TemplateResult => {
+  return html`
+    <api-viewer-tab
+      heading="${heading}"
+      slot="tab"
+      ?hidden="${hidden}"
+    ></api-viewer-tab>
+    <api-viewer-panel slot="panel" ?hidden="${hidden}">
+      ${content}
+    </api-viewer-panel>
+  `;
+};
+
 @customElement('api-viewer-content')
 export class ApiViewerContent extends LitElement {
   @property({ type: String }) name = '';
@@ -80,14 +97,10 @@ export class ApiViewerContent extends LitElement {
 
   // eslint-disable-next-line class-methods-use-this
   protected renderProperties(props: PropertyInfo[]): TemplateResult {
-    const hidden = props.length === 0;
-    return html`
-      <api-viewer-tab
-        heading="Properties"
-        slot="tab"
-        ?hidden="${hidden}"
-      ></api-viewer-tab>
-      <api-viewer-panel slot="panel" ?hidden="${hidden}">
+    return renderTab(
+      'Properties',
+      props.length === 0,
+      html`
         ${props.map(
           prop => html`
             <api-viewer-item
@@ -98,20 +111,16 @@ export class ApiViewerContent extends LitElement {
             ></api-viewer-item>
           `
         )}
-      </api-viewer-panel>
-    `;
+      `
+    );
   }
 
   // eslint-disable-next-line class-methods-use-this
   protected renderAttributes(attrs: AttributeInfo[]): TemplateResult {
-    const hidden = attrs.length === 0;
-    return html`
-      <api-viewer-tab
-        heading="Attributes"
-        slot="tab"
-        ?hidden="${hidden}"
-      ></api-viewer-tab>
-      <api-viewer-panel slot="panel" ?hidden="${hidden}">
+    return renderTab(
+      'Attributes',
+      attrs.length === 0,
+      html`
         ${attrs.map(
           attr => html`
             <api-viewer-item
@@ -121,20 +130,16 @@ export class ApiViewerContent extends LitElement {
             ></api-viewer-item>
           `
         )}
-      </api-viewer-panel>
-    `;
+      `
+    );
   }
 
   // eslint-disable-next-line class-methods-use-this
   protected renderSlots(slots: EventInfo[]): TemplateResult {
-    const hidden = slots.length === 0;
-    return html`
-      <api-viewer-tab
-        heading="Slots"
-        slot="tab"
-        ?hidden="${hidden}"
-      ></api-viewer-tab>
-      <api-viewer-panel slot="panel" ?hidden="${hidden}">
+    return renderTab(
+      'Slots',
+      slots.length === 0,
+      html`
         ${slots.map(
           slot => html`
             <api-viewer-item
@@ -143,20 +148,16 @@ export class ApiViewerContent extends LitElement {
             ></api-viewer-item>
           `
         )}
-      </api-viewer-panel>
-    `;
+      `
+    );
   }
 
   // eslint-disable-next-line class-methods-use-this
   protected renderEvents(events: EventInfo[]): TemplateResult {
-    const hidden = events.length === 0;
-    return html`
-      <api-viewer-tab
-        heading="Events"
-        slot="tab"
-        ?hidden="${hidden}"
-      ></api-viewer-tab>
-      <api-viewer-panel slot="panel" ?hidden="${hidden}">
+    return renderTab(
+      'Events',
+      events.length === 0,
+      html`
         ${events.map(
           event => html`
             <api-viewer-item
@@ -165,8 +166,8 @@ export class ApiViewerContent extends LitElement {
             ></api-viewer-item>
           `
         )}
-      </api-viewer-panel>
-    `;
+      `
+    );
   }
 
   protected render() {
