@@ -24,6 +24,22 @@ Analyze your components using `--format json`:
 wca analyze my-element.js --outFile custom-elements.json --format json
 ```
 
+## Styling
+
+The following custom CSS properties are available:
+
+| Property               | Description                                   |
+|------------------------|-----------------------------------------------|
+| `--ave-accent-color`   | Accent color, used for property names         |
+| `--ave-border-color`   | Color used for borders and dividers           |
+| `--ave-border-radius`  | Border radius used for the outer border       |
+| `--ave-header-color`   | Header text color used for tag name           |
+| `--ave-item-color`     | API items content color (main text)           |
+| `--ave-label-color`    | API items labels color                        |
+| `--ave-monospace-font` | Monospace font stack for the API items        |
+| `--ave-primary-color`  | Primary color, used for header and active tab |
+| `--ave-tab-color`      | Inactive tabs color                           |
+
 ## Contributing
 
 ### Install dependencies
