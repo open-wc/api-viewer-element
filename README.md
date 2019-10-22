@@ -51,3 +51,10 @@ yarn dist
 ```sh
 yarn serve:dist
 ```
+
+## Acknowledgements
+
+- Big thanks to [@runem](http://github.com/runem) for creating Web Component Analyzer.
+- Thanks to [@bahrus](https://github.com/bahrus) for [wc-info](https://github.com/bahrus/wc-info) component which inspired me.
+- The visual appearance is largely inspired by [Vuetify](https://vuetifyjs.com/en/getting-started/quick-start) API docs.
+- The tabs component is based on the [howto-tabs](https://developers.google.com/web/fundamentals/web-components/examples/howto-tabs) example.
