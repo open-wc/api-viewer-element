@@ -20,7 +20,7 @@ export class ApiViewerDocs extends LitElement {
     `;
   }
 
-  render() {
+  protected render() {
     const { elements, selected } = this;
     const tags = elements.map((tag: ElementInfo) => tag.name);
 

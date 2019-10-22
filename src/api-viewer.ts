@@ -58,7 +58,7 @@ export class ApiViewer extends LitElement {
     `;
   }
 
-  render() {
+  protected render() {
     const { src } = this;
 
     if (src && this.lastSrc !== src) {

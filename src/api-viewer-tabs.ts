@@ -186,7 +186,7 @@ export class ApiViewerTabs extends LitElement {
     newTab.focus();
   }
 
-  _onKeyDown(event: KeyboardEvent) {
+  private _onKeyDown(event: KeyboardEvent) {
     const { target } = event;
     if ((target && target instanceof ApiViewerTab) === false) {
       return;

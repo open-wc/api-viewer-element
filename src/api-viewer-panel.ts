@@ -19,13 +19,13 @@ export class ApiViewerPanel extends LitElement {
     `;
   }
 
-  render() {
+  protected render() {
     return html`
       <slot></slot>
     `;
   }
 
-  firstUpdated() {
+  protected firstUpdated() {
     this.setAttribute('role', 'tabpanel');
 
     if (!this.id) {

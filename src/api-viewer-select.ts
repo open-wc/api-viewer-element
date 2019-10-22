@@ -24,7 +24,7 @@ export class ApiViewerSelect extends LitElement {
     `;
   }
 
-  render() {
+  protected render() {
     return html`
       <select @change="${this._onChange}">
         ${this.options.map((option, index) => {

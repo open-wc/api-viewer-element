@@ -20,7 +20,7 @@ export class ApiViewerDescription extends LitElement {
     `;
   }
 
-  render() {
+  protected render() {
     return html`
       ${parse(this.description)}
     `;

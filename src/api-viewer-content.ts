@@ -169,7 +169,7 @@ export class ApiViewerContent extends LitElement {
     `;
   }
 
-  render() {
+  protected render() {
     const { slots, props, attrs, events } = this;
 
     const attributes = processAttrs(attrs || [], props || []);
@@ -183,7 +183,7 @@ export class ApiViewerContent extends LitElement {
     `;
   }
 
-  updated(props: PropertyValues) {
+  protected updated(props: PropertyValues) {
     super.updated(props);
 
     if (props.has('name') && props.get('name')) {

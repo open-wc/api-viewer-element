@@ -25,7 +25,7 @@ export class ApiViewerHeader extends LitElement {
     `;
   }
 
-  render() {
+  protected render() {
     return html`
       <div class="heading">&lt;${this.heading}&gt;</div>
       <slot></slot>

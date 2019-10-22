@@ -85,7 +85,7 @@ export class ApiViewerItem extends LitElement {
       : NOTHING;
   }
 
-  render() {
+  protected render() {
     const { name, description, valueType, attribute } = this;
 
     return html`

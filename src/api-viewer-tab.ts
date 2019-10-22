@@ -118,13 +118,13 @@ export class ApiViewerTab extends LitElement {
     `;
   }
 
-  render() {
+  protected render() {
     return html`
       ${this.heading}
     `;
   }
 
-  firstUpdated() {
+  protected firstUpdated() {
     this.setAttribute('role', 'tab');
 
     if (!this.id) {
@@ -144,7 +144,7 @@ export class ApiViewerTab extends LitElement {
     });
   }
 
-  updated(props: PropertyValues) {
+  protected updated(props: PropertyValues) {
     super.updated(props);
 
     if (props.has('selected')) {
