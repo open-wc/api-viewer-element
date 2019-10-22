@@ -8,7 +8,9 @@ API viewer for [web-component-analyzer](https://github.com/runem/web-component-a
 <api-viewer src="./custom-elements.json"></api-viewer>
 ```
 
-<img src="https://raw.githubusercontent.com/web-padawan/api-viewer-element/master/screenshot.png" alt="Screenshot of api-viewer element" width="800">
+[Live Demo ↗](https://api-viewer-element.netlify.com/)
+
+[<img src="https://raw.githubusercontent.com/web-padawan/api-viewer-element/master/screenshot.png" alt="Screenshot of api-viewer element" width="800">](https://api-viewer-element.netlify.com/)
 
 ## Preparing a JSON
 
