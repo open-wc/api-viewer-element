@@ -2,32 +2,52 @@
 
 API viewer for [web-component-analyzer](https://github.com/runem/web-component-analyzer) JSON output.
 
-## Usage
-
 ```html
 <api-viewer src="./custom-elements.json"></api-viewer>
-<script type="module">
-  import 'api-viewer-element';
-</script>
 ```
 
 [Live Demo ↗](https://api-viewer-element.netlify.com/)
 
 [<img src="https://raw.githubusercontent.com/web-padawan/api-viewer-element/master/screenshot.png" alt="Screenshot of api-viewer element" width="800">](https://api-viewer-element.netlify.com/)
 
-## Preparing a JSON
-
-First, install [web-component-analyzer](https://github.com/runem/web-component-analyzer):
+## Install
 
 ```sh
-npm install -g web-component-analyzer
+$ npm install api-viewer-element
 ```
 
-Analyze your components using `--format json`:
+## Usage
+
+1. Install [web-component-analyzer](https://github.com/runem/web-component-analyzer):
 
 ```sh
-wca analyze my-element.js --outFile custom-elements.json --format json
+$ npm install -g web-component-analyzer
 ```
+
+2. Analyze your components using `--format json`:
+
+```sh
+$ wca analyze my-element.js --outFile custom-elements.json --format json
+```
+
+3. Create an HTML file and import the component:
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="module">
+      import 'api-viewer-element';
+    </script>
+  </head>
+
+  <body>
+    <api-viewer src="./custom-elements.json"></api-viewer>
+  </body>
+</html>
+```
+
+4. Use [es-dev-server](https://open-wc.org/developing/es-dev-server.html) to serve your HTML page.
 
 ## Styling
 
@@ -50,13 +70,13 @@ The following custom CSS properties are available:
 ### Install dependencies
 
 ```sh
-yarn
+$ yarn
 ```
 
 ### Run demo in browser
 
 ```sh
-yarn dev
+$ yarn dev
 ```
 
 Open http://127.0.0.1:8081/demo/
@@ -64,13 +84,13 @@ Open http://127.0.0.1:8081/demo/
 ### Create dist folder
 
 ```sh
-yarn dist
+$ yarn dist
 ```
 
 ### Serve dist folder
 
 ```sh
-yarn serve:dist
+$ yarn serve:dist
 ```
 
 ## Acknowledgements
