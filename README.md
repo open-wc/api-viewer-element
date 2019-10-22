@@ -79,3 +79,4 @@ yarn serve:dist
 - Thanks to [@bahrus](https://github.com/bahrus) for [wc-info](https://github.com/bahrus/wc-info) component which inspired me.
 - The visual appearance is largely inspired by [Vuetify](https://vuetifyjs.com/en/getting-started/quick-start) API docs.
 - The tabs component is based on the [howto-tabs](https://developers.google.com/web/fundamentals/web-components/examples/howto-tabs) example.
+- Thanks to [open-wc.org](https://open-wc.org/) for [es-dev-server](https://github.com/open-wc/open-wc/tree/master/packages/es-dev-server) and [rollup preset](https://open-wc.org/building/building-rollup.html).
