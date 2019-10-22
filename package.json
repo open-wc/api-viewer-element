@@ -34,11 +34,11 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@open-wc/building-rollup": "^0.11.3",
-    "@typescript-eslint/eslint-plugin": "^2.3.3",
-    "@typescript-eslint/parser": "^2.3.3",
+    "@open-wc/building-rollup": "^0.12.0",
+    "@typescript-eslint/eslint-plugin": "^2.5.0",
+    "@typescript-eslint/parser": "^2.5.0",
     "@webcomponents/webcomponentsjs": "^2.3.0",
-    "es-dev-server": "^1.18.4",
+    "es-dev-server": "^1.18.5",
     "eslint": "^6.5.1",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.4.0",
