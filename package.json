@@ -17,7 +17,7 @@
     "lint": "npm-run-all --parallel lint:*",
     "prepublishOnly": "npm run build",
     "serve": "es-dev-server --node-resolve --port 8081",
-    "start:build": "es-dev-server --app-index dist/index.html --open",
+    "serve:dist": "es-dev-server --app-index dist/index.html --open",
     "watch": "tsc-watch"
   },
   "files": [
