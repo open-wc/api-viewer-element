@@ -2,8 +2,8 @@ import { LitElement, html, customElement, css, property } from 'lit-element';
 import { ElementInfo } from './lib/types.js';
 import { EMPTY_ELEMENTS, EMPTY_ELEMENT } from './lib/constants.js';
 import './api-viewer-content.js';
-import './api-viewer-description.js';
 import './api-viewer-header.js';
+import './api-viewer-marked.js';
 import './api-viewer-select.js';
 
 @customElement('api-viewer-docs')
@@ -16,6 +16,11 @@ export class ApiViewerDocs extends LitElement {
     return css`
       :host {
         display: block;
+      }
+
+      .description {
+        padding: 0.75rem;
+        border-bottom: solid 1px var(--ave-border-color);
       }
     `;
   }
@@ -46,9 +51,10 @@ export class ApiViewerDocs extends LitElement {
           @selected-changed="${this._onSelect}"
         ></api-viewer-select>
       </api-viewer-header>
-      <api-viewer-description
-        .description="${description}"
-      ></api-viewer-description>
+      <api-viewer-marked
+        .content="${description}"
+        class="description"
+      ></api-viewer-marked>
       <api-viewer-content
         .name="${name}"
         .props="${properties}"

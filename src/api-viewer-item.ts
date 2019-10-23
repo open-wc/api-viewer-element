@@ -1,6 +1,6 @@
 import { LitElement, html, customElement, css, property } from 'lit-element';
 import { nothing, TemplateResult } from 'lit-html';
-import { parse } from './lib/markdown.js';
+import './api-viewer-marked.js';
 
 const NOTHING = html`
   ${nothing}
@@ -46,11 +46,6 @@ export class ApiViewerItem extends LitElement {
         font-size: 0.75rem;
         line-height: 1rem;
         letter-spacing: 0.1rem;
-      }
-
-      p {
-        margin: 0.5rem 0;
-        font-size: 0.9375rem;
       }
 
       .value {
@@ -103,7 +98,7 @@ export class ApiViewerItem extends LitElement {
       </div>
       <div>
         <div class="label">Description</div>
-        ${parse(description)}
+        <api-viewer-marked content="${description}"></api-viewer-marked>
       </div>
     `;
   }
