@@ -67,6 +67,77 @@ const renderTab = (
   `;
 };
 
+const renderProperties = (props: PropertyInfo[]): TemplateResult => {
+  return renderTab(
+    'Properties',
+    props.length === 0,
+    html`
+      ${props.map(
+        prop => html`
+          <api-viewer-item
+            .name="${prop.name}"
+            .description="${prop.description}"
+            .valueType="${prop.type}"
+            .attribute="${prop.attribute}"
+          ></api-viewer-item>
+        `
+      )}
+    `
+  );
+};
+
+const renderAttributes = (attrs: AttributeInfo[]): TemplateResult => {
+  return renderTab(
+    'Attributes',
+    attrs.length === 0,
+    html`
+      ${attrs.map(
+        attr => html`
+          <api-viewer-item
+            .name="${attr.name}"
+            .description="${attr.description}"
+            .valueType="${attr.type}"
+          ></api-viewer-item>
+        `
+      )}
+    `
+  );
+};
+
+const renderSlots = (slots: EventInfo[]): TemplateResult => {
+  return renderTab(
+    'Slots',
+    slots.length === 0,
+    html`
+      ${slots.map(
+        slot => html`
+          <api-viewer-item
+            .name="${slot.name}"
+            .description="${slot.description}"
+          ></api-viewer-item>
+        `
+      )}
+    `
+  );
+};
+
+const renderEvents = (events: EventInfo[]): TemplateResult => {
+  return renderTab(
+    'Events',
+    events.length === 0,
+    html`
+      ${events.map(
+        event => html`
+          <api-viewer-item
+            .name="${event.name}"
+            .description="${event.description}"
+          ></api-viewer-item>
+        `
+      )}
+    `
+  );
+};
+
 @customElement('api-viewer-content')
 export class ApiViewerContent extends LitElement {
   @property({ type: String }) name = '';
@@ -95,81 +166,6 @@ export class ApiViewerContent extends LitElement {
     `;
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  protected renderProperties(props: PropertyInfo[]): TemplateResult {
-    return renderTab(
-      'Properties',
-      props.length === 0,
-      html`
-        ${props.map(
-          prop => html`
-            <api-viewer-item
-              .name="${prop.name}"
-              .description="${prop.description}"
-              .valueType="${prop.type}"
-              .attribute="${prop.attribute}"
-            ></api-viewer-item>
-          `
-        )}
-      `
-    );
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  protected renderAttributes(attrs: AttributeInfo[]): TemplateResult {
-    return renderTab(
-      'Attributes',
-      attrs.length === 0,
-      html`
-        ${attrs.map(
-          attr => html`
-            <api-viewer-item
-              .name="${attr.name}"
-              .description="${attr.description}"
-              .valueType="${attr.type}"
-            ></api-viewer-item>
-          `
-        )}
-      `
-    );
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  protected renderSlots(slots: EventInfo[]): TemplateResult {
-    return renderTab(
-      'Slots',
-      slots.length === 0,
-      html`
-        ${slots.map(
-          slot => html`
-            <api-viewer-item
-              .name="${slot.name}"
-              .description="${slot.description}"
-            ></api-viewer-item>
-          `
-        )}
-      `
-    );
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  protected renderEvents(events: EventInfo[]): TemplateResult {
-    return renderTab(
-      'Events',
-      events.length === 0,
-      html`
-        ${events.map(
-          event => html`
-            <api-viewer-item
-              .name="${event.name}"
-              .description="${event.description}"
-            ></api-viewer-item>
-          `
-        )}
-      `
-    );
-  }
-
   protected render() {
     const { slots, props, attrs, events } = this;
 
@@ -178,8 +174,8 @@ export class ApiViewerContent extends LitElement {
 
     return html`
       <api-viewer-tabs>
-        ${this.renderProperties(properties)}${this.renderAttributes(attributes)}
-        ${this.renderSlots(slots)}${this.renderEvents(events)}
+        ${renderProperties(properties)}${renderAttributes(attributes)}
+        ${renderSlots(slots)}${renderEvents(events)}
       </api-viewer-tabs>
     `;
   }
