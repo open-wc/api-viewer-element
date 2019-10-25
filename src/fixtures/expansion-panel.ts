@@ -1,0 +1,200 @@
+import {
+  LitElement,
+  html,
+  css,
+  customElement,
+  property,
+  query,
+  PropertyValues
+} from 'lit-element';
+import { styleMap } from 'lit-html/directives/style-map.js';
+
+/**
+ * A custom element similar to the HTML5 `<details>` element.
+ *
+ * @element expansion-panel
+ */
+@customElement('expansion-panel')
+export class ExpansionPanel extends LitElement {
+  /**
+   * When true, the panel content is expanded and visible
+   */
+  @property({ type: Boolean, reflect: true }) expanded = false;
+
+  /**
+   * Disabled panel can not be expanded or collapsed
+   */
+  @property({ type: Boolean, reflect: true }) disabled = false;
+
+  @query('[part="header"]')
+  protected header?: HTMLDivElement;
+
+  static get styles() {
+    return css`
+      :host {
+        display: block;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+          0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+      }
+
+      :host([hidden]) {
+        display: none !important;
+      }
+
+      [part='content'] {
+        display: none;
+        overflow: hidden;
+        padding: 8px 24px 24px;
+      }
+
+      [part='header'] {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        position: relative;
+        outline: none;
+        min-height: 48px;
+        padding: 0 24px;
+        box-sizing: border-box;
+        font-weight: 500;
+        font-size: 13px;
+        background-color: #fff;
+        color: rgba(0, 0, 0, 0.87);
+        cursor: default;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      :host([disabled]) [part='header'] {
+        color: rgba(0, 0, 0, 0.38);
+        background: rgba(0, 0, 0, 0.26);
+        pointer-events: none;
+      }
+
+      :host([expanded]) [part='content'] {
+        display: block;
+        overflow: visible;
+      }
+
+      :host([focus-ring]) [part='header'] {
+        background: rgba(0, 0, 0, 0.54);
+      }
+
+      [part='header'] ::slotted(*) {
+        margin: 12px 0;
+      }
+
+      [part='toggle'] {
+        position: relative;
+        order: 1;
+        margin-right: -8px;
+        width: 24px;
+        height: 24px;
+        padding: 4px;
+        color: var(--material-secondary-text-color);
+        line-height: 24px;
+        text-align: center;
+        transform: rotate(90deg);
+        transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 0.1);
+      }
+
+      [part='toggle']::before {
+        font-size: 24px;
+        width: 24px;
+        display: inline-block;
+        content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>');
+      }
+
+      [part='toggle']::after {
+        display: inline-block;
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.38);
+        transform: scale(0);
+        opacity: 0;
+        transition: transform 0s 0.8s, opacity 0.8s;
+        will-change: transform, opacity;
+      }
+
+      :host([disabled]) [part='toggle'] {
+        color: rgba(0, 0, 0, 0.26);
+      }
+
+      :host(:not([disabled])) [part='header']:active [part='toggle']::after {
+        transition-duration: 0.08s, 0.01s;
+        transition-delay: 0s, 0s;
+        transform: scale(1.25);
+        opacity: 0.15;
+      }
+
+      :host([expanded]) [part='toggle'] {
+        transform: rotate(270deg);
+      }
+    `;
+  }
+
+  render() {
+    return html`
+      <div role="heading">
+        <div
+          role="button"
+          part="header"
+          @click="${this._onToggleClick}"
+          @keydown="${this._onToggleKeyDown}"
+          ?disabled="${this.disabled}"
+          aria-expanded="${this.expanded ? 'true' : 'false'}"
+        >
+          <span part="toggle"></span>
+          <slot name="header"></slot>
+        </div>
+      </div>
+      <div
+        part="content"
+        style="${styleMap({ maxHeight: this.expanded ? '' : '0px' })}"
+        aria-hidden="${this.expanded ? 'false' : 'true'}"
+      >
+        <slot></slot>
+      </div>
+    `;
+  }
+
+  focus() {
+    if (this.header) {
+      this.header.focus();
+    }
+  }
+
+  protected updated(props: PropertyValues) {
+    super.updated(props);
+
+    if (props.has('expanded')) {
+      this.dispatchEvent(
+        new CustomEvent('expanded-changed', {
+          detail: { value: this.expanded }
+        })
+      );
+    }
+  }
+
+  private _onToggleClick() {
+    this.expanded = !this.expanded;
+  }
+
+  private _onToggleKeyDown(e: KeyboardEvent) {
+    if ([13, 32].indexOf(e.keyCode) > -1) {
+      e.preventDefault();
+      this.expanded = !this.expanded;
+    }
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'expansion-panel': ExpansionPanel;
+  }
+}

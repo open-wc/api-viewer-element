@@ -2,6 +2,45 @@
   "version": 2,
   "tags": [
     {
+      "name": "expansion-panel",
+      "description": "A custom element similar to the HTML5 `<details>` element.",
+      "jsDoc": "/**\n * A custom element similar to the HTML5 `<details>` element.\n *\n * @element expansion-panel\n */",
+      "attributes": [
+        {
+          "name": "expanded",
+          "description": "When true, the panel content is expanded and visible",
+          "jsDoc": "/**\n   * When true, the panel content is expanded and visible\n   */",
+          "type": "boolean"
+        },
+        {
+          "name": "disabled",
+          "description": "Disabled panel can not be expanded or collapsed",
+          "jsDoc": "/**\n   * Disabled panel can not be expanded or collapsed\n   */",
+          "type": "boolean"
+        }
+      ],
+      "properties": [
+        {
+          "name": "expanded",
+          "description": "When true, the panel content is expanded and visible",
+          "jsDoc": "/**\n   * When true, the panel content is expanded and visible\n   */",
+          "type": "boolean"
+        },
+        {
+          "name": "disabled",
+          "description": "Disabled panel can not be expanded or collapsed",
+          "jsDoc": "/**\n   * Disabled panel can not be expanded or collapsed\n   */",
+          "type": "boolean"
+        }
+      ],
+      "events": [
+        {
+          "name": "expanded-changed"
+        }
+      ],
+      "slots": []
+    },
+    {
       "name": "input-wrapper",
       "description": "A custom element wrapping `<input>` with `<label>` and extra slots.",
       "jsDoc": "/**\n * A custom element wrapping `<input>` with `<label>` and extra slots.\n *\n * @element input-wrapper\n *\n * @fires change - Event fired on value change (blur)\n * @fires input - Event fired on user input (key)\n *\n * @slot prefix - Slot for prefix content\n * @slot suffix - Slot for suffix content\n * @slot helper - Slot for helper content\n *\n * @attr {boolean} has-value - State attribute set when element has value\n * @attr {boolean} has-label - State attribute set when element has label\n */",
@@ -149,86 +188,6 @@
         }
       ],
       "events": [],
-      "slots": []
-    },
-    {
-      "name": "range-slider",
-      "description": "A custom element wrapping `<input type=\"range\">`.",
-      "jsDoc": "/**\n * A custom element wrapping `<input type=\"range\">`.\n *\n * @element range-slider\n *\n * @fires change - Event fired when value change is committed\n * @fires value-changed - Event fired when value is changed by the user\n */",
-      "attributes": [
-        {
-          "name": "disabled",
-          "description": "Disabled element can not be clicked",
-          "jsDoc": "/**\n   * Disabled element can not be clicked\n   */",
-          "type": "boolean"
-        },
-        {
-          "name": "value",
-          "description": "Value set on the wrapped `<input>` element.",
-          "jsDoc": "/**\n   * Value set on the wrapped `<input>` element.\n   *\n   * @memberof RangeElement\n   */",
-          "type": "number"
-        },
-        {
-          "name": "min",
-          "description": "The minimum permitted value.",
-          "jsDoc": "/**\n   * The minimum permitted value.\n   */",
-          "type": "number"
-        },
-        {
-          "name": "max",
-          "description": "The maximum permitted value.",
-          "jsDoc": "/**\n   * The maximum permitted value.\n   */",
-          "type": "number"
-        },
-        {
-          "name": "step",
-          "description": "The stepping interval.",
-          "jsDoc": "/**\n   * The stepping interval.\n   */",
-          "type": "number"
-        }
-      ],
-      "properties": [
-        {
-          "name": "disabled",
-          "description": "Disabled element can not be clicked",
-          "jsDoc": "/**\n   * Disabled element can not be clicked\n   */",
-          "type": "boolean"
-        },
-        {
-          "name": "value",
-          "description": "Value set on the wrapped `<input>` element.",
-          "jsDoc": "/**\n   * Value set on the wrapped `<input>` element.\n   *\n   * @memberof RangeElement\n   */",
-          "type": "number"
-        },
-        {
-          "name": "min",
-          "description": "The minimum permitted value.",
-          "jsDoc": "/**\n   * The minimum permitted value.\n   */",
-          "type": "number"
-        },
-        {
-          "name": "max",
-          "description": "The maximum permitted value.",
-          "jsDoc": "/**\n   * The maximum permitted value.\n   */",
-          "type": "number"
-        },
-        {
-          "name": "step",
-          "description": "The stepping interval.",
-          "jsDoc": "/**\n   * The stepping interval.\n   */",
-          "type": "number"
-        }
-      ],
-      "events": [
-        {
-          "name": "change",
-          "description": "Event fired when value change is committed"
-        },
-        {
-          "name": "value-changed",
-          "description": "Event fired when value is changed by the user"
-        }
-      ],
       "slots": []
     }
   ]
