@@ -1,9 +1,7 @@
 import { directive, Part, NodePart } from 'lit-html';
-import { KnobValues, KnobValue } from './types.js';
+import { KnobValues, KnobValue, ComponentWithProps } from './types.js';
 
 const caches = new WeakMap();
-
-type AnyProps = { [s: string]: string | number | boolean | null };
 
 const applyKnobs = (component: Element, knobs: KnobValues) => {
   Object.keys(knobs).forEach((key: string) => {
@@ -16,7 +14,7 @@ const applyKnobs = (component: Element, knobs: KnobValues) => {
         component.removeAttribute(key);
       }
     } else {
-      ((component as unknown) as AnyProps)[key] = knob.value;
+      ((component as unknown) as ComponentWithProps)[key] = knob.value;
     }
   });
 };
@@ -35,6 +33,21 @@ export const renderer = directive(
       part.commit();
 
       caches.set(part, component);
+
+      const instance = part.value as Element;
+
+      // wait for rendering
+      setTimeout(() => {
+        instance.dispatchEvent(
+          new CustomEvent('rendered', {
+            detail: {
+              component
+            },
+            bubbles: true,
+            composed: true
+          })
+        );
+      });
     }
 
     applyKnobs(component, knobs);

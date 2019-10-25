@@ -9,20 +9,53 @@ import {
 import { PropertyInfo } from './lib/types.js';
 import { EMPTY_PROP_INFO } from './lib/constants.js';
 
-const renderPropKnobs = (props: PropertyInfo[]): TemplateResult => {
-  // TODO set default property values to knobs
+const getInputType = (type: string) => {
+  switch (type) {
+    case 'boolean':
+      return 'checkbox';
+    case 'number':
+      return 'number';
+    default:
+      return 'text';
+  }
+};
 
+const getInput = (name: string, type: string, value: unknown) => {
+  const inputType = getInputType(type);
+  let input;
+  if (value === undefined) {
+    input = html`
+      <input type="${inputType}" data-name="${name}" data-type="${type}" />
+    `;
+  } else if (type === 'boolean') {
+    input = html`
+      <input
+        type="checkbox"
+        .checked="${Boolean(value)}"
+        data-name="${name}"
+        data-type="${type}"
+      />
+    `;
+  } else {
+    input = html`
+      <input
+        type="${inputType}"
+        .value="${String(value)}"
+        data-name="${name}"
+        data-type="${type}"
+      />
+    `;
+  }
+  return input;
+};
+
+const renderPropKnobs = (props: PropertyInfo[]): TemplateResult => {
   const rows = props.map(prop => {
+    const { name, type, value } = prop;
     return html`
       <tr>
-        <td>${prop.name}</td>
-        <td>
-          <input
-            type="${prop.type === 'boolean' ? 'checkbox' : 'text'}"
-            data-name="${prop.name}"
-            data-type="${prop.type}"
-          />
-        </td>
+        <td>${name}</td>
+        <td>${getInput(name, type, value)}</td>
       </tr>
     `;
   });
@@ -43,7 +76,13 @@ export class ApiViewerDemoKnobs extends LitElement {
     return css`
       :host {
         display: block;
+        padding: 1rem 1.5rem;
         background: #fafafa;
+      }
+
+      td {
+        padding: 0.25rem 0.25rem 0.25rem 0;
+        font-size: 0.9375rem;
       }
     `;
   }

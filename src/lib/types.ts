@@ -26,6 +26,7 @@ export interface AttributeInfo extends Info {
 export interface PropertyInfo extends Info {
   type: string;
   attribute: string | undefined;
+  value: string | number | boolean | null | undefined;
 }
 
 export interface KnobValue {
@@ -37,3 +38,7 @@ export type KnobValues = { [name: string]: KnobValue };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface EventInfo extends Info {}
+
+export type ComponentWithProps = {
+  [s: string]: string | number | boolean | null;
+};
