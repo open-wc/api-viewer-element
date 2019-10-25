@@ -10,7 +10,7 @@ import { until } from 'lit-html/directives/until.js';
 import { fetchJson } from './lib/fetch-json.js';
 import { ElementInfo } from './lib/types.js';
 import { EMPTY_ELEMENTS } from './lib/constants.js';
-import './api-viewer-docs.js';
+import './api-viewer-content.js';
 
 @customElement('api-viewer')
 export class ApiViewer extends LitElement {
@@ -27,7 +27,7 @@ export class ApiViewer extends LitElement {
     const elements = await jsonFetched;
 
     return html`
-      <api-viewer-docs .elements="${elements}"></api-viewer-docs>
+      <api-viewer-content .elements="${elements}"></api-viewer-content>
     `;
   }
 
