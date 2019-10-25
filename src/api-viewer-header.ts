@@ -21,6 +21,7 @@ export class ApiViewerHeader extends LitElement {
         font-family: var(--ave-monospace-font);
         font-size: 0.875rem;
         line-height: 1.5rem;
+        margin-right: auto;
       }
     `;
   }
