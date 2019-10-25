@@ -8,6 +8,7 @@ import {
 } from 'lit-element';
 import { PropertyInfo, SlotInfo } from './lib/types.js';
 import { EMPTY_PROP_INFO, EMPTY_SLOT_INFO } from './lib/constants.js';
+import { getSlotTitle } from './lib/utils.js';
 
 const getInputType = (type: string) => {
   switch (type) {
@@ -70,11 +71,9 @@ const renderPropKnobs = (props: PropertyInfo[]): TemplateResult => {
 const renderSlotKnobs = (slots: SlotInfo[]): TemplateResult => {
   const rows = slots.map(slot => {
     const { name, content } = slot;
-    const title =
-      name === '' ? 'Default' : name[0].toUpperCase() + name.slice(1);
     return html`
       <tr>
-        <td>${title}</td>
+        <td>${getSlotTitle(name)}</td>
         <td>
           <input
             type="text"

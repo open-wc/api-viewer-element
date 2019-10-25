@@ -1,6 +1,14 @@
-import { LitElement, html, customElement, css, property } from 'lit-element';
+import {
+  LitElement,
+  html,
+  customElement,
+  css,
+  property,
+  PropertyValues
+} from 'lit-element';
 import { PropertyInfo, SlotInfo, KnobValues } from './lib/types.js';
 import { EMPTY_PROP_INFO, EMPTY_SLOT_INFO } from './lib/constants.js';
+import { getSlotTitle } from './lib/utils.js';
 import './api-viewer-demo-renderer.js';
 import './api-viewer-demo-knobs.js';
 import './api-viewer-demo-snippet.js';
@@ -44,21 +52,22 @@ export class ApiViewerDemoLayout extends LitElement {
       ></api-viewer-demo-snippet>
       <api-viewer-demo-knobs
         .props="${this.props}"
-        .slots="${this.slots}"
+        .slots="${this.processedSlots}"
         @prop-changed="${this._onPropChanged}"
         @slot-changed="${this._onSlotChanged}"
       ></api-viewer-demo-knobs>
     `;
   }
 
-  protected firstUpdated() {
-    if (this.slots) {
+  protected updated(props: PropertyValues) {
+    super.updated(props);
+
+    if (props.has('slots') && this.slots) {
       this.processedSlots = this.slots.map((slot: SlotInfo) => {
-        const { name } = slot;
-        const result = slot;
-        result.content =
-          name === '' ? 'Default' : name[0].toUpperCase() + name.slice(1);
-        return result;
+        return {
+          ...slot,
+          content: getSlotTitle(slot.name)
+        };
       });
     }
   }
@@ -71,11 +80,12 @@ export class ApiViewerDemoLayout extends LitElement {
   private _onSlotChanged(e: CustomEvent) {
     const { name, content } = e.detail;
     this.processedSlots = this.processedSlots.map(slot => {
-      const result = slot;
-      if (slot.name === name) {
-        result.content = content;
-      }
-      return result;
+      return slot.name === name
+        ? {
+            ...slot,
+            content
+          }
+        : slot;
     });
   }
 
