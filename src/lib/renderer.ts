@@ -1,5 +1,10 @@
 import { directive, Part, NodePart } from 'lit-html';
-import { KnobValues, KnobValue, ComponentWithProps } from './types.js';
+import {
+  ComponentWithProps,
+  KnobValues,
+  KnobValue,
+  SlotValue
+} from './types.js';
 
 const caches = new WeakMap();
 
@@ -19,8 +24,23 @@ const applyKnobs = (component: Element, knobs: KnobValues) => {
   });
 };
 
+const applySlots = (component: Element, slots: SlotValue[]) => {
+  while (component.firstChild) {
+    component.removeChild(component.firstChild);
+  }
+  slots.forEach(slot => {
+    const div = document.createElement('div');
+    const { name, content } = slot;
+    if (name) {
+      div.setAttribute('slot', name);
+    }
+    div.textContent = content;
+    component.appendChild(div);
+  });
+};
+
 export const renderer = directive(
-  (tag: string, knobs: KnobValues) => (part: Part) => {
+  (tag: string, knobs: KnobValues, slots: SlotValue[]) => (part: Part) => {
     if (!(part instanceof NodePart)) {
       throw new Error('renderer can only be used in text bindings');
     }
@@ -51,5 +71,9 @@ export const renderer = directive(
     }
 
     applyKnobs(component, knobs);
+
+    if (slots.length) {
+      applySlots(component, slots);
+    }
   }
 );

@@ -4,10 +4,10 @@
     {
       "name": "expansion-panel",
       "description": "A custom element similar to the HTML5 `<details>` element.",
-      "jsDoc": "/**\n * A custom element similar to the HTML5 `<details>` element.\n *\n * @element expansion-panel\n */",
+      "jsDoc": "/**\n * A custom element similar to the HTML5 `<details>` element.\n *\n * @element expansion-panel\n *\n * @slot - Slot fot panel content\n * @slot header - Slot for panel header\n *\n * @fires opened-changed - Event fired when expanding / collapsing\n */",
       "attributes": [
         {
-          "name": "expanded",
+          "name": "opened",
           "description": "When true, the panel content is expanded and visible",
           "jsDoc": "/**\n   * When true, the panel content is expanded and visible\n   */",
           "type": "boolean"
@@ -21,7 +21,7 @@
       ],
       "properties": [
         {
-          "name": "expanded",
+          "name": "opened",
           "description": "When true, the panel content is expanded and visible",
           "jsDoc": "/**\n   * When true, the panel content is expanded and visible\n   */",
           "type": "boolean"
@@ -35,10 +35,20 @@
       ],
       "events": [
         {
-          "name": "expanded-changed"
+          "name": "opened-changed",
+          "description": "Event fired when expanding / collapsing"
         }
       ],
-      "slots": []
+      "slots": [
+        {
+          "name": "header",
+          "description": "Slot for panel header"
+        },
+        {
+          "name": "",
+          "description": "Slot fot panel content"
+        }
+      ]
     },
     {
       "name": "input-wrapper",

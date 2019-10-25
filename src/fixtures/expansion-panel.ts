@@ -13,13 +13,18 @@ import { styleMap } from 'lit-html/directives/style-map.js';
  * A custom element similar to the HTML5 `<details>` element.
  *
  * @element expansion-panel
+ *
+ * @slot - Slot fot panel content
+ * @slot header - Slot for panel header
+ *
+ * @fires opened-changed - Event fired when expanding / collapsing
  */
 @customElement('expansion-panel')
 export class ExpansionPanel extends LitElement {
   /**
    * When true, the panel content is expanded and visible
    */
-  @property({ type: Boolean, reflect: true }) expanded = false;
+  @property({ type: Boolean, reflect: true }) opened = false;
 
   /**
    * Disabled panel can not be expanded or collapsed
@@ -44,7 +49,7 @@ export class ExpansionPanel extends LitElement {
       [part='content'] {
         display: none;
         overflow: hidden;
-        padding: 8px 24px 24px;
+        padding: 16px 24px 24px;
       }
 
       [part='header'] {
@@ -71,7 +76,7 @@ export class ExpansionPanel extends LitElement {
         pointer-events: none;
       }
 
-      :host([expanded]) [part='content'] {
+      :host([opened]) [part='content'] {
         display: block;
         overflow: visible;
       }
@@ -85,9 +90,9 @@ export class ExpansionPanel extends LitElement {
       }
 
       [part='toggle'] {
-        position: relative;
+        position: absolute;
         order: 1;
-        margin-right: -8px;
+        right: 8px;
         width: 24px;
         height: 24px;
         padding: 4px;
@@ -132,7 +137,7 @@ export class ExpansionPanel extends LitElement {
         opacity: 0.15;
       }
 
-      :host([expanded]) [part='toggle'] {
+      :host([opened]) [part='toggle'] {
         transform: rotate(270deg);
       }
     `;
@@ -146,8 +151,7 @@ export class ExpansionPanel extends LitElement {
           part="header"
           @click="${this._onToggleClick}"
           @keydown="${this._onToggleKeyDown}"
-          ?disabled="${this.disabled}"
-          aria-expanded="${this.expanded ? 'true' : 'false'}"
+          aria-expanded="${this.opened ? 'true' : 'false'}"
         >
           <span part="toggle"></span>
           <slot name="header"></slot>
@@ -155,8 +159,8 @@ export class ExpansionPanel extends LitElement {
       </div>
       <div
         part="content"
-        style="${styleMap({ maxHeight: this.expanded ? '' : '0px' })}"
-        aria-hidden="${this.expanded ? 'false' : 'true'}"
+        style="${styleMap({ maxHeight: this.opened ? '' : '0px' })}"
+        aria-hidden="${this.opened ? 'false' : 'true'}"
       >
         <slot></slot>
       </div>
@@ -172,23 +176,23 @@ export class ExpansionPanel extends LitElement {
   protected updated(props: PropertyValues) {
     super.updated(props);
 
-    if (props.has('expanded')) {
+    if (props.has('opened')) {
       this.dispatchEvent(
-        new CustomEvent('expanded-changed', {
-          detail: { value: this.expanded }
+        new CustomEvent('opened-changed', {
+          detail: { value: this.opened }
         })
       );
     }
   }
 
   private _onToggleClick() {
-    this.expanded = !this.expanded;
+    this.opened = !this.opened;
   }
 
   private _onToggleKeyDown(e: KeyboardEvent) {
     if ([13, 32].indexOf(e.keyCode) > -1) {
       e.preventDefault();
-      this.expanded = !this.expanded;
+      this.opened = !this.opened;
     }
   }
 }

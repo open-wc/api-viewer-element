@@ -11,7 +11,8 @@ export interface ElementInfo extends Info {
 
 export interface SlotInfo {
   name: string;
-  description: string;
+  description?: string;
+  content?: string;
 }
 
 export interface Info {
@@ -35,6 +36,11 @@ export interface KnobValue {
 }
 
 export type KnobValues = { [name: string]: KnobValue };
+
+export interface SlotValue {
+  name: string;
+  content: string;
+}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface EventInfo extends Info {}

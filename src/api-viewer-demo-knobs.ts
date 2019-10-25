@@ -6,8 +6,8 @@ import {
   property,
   TemplateResult
 } from 'lit-element';
-import { PropertyInfo } from './lib/types.js';
-import { EMPTY_PROP_INFO } from './lib/constants.js';
+import { PropertyInfo, SlotInfo } from './lib/types.js';
+import { EMPTY_PROP_INFO, EMPTY_SLOT_INFO } from './lib/constants.js';
 
 const getInputType = (type: string) => {
   switch (type) {
@@ -67,10 +67,40 @@ const renderPropKnobs = (props: PropertyInfo[]): TemplateResult => {
   `;
 };
 
+const renderSlotKnobs = (slots: SlotInfo[]): TemplateResult => {
+  const rows = slots.map(slot => {
+    const { name, content } = slot;
+    const title =
+      name === '' ? 'Default' : name[0].toUpperCase() + name.slice(1);
+    return html`
+      <tr>
+        <td>${title}</td>
+        <td>
+          <input
+            type="text"
+            .value="${content}"
+            data-type="slot"
+            data-slot="${name}"
+          />
+        </td>
+      </tr>
+    `;
+  });
+
+  return html`
+    <table>
+      ${rows}
+    </table>
+  `;
+};
+
 @customElement('api-viewer-demo-knobs')
 export class ApiViewerDemoKnobs extends LitElement {
   @property({ attribute: false, hasChanged: () => true })
   props: PropertyInfo[] = EMPTY_PROP_INFO;
+
+  @property({ attribute: false, hasChanged: () => true })
+  slots: SlotInfo[] = EMPTY_SLOT_INFO;
 
   static get styles() {
     return css`
@@ -80,16 +110,39 @@ export class ApiViewerDemoKnobs extends LitElement {
         background: #fafafa;
       }
 
+      .columns {
+        display: flex;
+      }
+
+      section {
+        width: 50%;
+      }
+
       td {
         padding: 0.25rem 0.25rem 0.25rem 0;
         font-size: 0.9375rem;
+      }
+
+      h3 {
+        font-size: 1rem;
+        font-weight: bold;
+        margin: 0 0 0.25rem;
       }
     `;
   }
 
   protected render() {
     return html`
-      ${renderPropKnobs(this.props)}
+      <div class="columns">
+        <section>
+          <h3>Properties</h3>
+          ${renderPropKnobs(this.props)}
+        </section>
+        <section ?hidden="${this.slots.length === 0}">
+          <h3>Slots</h3>
+          ${renderSlotKnobs(this.slots)}
+        </section>
+      </div>
     `;
   }
 
@@ -98,15 +151,26 @@ export class ApiViewerDemoKnobs extends LitElement {
       const target = e.composedPath()[0];
       if (target && target instanceof HTMLInputElement) {
         const { type } = target.dataset;
-        this.dispatchEvent(
-          new CustomEvent('knob-changed', {
-            detail: {
-              name: target.dataset.name,
-              type,
-              value: type === 'boolean' ? target.checked : target.value
-            }
-          })
-        );
+        if (type === 'slot') {
+          this.dispatchEvent(
+            new CustomEvent('slot-changed', {
+              detail: {
+                name: target.dataset.slot,
+                content: target.value
+              }
+            })
+          );
+        } else {
+          this.dispatchEvent(
+            new CustomEvent('prop-changed', {
+              detail: {
+                name: target.dataset.name,
+                type,
+                value: type === 'boolean' ? target.checked : target.value
+              }
+            })
+          );
+        }
       }
     });
   }

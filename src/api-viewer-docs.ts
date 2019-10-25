@@ -104,7 +104,7 @@ const renderAttributes = (attrs: AttributeInfo[]): TemplateResult => {
   );
 };
 
-const renderSlots = (slots: EventInfo[]): TemplateResult => {
+const renderSlots = (slots: SlotInfo[]): TemplateResult => {
   return renderTab(
     'Slots',
     slots.length === 0,

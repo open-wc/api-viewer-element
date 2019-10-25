@@ -1,5 +1,5 @@
 import { LitElement, html, customElement, css, property } from 'lit-element';
-import { KnobValues } from './lib/types.js';
+import { KnobValues, SlotValue } from './lib/types.js';
 import { renderer } from './lib/renderer.js';
 
 @customElement('api-viewer-demo-renderer')
@@ -8,6 +8,9 @@ export class ApiViewerDemoRenderer extends LitElement {
 
   @property({ attribute: false, hasChanged: () => true })
   knobs: KnobValues = {};
+
+  @property({ attribute: false, hasChanged: () => true })
+  slots: SlotValue[] = [];
 
   static get styles() {
     return css`
@@ -21,7 +24,7 @@ export class ApiViewerDemoRenderer extends LitElement {
 
   protected render() {
     return html`
-      ${renderer(this.tag, this.knobs)}
+      ${renderer(this.tag, this.knobs, this.slots)}
     `;
   }
 }
