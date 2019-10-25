@@ -44,7 +44,7 @@ export class ApiViewer extends LitElement {
         border: 1px solid var(--ave-border-color);
         border-radius: var(--ave-border-radius);
 
-        --ave-primary-color: #1867c0;
+        --ave-primary-color: #01579b;
         --ave-accent-color: #d63200;
         --ave-border-color: rgba(0, 0, 0, 0.12);
         --ave-border-radius: 4px;
