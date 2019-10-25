@@ -93,6 +93,63 @@
       ]
     },
     {
+      "name": "progress-bar",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Current progress value.",
+          "jsDoc": "/**\n   * Current progress value.\n   */",
+          "type": "number"
+        },
+        {
+          "name": "min",
+          "description": "Minimum bound of the progress bar.",
+          "jsDoc": "/**\n   * Minimum bound of the progress bar.\n   */",
+          "type": "number"
+        },
+        {
+          "name": "max",
+          "description": "Maximum bound of the progress bar.",
+          "jsDoc": "/**\n   * Maximum bound of the progress bar.\n   */",
+          "type": "number"
+        },
+        {
+          "name": "indeterminate",
+          "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value).",
+          "jsDoc": "/**\n   * Indeterminate state of the progress bar.\n   * This property takes precedence over other state properties (min, max, value).\n   */",
+          "type": "boolean"
+        }
+      ],
+      "properties": [
+        {
+          "name": "value",
+          "description": "Current progress value.",
+          "jsDoc": "/**\n   * Current progress value.\n   */",
+          "type": "number"
+        },
+        {
+          "name": "min",
+          "description": "Minimum bound of the progress bar.",
+          "jsDoc": "/**\n   * Minimum bound of the progress bar.\n   */",
+          "type": "number"
+        },
+        {
+          "name": "max",
+          "description": "Maximum bound of the progress bar.",
+          "jsDoc": "/**\n   * Maximum bound of the progress bar.\n   */",
+          "type": "number"
+        },
+        {
+          "name": "indeterminate",
+          "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value).",
+          "jsDoc": "/**\n   * Indeterminate state of the progress bar.\n   * This property takes precedence over other state properties (min, max, value).\n   */",
+          "type": "boolean"
+        }
+      ],
+      "events": [],
+      "slots": []
+    },
+    {
       "name": "range-slider",
       "description": "A custom element wrapping `<input type=\"range\">`.",
       "jsDoc": "/**\n * A custom element wrapping `<input type=\"range\">`.\n *\n * @element range-slider\n *\n * @fires change - Event fired when value change is committed\n * @fires value-changed - Event fired when value is changed by the user\n */",

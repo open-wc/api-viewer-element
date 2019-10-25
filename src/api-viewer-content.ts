@@ -2,6 +2,7 @@ import { LitElement, html, customElement, css, property } from 'lit-element';
 import { ElementInfo } from './lib/types.js';
 import { EMPTY_ELEMENTS, EMPTY_ELEMENT } from './lib/constants.js';
 import './api-viewer-docs.js';
+import './api-viewer-demo.js';
 import './api-viewer-header.js';
 import './api-viewer-marked.js';
 import './api-viewer-select.js';
@@ -62,6 +63,7 @@ export class ApiViewerContent extends LitElement {
         .events="${events}"
         .slots="${slots}"
       ></api-viewer-docs>
+      <api-viewer-demo .name="${name}" .props="${properties}"></api-viewer-demo>
     `;
   }
 

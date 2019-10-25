@@ -24,9 +24,16 @@ export interface AttributeInfo extends Info {
 }
 
 export interface PropertyInfo extends Info {
-  type: string | undefined;
+  type: string;
   attribute: string | undefined;
 }
+
+export interface KnobValue {
+  type: string;
+  value: string | number | boolean | null;
+}
+
+export type KnobValues = { [name: string]: KnobValue };
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface EventInfo extends Info {}
