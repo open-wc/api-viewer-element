@@ -23,6 +23,11 @@ const normalizeValue = (value: number, min: number, max: number) => {
   return nV;
 };
 
+/**
+ * A custom element similar to the HTML5 `<progress>` element.
+ *
+ * @element progress-bar
+ */
 @customElement('progress-bar')
 export class ProgressBar extends LitElement {
   /**

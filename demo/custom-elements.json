@@ -94,6 +94,8 @@
     },
     {
       "name": "progress-bar",
+      "description": "A custom element similar to the HTML5 `<progress>` element.",
+      "jsDoc": "/**\n * A custom element similar to the HTML5 `<progress>` element.\n *\n * @element progress-bar\n */",
       "attributes": [
         {
           "name": "value",
