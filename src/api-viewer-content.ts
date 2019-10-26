@@ -80,6 +80,7 @@ export class ApiViewerContent extends LitElement {
                 .name="${name}"
                 .props="${properties}"
                 .slots="${slots}"
+                .events="${events}"
               ></api-viewer-demo>
             `
       )}

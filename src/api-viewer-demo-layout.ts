@@ -6,8 +6,18 @@ import {
   property,
   PropertyValues
 } from 'lit-element';
-import { PropertyInfo, SlotInfo, KnobValues } from './lib/types.js';
-import { EMPTY_PROP_INFO, EMPTY_SLOT_INFO } from './lib/constants.js';
+import {
+  ComponentWithProps,
+  PropertyInfo,
+  SlotInfo,
+  EventInfo,
+  KnobValues
+} from './lib/types.js';
+import {
+  EMPTY_PROP_INFO,
+  EMPTY_SLOT_INFO,
+  EMPTY_EVT_INFO
+} from './lib/constants.js';
 import { getSlotTitle } from './lib/utils.js';
 import './api-viewer-demo-renderer.js';
 import './api-viewer-demo-knobs.js';
@@ -22,6 +32,9 @@ export class ApiViewerDemoLayout extends LitElement {
 
   @property({ attribute: false, hasChanged: () => true })
   slots: SlotInfo[] = EMPTY_SLOT_INFO;
+
+  @property({ attribute: false, hasChanged: () => true })
+  events: EventInfo[] = EMPTY_EVT_INFO;
 
   @property({ attribute: false, hasChanged: () => true })
   protected processedSlots: SlotInfo[] = EMPTY_SLOT_INFO;
@@ -100,6 +113,34 @@ export class ApiViewerDemoLayout extends LitElement {
         result.value = component[name];
       }
       return result;
+    });
+
+    this.events.forEach(event => {
+      const { name } = event;
+      const s = '-changed';
+      if (name.endsWith(s) && props.some(prop => name === `${prop.name}${s}`)) {
+        this._listenKnob(component, name, name.replace(s, ''));
+      }
+    });
+  }
+
+  private _listenKnob(component: Element, event: string, name: string) {
+    component.addEventListener(event, () => {
+      const { props } = this;
+      const { type } = props.find(p => p.name === name) as PropertyInfo;
+      const value = ((component as unknown) as ComponentWithProps)[name];
+
+      // update knobs to avoid duplicate event
+      this.knobs = Object.assign(this.knobs, { [name]: { type, value } });
+
+      this.props = props.map(prop => {
+        return prop.name === name
+          ? {
+              ...prop,
+              value
+            }
+          : prop;
+      });
     });
   }
 }
