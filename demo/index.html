@@ -8,6 +8,21 @@
   <!-- Uncomment to run demo in Edge
   <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
   -->
+  <style>
+    body {
+      margin: 0;
+    }
+
+    api-viewer {
+      margin: 1rem auto 0;
+    }
+
+    @media(max-width: 799px) {
+      api-viewer {
+        margin: 0;
+      }
+    }
+  </style>
 </head>
 <body>
   <api-viewer src="./custom-elements.json"></api-viewer>
