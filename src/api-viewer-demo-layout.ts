@@ -13,11 +13,6 @@ import {
   EventInfo,
   KnobValues
 } from './lib/types.js';
-import {
-  EMPTY_PROP_INFO,
-  EMPTY_SLOT_INFO,
-  EMPTY_EVT_INFO
-} from './lib/constants.js';
 import { getSlotTitle } from './lib/utils.js';
 import './api-viewer-demo-renderer.js';
 import './api-viewer-demo-knobs.js';
@@ -28,16 +23,16 @@ export class ApiViewerDemoLayout extends LitElement {
   @property({ type: String }) tag = '';
 
   @property({ attribute: false, hasChanged: () => true })
-  props: PropertyInfo[] = EMPTY_PROP_INFO;
+  props: PropertyInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
-  slots: SlotInfo[] = EMPTY_SLOT_INFO;
+  slots: SlotInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
-  events: EventInfo[] = EMPTY_EVT_INFO;
+  events: EventInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
-  protected processedSlots: SlotInfo[] = EMPTY_SLOT_INFO;
+  protected processedSlots: SlotInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
   knobs: KnobValues = {};

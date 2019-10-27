@@ -9,7 +9,6 @@ import {
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import 'prismjs';
 import { KnobValues, KnobValue, SlotInfo } from './lib/types.js';
-import { EMPTY_SLOT_INFO } from './lib/constants.js';
 import prismTheme from './lib/prism-theme.js';
 
 const { highlight, languages } = window.Prism;
@@ -66,7 +65,7 @@ export class ApiViewerDemoSnippet extends LitElement {
   knobs: KnobValues = {};
 
   @property({ attribute: false, hasChanged: () => true })
-  slots: SlotInfo[] = EMPTY_SLOT_INFO;
+  slots: SlotInfo[] = [];
 
   static get styles() {
     return [

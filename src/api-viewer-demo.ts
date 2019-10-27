@@ -8,11 +8,6 @@ import {
 } from 'lit-element';
 import { until } from 'lit-html/directives/until.js';
 import { PropertyInfo, SlotInfo, EventInfo } from './lib/types.js';
-import {
-  EMPTY_PROP_INFO,
-  EMPTY_SLOT_INFO,
-  EMPTY_EVT_INFO
-} from './lib/constants.js';
 
 import './api-viewer-demo-layout.js';
 
@@ -21,13 +16,13 @@ export class ApiViewerDemo extends LitElement {
   @property({ type: String }) name = '';
 
   @property({ attribute: false, hasChanged: () => true })
-  props: PropertyInfo[] = EMPTY_PROP_INFO;
+  props: PropertyInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
-  slots: SlotInfo[] = EMPTY_SLOT_INFO;
+  slots: SlotInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
-  events: EventInfo[] = EMPTY_EVT_INFO;
+  events: EventInfo[] = [];
 
   private whenDefined: Promise<unknown> = Promise.resolve();
 

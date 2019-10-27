@@ -1,8 +1,7 @@
 import { ElementInfo, ElementSetInfo } from './types.js';
-import { EMPTY_ELEMENTS } from './constants.js';
 
 export const fetchJson = async (src: string): Promise<ElementInfo[]> => {
-  let result = EMPTY_ELEMENTS;
+  let result: ElementInfo[] = [];
   try {
     const file = await fetch(src);
     const json = (await file.json()) as ElementSetInfo;

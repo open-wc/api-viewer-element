@@ -7,7 +7,6 @@ import {
   TemplateResult
 } from 'lit-element';
 import { PropertyInfo, SlotInfo } from './lib/types.js';
-import { EMPTY_PROP_INFO, EMPTY_SLOT_INFO } from './lib/constants.js';
 import { getSlotTitle } from './lib/utils.js';
 
 const getInputType = (type: string) => {
@@ -96,10 +95,10 @@ const renderSlotKnobs = (slots: SlotInfo[]): TemplateResult => {
 @customElement('api-viewer-demo-knobs')
 export class ApiViewerDemoKnobs extends LitElement {
   @property({ attribute: false, hasChanged: () => true })
-  props: PropertyInfo[] = EMPTY_PROP_INFO;
+  props: PropertyInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
-  slots: SlotInfo[] = EMPTY_SLOT_INFO;
+  slots: SlotInfo[] = [];
 
   static get styles() {
     return css`

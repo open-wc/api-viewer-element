@@ -13,12 +13,6 @@ import {
   AttributeInfo,
   EventInfo
 } from './lib/types.js';
-import {
-  EMPTY_ATTR_INFO,
-  EMPTY_EVT_INFO,
-  EMPTY_PROP_INFO,
-  EMPTY_SLOT_INFO
-} from './lib/constants.js';
 
 import './api-viewer-item.js';
 import './api-viewer-panel.js';
@@ -143,16 +137,16 @@ export class ApiViewerDocs extends LitElement {
   @property({ type: String }) name = '';
 
   @property({ attribute: false, hasChanged: () => true })
-  props: PropertyInfo[] = EMPTY_PROP_INFO;
+  props: PropertyInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
-  attrs: AttributeInfo[] = EMPTY_ATTR_INFO;
+  attrs: AttributeInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
-  slots: SlotInfo[] = EMPTY_SLOT_INFO;
+  slots: SlotInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
-  events: EventInfo[] = EMPTY_EVT_INFO;
+  events: EventInfo[] = [];
 
   static get styles() {
     return css`

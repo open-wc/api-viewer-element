@@ -1,7 +1,7 @@
 import { LitElement, html, customElement, css, property } from 'lit-element';
 import { cache } from 'lit-html/directives/cache.js';
 import { ElementInfo } from './lib/types.js';
-import { EMPTY_ELEMENTS, EMPTY_ELEMENT } from './lib/constants.js';
+import { EMPTY_ELEMENT } from './lib/constants.js';
 import './api-viewer-docs.js';
 import './api-viewer-demo.js';
 import './api-viewer-header.js';
@@ -11,7 +11,7 @@ import './api-viewer-toggle.js';
 
 @customElement('api-viewer-content')
 export class ApiViewerContent extends LitElement {
-  @property({ attribute: false }) elements: ElementInfo[] = EMPTY_ELEMENTS;
+  @property({ attribute: false }) elements: ElementInfo[] = [];
 
   @property({ type: Number }) selected = 0;
 

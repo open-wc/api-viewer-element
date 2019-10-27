@@ -9,14 +9,13 @@ import {
 import { until } from 'lit-html/directives/until.js';
 import { fetchJson } from './lib/fetch-json.js';
 import { ElementInfo } from './lib/types.js';
-import { EMPTY_ELEMENTS } from './lib/constants.js';
 import './api-viewer-content.js';
 
 @customElement('api-viewer')
 export class ApiViewer extends LitElement {
   @property({ type: String }) src?: string;
 
-  private jsonFetched: Promise<ElementInfo[]> = Promise.resolve(EMPTY_ELEMENTS);
+  private jsonFetched: Promise<ElementInfo[]> = Promise.resolve([]);
 
   private lastSrc?: string;
 
