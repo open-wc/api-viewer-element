@@ -126,6 +126,16 @@ export class ApiViewerDemoKnobs extends LitElement {
         font-weight: bold;
         margin: 0 0 0.25rem;
       }
+
+      @media (max-width: 480px) {
+        .columns {
+          flex-direction: column;
+        }
+
+        section:not(:last-child) {
+          margin-bottom: 1rem;
+        }
+      }
     `;
   }
 
