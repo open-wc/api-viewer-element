@@ -59,6 +59,7 @@ export class ApiViewerDemoLayout extends LitElement {
         .slots="${this.processedSlots}"
       ></api-viewer-demo-snippet>
       <api-viewer-demo-knobs
+        .tag="${this.tag}"
         .props="${this.props}"
         .slots="${this.processedSlots}"
         @prop-changed="${this._onPropChanged}"

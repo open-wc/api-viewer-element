@@ -9,6 +9,7 @@ import {
 import { until } from 'lit-html/directives/until.js';
 import { fetchJson } from './lib/fetch-json.js';
 import { ElementInfo } from './lib/types.js';
+import { queryTemplates } from './lib/utils.js';
 import './api-viewer-content.js';
 
 @customElement('api-viewer')
@@ -68,6 +69,10 @@ export class ApiViewer extends LitElement {
     return html`
       ${until(this.renderDocs(this.jsonFetched))}
     `;
+  }
+
+  protected firstUpdated() {
+    queryTemplates(this);
   }
 }
 

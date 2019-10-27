@@ -61,6 +61,39 @@
       ]
     },
     {
+      "name": "fancy-accordion",
+      "description": "A custom element wrapping several `<expansion-panel>` elements.",
+      "jsDoc": "/**\n * A custom element wrapping several `<expansion-panel>` elements.\n *\n * @element fancy-accordion\n *\n * @slot - Slot fot panel elements.\n *\n * @fires opened-changed - Event fired when expanding / collapsing\n */",
+      "attributes": [
+        {
+          "name": "opened",
+          "description": "The index of the currently opened panel.",
+          "jsDoc": "/**\n   * The index of the currently opened panel.\n   */",
+          "type": "number | undefined"
+        }
+      ],
+      "properties": [
+        {
+          "name": "opened",
+          "description": "The index of the currently opened panel.",
+          "jsDoc": "/**\n   * The index of the currently opened panel.\n   */",
+          "type": "number | undefined"
+        }
+      ],
+      "events": [
+        {
+          "name": "opened-changed",
+          "description": "Event fired when expanding / collapsing"
+        }
+      ],
+      "slots": [
+        {
+          "name": "",
+          "description": "Slot fot panel elements."
+        }
+      ]
+    },
+    {
       "name": "progress-bar",
       "description": "A custom element similar to the HTML5 `<progress>` element.",
       "jsDoc": "/**\n * A custom element similar to the HTML5 `<progress>` element.\n *\n * @element progress-bar\n */",

@@ -7,10 +7,10 @@ import {
   TemplateResult
 } from 'lit-element';
 import { PropertyInfo, SlotInfo } from './lib/types.js';
-import { getSlotTitle } from './lib/utils.js';
+import { getSlotTitle, hasTemplate } from './lib/utils.js';
 
 const getInputType = (type: string) => {
-  switch (type) {
+  switch (type.replace(' | undefined', '')) {
     case 'boolean':
       return 'checkbox';
     case 'number':
@@ -94,6 +94,8 @@ const renderSlotKnobs = (slots: SlotInfo[]): TemplateResult => {
 
 @customElement('api-viewer-demo-knobs')
 export class ApiViewerDemoKnobs extends LitElement {
+  @property({ type: String }) tag = '';
+
   @property({ attribute: false, hasChanged: () => true })
   props: PropertyInfo[] = [];
 
@@ -146,7 +148,7 @@ export class ApiViewerDemoKnobs extends LitElement {
           <h3>Properties</h3>
           ${renderPropKnobs(this.props)}
         </section>
-        <section ?hidden="${this.slots.length === 0}">
+        <section ?hidden="${hasTemplate(this.tag) || this.slots.length === 0}">
           <h3>Slots</h3>
           ${renderSlotKnobs(this.slots)}
         </section>

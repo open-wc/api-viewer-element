@@ -9,15 +9,33 @@ import {
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import 'prismjs';
 import { KnobValues, KnobValue, SlotInfo } from './lib/types.js';
+import { getTemplate } from './lib/utils.js';
 import prismTheme from './lib/prism-theme.js';
 
 const { highlight, languages } = window.Prism;
+
+const INDENT = '  ';
 
 declare global {
   interface Window {
     Prism: typeof import('prismjs');
   }
 }
+
+const unindent = (text: string) => {
+  if (!text) return text;
+  const lines = text.replace(/\t/g, INDENT).split('\n');
+  const indent = lines.reduce((prev: number | null, line: string) => {
+    if (/^\s*$/.test(line)) return prev; // Completely ignore blank lines.
+
+    const match = line.match(/^(\s*)/);
+    const lineIndent = match && match[0].length;
+    if (prev === null) return lineIndent;
+    return (lineIndent as number) < prev ? lineIndent : prev;
+  }, null);
+
+  return lines.map(l => INDENT + l.substr(indent as number)).join('\n');
+};
 
 const renderSnippet = (
   tag: string,
@@ -32,18 +50,24 @@ const renderSnippet = (
         markup += knob.value ? ` ${key}` : '';
         break;
       default:
-        markup += ` ${key}="${knob.value}"`;
+        // eslint-disable-next-line eqeqeq
+        markup += knob.value != undefined ? ` ${key}="${knob.value}"` : '';
         break;
     }
   });
 
   markup += `>`;
 
-  if (slots.length) {
+  const template = getTemplate(tag);
+  if (template instanceof HTMLTemplateElement) {
+    const tpl = template.innerHTML.replace(/\s+$/, '').replace(/(="")/g, '');
+    markup += unindent(tpl);
+    markup += `\n`;
+  } else if (slots.length) {
     slots.forEach(slot => {
       const { name, content } = slot;
       const div = name ? `<div slot="${name}">` : '<div>';
-      markup += `\n\t${div}${content}</div>`;
+      markup += `\n${INDENT}${div}${content}</div>`;
     });
     markup += `\n`;
   }

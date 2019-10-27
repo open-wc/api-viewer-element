@@ -25,9 +25,25 @@
   </style>
 </head>
 <body>
-  <api-viewer src="./custom-elements.json"></api-viewer>
+  <api-viewer src="./custom-elements.json">
+    <template data-element="fancy-accordion">
+      <expansion-panel>
+        <div slot="header">Panel 1</div>
+        <div>Content 1</div>
+      </expansion-panel>
+      <expansion-panel disabled>
+        <div slot="header">Panel 2</div>
+        <div>Content 2</div>
+      </expansion-panel>
+      <expansion-panel>
+        <div slot="header">Panel 3</div>
+        <div>Content 3</div>
+      </expansion-panel>
+    </template>
+  </api-viewer>
 
   <script type="module" src="../lib/fixtures/expansion-panel.js"></script>
+  <script type="module" src="../lib/fixtures/fancy-accordion.js"></script>
   <script type="module" src="../lib/fixtures/progress-bar.js"></script>
   <script type="module" src="../lib/api-viewer.js"></script>
 </body>

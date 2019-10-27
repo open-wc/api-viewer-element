@@ -5,6 +5,7 @@ import {
   KnobValue,
   SlotValue
 } from './types.js';
+import { getTemplate, hasTemplate } from './utils.js';
 
 const caches = new WeakMap();
 
@@ -52,6 +53,12 @@ export const renderer = directive(
       part.setValue(component);
       part.commit();
 
+      const template = getTemplate(tag);
+      if (template instanceof HTMLTemplateElement) {
+        const clone = document.importNode(template.content, true);
+        component.appendChild(clone);
+      }
+
       caches.set(part, component);
 
       const instance = part.value as Element;
@@ -72,7 +79,7 @@ export const renderer = directive(
 
     applyKnobs(component, knobs);
 
-    if (slots.length) {
+    if (!hasTemplate(tag) && slots.length) {
       applySlots(component, slots);
     }
   }
