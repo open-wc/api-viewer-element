@@ -17,6 +17,8 @@ import { styleMap } from 'lit-html/directives/style-map.js';
  * @slot - Slot fot panel content
  * @slot header - Slot for panel header
  *
+ * @attr {Boolean} focused - State attribute set when element has focus.
+ *
  * @fires opened-changed - Event fired when expanding / collapsing
  */
 @customElement('expansion-panel')
@@ -34,10 +36,13 @@ export class ExpansionPanel extends LitElement {
   @query('[part="header"]')
   protected header?: HTMLDivElement;
 
+  protected _isShiftTabbing = false;
+
   static get styles() {
     return css`
       :host {
         display: block;
+        outline: none;
         box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
           0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
       }
@@ -81,8 +86,8 @@ export class ExpansionPanel extends LitElement {
         overflow: visible;
       }
 
-      :host([focus-ring]) [part='header'] {
-        background: rgba(0, 0, 0, 0.54);
+      :host([focused]) [part='header'] {
+        background: rgba(0, 0, 0, 0.08);
       }
 
       [part='header'] ::slotted(*) {
@@ -152,6 +157,7 @@ export class ExpansionPanel extends LitElement {
           @click="${this._onToggleClick}"
           @keydown="${this._onToggleKeyDown}"
           aria-expanded="${this.opened ? 'true' : 'false'}"
+          tabindex="0"
         >
           <span part="toggle"></span>
           <slot name="header"></slot>
@@ -173,6 +179,38 @@ export class ExpansionPanel extends LitElement {
     }
   }
 
+  protected firstUpdated() {
+    this.setAttribute('tabindex', '0');
+    this.addEventListener('focusin', e => {
+      if (e.composedPath()[0] === this) {
+        if (this._isShiftTabbing) {
+          return;
+        }
+        this._setFocused(true);
+        this.focus();
+      } else if (
+        this.header &&
+        e.composedPath().indexOf(this.header) !== -1 &&
+        !this.disabled
+      ) {
+        this._setFocused(true);
+      }
+    });
+
+    this.addEventListener('focusout', () => this._setFocused(false));
+
+    this.addEventListener('keydown', e => {
+      if (e.shiftKey && e.keyCode === 9) {
+        this._isShiftTabbing = true;
+        HTMLElement.prototype.focus.apply(this);
+        this._setFocused(false);
+        setTimeout(() => {
+          this._isShiftTabbing = false;
+        }, 0);
+      }
+    });
+  }
+
   protected updated(props: PropertyValues) {
     super.updated(props);
 
@@ -182,6 +220,24 @@ export class ExpansionPanel extends LitElement {
           detail: { value: this.opened }
         })
       );
+    }
+
+    if (props.has('disabled') && this.header) {
+      if (this.disabled) {
+        this.removeAttribute('tabindex');
+        this.header.setAttribute('tabindex', '-1');
+      } else if (props.get('disabled')) {
+        this.setAttribute('tabindex', '0');
+        this.header.setAttribute('tabindex', '0');
+      }
+    }
+  }
+
+  private _setFocused(focused: boolean) {
+    if (focused) {
+      this.setAttribute('focused', '');
+    } else {
+      this.removeAttribute('focused');
     }
   }
 
