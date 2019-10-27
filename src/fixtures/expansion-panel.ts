@@ -18,6 +18,7 @@ import { styleMap } from 'lit-html/directives/style-map.js';
  * @slot header - Slot for panel header
  *
  * @attr {Boolean} focused - State attribute set when element has focus.
+ * @attr {Boolean} focus-ring - State attribute set when focused from keyboard.
  *
  * @fires opened-changed - Event fired when expanding / collapsing
  */
@@ -37,6 +38,12 @@ export class ExpansionPanel extends LitElement {
   protected header?: HTMLDivElement;
 
   protected _isShiftTabbing = false;
+
+  protected _tabPressed = false;
+
+  private _boundBodyKeydown = this._onBodyKeydown.bind(this);
+
+  private _boundBodyKeyup = this._onBodyKeyup.bind(this);
 
   static get styles() {
     return css`
@@ -86,7 +93,7 @@ export class ExpansionPanel extends LitElement {
         overflow: visible;
       }
 
-      :host([focused]) [part='header'] {
+      :host([focus-ring]) [part='header'] {
         background: rgba(0, 0, 0, 0.08);
       }
 
@@ -173,6 +180,20 @@ export class ExpansionPanel extends LitElement {
     `;
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+
+    document.body.addEventListener('keydown', this._boundBodyKeydown, true);
+    document.body.addEventListener('keyup', this._boundBodyKeyup, true);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+
+    document.body.removeEventListener('keydown', this._boundBodyKeydown, true);
+    document.body.removeEventListener('keyup', this._boundBodyKeyup, true);
+  }
+
   focus() {
     if (this.header) {
       this.header.focus();
@@ -239,6 +260,12 @@ export class ExpansionPanel extends LitElement {
     } else {
       this.removeAttribute('focused');
     }
+
+    if (focused && this._tabPressed) {
+      this.setAttribute('focus-ring', '');
+    } else {
+      this.removeAttribute('focus-ring');
+    }
   }
 
   private _onToggleClick() {
@@ -250,6 +277,14 @@ export class ExpansionPanel extends LitElement {
       e.preventDefault();
       this.opened = !this.opened;
     }
+  }
+
+  private _onBodyKeydown(e: KeyboardEvent) {
+    this._tabPressed = e.keyCode === 9;
+  }
+
+  private _onBodyKeyup() {
+    this._tabPressed = false;
   }
 }
 
