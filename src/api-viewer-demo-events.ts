@@ -45,7 +45,7 @@ export class ApiViewerDemoEvents extends LitElement {
         :host {
           display: block;
           position: relative;
-          padding: 0 1.5rem;
+          padding: 0 1rem;
           min-height: 50px;
           max-height: 200px;
           overflow: auto;
@@ -59,11 +59,11 @@ export class ApiViewerDemoEvents extends LitElement {
         }
 
         p:first-of-type {
-          margin-top: 1.5rem;
+          margin-top: 1rem;
         }
 
         p:last-of-type {
-          margin-bottom: 1.5rem;
+          margin-bottom: 1rem;
         }
       `
     ];

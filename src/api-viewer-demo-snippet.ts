@@ -102,7 +102,7 @@ export class ApiViewerDemoSnippet extends LitElement {
         :host {
           display: block;
           position: relative;
-          padding: 1.5rem;
+          padding: 1rem;
         }
 
         pre {
