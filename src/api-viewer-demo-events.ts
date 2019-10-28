@@ -1,4 +1,12 @@
-import { LitElement, html, customElement, css, property } from 'lit-element';
+import {
+  LitElement,
+  html,
+  customElement,
+  css,
+  property,
+  TemplateResult
+} from 'lit-element';
+import { cache } from 'lit-html/directives/cache.js';
 
 interface EventDetail {
   value: string | number | boolean | null | undefined;
@@ -12,6 +20,18 @@ const renderDetail = (detail: EventDetail): string => {
   return JSON.stringify(detail).replace('"undefined"', 'undefined');
 };
 
+const renderEvents = (log: CustomEvent[]): TemplateResult => {
+  return html`
+    ${log.map(e => {
+      return html`
+        <p>
+          event: "${e.type}". detail: ${renderDetail(e.detail)}
+        </p>
+      `;
+    })}
+  `;
+};
+
 @customElement('api-viewer-demo-events')
 export class ApiViewerDemoEvents extends LitElement {
   @property({ attribute: false, hasChanged: () => true })
@@ -23,22 +43,23 @@ export class ApiViewerDemoEvents extends LitElement {
         display: block;
         position: relative;
         padding: 0 1.5rem;
+        min-height: 50px;
         max-height: 200px;
         overflow: auto;
       }
 
-      .event {
+      p {
         margin: 0 0 0.25rem;
         font-family: var(--ave-monospace-font);
         font-size: 0.875rem;
         line-height: 1.5;
       }
 
-      .event:first-of-type {
+      p:first-of-type {
         margin-top: 1.5rem;
       }
 
-      .event:last-of-type {
+      p:last-of-type {
         margin-bottom: 1.5rem;
       }
 
@@ -62,15 +83,18 @@ export class ApiViewerDemoEvents extends LitElement {
   }
 
   protected render() {
+    const { log } = this;
     return html`
-      <button @click="${this._onClearClick}">Clear</button>
-      ${this.log.map(e => {
-        return html`
-          <p class="event">
-            event: "${e.type}". detail: ${renderDetail(e.detail)}
-          </p>
-        `;
-      })}
+      <button @click="${this._onClearClick}" ?hidden="${!log.length}">
+        Clear
+      </button>
+      ${cache(
+        log.length
+          ? renderEvents(log)
+          : html`
+              <p>Interact with component to see the event log.</p>
+            `
+      )}
     `;
   }
 
