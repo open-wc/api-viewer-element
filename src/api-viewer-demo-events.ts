@@ -7,6 +7,7 @@ import {
   TemplateResult
 } from 'lit-element';
 import { cache } from 'lit-html/directives/cache.js';
+import buttonStyle from './lib/button-style.js';
 
 interface EventDetail {
   value: string | number | boolean | null | undefined;
@@ -38,48 +39,34 @@ export class ApiViewerDemoEvents extends LitElement {
   log: CustomEvent[] = [];
 
   static get styles() {
-    return css`
-      :host {
-        display: block;
-        position: relative;
-        padding: 0 1.5rem;
-        min-height: 50px;
-        max-height: 200px;
-        overflow: auto;
-      }
+    return [
+      buttonStyle,
+      css`
+        :host {
+          display: block;
+          position: relative;
+          padding: 0 1.5rem;
+          min-height: 50px;
+          max-height: 200px;
+          overflow: auto;
+        }
 
-      p {
-        margin: 0 0 0.25rem;
-        font-family: var(--ave-monospace-font);
-        font-size: 0.875rem;
-        line-height: 1.5;
-      }
+        p {
+          margin: 0 0 0.25rem;
+          font-family: var(--ave-monospace-font);
+          font-size: 0.875rem;
+          line-height: 1.5;
+        }
 
-      p:first-of-type {
-        margin-top: 1.5rem;
-      }
+        p:first-of-type {
+          margin-top: 1.5rem;
+        }
 
-      p:last-of-type {
-        margin-bottom: 1.5rem;
-      }
-
-      button {
-        position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
-        text-transform: uppercase;
-        border: none;
-        border-radius: 0.25em;
-        cursor: pointer;
-        background: rgba(0, 0, 0, 0.3);
-        color: #fff;
-      }
-
-      button:focus,
-      button:hover {
-        background: rgba(0, 0, 0, 0.6);
-      }
-    `;
+        p:last-of-type {
+          margin-bottom: 1.5rem;
+        }
+      `
+    ];
   }
 
   protected render() {
