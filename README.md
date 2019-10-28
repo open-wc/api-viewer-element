@@ -77,10 +77,9 @@ Import the components documented in JSON file to enable demos:
 
 ### Knobs
 
-The playground listens to `[property]-changed` events on the rendered component
-to keep knobs in sync with the property values changed by the user.
-
-If you need to sync knobs, make sure to dispatch these events and document them:
+The playground listens to all the events dispatched by the rendered component. This can be used to
+sync knobs with the property changes caused by the user interactions. In order to make it work,
+dispatch and document `[property]-changed` events:
 
 ```js
 /**
