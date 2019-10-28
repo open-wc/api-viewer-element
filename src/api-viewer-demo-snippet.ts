@@ -97,10 +97,6 @@ export class ApiViewerDemoSnippet extends LitElement {
       css`
         :host {
           display: block;
-          padding: 1.5rem;
-          background: #fafafa;
-          border-top: solid 1px var(--ave-border-color);
-          border-bottom: solid 1px var(--ave-border-color);
         }
 
         pre {

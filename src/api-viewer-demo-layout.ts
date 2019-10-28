@@ -17,6 +17,9 @@ import { getSlotTitle } from './lib/utils.js';
 import './api-viewer-demo-renderer.js';
 import './api-viewer-demo-knobs.js';
 import './api-viewer-demo-snippet.js';
+import './api-viewer-panel.js';
+import './api-viewer-tab.js';
+import './api-viewer-tabs.js';
 
 @customElement('api-viewer-demo-layout')
 export class ApiViewerDemoLayout extends LitElement {
@@ -42,6 +45,16 @@ export class ApiViewerDemoLayout extends LitElement {
       :host {
         display: block;
       }
+
+      api-viewer-tabs {
+        border-top: solid 1px var(--ave-border-color);
+      }
+
+      api-viewer-panel {
+        box-sizing: border-box;
+        padding: 1.5rem;
+        background: #fafafa;
+      }
     `;
   }
 
@@ -53,18 +66,26 @@ export class ApiViewerDemoLayout extends LitElement {
         .slots="${this.processedSlots}"
         @rendered="${this._onRendered}"
       ></api-viewer-demo-renderer>
-      <api-viewer-demo-snippet
-        .tag="${this.tag}"
-        .knobs="${this.knobs}"
-        .slots="${this.processedSlots}"
-      ></api-viewer-demo-snippet>
-      <api-viewer-demo-knobs
-        .tag="${this.tag}"
-        .props="${this.props}"
-        .slots="${this.processedSlots}"
-        @prop-changed="${this._onPropChanged}"
-        @slot-changed="${this._onSlotChanged}"
-      ></api-viewer-demo-knobs>
+      <api-viewer-tabs>
+        <api-viewer-tab heading="Source" slot="tab"></api-viewer-tab>
+        <api-viewer-panel slot="panel">
+          <api-viewer-demo-snippet
+            .tag="${this.tag}"
+            .knobs="${this.knobs}"
+            .slots="${this.processedSlots}"
+          ></api-viewer-demo-snippet>
+        </api-viewer-panel>
+        <api-viewer-tab heading="Knobs" slot="tab"></api-viewer-tab>
+        <api-viewer-panel slot="panel">
+          <api-viewer-demo-knobs
+            .tag="${this.tag}"
+            .props="${this.props}"
+            .slots="${this.processedSlots}"
+            @prop-changed="${this._onPropChanged}"
+            @slot-changed="${this._onSlotChanged}"
+          ></api-viewer-demo-knobs>
+        </api-viewer-panel>
+      </api-viewer-tabs>
     `;
   }
 
