@@ -62,6 +62,8 @@ export class ApiViewerDemoLayout extends LitElement {
   }
 
   protected render() {
+    const noEvents = this.events.length === 0;
+
     return html`
       <api-viewer-demo-renderer
         .tag="${this.tag}"
@@ -88,9 +90,14 @@ export class ApiViewerDemoLayout extends LitElement {
             @slot-changed="${this._onSlotChanged}"
           ></api-viewer-demo-knobs>
         </api-viewer-panel>
-        <api-viewer-tab heading="Events" slot="tab"></api-viewer-tab>
+        <api-viewer-tab
+          heading="Events"
+          slot="tab"
+          ?hidden="${noEvents}"
+        ></api-viewer-tab>
         <api-viewer-panel slot="panel">
           <api-viewer-demo-events
+            ?hidden="${noEvents}"
             .log="${this.eventLog}"
             @clear="${this._onLogClear}"
           ></api-viewer-demo-events>
