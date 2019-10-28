@@ -17,6 +17,7 @@ import { getSlotTitle } from './lib/utils.js';
 import './api-viewer-demo-renderer.js';
 import './api-viewer-demo-knobs.js';
 import './api-viewer-demo-snippet.js';
+import './api-viewer-demo-events.js';
 import './api-viewer-panel.js';
 import './api-viewer-tab.js';
 import './api-viewer-tabs.js';
@@ -38,6 +39,9 @@ export class ApiViewerDemoLayout extends LitElement {
   protected processedSlots: SlotInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
+  protected eventLog: CustomEvent[] = [];
+
+  @property({ attribute: false, hasChanged: () => true })
   knobs: KnobValues = {};
 
   static get styles() {
@@ -52,7 +56,6 @@ export class ApiViewerDemoLayout extends LitElement {
 
       api-viewer-panel {
         box-sizing: border-box;
-        padding: 1.5rem;
         background: #fafafa;
       }
     `;
@@ -85,6 +88,13 @@ export class ApiViewerDemoLayout extends LitElement {
             @slot-changed="${this._onSlotChanged}"
           ></api-viewer-demo-knobs>
         </api-viewer-panel>
+        <api-viewer-tab heading="Events" slot="tab"></api-viewer-tab>
+        <api-viewer-panel slot="panel">
+          <api-viewer-demo-events
+            .log="${this.eventLog}"
+            @clear="${this._onLogClear}"
+          ></api-viewer-demo-events>
+        </api-viewer-panel>
       </api-viewer-tabs>
     `;
   }
@@ -100,6 +110,10 @@ export class ApiViewerDemoLayout extends LitElement {
         };
       });
     }
+  }
+
+  private _onLogClear() {
+    this.eventLog = [];
   }
 
   private _onPropChanged(e: CustomEvent) {
@@ -133,31 +147,38 @@ export class ApiViewerDemoLayout extends LitElement {
     });
 
     this.events.forEach(event => {
-      const { name } = event;
-      const s = '-changed';
-      if (name.endsWith(s) && props.some(prop => name === `${prop.name}${s}`)) {
-        this._listenKnob(component, name, name.replace(s, ''));
-      }
+      this._listen(component, event.name);
     });
   }
 
-  private _listenKnob(component: Element, event: string, name: string) {
-    component.addEventListener(event, () => {
-      const { props } = this;
-      const { type } = props.find(p => p.name === name) as PropertyInfo;
-      const value = ((component as unknown) as ComponentWithProps)[name];
+  private _listen(component: Element, event: string) {
+    component.addEventListener(event, ((e: CustomEvent) => {
+      const s = '-changed';
+      if (event.endsWith(s)) {
+        const name = event.replace(s, '');
+        const prop = this.props.find(p => p.name === name) as PropertyInfo;
+        if (prop) {
+          this._syncKnob(component, name, prop.type);
+        }
+      }
 
-      // update knobs to avoid duplicate event
-      this.knobs = Object.assign(this.knobs, { [name]: { type, value } });
+      this.eventLog.push(e);
+    }) as EventListener);
+  }
 
-      this.props = props.map(prop => {
-        return prop.name === name
-          ? {
-              ...prop,
-              value
-            }
-          : prop;
-      });
+  private _syncKnob(component: Element, name: string, type: string) {
+    const value = ((component as unknown) as ComponentWithProps)[name];
+
+    // update knobs to avoid duplicate event
+    this.knobs = Object.assign(this.knobs, { [name]: { type, value } });
+
+    this.props = this.props.map(prop => {
+      return prop.name === name
+        ? {
+            ...prop,
+            value
+          }
+        : prop;
     });
   }
 }

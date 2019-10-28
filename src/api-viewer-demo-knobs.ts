@@ -106,6 +106,7 @@ export class ApiViewerDemoKnobs extends LitElement {
     return css`
       :host {
         display: block;
+        padding: 1.5rem;
       }
 
       .columns {

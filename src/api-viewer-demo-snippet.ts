@@ -97,6 +97,7 @@ export class ApiViewerDemoSnippet extends LitElement {
       css`
         :host {
           display: block;
+          padding: 1.5rem;
         }
 
         pre {
