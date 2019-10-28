@@ -1,6 +1,6 @@
 # &lt;api-viewer&gt;
 
-API viewer for [web-component-analyzer](https://github.com/runem/web-component-analyzer) JSON output.
+API documentation and live playground for Web Components. Based on [web-component-analyzer](https://github.com/runem/web-component-analyzer) JSON format.
 
 ```html
 <api-viewer src="./custom-elements.json"></api-viewer>
@@ -9,6 +9,19 @@ API viewer for [web-component-analyzer](https://github.com/runem/web-component-a
 [Live Demo ↗](https://api-viewer-element.netlify.com/)
 
 [<img src="https://raw.githubusercontent.com/web-padawan/api-viewer-element/master/screenshot.png" alt="Screenshot of api-viewer element" width="800">](https://api-viewer-element.netlify.com/)
+
+## Features
+
+- API docs viewer
+  - Properties - JS properties publicly exposed by the component
+  - Attributes - HTML attributes (except those that match properties)
+  - Events - DOM events dispatched by the component
+  - Slots - default `<slot>` and / or named slots, if any
+- Live playground
+  - Source - code snippet matching the rendered component
+  - Knobs - change properties and slotted content dynamically
+  - Event log - output the events fired by the component
+  - Templates - configure complex slotted content
 
 ## Install
 
@@ -48,6 +61,58 @@ $ wca analyze my-element.js --outFile custom-elements.json --format json
 ```
 
 4. Use [es-dev-server](https://open-wc.org/developing/es-dev-server.html) to serve your HTML page.
+
+## Examples
+
+### Playground
+
+Import the components documented in JSON file to enable demos:
+
+```html
+<script type="module">
+  import 'my-element';
+</script>
+<api-viewer src="./custom-elements.json"></api-viewer>
+```
+
+### Knobs
+
+The playground listens to `[property]-changed` events on the rendered component
+to keep knobs in sync with the property values changed by the user.
+
+If you need to sync knobs, make sure to dispatch these events and document them:
+
+```js
+/**
+ * A custom element that fires event on value change.
+ *
+ * @element my-element
+ *
+ * @prop {String} value - Value of the component
+ * @fires value-changed - Event fired when value is changed
+ */
+```
+
+### Templates
+
+Use `<template data-element="my-element">` for configuring complex content:
+
+```html
+  <api-viewer src="./custom-elements.json">
+    <template data-element="fancy-accordion">
+      <expansion-panel>
+        <div slot="header">Panel 1</div>
+        <div>Content 1</div>
+      </expansion-panel>
+      <expansion-panel>
+        <div slot="header">Panel 2</div>
+        <div>Content 2</div>
+      </expansion-panel>
+    </template>
+  </api-viewer>
+```
+
+*Note*: do not minify HTML to keep proper indentation.
 
 ## Styling
 
