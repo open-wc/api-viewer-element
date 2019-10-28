@@ -94,6 +94,7 @@ export class ApiViewerDemoLayout extends LitElement {
           heading="Events"
           slot="tab"
           ?hidden="${noEvents}"
+          class="events"
         ></api-viewer-tab>
         <api-viewer-panel slot="panel">
           <api-viewer-demo-events
@@ -121,6 +122,10 @@ export class ApiViewerDemoLayout extends LitElement {
 
   private _onLogClear() {
     this.eventLog = [];
+    const tab = this.renderRoot.querySelector('.events') as HTMLElement;
+    if (tab) {
+      tab.focus();
+    }
   }
 
   private _onPropChanged(e: CustomEvent) {
