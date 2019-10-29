@@ -43,9 +43,13 @@ const applySlots = (component: Element, slots: SlotValue[]) => {
 
 const applyCssProps = (component: HTMLElement, cssProps: CSSPropertyInfo[]) => {
   cssProps.forEach(prop => {
-    const { value } = prop;
-    if (value && value !== prop.defaultValue) {
-      component.style.setProperty(prop.name, value);
+    const { name, value } = prop;
+    if (value) {
+      if (value === prop.defaultValue) {
+        component.style.removeProperty(name);
+      } else {
+        component.style.setProperty(name, value);
+      }
     }
   });
 };
