@@ -1,6 +1,0 @@
-{
-  "rules": {
-    "lit/no-property-change-update": "off",
-    "no-restricted-globals": "off"
-  }
-}
