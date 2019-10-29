@@ -115,18 +115,18 @@ button {
 Use `<template data-element="my-element">` for configuring complex content:
 
 ```html
-  <api-viewer src="./custom-elements.json">
-    <template data-element="fancy-accordion">
-      <expansion-panel>
-        <div slot="header">Panel 1</div>
-        <div>Content 1</div>
-      </expansion-panel>
-      <expansion-panel>
-        <div slot="header">Panel 2</div>
-        <div>Content 2</div>
-      </expansion-panel>
-    </template>
-  </api-viewer>
+<api-viewer src="./custom-elements.json">
+  <template data-element="fancy-accordion">
+    <expansion-panel>
+      <div slot="header">Panel 1</div>
+      <div>Content 1</div>
+    </expansion-panel>
+    <expansion-panel>
+      <div slot="header">Panel 2</div>
+      <div>Content 2</div>
+    </expansion-panel>
+  </template>
+</api-viewer>
 ```
 
 *Note*: do not minify HTML to keep proper indentation.
