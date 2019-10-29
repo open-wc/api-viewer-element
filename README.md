@@ -17,9 +17,11 @@ API documentation and live playground for Web Components. Based on [web-componen
   - Attributes - HTML attributes (except those that match properties)
   - Events - DOM events dispatched by the component
   - Slots - default `<slot>` and / or named slots, if any
+  - CSS Custom Properties - styling API of the component
 - Live playground
   - Source - code snippet matching the rendered component
   - Knobs - change properties and slotted content dynamically
+  - Styles - change values of the custom CSS properties
   - Event log - output the events fired by the component
   - Templates - configure complex slotted content
 
@@ -90,6 +92,22 @@ dispatch and document `[property]-changed` events:
  * @prop {String} value - Value of the component
  * @fires value-changed - Event fired when value is changed
  */
+```
+
+### Styles
+
+The playground collects the default values for the documented CSS custom properties on the
+rendered component using `getComputedStyle(element).getPropertyValue()`. In order to make it work,
+use the following CSS structure:
+
+```css
+:host {
+  --button-color: red;
+}
+
+button {
+  color: var(--button-color);
+}
 ```
 
 ### Templates
