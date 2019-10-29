@@ -80,8 +80,8 @@ Import the components documented in JSON file to enable demos:
 ### Knobs
 
 The playground listens to all the events dispatched by the rendered component. This can be used to
-sync knobs with the property changes caused by the user interactions. In order to make it work,
-dispatch and document `[property]-changed` events:
+sync knobs with the property changes caused by the user. In order to make it work, dispatch and
+document `[property]-changed` events:
 
 ```js
 /**
@@ -135,17 +135,20 @@ Use `<template data-element="my-element">` for configuring complex content:
 
 The following custom CSS properties are available:
 
-| Property               | Description                                   |
-|------------------------|-----------------------------------------------|
-| `--ave-accent-color`   | Accent color, used for property names         |
-| `--ave-border-color`   | Color used for borders and dividers           |
-| `--ave-border-radius`  | Border radius used for the outer border       |
-| `--ave-header-color`   | Header text color used for tag name           |
-| `--ave-item-color`     | API items content color (main text)           |
-| `--ave-label-color`    | API items labels color                        |
-| `--ave-monospace-font` | Monospace font stack for the API items        |
-| `--ave-primary-color`  | Primary color, used for header and active tab |
-| `--ave-tab-color`      | Inactive tabs color                           |
+| Property                         | Description                                     |
+| -------------------------------- | ----------------------------------------------- |
+| `--ave-accent-color`             | Accent color, used for property names           |
+| `--ave-border-color`             | Color used for borders and dividers             |
+| `--ave-border-radius`            | Border radius used for the outer border         |
+| `--ave-button-active-background` | Color of the `:focus` and `:hover` button       |
+| `--ave-button-background`        | Background of the button (code snippet, events) |
+| `--ave-button-color`             | Color of the button (code snippet, events)      |
+| `--ave-header-color`             | Header text color used for tag name             |
+| `--ave-item-color`               | API items content color (main text)             |
+| `--ave-label-color`              | API items labels color                          |
+| `--ave-monospace-font`           | Monospace font stack for the API items          |
+| `--ave-primary-color`            | Primary color, used for header and active tab   |
+| `--ave-tab-color`                | Inactive tabs color                             |
 
 ## Contributing
 
