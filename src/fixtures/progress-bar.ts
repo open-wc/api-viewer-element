@@ -27,6 +27,9 @@ const normalizeValue = (value: number, min: number, max: number) => {
  * A custom element similar to the HTML5 `<progress>` element.
  *
  * @element progress-bar
+ *
+ * @cssprop --progress-bar-fill-color - Color of the filled progress bar part.
+ * @cssprop --progress-bar-opacity - Opacity set on the underlying track.
  */
 @customElement('progress-bar')
 export class ProgressBar extends LitElement {
@@ -60,14 +63,17 @@ export class ProgressBar extends LitElement {
         margin: 8px 0;
         position: relative;
         overflow: hidden;
+
+        --progress-bar-fill-color: #6200ee;
+        --progress-bar-opacity: 0.16;
       }
 
       :host::before {
         content: '';
         display: block;
         height: 100%;
-        background-color: var(--material-primary-color, #6200ee);
-        opacity: 0.16;
+        background-color: var(--progress-bar-fill-color);
+        opacity: var(--progress-bar-opacity);
       }
 
       :host([hidden]) {
@@ -85,7 +91,7 @@ export class ProgressBar extends LitElement {
 
       [part='value'] {
         height: 100%;
-        background-color: var(--material-primary-color, #6200ee);
+        background-color: var(--progress-bar-fill-color);
       }
 
       :host([indeterminate]) [part='bar'] {

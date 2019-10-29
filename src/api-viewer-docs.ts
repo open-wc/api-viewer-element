@@ -11,7 +11,8 @@ import {
   PropertyInfo,
   SlotInfo,
   AttributeInfo,
-  EventInfo
+  EventInfo,
+  CSSPropertyInfo
 } from './lib/types.js';
 
 import './api-viewer-item.js';
@@ -132,6 +133,23 @@ const renderEvents = (events: EventInfo[]): TemplateResult => {
   );
 };
 
+const renderCssProps = (props: CSSPropertyInfo[]): TemplateResult => {
+  return renderTab(
+    'CSS Custom Properties',
+    props.length === 0,
+    html`
+      ${props.map(
+        prop => html`
+          <api-viewer-item
+            .name="${prop.name}"
+            .description="${prop.description}"
+          ></api-viewer-item>
+        `
+      )}
+    `
+  );
+};
+
 @customElement('api-viewer-docs')
 export class ApiViewerDocs extends LitElement {
   @property({ type: String }) name = '';
@@ -148,6 +166,9 @@ export class ApiViewerDocs extends LitElement {
   @property({ attribute: false, hasChanged: () => true })
   events: EventInfo[] = [];
 
+  @property({ attribute: false, hasChanged: () => true })
+  cssProps: CSSPropertyInfo[] = [];
+
   static get styles() {
     return css`
       :host {
@@ -157,11 +178,19 @@ export class ApiViewerDocs extends LitElement {
       api-viewer-item:not(:first-of-type) {
         border-top: solid 1px var(--ave-border-color);
       }
+
+      api-viewer-tab {
+        max-width: 150px;
+      }
+
+      api-viewer-tab[heading^='CSS'] {
+        font-size: 0.8125rem;
+      }
     `;
   }
 
   protected render() {
-    const { slots, props, attrs, events } = this;
+    const { slots, props, attrs, events, cssProps } = this;
 
     const attributes = processAttrs(attrs || [], props || []);
     const properties = processProps(props || [], attrs || []);
@@ -169,7 +198,7 @@ export class ApiViewerDocs extends LitElement {
     return html`
       <api-viewer-tabs>
         ${renderProperties(properties)}${renderAttributes(attributes)}
-        ${renderSlots(slots)}${renderEvents(events)}
+        ${renderSlots(slots)}${renderEvents(events)}${renderCssProps(cssProps)}
       </api-viewer-tabs>
     `;
   }

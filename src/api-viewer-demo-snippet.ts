@@ -8,7 +8,12 @@ import {
 } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import 'prismjs';
-import { KnobValues, KnobValue, SlotInfo } from './lib/types.js';
+import {
+  CSSPropertyInfo,
+  KnobValues,
+  KnobValue,
+  SlotInfo
+} from './lib/types.js';
 import { getTemplate } from './lib/utils.js';
 import buttonStyle from './lib/button-style.js';
 import prismTheme from './lib/prism-theme.js';
@@ -41,7 +46,8 @@ const unindent = (text: string) => {
 const renderSnippet = (
   tag: string,
   values: KnobValues,
-  slots: SlotInfo[]
+  slots: SlotInfo[],
+  cssProps: CSSPropertyInfo[]
 ): TemplateResult => {
   let markup = `<${tag}`;
   Object.keys(values).forEach((key: string) => {
@@ -75,6 +81,17 @@ const renderSnippet = (
 
   markup += `</${tag}>`;
 
+  const cssValues = cssProps.filter(p => p.value !== p.defaultValue);
+  if (cssValues.length) {
+    markup += `\n<style>\n${INDENT}${tag} {\n`;
+    cssValues.forEach(prop => {
+      if (prop.value) {
+        markup += `${INDENT}${INDENT}${prop.name}: ${prop.value};\n`;
+      }
+    });
+    markup += `${INDENT}}\n</style>`;
+  }
+
   const snippet = unsafeHTML(highlight(markup, languages.markup, 'html'));
 
   return html`
@@ -91,6 +108,9 @@ export class ApiViewerDemoSnippet extends LitElement {
 
   @property({ attribute: false, hasChanged: () => true })
   slots: SlotInfo[] = [];
+
+  @property({ attribute: false, hasChanged: () => true })
+  cssProps: CSSPropertyInfo[] = [];
 
   @property({ type: String }) protected btnText = 'copy';
 
@@ -115,7 +135,7 @@ export class ApiViewerDemoSnippet extends LitElement {
   protected render() {
     return html`
       <button @click="${this._onCopyClick}">${this.btnText}</button>
-      ${renderSnippet(this.tag, this.knobs, this.slots)}
+      ${renderSnippet(this.tag, this.knobs, this.slots, this.cssProps)}
     `;
   }
 

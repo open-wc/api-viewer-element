@@ -7,6 +7,7 @@ export interface ElementInfo extends Info {
   events: EventInfo[] | undefined;
   properties: PropertyInfo[] | undefined;
   slots: SlotInfo[] | undefined;
+  cssProperties: CSSPropertyInfo[] | undefined;
 }
 
 export interface SlotInfo {
@@ -44,6 +45,12 @@ export interface SlotValue {
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface EventInfo extends Info {}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface CSSPropertyInfo extends Info {
+  value?: string;
+  defaultValue?: string;
+}
 
 export type ComponentWithProps = {
   [s: string]: string | number | boolean | null;

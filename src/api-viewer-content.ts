@@ -45,8 +45,14 @@ export class ApiViewerContent extends LitElement {
       properties,
       attributes,
       slots,
-      events
+      events,
+      cssProperties
     } = element;
+
+    // TODO: analyzer should sort CSS custom properties
+    const cssProps = (cssProperties || []).sort((a, b) =>
+      a.name > b.name ? 1 : -1
+    );
 
     return html`
       <api-viewer-header .heading="${name}">
@@ -73,6 +79,7 @@ export class ApiViewerContent extends LitElement {
                 .attrs="${attributes}"
                 .events="${events}"
                 .slots="${slots}"
+                .cssProps="${cssProps}"
               ></api-viewer-docs>
             `
           : html`
@@ -81,6 +88,7 @@ export class ApiViewerContent extends LitElement {
                 .props="${properties}"
                 .slots="${slots}"
                 .events="${events}"
+                .cssProps="${cssProps}"
               ></api-viewer-demo>
             `
       )}

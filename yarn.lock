@@ -2362,7 +2362,7 @@ fast-glob@^2.2.6:
     merge2 "^1.2.3"
     micromatch "^3.1.10"
 
-fast-glob@^3.0.3:
+fast-glob@^3.0.3, fast-glob@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/fast-glob/-/fast-glob-3.1.0.tgz#77375a7e3e6f6fc9b18f061cddd28b8d1eec75ae"
   integrity sha512-TrUz3THiq2Vy3bjfQUB2wNyPdGBeGmdjbzzBLhfHN4YFurYptCKwGq/TfiRavbGywFRzY6U2CdmQ1zmsY5yYaw==
@@ -6071,7 +6071,15 @@ vscode-uri@^1.0.6:
   resolved "https://registry.yarnpkg.com/vscode-uri/-/vscode-uri-1.0.8.tgz#9769aaececae4026fb6e22359cb38946580ded59"
   integrity sha512-obtSWTlbJ+a+TFRYGaUumtVwb+InIUVI0Lu0VBUAPmj2cU5JutEXg3xUE0c2J5Tcy7h2DEKVJBFi+Y9ZSFzzPQ==
 
-web-component-analyzer@^0.1.17, web-component-analyzer@~0.1.17:
+"web-component-analyzer@https://github.com/runem/web-component-analyzer#00eee1db63837f6b50a12ccbbebe35101d83c2f7":
+  version "0.1.17"
+  resolved "https://github.com/runem/web-component-analyzer#00eee1db63837f6b50a12ccbbebe35101d83c2f7"
+  dependencies:
+    fast-glob "^3.1.0"
+    ts-simple-type "~0.3.6"
+    typescript "^3.6.4"
+
+web-component-analyzer@~0.1.17:
   version "0.1.17"
   resolved "https://registry.yarnpkg.com/web-component-analyzer/-/web-component-analyzer-0.1.17.tgz#1428894d0845de84a56fcfc2df90eacdc6a873d4"
   integrity sha512-U/GQZA7+DgG+vo9O/qnjXr2Rst/fO+5GQQ9ptzejLrVt/O46QFCHvJ9AHh8WSOouF3X+A1NYVVcJjJpD8SYOiw==

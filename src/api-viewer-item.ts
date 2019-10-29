@@ -37,6 +37,10 @@ export class ApiViewerItem extends LitElement {
         padding-right: 0.5rem;
       }
 
+      .col:only-child {
+        flex-basis: 100%;
+      }
+
       .col-type {
         flex-basis: 50%;
       }
@@ -64,8 +68,10 @@ export class ApiViewerItem extends LitElement {
   protected renderType(type?: string): TemplateResult {
     return type
       ? html`
-          <div class="label">Type</div>
-          <div class="value">${type}</div>
+          <div class="col col-type">
+            <div class="label">Type</div>
+            <div class="value">${type}</div>
+          </div>
         `
       : NOTHING;
   }
@@ -74,8 +80,10 @@ export class ApiViewerItem extends LitElement {
   protected renderAttr(attr?: string): TemplateResult {
     return attr
       ? html`
-          <div class="label">Attribute</div>
-          <div class="value">${attr}</div>
+          <div class="col">
+            <div class="label">Attribute</div>
+            <div class="value">${attr}</div>
+          </div>
         `
       : NOTHING;
   }
@@ -89,12 +97,7 @@ export class ApiViewerItem extends LitElement {
           <div class="label">Name</div>
           <div class="value value-name">${name}</div>
         </div>
-        <div class="col">
-          ${this.renderAttr(attribute)}
-        </div>
-        <div class="col col-type">
-          ${this.renderType(valueType)}
-        </div>
+        ${this.renderAttr(attribute)}${this.renderType(valueType)}
       </div>
       <div>
         <div class="label">Description</div>

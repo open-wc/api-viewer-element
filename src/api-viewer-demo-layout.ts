@@ -8,6 +8,7 @@ import {
 } from 'lit-element';
 import {
   ComponentWithProps,
+  CSSPropertyInfo,
   PropertyInfo,
   SlotInfo,
   EventInfo,
@@ -18,6 +19,7 @@ import './api-viewer-demo-renderer.js';
 import './api-viewer-demo-knobs.js';
 import './api-viewer-demo-snippet.js';
 import './api-viewer-demo-events.js';
+import './api-viewer-demo-css.js';
 import './api-viewer-panel.js';
 import './api-viewer-tab.js';
 import './api-viewer-tabs.js';
@@ -36,7 +38,13 @@ export class ApiViewerDemoLayout extends LitElement {
   events: EventInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
+  cssProps: CSSPropertyInfo[] = [];
+
+  @property({ attribute: false, hasChanged: () => true })
   protected processedSlots: SlotInfo[] = [];
+
+  @property({ attribute: false, hasChanged: () => true })
+  protected processedCss: CSSPropertyInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
   protected eventLog: CustomEvent[] = [];
@@ -63,12 +71,14 @@ export class ApiViewerDemoLayout extends LitElement {
 
   protected render() {
     const noEvents = this.events.length === 0;
+    const noCss = this.cssProps.length === 0;
 
     return html`
       <api-viewer-demo-renderer
         .tag="${this.tag}"
         .knobs="${this.knobs}"
         .slots="${this.processedSlots}"
+        .cssProps="${this.processedCss}"
         @rendered="${this._onRendered}"
       ></api-viewer-demo-renderer>
       <api-viewer-tabs>
@@ -78,6 +88,7 @@ export class ApiViewerDemoLayout extends LitElement {
             .tag="${this.tag}"
             .knobs="${this.knobs}"
             .slots="${this.processedSlots}"
+            .cssProps="${this.processedCss}"
           ></api-viewer-demo-snippet>
         </api-viewer-panel>
         <api-viewer-tab heading="Knobs" slot="tab"></api-viewer-tab>
@@ -89,6 +100,18 @@ export class ApiViewerDemoLayout extends LitElement {
             @prop-changed="${this._onPropChanged}"
             @slot-changed="${this._onSlotChanged}"
           ></api-viewer-demo-knobs>
+        </api-viewer-panel>
+        <api-viewer-tab
+          heading="Styles"
+          slot="tab"
+          ?hidden="${noCss}"
+        ></api-viewer-tab>
+        <api-viewer-panel slot="panel">
+          <api-viewer-demo-css
+            ?hidden="${noCss}"
+            .cssProps="${this.processedCss}"
+            @css-changed="${this._onCssChanged}"
+          ></api-viewer-demo-css>
         </api-viewer-panel>
         <api-viewer-tab
           heading="Events"
@@ -128,6 +151,18 @@ export class ApiViewerDemoLayout extends LitElement {
     }
   }
 
+  private _onCssChanged(e: CustomEvent) {
+    const { name, value } = e.detail;
+    this.processedCss = this.processedCss.map(prop => {
+      return prop.name === name
+        ? {
+            ...prop,
+            value
+          }
+        : prop;
+    });
+  }
+
   private _onPropChanged(e: CustomEvent) {
     const { name, type, value } = e.detail;
     this.knobs = Object.assign(this.knobs, { [name]: { type, value } });
@@ -161,6 +196,21 @@ export class ApiViewerDemoLayout extends LitElement {
     this.events.forEach(event => {
       this._listen(component, event.name);
     });
+
+    if (this.cssProps.length) {
+      const style = getComputedStyle(component);
+
+      this.processedCss = this.cssProps.map(cssProp => {
+        let value = style.getPropertyValue(cssProp.name);
+        const result = cssProp;
+        if (value) {
+          value = value.trim();
+          result.defaultValue = value;
+          result.value = value;
+        }
+        return result;
+      });
+    }
   }
 
   private _listen(component: Element, event: string) {

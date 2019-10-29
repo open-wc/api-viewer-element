@@ -6,5 +6,6 @@ export const EMPTY_ELEMENT: ElementInfo = {
   slots: [],
   attributes: [],
   properties: [],
-  events: []
+  events: [],
+  cssProperties: []
 };

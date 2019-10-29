@@ -1,6 +1,7 @@
 import { directive, Part, NodePart } from 'lit-html';
 import {
   ComponentWithProps,
+  CSSPropertyInfo,
   KnobValues,
   KnobValue,
   SlotValue
@@ -40,8 +41,22 @@ const applySlots = (component: Element, slots: SlotValue[]) => {
   });
 };
 
+const applyCssProps = (component: HTMLElement, cssProps: CSSPropertyInfo[]) => {
+  cssProps.forEach(prop => {
+    const { value } = prop;
+    if (value && value !== prop.defaultValue) {
+      component.style.setProperty(prop.name, value);
+    }
+  });
+};
+
 export const renderer = directive(
-  (tag: string, knobs: KnobValues, slots: SlotValue[]) => (part: Part) => {
+  (
+    tag: string,
+    knobs: KnobValues,
+    slots: SlotValue[],
+    cssProps: CSSPropertyInfo[]
+  ) => (part: Part) => {
     if (!(part instanceof NodePart)) {
       throw new Error('renderer can only be used in text bindings');
     }
@@ -81,6 +96,10 @@ export const renderer = directive(
 
     if (!hasTemplate(tag) && slots.length) {
       applySlots(component, slots);
+    }
+
+    if (cssProps.length) {
+      applyCssProps(component, cssProps);
     }
   }
 );

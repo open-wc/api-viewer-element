@@ -35,9 +35,11 @@ export class ApiViewerTabs extends LitElement {
         }
 
         .tabs {
+          flex-grow: 1;
           display: flex;
-          flex-wrap: nowrap;
-          overflow: auto;
+          align-self: stretch;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
         }
       }
     `;

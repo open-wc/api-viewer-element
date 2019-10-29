@@ -4,7 +4,7 @@
     {
       "name": "expansion-panel",
       "description": "A custom element similar to the HTML5 `<details>` element.",
-      "jsDoc": "/**\n * A custom element similar to the HTML5 `<details>` element.\n *\n * @element expansion-panel\n *\n * @slot - Slot fot panel content\n * @slot header - Slot for panel header\n *\n * @attr {Boolean} focused - State attribute set when element has focus.\n * @attr {Boolean} focus-ring - State attribute set when focused from keyboard.\n *\n * @fires opened-changed - Event fired when expanding / collapsing\n */",
+      "jsDoc": "/**\n * A custom element similar to the HTML5 `<details>` element.\n *\n * @element expansion-panel\n *\n * @slot - Slot fot panel content\n * @slot header - Slot for panel header\n *\n * @attr {Boolean} focused - State attribute set when element has focus.\n * @attr {Boolean} focus-ring - State attribute set when focused from keyboard.\n *\n * @cssprop --panel-header-background - Default panel header background color.\n * @cssprop --panel-header-min-height - Panel header minimum height.\n * @cssprop --panel-ripple-background - Active toggle button ripple background.\n *\n * @fires opened-changed - Event fired when expanding / collapsing\n */",
       "attributes": [
         {
           "name": "focused",
@@ -58,6 +58,20 @@
           "name": "",
           "description": "Slot fot panel content"
         }
+      ],
+      "cssProperties": [
+        {
+          "name": "--panel-ripple-background",
+          "description": "Active toggle button ripple background."
+        },
+        {
+          "name": "--panel-header-min-height",
+          "description": "Panel header minimum height."
+        },
+        {
+          "name": "--panel-header-background",
+          "description": "Default panel header background color."
+        }
       ]
     },
     {
@@ -91,12 +105,13 @@
           "name": "",
           "description": "Slot fot panel elements."
         }
-      ]
+      ],
+      "cssProperties": []
     },
     {
       "name": "progress-bar",
       "description": "A custom element similar to the HTML5 `<progress>` element.",
-      "jsDoc": "/**\n * A custom element similar to the HTML5 `<progress>` element.\n *\n * @element progress-bar\n */",
+      "jsDoc": "/**\n * A custom element similar to the HTML5 `<progress>` element.\n *\n * @element progress-bar\n *\n * @cssprop --progress-bar-fill-color - Color of the filled progress bar part.\n * @cssprop --progress-bar-opacity - Opacity set on the underlying track.\n */",
       "attributes": [
         {
           "name": "value",
@@ -150,7 +165,17 @@
         }
       ],
       "events": [],
-      "slots": []
+      "slots": [],
+      "cssProperties": [
+        {
+          "name": "--progress-bar-opacity",
+          "description": "Opacity set on the underlying track."
+        },
+        {
+          "name": "--progress-bar-fill-color",
+          "description": "Color of the filled progress bar part."
+        }
+      ]
     }
   ]
 }
