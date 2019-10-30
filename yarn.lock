@@ -6071,9 +6071,10 @@ vscode-uri@^1.0.6:
   resolved "https://registry.yarnpkg.com/vscode-uri/-/vscode-uri-1.0.8.tgz#9769aaececae4026fb6e22359cb38946580ded59"
   integrity sha512-obtSWTlbJ+a+TFRYGaUumtVwb+InIUVI0Lu0VBUAPmj2cU5JutEXg3xUE0c2J5Tcy7h2DEKVJBFi+Y9ZSFzzPQ==
 
-"web-component-analyzer@https://github.com/runem/web-component-analyzer#00eee1db63837f6b50a12ccbbebe35101d83c2f7":
-  version "0.1.17"
-  resolved "https://github.com/runem/web-component-analyzer#00eee1db63837f6b50a12ccbbebe35101d83c2f7"
+web-component-analyzer@^0.1.18:
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/web-component-analyzer/-/web-component-analyzer-0.1.18.tgz#0ea525ba50dd470303c82dc00379a252fe80503f"
+  integrity sha512-nqd13vUqLxCMO0qcnbZ4gVKHP0NMxz2AfUWKQI0c4xuBW334Sn/KrDrWDsDKZDUrpeKZq0y1DIlnEZjKpeiYMw==
   dependencies:
     fast-glob "^3.1.0"
     ts-simple-type "~0.3.6"
