@@ -8,7 +8,9 @@ API documentation and live playground for Web Components. Based on [web-componen
 
 [Live Demo ↗](https://api-viewer-element.netlify.com/)
 
-[<img src="https://raw.githubusercontent.com/web-padawan/api-viewer-element/master/screenshot.png" alt="Screenshot of api-viewer element" width="800">](https://api-viewer-element.netlify.com/)
+[<img src="https://raw.githubusercontent.com/web-padawan/api-viewer-element/master/screenshot-docs.png" alt="Screenshot of api-viewer docs" width="800">](https://api-viewer-element.netlify.com/)
+
+[<img src="https://raw.githubusercontent.com/web-padawan/api-viewer-element/master/screenshot-demo.png" alt="Screenshot of api-viewer demo" width="800">](https://api-viewer-element.netlify.com/)
 
 ## Features
 
