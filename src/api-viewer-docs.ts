@@ -11,14 +11,9 @@ import {
   PropertyInfo,
   SlotInfo,
   AttributeInfo,
-  EventInfo
+  EventInfo,
+  CSSPropertyInfo
 } from './lib/types.js';
-import {
-  EMPTY_ATTR_INFO,
-  EMPTY_EVT_INFO,
-  EMPTY_PROP_INFO,
-  EMPTY_SLOT_INFO
-} from './lib/constants.js';
 
 import './api-viewer-item.js';
 import './api-viewer-panel.js';
@@ -104,7 +99,7 @@ const renderAttributes = (attrs: AttributeInfo[]): TemplateResult => {
   );
 };
 
-const renderSlots = (slots: EventInfo[]): TemplateResult => {
+const renderSlots = (slots: SlotInfo[]): TemplateResult => {
   return renderTab(
     'Slots',
     slots.length === 0,
@@ -138,21 +133,41 @@ const renderEvents = (events: EventInfo[]): TemplateResult => {
   );
 };
 
+const renderCssProps = (props: CSSPropertyInfo[]): TemplateResult => {
+  return renderTab(
+    'CSS Custom Properties',
+    props.length === 0,
+    html`
+      ${props.map(
+        prop => html`
+          <api-viewer-item
+            .name="${prop.name}"
+            .description="${prop.description}"
+          ></api-viewer-item>
+        `
+      )}
+    `
+  );
+};
+
 @customElement('api-viewer-docs')
 export class ApiViewerDocs extends LitElement {
   @property({ type: String }) name = '';
 
   @property({ attribute: false, hasChanged: () => true })
-  props: PropertyInfo[] = EMPTY_PROP_INFO;
+  props: PropertyInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
-  attrs: AttributeInfo[] = EMPTY_ATTR_INFO;
+  attrs: AttributeInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
-  slots: SlotInfo[] = EMPTY_SLOT_INFO;
+  slots: SlotInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
-  events: EventInfo[] = EMPTY_EVT_INFO;
+  events: EventInfo[] = [];
+
+  @property({ attribute: false, hasChanged: () => true })
+  cssProps: CSSPropertyInfo[] = [];
 
   static get styles() {
     return css`
@@ -163,11 +178,19 @@ export class ApiViewerDocs extends LitElement {
       api-viewer-item:not(:first-of-type) {
         border-top: solid 1px var(--ave-border-color);
       }
+
+      api-viewer-tab {
+        max-width: 150px;
+      }
+
+      api-viewer-tab[heading^='CSS'] {
+        font-size: 0.8125rem;
+      }
     `;
   }
 
   protected render() {
-    const { slots, props, attrs, events } = this;
+    const { slots, props, attrs, events, cssProps } = this;
 
     const attributes = processAttrs(attrs || [], props || []);
     const properties = processProps(props || [], attrs || []);
@@ -175,7 +198,7 @@ export class ApiViewerDocs extends LitElement {
     return html`
       <api-viewer-tabs>
         ${renderProperties(properties)}${renderAttributes(attributes)}
-        ${renderSlots(slots)}${renderEvents(events)}
+        ${renderSlots(slots)}${renderEvents(events)}${renderCssProps(cssProps)}
       </api-viewer-tabs>
     `;
   }

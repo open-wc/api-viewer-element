@@ -22,13 +22,29 @@ export class ApiViewerHeader extends LitElement {
         font-size: 0.875rem;
         line-height: 1.5rem;
       }
+
+      .controls {
+        display: flex;
+      }
+
+      @media (max-width: 480px) {
+        .controls {
+          flex-direction: column;
+        }
+
+        .controls ::slotted(:not(:last-child)) {
+          margin-bottom: 0.5rem;
+        }
+      }
     `;
   }
 
   protected render() {
     return html`
       <div class="heading">&lt;${this.heading}&gt;</div>
-      <slot></slot>
+      <div class="controls">
+        <slot></slot>
+      </div>
     `;
   }
 }

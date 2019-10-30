@@ -24,6 +24,7 @@ export class ApiViewerTab extends LitElement {
       :host {
         display: flex;
         align-items: center;
+        flex-shrink: 0;
         box-sizing: border-box;
         position: relative;
         overflow: hidden;

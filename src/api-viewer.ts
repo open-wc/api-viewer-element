@@ -9,14 +9,14 @@ import {
 import { until } from 'lit-html/directives/until.js';
 import { fetchJson } from './lib/fetch-json.js';
 import { ElementInfo } from './lib/types.js';
-import { EMPTY_ELEMENTS } from './lib/constants.js';
+import { queryTemplates } from './lib/utils.js';
 import './api-viewer-content.js';
 
 @customElement('api-viewer')
 export class ApiViewer extends LitElement {
   @property({ type: String }) src?: string;
 
-  private jsonFetched: Promise<ElementInfo[]> = Promise.resolve(EMPTY_ELEMENTS);
+  private jsonFetched: Promise<ElementInfo[]> = Promise.resolve([]);
 
   private lastSrc?: string;
 
@@ -44,7 +44,7 @@ export class ApiViewer extends LitElement {
         border: 1px solid var(--ave-border-color);
         border-radius: var(--ave-border-radius);
 
-        --ave-primary-color: #1867c0;
+        --ave-primary-color: #01579b;
         --ave-accent-color: #d63200;
         --ave-border-color: rgba(0, 0, 0, 0.12);
         --ave-border-radius: 4px;
@@ -69,6 +69,10 @@ export class ApiViewer extends LitElement {
     return html`
       ${until(this.renderDocs(this.jsonFetched))}
     `;
+  }
+
+  protected firstUpdated() {
+    queryTemplates(this);
   }
 }
 
