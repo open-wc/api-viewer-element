@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.2.1] - 2019-11-02
+
+### Fixed
+
+- Docs & demo: UI is no longer shown when JSON is empty
+- Docs: elements with empty description are rendered correctly
+- Docs: description for properties is not displayed when empty
+
 ## [0.2.0] - 2019-10-30
 
 ### Added
