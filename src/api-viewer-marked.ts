@@ -28,6 +28,10 @@ export class ApiViewerMarked extends LitElement {
         display: block;
       }
 
+      :host([hidden]) {
+        display: none !important;
+      }
+
       p {
         margin: 0.5rem 0;
         font-size: 0.9375rem;

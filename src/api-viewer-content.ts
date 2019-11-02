@@ -34,11 +34,6 @@ export class ApiViewerContent extends LitElement {
     const { elements, selected, section } = this;
     const tags = elements.map((tag: ElementInfo) => tag.name);
 
-    const element = EMPTY_ELEMENT;
-    if (elements[selected]) {
-      Object.assign(element, elements[selected]);
-    }
-
     const {
       name,
       description,
@@ -47,7 +42,7 @@ export class ApiViewerContent extends LitElement {
       slots,
       events,
       cssProperties
-    } = element;
+    } = { ...EMPTY_ELEMENT, ...(elements[selected] || {}) };
 
     // TODO: analyzer should sort CSS custom properties
     const cssProps = (cssProperties || []).sort((a, b) =>
@@ -72,6 +67,7 @@ export class ApiViewerContent extends LitElement {
               <api-viewer-marked
                 .content="${description}"
                 class="description"
+                ?hidden="${description === ''}"
               ></api-viewer-marked>
               <api-viewer-docs
                 .name="${name}"
