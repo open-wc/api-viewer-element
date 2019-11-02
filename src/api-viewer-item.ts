@@ -99,7 +99,7 @@ export class ApiViewerItem extends LitElement {
         </div>
         ${this.renderAttr(attribute)}${this.renderType(valueType)}
       </div>
-      <div>
+      <div ?hidden="${description === undefined}">
         <div class="label">Description</div>
         <api-viewer-marked content="${description}"></api-viewer-marked>
       </div>
