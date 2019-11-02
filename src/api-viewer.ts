@@ -26,9 +26,15 @@ export class ApiViewer extends LitElement {
   ): Promise<TemplateResult> {
     const elements = await jsonFetched;
 
-    return html`
-      <api-viewer-content .elements="${elements}"></api-viewer-content>
-    `;
+    return elements.length
+      ? html`
+          <api-viewer-content .elements="${elements}"></api-viewer-content>
+        `
+      : html`
+          <div class="warn">
+            No custom elements found in the JSON file.
+          </div>
+        `;
   }
 
   static get styles() {
@@ -54,6 +60,10 @@ export class ApiViewer extends LitElement {
         --ave-tab-color: rgba(0, 0, 0, 0.54);
         --ave-monospace-font: Menlo, 'DejaVu Sans Mono', 'Liberation Mono',
           Consolas, 'Courier New', monospace;
+      }
+
+      .warn {
+        padding: 1rem;
       }
     `;
   }
