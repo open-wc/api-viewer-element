@@ -30,6 +30,9 @@ const normalizeValue = (value: number, min: number, max: number) => {
  *
  * @cssprop --progress-bar-fill-color - Color of the filled progress bar part.
  * @cssprop --progress-bar-opacity - Opacity set on the underlying track.
+ *
+ * @csspart bar - A progress bar background.
+ * @csspart value - A progress bar foreground.
  */
 @customElement('progress-bar')
 export class ProgressBar extends LitElement {

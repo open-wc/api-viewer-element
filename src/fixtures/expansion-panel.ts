@@ -24,6 +24,10 @@ import { styleMap } from 'lit-html/directives/style-map.js';
  * @cssprop --panel-header-min-height - Panel header minimum height.
  * @cssprop --panel-ripple-background - Active toggle button ripple background.
  *
+ * @csspart header - An element wrapping the `header` slot.
+ * @csspart toggle - A toggle button, child of the header part.
+ * @csspart content - An element wrapping the `content` slot.
+ *
  * @fires opened-changed - Event fired when expanding / collapsing
  */
 @customElement('expansion-panel')

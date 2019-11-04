@@ -8,6 +8,7 @@ export interface ElementInfo extends Info {
   properties: PropertyInfo[] | undefined;
   slots: SlotInfo[] | undefined;
   cssProperties: CSSPropertyInfo[] | undefined;
+  cssParts: CSSPartInfo[] | undefined;
 }
 
 export interface SlotInfo {
@@ -47,6 +48,8 @@ export interface SlotValue {
 export interface EventInfo extends Info {}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface CSSPartInfo extends Info {}
+
 export interface CSSPropertyInfo extends Info {
   value?: string;
   defaultValue?: string;

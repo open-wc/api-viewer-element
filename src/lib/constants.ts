@@ -7,5 +7,6 @@ export const EMPTY_ELEMENT: ElementInfo = {
   attributes: [],
   properties: [],
   events: [],
+  cssParts: [],
   cssProperties: []
 };

@@ -12,6 +12,7 @@ import {
   SlotInfo,
   AttributeInfo,
   EventInfo,
+  CSSPartInfo,
   CSSPropertyInfo
 } from './lib/types.js';
 
@@ -99,54 +100,38 @@ const renderAttributes = (attrs: AttributeInfo[]): TemplateResult => {
   );
 };
 
+const renderEntity = (
+  items: Array<SlotInfo | EventInfo | CSSPartInfo | CSSPropertyInfo>
+): TemplateResult => {
+  return html`
+    ${items.map(
+      (item: SlotInfo | EventInfo | CSSPartInfo | CSSPropertyInfo) => html`
+        <api-viewer-item
+          .name="${item.name}"
+          .description="${item.description}"
+        ></api-viewer-item>
+      `
+    )}
+  `;
+};
+
 const renderSlots = (slots: SlotInfo[]): TemplateResult => {
-  return renderTab(
-    'Slots',
-    slots.length === 0,
-    html`
-      ${slots.map(
-        slot => html`
-          <api-viewer-item
-            .name="${slot.name}"
-            .description="${slot.description}"
-          ></api-viewer-item>
-        `
-      )}
-    `
-  );
+  return renderTab('Slots', slots.length === 0, renderEntity(slots));
 };
 
 const renderEvents = (events: EventInfo[]): TemplateResult => {
-  return renderTab(
-    'Events',
-    events.length === 0,
-    html`
-      ${events.map(
-        event => html`
-          <api-viewer-item
-            .name="${event.name}"
-            .description="${event.description}"
-          ></api-viewer-item>
-        `
-      )}
-    `
-  );
+  return renderTab('Events', events.length === 0, renderEntity(events));
+};
+
+const renderCssParts = (parts: CSSPartInfo[]): TemplateResult => {
+  return renderTab('CSS Shadow Parts', parts.length === 0, renderEntity(parts));
 };
 
 const renderCssProps = (props: CSSPropertyInfo[]): TemplateResult => {
   return renderTab(
     'CSS Custom Properties',
     props.length === 0,
-    html`
-      ${props.map(
-        prop => html`
-          <api-viewer-item
-            .name="${prop.name}"
-            .description="${prop.description}"
-          ></api-viewer-item>
-        `
-      )}
-    `
+    renderEntity(props)
   );
 };
 
@@ -165,6 +150,9 @@ export class ApiViewerDocs extends LitElement {
 
   @property({ attribute: false, hasChanged: () => true })
   events: EventInfo[] = [];
+
+  @property({ attribute: false, hasChanged: () => true })
+  cssParts: CSSPartInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
   cssProps: CSSPropertyInfo[] = [];
@@ -190,7 +178,7 @@ export class ApiViewerDocs extends LitElement {
   }
 
   protected render() {
-    const { slots, props, attrs, events, cssProps } = this;
+    const { slots, props, attrs, events, cssParts, cssProps } = this;
 
     const attributes = processAttrs(attrs || [], props || []);
     const properties = processProps(props || [], attrs || []);
@@ -199,6 +187,7 @@ export class ApiViewerDocs extends LitElement {
       <api-viewer-tabs>
         ${renderProperties(properties)}${renderAttributes(attributes)}
         ${renderSlots(slots)}${renderEvents(events)}${renderCssProps(cssProps)}
+        ${renderCssParts(cssParts)}
       </api-viewer-tabs>
     `;
   }

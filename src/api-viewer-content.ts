@@ -41,6 +41,7 @@ export class ApiViewerContent extends LitElement {
       attributes,
       slots,
       events,
+      cssParts,
       cssProperties
     } = { ...EMPTY_ELEMENT, ...(elements[selected] || {}) };
 
@@ -75,6 +76,7 @@ export class ApiViewerContent extends LitElement {
                 .attrs="${attributes}"
                 .events="${events}"
                 .slots="${slots}"
+                .cssParts="${cssParts}"
                 .cssProps="${cssProps}"
               ></api-viewer-docs>
             `
