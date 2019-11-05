@@ -20,6 +20,7 @@ API documentation and live playground for Web Components. Based on [web-componen
   - Events - DOM events dispatched by the component
   - Slots - default `<slot>` and / or named slots, if any
   - CSS Custom Properties - styling API of the component
+  - CSS Shadow Parts - elements that can be styled using `::part`
 - Live playground
   - Source - code snippet matching the rendered component
   - Knobs - change properties and slotted content dynamically
