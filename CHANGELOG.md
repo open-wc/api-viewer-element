@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.2.2] - 2019-11-05
+
+### Added
+
+#### API docs viewer
+
+- CSS Shadow Parts: name, description
+
 ## [0.2.1] - 2019-11-02
 
 ### Fixed
