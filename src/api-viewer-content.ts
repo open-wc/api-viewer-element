@@ -60,6 +60,7 @@ export class ApiViewerContent extends LitElement {
           .options="${tags}"
           .selected="${selected}"
           @selected-changed="${this._onSelect}"
+          ?hidden="${elements.length === 1}"
         ></api-viewer-select>
       </api-viewer-header>
       ${cache(

@@ -21,6 +21,10 @@ export class ApiViewerSelect extends LitElement {
       :host {
         display: block;
       }
+
+      :host([hidden]) {
+        display: none !important;
+      }
     `;
   }
 
