@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.2.3] - 2019-11-06
+
+### Fixed
+
+- Element selector is now hidden if there is only one element
+
 ## [0.2.2] - 2019-11-05
 
 ### Added
