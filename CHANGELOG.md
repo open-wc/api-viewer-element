@@ -16,6 +16,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.2.4] - 2019-11-11
+
+### Fixed
+
+- Docs: tabs are no longer shown if there is no documented API
+- Demo: knobs are now hidden if there is no properties / slots
+
+### Changed
+
+- Demo: adjusted source code snippet vertical padding
+
 ## [0.2.3] - 2019-11-06
 
 ### Fixed
