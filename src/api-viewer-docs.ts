@@ -15,6 +15,7 @@ import {
   CSSPartInfo,
   CSSPropertyInfo
 } from './lib/types.js';
+import { isEmptyArray } from './lib/utils.js';
 
 import './api-viewer-item.js';
 import './api-viewer-panel.js';
@@ -174,6 +175,10 @@ export class ApiViewerDocs extends LitElement {
       api-viewer-tab[heading^='CSS'] {
         font-size: 0.8125rem;
       }
+
+      .warn {
+        padding: 1rem;
+      }
     `;
   }
 
@@ -183,23 +188,41 @@ export class ApiViewerDocs extends LitElement {
     const attributes = processAttrs(attrs || [], props || []);
     const properties = processProps(props || [], attrs || []);
 
-    return html`
-      <api-viewer-tabs>
-        ${renderProperties(properties)}${renderAttributes(attributes)}
-        ${renderSlots(slots)}${renderEvents(events)}${renderCssProps(cssProps)}
-        ${renderCssParts(cssParts)}
-      </api-viewer-tabs>
-    `;
+    const emptyDocs = [
+      properties,
+      attributes,
+      slots,
+      events,
+      cssProps,
+      cssParts
+    ].every(isEmptyArray);
+
+    return emptyDocs
+      ? html`
+          <div class="warn">
+            The element &lt;${this.name}&gt; does not provide any documented
+            API.
+          </div>
+        `
+      : html`
+          <api-viewer-tabs>
+            ${renderProperties(properties)}${renderAttributes(attributes)}
+            ${renderSlots(slots)}${renderEvents(events)}${renderCssProps(
+              cssProps
+            )}
+            ${renderCssParts(cssParts)}
+          </api-viewer-tabs>
+        `;
   }
 
   protected updated(props: PropertyValues) {
     super.updated(props);
 
     if (props.has('name') && props.get('name')) {
-      const tabs = this.renderRoot.querySelector(
-        'api-viewer-tabs'
-      ) as ApiViewerTabs;
-      tabs.selectFirst();
+      const tabs = this.renderRoot.querySelector('api-viewer-tabs');
+      if (tabs instanceof ApiViewerTabs) {
+        tabs.selectFirst();
+      }
     }
   }
 }

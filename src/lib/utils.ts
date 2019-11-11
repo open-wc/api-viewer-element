@@ -15,3 +15,5 @@ export const getTemplate = (name: string) => {
 export const hasTemplate = (name: string) => {
   return templates.some(tpl => tpl.dataset.element === name);
 };
+
+export const isEmptyArray = (array: unknown[]) => array.length === 0;
