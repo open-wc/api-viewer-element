@@ -14,7 +14,7 @@ import {
   EventInfo,
   KnobValues
 } from './lib/types.js';
-import { getSlotTitle } from './lib/utils.js';
+import { getSlotTitle, isEmptyArray } from './lib/utils.js';
 import './api-viewer-demo-renderer.js';
 import './api-viewer-demo-knobs.js';
 import './api-viewer-demo-snippet.js';
@@ -70,8 +70,9 @@ export class ApiViewerDemoLayout extends LitElement {
   }
 
   protected render() {
-    const noEvents = this.events.length === 0;
-    const noCss = this.cssProps.length === 0;
+    const noEvents = isEmptyArray(this.events);
+    const noCss = isEmptyArray(this.cssProps);
+    const noKnobs = isEmptyArray(this.props) && isEmptyArray(this.slots);
 
     return html`
       <api-viewer-demo-renderer
@@ -91,7 +92,11 @@ export class ApiViewerDemoLayout extends LitElement {
             .cssProps="${this.processedCss}"
           ></api-viewer-demo-snippet>
         </api-viewer-panel>
-        <api-viewer-tab heading="Knobs" slot="tab"></api-viewer-tab>
+        <api-viewer-tab
+          heading="Knobs"
+          slot="tab"
+          ?hidden="${noKnobs}"
+        ></api-viewer-tab>
         <api-viewer-panel slot="panel">
           <api-viewer-demo-knobs
             .tag="${this.tag}"
@@ -99,6 +104,7 @@ export class ApiViewerDemoLayout extends LitElement {
             .slots="${this.processedSlots}"
             @prop-changed="${this._onPropChanged}"
             @slot-changed="${this._onSlotChanged}"
+            ?hidden="${noKnobs}"
           ></api-viewer-demo-knobs>
         </api-viewer-panel>
         <api-viewer-tab
