@@ -80,6 +80,15 @@ Import the components documented in JSON file to enable demos:
 <api-viewer src="./custom-elements.json"></api-viewer>
 ```
 
+### Section
+
+By default, the API documentation is shown. If you want to show the playground instead, set the
+`section` property to `demo`:
+
+```html
+<api-viewer src="./custom-elements.json" section="demo"></api-viewer>
+```
+
 ### Knobs
 
 The playground listens to all the events dispatched by the rendered component. This can be used to
