@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.2.5] - 2019-11-13
+
+### Added
+
+- Exposed `section` property to toggle between docs and demo
+
 ## [0.2.4] - 2019-11-11
 
 ### Fixed
