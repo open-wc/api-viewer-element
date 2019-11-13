@@ -16,19 +16,25 @@ import './api-viewer-content.js';
 export class ApiViewer extends LitElement {
   @property({ type: String }) src?: string;
 
+  @property({ type: String }) section = 'docs';
+
   private jsonFetched: Promise<ElementInfo[]> = Promise.resolve([]);
 
   private lastSrc?: string;
 
   // eslint-disable-next-line class-methods-use-this
   private async renderDocs(
-    jsonFetched: Promise<ElementInfo[]>
+    jsonFetched: Promise<ElementInfo[]>,
+    section: string
   ): Promise<TemplateResult> {
     const elements = await jsonFetched;
 
     return elements.length
       ? html`
-          <api-viewer-content .elements="${elements}"></api-viewer-content>
+          <api-viewer-content
+            .elements="${elements}"
+            .section="${section}"
+          ></api-viewer-content>
         `
       : html`
           <div class="warn">
@@ -77,7 +83,7 @@ export class ApiViewer extends LitElement {
     }
 
     return html`
-      ${until(this.renderDocs(this.jsonFetched))}
+      ${until(this.renderDocs(this.jsonFetched, this.section))}
     `;
   }
 
