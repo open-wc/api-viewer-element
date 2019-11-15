@@ -89,6 +89,15 @@ By default, the API documentation is shown. If you want to show the playground i
 <api-viewer src="./custom-elements.json" section="demo"></api-viewer>
 ```
 
+### Selected tag
+
+By default, the first element found in JSON file is shown. Set the `selected` property to configure
+it to a different tag name:
+
+```html
+<api-viewer src="./custom-elements.json" selected="my-element"></api-viewer>
+```
+
 ### Knobs
 
 The playground listens to all the events dispatched by the rendered component. This can be used to
