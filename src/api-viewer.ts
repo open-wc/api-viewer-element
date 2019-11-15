@@ -18,6 +18,8 @@ export class ApiViewer extends LitElement {
 
   @property({ type: String }) section = 'docs';
 
+  @property({ type: String }) selected?: string;
+
   private jsonFetched: Promise<ElementInfo[]> = Promise.resolve([]);
 
   private lastSrc?: string;
@@ -25,15 +27,19 @@ export class ApiViewer extends LitElement {
   // eslint-disable-next-line class-methods-use-this
   private async renderDocs(
     jsonFetched: Promise<ElementInfo[]>,
-    section: string
+    section: string,
+    selected?: string
   ): Promise<TemplateResult> {
     const elements = await jsonFetched;
+
+    const index = elements.findIndex(el => el.name === selected);
 
     return elements.length
       ? html`
           <api-viewer-content
             .elements="${elements}"
             .section="${section}"
+            .selected="${index >= 0 ? index : 0}"
           ></api-viewer-content>
         `
       : html`
@@ -83,7 +89,7 @@ export class ApiViewer extends LitElement {
     }
 
     return html`
-      ${until(this.renderDocs(this.jsonFetched, this.section))}
+      ${until(this.renderDocs(this.jsonFetched, this.section, this.selected))}
     `;
   }
 
