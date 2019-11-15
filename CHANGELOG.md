@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.2.6] - 2019-11-15
+
+### Added
+
+- Exposed `selected` property to toggle selected element name
+
 ## [0.2.5] - 2019-11-13
 
 ### Added
