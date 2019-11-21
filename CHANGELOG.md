@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.2.7] - 2019-11-21
+
+### Fixed
+
+- Demo: fixed font family and size in the code snippet
+
 ## [0.2.6] - 2019-11-15
 
 ### Added
