@@ -5,7 +5,7 @@ export default css`
     color: black;
     background: none;
     font-family: var(--ave-monospace-font);
-    font-size: 1em;
+    font-size: 0.875rem;
     text-align: left;
     white-space: pre;
     word-spacing: normal;
@@ -15,6 +15,10 @@ export default css`
     tab-size: 4;
     hyphens: none;
     text-shadow: none;
+  }
+
+  code {
+    font-family: inherit;
   }
 
   .token.comment,
