@@ -6,7 +6,7 @@ import {
   property,
   TemplateResult
 } from 'lit-element';
-import { PropertyInfo, SlotInfo } from './lib/types.js';
+import { PropertyInfo, SlotValue } from './lib/types.js';
 import { getSlotTitle, hasTemplate } from './lib/utils.js';
 
 const getInputType = (type: string) => {
@@ -67,7 +67,7 @@ const renderPropKnobs = (props: PropertyInfo[]): TemplateResult => {
   `;
 };
 
-const renderSlotKnobs = (slots: SlotInfo[]): TemplateResult => {
+const renderSlotKnobs = (slots: SlotValue[]): TemplateResult => {
   const rows = slots.map(slot => {
     const { name, content } = slot;
     return html`
@@ -100,7 +100,7 @@ export class ApiViewerDemoKnobs extends LitElement {
   props: PropertyInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
-  slots: SlotInfo[] = [];
+  slots: SlotValue[] = [];
 
   static get styles() {
     return css`

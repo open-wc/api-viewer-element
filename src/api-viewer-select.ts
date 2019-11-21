@@ -30,7 +30,7 @@ export class ApiViewerSelect extends LitElement {
 
   protected render() {
     const { options } = this;
-    const selected = options.find((_, index) => this.selected === index);
+    const selected = options.find((_, index) => this.selected === index) || '';
     return html`
       <select @change="${this._onChange}" .value="${selected}">
         ${options.map(option => {

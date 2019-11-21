@@ -11,6 +11,7 @@ import {
   CSSPropertyInfo,
   PropertyInfo,
   SlotInfo,
+  SlotValue,
   EventInfo,
   KnobValues
 } from './lib/types.js';
@@ -41,7 +42,7 @@ export class ApiViewerDemoLayout extends LitElement {
   cssProps: CSSPropertyInfo[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
-  protected processedSlots: SlotInfo[] = [];
+  protected processedSlots: SlotValue[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
   protected processedCss: CSSPropertyInfo[] = [];

@@ -12,7 +12,7 @@ import {
   CSSPropertyInfo,
   KnobValues,
   KnobValue,
-  SlotInfo
+  SlotValue
 } from './lib/types.js';
 import { getTemplate } from './lib/utils.js';
 import buttonStyle from './lib/button-style.js';
@@ -46,7 +46,7 @@ const unindent = (text: string) => {
 const renderSnippet = (
   tag: string,
   values: KnobValues,
-  slots: SlotInfo[],
+  slots: SlotValue[],
   cssProps: CSSPropertyInfo[]
 ): TemplateResult => {
   let markup = `<${tag}`;
@@ -107,7 +107,7 @@ export class ApiViewerDemoSnippet extends LitElement {
   knobs: KnobValues = {};
 
   @property({ attribute: false, hasChanged: () => true })
-  slots: SlotInfo[] = [];
+  slots: SlotValue[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
   cssProps: CSSPropertyInfo[] = [];

@@ -3,18 +3,12 @@ export interface ElementSetInfo {
 }
 
 export interface ElementInfo extends Info {
-  attributes: AttributeInfo[] | undefined;
-  events: EventInfo[] | undefined;
-  properties: PropertyInfo[] | undefined;
-  slots: SlotInfo[] | undefined;
-  cssProperties: CSSPropertyInfo[] | undefined;
-  cssParts: CSSPartInfo[] | undefined;
-}
-
-export interface SlotInfo {
-  name: string;
-  description?: string;
-  content?: string;
+  attributes: AttributeInfo[];
+  events: EventInfo[];
+  properties: PropertyInfo[];
+  slots: SlotInfo[];
+  cssProperties: CSSPropertyInfo[];
+  cssParts: CSSPartInfo[];
 }
 
 export interface Info {
@@ -43,6 +37,9 @@ export interface SlotValue {
   name: string;
   content: string;
 }
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface SlotInfo extends Info {}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface EventInfo extends Info {}
