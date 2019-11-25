@@ -1,6 +1,6 @@
 {
   "name": "api-viewer-element",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Web Components API viewer element",
   "author": "Serhii Kulykov <iamkulykov@gmail.com>",
   "license": "MIT",
