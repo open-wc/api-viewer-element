@@ -69,6 +69,8 @@ export class ApiViewer extends LitElement {
         --ave-header-color: #fff;
         --ave-item-color: rgba(0, 0, 0, 0.87);
         --ave-label-color: #424242;
+        --ave-link-color: #01579b;
+        --ave-link-hover-color: #d63200;
         --ave-tab-color: rgba(0, 0, 0, 0.54);
         --ave-monospace-font: Menlo, 'DejaVu Sans Mono', 'Liberation Mono',
           Consolas, 'Courier New', monospace;

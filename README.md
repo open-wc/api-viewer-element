@@ -167,6 +167,8 @@ The following custom CSS properties are available:
 | `--ave-header-color`             | Header text color used for tag name             |
 | `--ave-item-color`               | API items content color (main text)             |
 | `--ave-label-color`              | API items labels color                          |
+| `--ave-link-color`               | API description links default color             |
+| `--ave-link-hover-color`         | API description links hover color               |
 | `--ave-monospace-font`           | Monospace font stack for the API items          |
 | `--ave-primary-color`            | Primary color, used for header and active tab   |
 | `--ave-tab-color`                | Inactive tabs color                             |

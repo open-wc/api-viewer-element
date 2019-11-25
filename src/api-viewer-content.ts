@@ -38,6 +38,14 @@ export class ApiViewerContent extends LitElement {
         font-size: 0.9375rem;
         line-height: 1.5;
       }
+
+      a {
+        color: var(--ave-link-color);
+      }
+
+      a:hover {
+        color: var(--ave-link-hover-color);
+      }
     `;
   }
 
