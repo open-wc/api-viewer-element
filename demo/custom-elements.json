@@ -90,21 +90,21 @@
     },
     {
       "name": "fancy-accordion",
-      "description": "A custom element wrapping several `<expansion-panel>` elements.",
-      "jsDoc": "/**\n * A custom element wrapping several `<expansion-panel>` elements.\n *\n * @element fancy-accordion\n *\n * @slot - Slot fot panel elements.\n *\n * @fires opened-changed - Event fired when expanding / collapsing\n */",
+      "description": "A custom element implementing the accordion widget: a vertically stacked set of expandable panels\nthat wraps several instances of the `<expansion-panel>` element. Only one panel can be opened\n(expanded) at a time.\n\nPanel headings function as controls that enable users to open (expand) or hide (collapse) their\nassociated sections of content. The user can toggle panels by mouse click, Enter and Space keys.\n\nThe component supports keyboard navigation and is aligned with the\n[WAI-ARIA Authoring Practices](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion).",
+      "jsDoc": "/**\n * A custom element implementing the accordion widget: a vertically stacked set of expandable panels\n * that wraps several instances of the `<expansion-panel>` element. Only one panel can be opened\n * (expanded) at a time.\n *\n * Panel headings function as controls that enable users to open (expand) or hide (collapse) their\n * associated sections of content. The user can toggle panels by mouse click, Enter and Space keys.\n *\n * The component supports keyboard navigation and is aligned with the\n * [WAI-ARIA Authoring Practices](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion).\n *\n * @element fancy-accordion\n *\n * @slot - Slot fot panel elements.\n *\n * @fires opened-changed - Event fired when expanding / collapsing\n */",
       "attributes": [
         {
           "name": "opened",
-          "description": "The index of the currently opened panel.",
-          "jsDoc": "/**\n   * The index of the currently opened panel.\n   */",
+          "description": "Index of the currently opened panel. First panel is opened by\ndefault. Only one panel can be opened at the same time.\nSetting `undefined` closes all the accordion panels.",
+          "jsDoc": "/**\n   * Index of the currently opened panel. First panel is opened by\n   * default. Only one panel can be opened at the same time.\n   * Setting `undefined` closes all the accordion panels.\n   */",
           "type": "number | undefined"
         }
       ],
       "properties": [
         {
           "name": "opened",
-          "description": "The index of the currently opened panel.",
-          "jsDoc": "/**\n   * The index of the currently opened panel.\n   */",
+          "description": "Index of the currently opened panel. First panel is opened by\ndefault. Only one panel can be opened at the same time.\nSetting `undefined` closes all the accordion panels.",
+          "jsDoc": "/**\n   * Index of the currently opened panel. First panel is opened by\n   * default. Only one panel can be opened at the same time.\n   * Setting `undefined` closes all the accordion panels.\n   */",
           "type": "number | undefined"
         }
       ],

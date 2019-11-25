@@ -9,7 +9,15 @@ import {
 import { ExpansionPanel } from './expansion-panel.js';
 
 /**
- * A custom element wrapping several `<expansion-panel>` elements.
+ * A custom element implementing the accordion widget: a vertically stacked set of expandable panels
+ * that wraps several instances of the `<expansion-panel>` element. Only one panel can be opened
+ * (expanded) at a time.
+ *
+ * Panel headings function as controls that enable users to open (expand) or hide (collapse) their
+ * associated sections of content. The user can toggle panels by mouse click, Enter and Space keys.
+ *
+ * The component supports keyboard navigation and is aligned with the
+ * [WAI-ARIA Authoring Practices](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion).
  *
  * @element fancy-accordion
  *
@@ -20,7 +28,9 @@ import { ExpansionPanel } from './expansion-panel.js';
 @customElement('fancy-accordion')
 export class FancyAccordion extends LitElement {
   /**
-   * The index of the currently opened panel.
+   * Index of the currently opened panel. First panel is opened by
+   * default. Only one panel can be opened at the same time.
+   * Setting `undefined` closes all the accordion panels.
    */
   @property({ type: Number }) opened? = 0;
 
