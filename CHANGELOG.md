@@ -16,6 +16,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.2.8] - 2019-11-25
+
+### Added
+
+- Docs: added custom CSS properties for link colors
+
+### Fixed
+
+- Docs: improved the multi-line descriptions appearance
+
 ## [0.2.7] - 2019-11-21
 
 ### Fixed
