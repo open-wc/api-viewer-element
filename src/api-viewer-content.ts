@@ -23,9 +23,20 @@ export class ApiViewerContent extends LitElement {
         display: block;
       }
 
-      .description {
-        padding: 0.75rem;
+      api-viewer-marked {
+        display: block;
+        padding: 0 1rem;
         border-bottom: solid 1px var(--ave-border-color);
+      }
+
+      api-viewer-marked[hidden] {
+        display: none;
+      }
+
+      p {
+        margin: 1rem 0;
+        font-size: 0.9375rem;
+        line-height: 1.5;
       }
     `;
   }
@@ -68,7 +79,6 @@ export class ApiViewerContent extends LitElement {
           ? html`
               <api-viewer-marked
                 .content="${description}"
-                class="description"
                 ?hidden="${description === ''}"
               ></api-viewer-marked>
               <api-viewer-docs

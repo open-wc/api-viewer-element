@@ -1,4 +1,4 @@
-import { LitElement, html, customElement, css, property } from 'lit-element';
+import { LitElement, html, customElement, property } from 'lit-element';
 import { nothing, TemplateResult } from 'lit-html';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import 'marked';
@@ -22,21 +22,8 @@ const parse = (markdown?: string): TemplateResult => {
 export class ApiViewerMarked extends LitElement {
   @property({ type: String }) content?: string | undefined;
 
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
-
-      :host([hidden]) {
-        display: none !important;
-      }
-
-      p {
-        margin: 0.5rem 0;
-        font-size: 0.9375rem;
-      }
-    `;
+  protected createRenderRoot() {
+    return this;
   }
 
   protected render() {

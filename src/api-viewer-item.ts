@@ -61,6 +61,12 @@ export class ApiViewerItem extends LitElement {
       .value-name {
         color: var(--ave-accent-color);
       }
+
+      p {
+        margin: 0.5rem 0;
+        font-size: 0.9375rem;
+        line-height: 1.5;
+      }
     `;
   }
 
