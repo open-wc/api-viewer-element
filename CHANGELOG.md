@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.2.9] - 2019-12-02
+
+### Fixed
+
+- Docs: fix knobs type detection to handle null
+
 ## [0.2.8] - 2019-11-25
 
 ### Added
