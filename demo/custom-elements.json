@@ -1,32 +1,31 @@
 {
-  "version": 2,
+  "version": "experimental",
   "tags": [
     {
       "name": "expansion-panel",
       "description": "A custom element similar to the HTML5 `<details>` element.",
-      "jsDoc": "/**\n * A custom element similar to the HTML5 `<details>` element.\n *\n * @element expansion-panel\n *\n * @slot - Slot fot panel content\n * @slot header - Slot for panel header\n *\n * @attr {Boolean} focused - State attribute set when element has focus.\n * @attr {Boolean} focus-ring - State attribute set when focused from keyboard.\n *\n * @cssprop --panel-header-background - Default panel header background color.\n * @cssprop --panel-header-min-height - Panel header minimum height.\n * @cssprop --panel-ripple-background - Active toggle button ripple background.\n *\n * @csspart header - An element wrapping the `header` slot.\n * @csspart toggle - A toggle button, child of the header part.\n * @csspart content - An element wrapping the `content` slot.\n *\n * @fires opened-changed - Event fired when expanding / collapsing\n */",
       "attributes": [
-        {
-          "name": "focused",
-          "description": "State attribute set when element has focus.",
-          "type": "boolean"
-        },
-        {
-          "name": "focus-ring",
-          "description": "State attribute set when focused from keyboard.",
-          "type": "boolean"
-        },
         {
           "name": "opened",
           "description": "When true, the panel content is expanded and visible",
-          "jsDoc": "/**\n   * When true, the panel content is expanded and visible\n   */",
-          "type": "boolean | null | undefined"
+          "type": "boolean | null | undefined",
+          "default": "false"
         },
         {
           "name": "disabled",
           "description": "Disabled panel can not be expanded or collapsed",
-          "jsDoc": "/**\n   * Disabled panel can not be expanded or collapsed\n   */",
-          "type": "boolean"
+          "type": "boolean",
+          "default": "false"
+        },
+        {
+          "name": "focused",
+          "description": "State attribute set when element has focus.",
+          "type": "Boolean"
+        },
+        {
+          "name": "focus-ring",
+          "description": "State attribute set when focused from keyboard.",
+          "type": "Boolean"
         }
       ],
       "properties": [
@@ -34,15 +33,15 @@
           "name": "opened",
           "attribute": "opened",
           "description": "When true, the panel content is expanded and visible",
-          "jsDoc": "/**\n   * When true, the panel content is expanded and visible\n   */",
-          "type": "boolean | null | undefined"
+          "type": "boolean | null | undefined",
+          "default": "false"
         },
         {
           "name": "disabled",
           "attribute": "disabled",
           "description": "Disabled panel can not be expanded or collapsed",
-          "jsDoc": "/**\n   * Disabled panel can not be expanded or collapsed\n   */",
-          "type": "boolean"
+          "type": "boolean",
+          "default": "false"
         }
       ],
       "events": [
@@ -53,53 +52,52 @@
       ],
       "slots": [
         {
-          "name": "header",
-          "description": "Slot for panel header"
-        },
-        {
           "name": "",
           "description": "Slot fot panel content"
+        },
+        {
+          "name": "header",
+          "description": "Slot for panel header"
         }
       ],
       "cssProperties": [
         {
-          "name": "--panel-ripple-background",
-          "description": "Active toggle button ripple background."
+          "name": "--panel-header-background",
+          "description": "Default panel header background color."
         },
         {
           "name": "--panel-header-min-height",
           "description": "Panel header minimum height."
         },
         {
-          "name": "--panel-header-background",
-          "description": "Default panel header background color."
+          "name": "--panel-ripple-background",
+          "description": "Active toggle button ripple background."
         }
       ],
       "cssParts": [
         {
-          "name": "content",
-          "description": "An element wrapping the `content` slot."
+          "name": "header",
+          "description": "An element wrapping the `header` slot."
         },
         {
           "name": "toggle",
           "description": "A toggle button, child of the header part."
         },
         {
-          "name": "header",
-          "description": "An element wrapping the `header` slot."
+          "name": "content",
+          "description": "An element wrapping the `content` slot."
         }
       ]
     },
     {
       "name": "fancy-accordion",
       "description": "A custom element implementing the accordion widget: a vertically stacked set of expandable panels\nthat wraps several instances of the `<expansion-panel>` element. Only one panel can be opened\n(expanded) at a time.\n\nPanel headings function as controls that enable users to open (expand) or hide (collapse) their\nassociated sections of content. The user can toggle panels by mouse click, Enter and Space keys.\n\nThe component supports keyboard navigation and is aligned with the\n[WAI-ARIA Authoring Practices](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion).",
-      "jsDoc": "/**\n * A custom element implementing the accordion widget: a vertically stacked set of expandable panels\n * that wraps several instances of the `<expansion-panel>` element. Only one panel can be opened\n * (expanded) at a time.\n *\n * Panel headings function as controls that enable users to open (expand) or hide (collapse) their\n * associated sections of content. The user can toggle panels by mouse click, Enter and Space keys.\n *\n * The component supports keyboard navigation and is aligned with the\n * [WAI-ARIA Authoring Practices](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion).\n *\n * @element fancy-accordion\n *\n * @slot - Slot fot panel elements.\n *\n * @fires opened-changed - Event fired when expanding / collapsing\n */",
       "attributes": [
         {
           "name": "opened",
           "description": "Index of the currently opened panel. First panel is opened by\ndefault. Only one panel can be opened at the same time.\nSetting `undefined` closes all the accordion panels.",
-          "jsDoc": "/**\n   * Index of the currently opened panel. First panel is opened by\n   * default. Only one panel can be opened at the same time.\n   * Setting `undefined` closes all the accordion panels.\n   */",
-          "type": "number | undefined"
+          "type": "number | undefined",
+          "default": "0"
         }
       ],
       "properties": [
@@ -107,8 +105,8 @@
           "name": "opened",
           "attribute": "opened",
           "description": "Index of the currently opened panel. First panel is opened by\ndefault. Only one panel can be opened at the same time.\nSetting `undefined` closes all the accordion panels.",
-          "jsDoc": "/**\n   * Index of the currently opened panel. First panel is opened by\n   * default. Only one panel can be opened at the same time.\n   * Setting `undefined` closes all the accordion panels.\n   */",
-          "type": "number | undefined"
+          "type": "number | undefined",
+          "default": "0"
         }
       ],
       "events": [
@@ -127,31 +125,30 @@
     {
       "name": "progress-bar",
       "description": "A custom element similar to the HTML5 `<progress>` element.",
-      "jsDoc": "/**\n * A custom element similar to the HTML5 `<progress>` element.\n *\n * @element progress-bar\n *\n * @cssprop --progress-bar-fill-color - Color of the filled progress bar part.\n * @cssprop --progress-bar-opacity - Opacity set on the underlying track.\n *\n * @csspart bar - A progress bar background.\n * @csspart value - A progress bar foreground.\n */",
       "attributes": [
         {
           "name": "value",
           "description": "Current progress value.",
-          "jsDoc": "/**\n   * Current progress value.\n   */",
-          "type": "number"
+          "type": "number",
+          "default": "0.5"
         },
         {
           "name": "min",
           "description": "Minimum bound of the progress bar.",
-          "jsDoc": "/**\n   * Minimum bound of the progress bar.\n   */",
-          "type": "number"
+          "type": "number",
+          "default": "0"
         },
         {
           "name": "max",
           "description": "Maximum bound of the progress bar.",
-          "jsDoc": "/**\n   * Maximum bound of the progress bar.\n   */",
-          "type": "number"
+          "type": "number",
+          "default": "1"
         },
         {
           "name": "indeterminate",
           "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value).",
-          "jsDoc": "/**\n   * Indeterminate state of the progress bar.\n   * This property takes precedence over other state properties (min, max, value).\n   */",
-          "type": "boolean"
+          "type": "boolean",
+          "default": "false"
         }
       ],
       "properties": [
@@ -159,49 +156,49 @@
           "name": "value",
           "attribute": "value",
           "description": "Current progress value.",
-          "jsDoc": "/**\n   * Current progress value.\n   */",
-          "type": "number"
+          "type": "number",
+          "default": "0.5"
         },
         {
           "name": "min",
           "attribute": "min",
           "description": "Minimum bound of the progress bar.",
-          "jsDoc": "/**\n   * Minimum bound of the progress bar.\n   */",
-          "type": "number"
+          "type": "number",
+          "default": "0"
         },
         {
           "name": "max",
           "attribute": "max",
           "description": "Maximum bound of the progress bar.",
-          "jsDoc": "/**\n   * Maximum bound of the progress bar.\n   */",
-          "type": "number"
+          "type": "number",
+          "default": "1"
         },
         {
           "name": "indeterminate",
           "attribute": "indeterminate",
           "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value).",
-          "jsDoc": "/**\n   * Indeterminate state of the progress bar.\n   * This property takes precedence over other state properties (min, max, value).\n   */",
-          "type": "boolean"
+          "type": "boolean",
+          "default": "false"
         }
       ],
       "cssProperties": [
         {
-          "name": "--progress-bar-opacity",
-          "description": "Opacity set on the underlying track."
-        },
-        {
           "name": "--progress-bar-fill-color",
           "description": "Color of the filled progress bar part."
+        },
+        {
+          "name": "--progress-bar-opacity",
+          "description": "Opacity set on the underlying track."
         }
       ],
       "cssParts": [
         {
-          "name": "value",
-          "description": "A progress bar foreground."
-        },
-        {
           "name": "bar",
           "description": "A progress bar background."
+        },
+        {
+          "name": "value",
+          "description": "A progress bar foreground."
         }
       ]
     }
