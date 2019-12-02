@@ -20,7 +20,7 @@
           "name": "opened",
           "description": "When true, the panel content is expanded and visible",
           "jsDoc": "/**\n   * When true, the panel content is expanded and visible\n   */",
-          "type": "boolean"
+          "type": "boolean | null | undefined"
         },
         {
           "name": "disabled",
@@ -34,7 +34,7 @@
           "name": "opened",
           "description": "When true, the panel content is expanded and visible",
           "jsDoc": "/**\n   * When true, the panel content is expanded and visible\n   */",
-          "type": "boolean"
+          "type": "boolean | null | undefined"
         },
         {
           "name": "disabled",

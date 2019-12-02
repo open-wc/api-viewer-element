@@ -35,7 +35,7 @@ export class ExpansionPanel extends LitElement {
   /**
    * When true, the panel content is expanded and visible
    */
-  @property({ type: Boolean, reflect: true }) opened = false;
+  @property({ type: Boolean, reflect: true }) opened?: boolean | null = false;
 
   /**
    * Disabled panel can not be expanded or collapsed
