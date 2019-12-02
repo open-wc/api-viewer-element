@@ -35,9 +35,10 @@ const processAttrs = (
 
 const renderTab = (
   heading: string,
-  hidden: boolean,
+  count: number,
   content: TemplateResult
 ): TemplateResult => {
+  const hidden = count === 0;
   return html`
     <api-viewer-tab
       heading="${heading}"
@@ -48,43 +49,6 @@ const renderTab = (
       ${content}
     </api-viewer-panel>
   `;
-};
-
-const renderProperties = (props: PropertyInfo[]): TemplateResult => {
-  return renderTab(
-    'Properties',
-    props.length === 0,
-    html`
-      ${props.map(
-        prop => html`
-          <api-viewer-item
-            .name="${prop.name}"
-            .description="${prop.description}"
-            .valueType="${prop.type}"
-            .attribute="${prop.attribute}"
-          ></api-viewer-item>
-        `
-      )}
-    `
-  );
-};
-
-const renderAttributes = (attrs: AttributeInfo[]): TemplateResult => {
-  return renderTab(
-    'Attributes',
-    attrs.length === 0,
-    html`
-      ${attrs.map(
-        attr => html`
-          <api-viewer-item
-            .name="${attr.name}"
-            .description="${attr.description}"
-            .valueType="${attr.type}"
-          ></api-viewer-item>
-        `
-      )}
-    `
-  );
 };
 
 const renderEntity = (
@@ -100,26 +64,6 @@ const renderEntity = (
       `
     )}
   `;
-};
-
-const renderSlots = (slots: SlotInfo[]): TemplateResult => {
-  return renderTab('Slots', slots.length === 0, renderEntity(slots));
-};
-
-const renderEvents = (events: EventInfo[]): TemplateResult => {
-  return renderTab('Events', events.length === 0, renderEntity(events));
-};
-
-const renderCssParts = (parts: CSSPartInfo[]): TemplateResult => {
-  return renderTab('CSS Shadow Parts', parts.length === 0, renderEntity(parts));
-};
-
-const renderCssProps = (props: CSSPropertyInfo[]): TemplateResult => {
-  return renderTab(
-    'CSS Custom Properties',
-    props.length === 0,
-    renderEntity(props)
-  );
 };
 
 @customElement('api-viewer-docs')
@@ -192,11 +136,49 @@ export class ApiViewerDocs extends LitElement {
         `
       : html`
           <api-viewer-tabs>
-            ${renderProperties(properties)}${renderAttributes(attributes)}
-            ${renderSlots(slots)}${renderEvents(events)}${renderCssProps(
-              cssProps
+            ${renderTab(
+              'Properties',
+              properties.length,
+              html`
+                ${properties.map(
+                  prop => html`
+                    <api-viewer-item
+                      .name="${prop.name}"
+                      .description="${prop.description}"
+                      .valueType="${prop.type}"
+                      .attribute="${prop.attribute}"
+                    ></api-viewer-item>
+                  `
+                )}
+              `
             )}
-            ${renderCssParts(cssParts)}
+            ${renderTab(
+              'Attributes',
+              attributes.length,
+              html`
+                ${attributes.map(
+                  attr => html`
+                    <api-viewer-item
+                      .name="${attr.name}"
+                      .description="${attr.description}"
+                      .valueType="${attr.type}"
+                    ></api-viewer-item>
+                  `
+                )}
+              `
+            )}
+            ${renderTab('Slots', slots.length, renderEntity(slots))}
+            ${renderTab('Events', events.length, renderEntity(events))}
+            ${renderTab(
+              'CSS Custom Properties',
+              cssProps.length,
+              renderEntity(cssProps)
+            )}
+            ${renderTab(
+              'CSS Shadow Parts',
+              cssParts.length,
+              renderEntity(cssParts)
+            )}
           </api-viewer-tabs>
         `;
   }
