@@ -33,20 +33,6 @@ const processAttrs = (
   return attrs.filter(attr => !props.some(prop => prop.name === attr.name));
 };
 
-const processProps = (
-  props: PropertyInfo[],
-  attrs: AttributeInfo[]
-): PropertyInfo[] => {
-  return props.map((prop: PropertyInfo) => {
-    const p = prop;
-    const a = attrs.find(attr => prop.name === attr.name);
-    if (a) {
-      p.attribute = a.name;
-    }
-    return p;
-  });
-};
-
 const renderTab = (
   heading: string,
   hidden: boolean,
@@ -185,8 +171,8 @@ export class ApiViewerDocs extends LitElement {
   protected render() {
     const { slots, props, attrs, events, cssParts, cssProps } = this;
 
-    const attributes = processAttrs(attrs || [], props || []);
-    const properties = processProps(props || [], attrs || []);
+    const properties = props || [];
+    const attributes = processAttrs(attrs || [], properties);
 
     const emptyDocs = [
       properties,
