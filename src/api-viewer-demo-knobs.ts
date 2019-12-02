@@ -10,7 +10,7 @@ import { PropertyInfo, SlotValue } from './lib/types.js';
 import { getSlotTitle, hasTemplate } from './lib/utils.js';
 
 const getInputType = (type: string) => {
-  switch (type.replace(' | undefined', '')) {
+  switch (type.replace(' | undefined', '').replace(' | null', '')) {
     case 'boolean':
       return 'checkbox';
     case 'number':
