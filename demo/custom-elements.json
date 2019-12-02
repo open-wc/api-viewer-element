@@ -32,12 +32,14 @@
       "properties": [
         {
           "name": "opened",
+          "attribute": "opened",
           "description": "When true, the panel content is expanded and visible",
           "jsDoc": "/**\n   * When true, the panel content is expanded and visible\n   */",
           "type": "boolean | null | undefined"
         },
         {
           "name": "disabled",
+          "attribute": "disabled",
           "description": "Disabled panel can not be expanded or collapsed",
           "jsDoc": "/**\n   * Disabled panel can not be expanded or collapsed\n   */",
           "type": "boolean"
@@ -103,6 +105,7 @@
       "properties": [
         {
           "name": "opened",
+          "attribute": "opened",
           "description": "Index of the currently opened panel. First panel is opened by\ndefault. Only one panel can be opened at the same time.\nSetting `undefined` closes all the accordion panels.",
           "jsDoc": "/**\n   * Index of the currently opened panel. First panel is opened by\n   * default. Only one panel can be opened at the same time.\n   * Setting `undefined` closes all the accordion panels.\n   */",
           "type": "number | undefined"
@@ -154,24 +157,28 @@
       "properties": [
         {
           "name": "value",
+          "attribute": "value",
           "description": "Current progress value.",
           "jsDoc": "/**\n   * Current progress value.\n   */",
           "type": "number"
         },
         {
           "name": "min",
+          "attribute": "min",
           "description": "Minimum bound of the progress bar.",
           "jsDoc": "/**\n   * Minimum bound of the progress bar.\n   */",
           "type": "number"
         },
         {
           "name": "max",
+          "attribute": "max",
           "description": "Maximum bound of the progress bar.",
           "jsDoc": "/**\n   * Maximum bound of the progress bar.\n   */",
           "type": "number"
         },
         {
           "name": "indeterminate",
+          "attribute": "indeterminate",
           "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value).",
           "jsDoc": "/**\n   * Indeterminate state of the progress bar.\n   * This property takes precedence over other state properties (min, max, value).\n   */",
           "type": "boolean"
