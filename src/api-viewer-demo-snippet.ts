@@ -7,7 +7,8 @@ import {
   TemplateResult
 } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
-import 'prismjs';
+import { addLanguage, highlight } from 'illuminate-js';
+import { html as htmlSyntax } from 'illuminate-js/esm/languages';
 import {
   CSSPropertyInfo,
   KnobValues,
@@ -18,15 +19,9 @@ import { getTemplate } from './lib/utils.js';
 import buttonStyle from './lib/button-style.js';
 import prismTheme from './lib/prism-theme.js';
 
-const { highlight, languages } = window.Prism;
+addLanguage('html', htmlSyntax);
 
 const INDENT = '  ';
-
-declare global {
-  interface Window {
-    Prism: typeof import('prismjs');
-  }
-}
 
 const unindent = (text: string) => {
   if (!text) return text;
@@ -92,7 +87,7 @@ const renderSnippet = (
     markup += `${INDENT}}\n</style>`;
   }
 
-  const snippet = unsafeHTML(highlight(markup, languages.markup, 'html'));
+  const snippet = unsafeHTML(highlight(markup, 'html'));
 
   return html`
     <pre><code>${snippet}</code></pre>
