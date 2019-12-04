@@ -147,6 +147,7 @@ export class ApiViewerDocs extends LitElement {
                       .description="${prop.description}"
                       .valueType="${prop.type}"
                       .attribute="${prop.attribute}"
+                      .value="${prop.default}"
                     ></api-viewer-item>
                   `
                 )}

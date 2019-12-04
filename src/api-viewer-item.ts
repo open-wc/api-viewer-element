@@ -1,10 +1,6 @@
 import { LitElement, html, customElement, css, property } from 'lit-element';
-import { nothing, TemplateResult } from 'lit-html';
+import { nothing } from 'lit-html';
 import './api-viewer-marked.js';
-
-const NOTHING = html`
-  ${nothing}
-`;
 
 @customElement('api-viewer-item')
 export class ApiViewerItem extends LitElement {
@@ -12,11 +8,11 @@ export class ApiViewerItem extends LitElement {
 
   @property({ type: String }) description = '';
 
-  @property({ type: String, attribute: 'value-type' }) valueType?:
-    | string
-    | undefined;
+  @property({ type: String, attribute: 'value-type' }) valueType?: string;
 
-  @property({ type: String }) attribute?: string | undefined;
+  @property({ type: String }) attribute?: string;
+
+  @property({ type: String }) value?: string | number | boolean | null;
 
   static get styles() {
     return css`
@@ -28,6 +24,7 @@ export class ApiViewerItem extends LitElement {
 
       .row {
         display: flex;
+        flex-wrap: wrap;
         margin-bottom: 1rem;
       }
 
@@ -58,7 +55,7 @@ export class ApiViewerItem extends LitElement {
         line-height: 1.5rem;
       }
 
-      .value-name {
+      .accent {
         color: var(--ave-accent-color);
       }
 
@@ -67,43 +64,48 @@ export class ApiViewerItem extends LitElement {
         font-size: 0.9375rem;
         line-height: 1.5;
       }
+
+      @media (max-width: 480px) {
+        .col-type {
+          flex-basis: 100%;
+          margin-top: 1rem;
+        }
+      }
     `;
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  protected renderType(type?: string): TemplateResult {
-    return type
-      ? html`
-          <div class="col col-type">
-            <div class="label">Type</div>
-            <div class="value">${type}</div>
-          </div>
-        `
-      : NOTHING;
-  }
-
-  // eslint-disable-next-line class-methods-use-this
-  protected renderAttr(attr?: string): TemplateResult {
-    return attr
-      ? html`
-          <div class="col">
-            <div class="label">Attribute</div>
-            <div class="value">${attr}</div>
-          </div>
-        `
-      : NOTHING;
-  }
-
   protected render() {
-    const { name, description, valueType, attribute } = this;
+    const { name, description, valueType, attribute, value } = this;
 
     return html`
       <div class="row">
         <div class="col">
           <div class="label">Name</div>
-          <div class="value value-name">${name}</div>
+          <div class="value accent">${name}</div>
         </div>
-        ${this.renderAttr(attribute)}${this.renderType(valueType)}
+        ${attribute === undefined
+          ? nothing
+          : html`
+              <div class="col">
+                <div class="label">Attribute</div>
+                <div class="value">${attribute}</div>
+              </div>
+            `}
+        ${valueType === undefined
+          ? nothing
+          : html`
+              <div class="col col-type">
+                <div class="label">Type</div>
+                <div class="value">
+                  ${valueType.toLowerCase()}
+                  ${value === undefined
+                    ? nothing
+                    : html`
+                        = <span class="accent">${value}</span>
+                      `}
+                </div>
+              </div>
+            `}
       </div>
       <div ?hidden="${description === undefined}">
         <div class="label">Description</div>
