@@ -1,10 +1,8 @@
 import { LitElement, html, customElement, property } from 'lit-element';
 import { nothing, TemplateResult } from 'lit-html';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
-import 'marked';
+import marked from 'marked/lib/marked.esm.js';
 import DOMPurify from 'dompurify';
-
-const { marked } = window;
 
 const parse = (markdown?: string): TemplateResult => {
   if (!markdown) {
@@ -14,7 +12,7 @@ const parse = (markdown?: string): TemplateResult => {
   }
 
   return html`
-    ${unsafeHTML(DOMPurify.sanitize(marked.parse(markdown)))}
+    ${unsafeHTML(DOMPurify.sanitize(marked(markdown)))}
   `;
 };
 
