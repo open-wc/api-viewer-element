@@ -15,7 +15,7 @@ import {
   KnobValue,
   SlotValue
 } from './lib/types.js';
-import { getTemplate } from './lib/utils.js';
+import { getSlotTemplate } from './lib/utils.js';
 import buttonStyle from './lib/button-style.js';
 import prismTheme from './lib/prism-theme.js';
 
@@ -52,15 +52,14 @@ const renderSnippet = (
         markup += knob.value ? ` ${key}` : '';
         break;
       default:
-        // eslint-disable-next-line eqeqeq
-        markup += knob.value != undefined ? ` ${key}="${knob.value}"` : '';
+        markup += knob.value != null ? ` ${key}="${knob.value}"` : '';
         break;
     }
   });
 
   markup += `>`;
 
-  const template = getTemplate(tag);
+  const template = getSlotTemplate(tag);
   if (template instanceof HTMLTemplateElement) {
     const tpl = template.innerHTML.replace(/\s+$/, '').replace(/(="")/g, '');
     markup += unindent(tpl);

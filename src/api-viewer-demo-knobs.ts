@@ -7,7 +7,7 @@ import {
   TemplateResult
 } from 'lit-element';
 import { PropertyInfo, SlotValue } from './lib/types.js';
-import { getSlotTitle, hasTemplate } from './lib/utils.js';
+import { getSlotTitle, hasSlotTemplate } from './lib/utils.js';
 
 const getInputType = (type: string) => {
   switch (type.replace(' | undefined', '').replace(' | null', '')) {
@@ -147,7 +147,9 @@ export class ApiViewerDemoKnobs extends LitElement {
           <h3>Properties</h3>
           ${renderPropKnobs(this.props)}
         </section>
-        <section ?hidden="${hasTemplate(this.tag) || this.slots.length === 0}">
+        <section
+          ?hidden="${hasSlotTemplate(this.tag) || this.slots.length === 0}"
+        >
           <h3>Slots</h3>
           ${renderSlotKnobs(this.slots)}
         </section>

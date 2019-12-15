@@ -15,7 +15,7 @@ import {
   EventInfo,
   KnobValues
 } from './lib/types.js';
-import { getSlotTitle, isEmptyArray } from './lib/utils.js';
+import { getSlotTitle, hasHostTemplate, isEmptyArray } from './lib/utils.js';
 import './api-viewer-demo-renderer.js';
 import './api-viewer-demo-knobs.js';
 import './api-viewer-demo-snippet.js';
@@ -24,6 +24,19 @@ import './api-viewer-demo-css.js';
 import './api-viewer-panel.js';
 import './api-viewer-tab.js';
 import './api-viewer-tabs.js';
+
+const getDefault = (
+  prop: PropertyInfo
+): string | number | boolean | null | undefined => {
+  switch (prop.type.replace(' | undefined', '').replace(' | null', '')) {
+    case 'boolean':
+      return prop.default !== 'false';
+    case 'number':
+      return Number(prop.default);
+    default:
+      return prop.default;
+  }
+};
 
 @customElement('api-viewer-demo-layout')
 export class ApiViewerDemoLayout extends LitElement {
@@ -137,6 +150,20 @@ export class ApiViewerDemoLayout extends LitElement {
     `;
   }
 
+  protected firstUpdated(props: PropertyValues) {
+    if (props.has('props')) {
+      // Apply default property values from analyzer
+      this.props = this.props.map((prop: PropertyInfo) => {
+        return typeof prop.default === 'string'
+          ? {
+              ...prop,
+              value: getDefault(prop)
+            }
+          : prop;
+      });
+    }
+  }
+
   protected updated(props: PropertyValues) {
     super.updated(props);
 
@@ -189,16 +216,15 @@ export class ApiViewerDemoLayout extends LitElement {
 
   private _onRendered(e: CustomEvent) {
     const { component } = e.detail;
-    const { props } = this;
-    // TODO: get default values from analyzer
-    this.props = props.map((prop: PropertyInfo) => {
-      const { name } = prop;
-      const result = prop;
-      if (component[name] !== undefined) {
-        result.value = component[name];
-      }
-      return result;
-    });
+
+    if (hasHostTemplate(this.tag)) {
+      // Apply property values from template
+      this.props
+        .filter(prop => component[prop.name] !== getDefault(prop))
+        .forEach(({ name, type }) => {
+          this._syncKnob(component, name, type);
+        });
+    }
 
     this.events.forEach(event => {
       this._listen(component, event.name);
