@@ -67,9 +67,7 @@ $ wca analyze my-element.js --outFile custom-elements.json --format json
 
 4. Use [es-dev-server](https://open-wc.org/developing/es-dev-server.html) to serve your HTML page.
 
-## Examples
-
-### Playground
+## Playground
 
 Import the components documented in JSON file to enable demos:
 
@@ -80,23 +78,9 @@ Import the components documented in JSON file to enable demos:
 <api-viewer src="./custom-elements.json"></api-viewer>
 ```
 
-### Section
-
-By default, the API documentation is shown. If you want to show the playground instead, set the
-`section` property to `demo`:
-
-```html
-<api-viewer src="./custom-elements.json" section="demo"></api-viewer>
-```
-
-### Selected tag
-
-By default, the first element found in JSON file is shown. Set the `selected` property to configure
-it to a different tag name:
-
-```html
-<api-viewer src="./custom-elements.json" selected="my-element"></api-viewer>
-```
+In order to ensure that all the playground features work properly and knobs for properties and CSS
+custom properties are in sync, please read the following sections and update the code of your custom
+elements accordingly if needed.
 
 ### Knobs
 
@@ -131,13 +115,51 @@ button {
 }
 ```
 
+## Configuration
+
+### Properties
+
+The following properties can be set on the `<api-viewer>` element:
+
+#### `section`
+
+Use `section` property to toggle between demo and API docs:
+
+```html
+<api-viewer src="./custom-elements.json" section="demo"></api-viewer>
+```
+
+#### `selected`
+
+Use `selected` property to configure the displayed element:
+
+```html
+<api-viewer src="./custom-elements.json" selected="my-element"></api-viewer>
+```
+
 ### Templates
 
-Use `<template data-element="my-element">` for configuring complex content:
+The following templates can be passed to `<api-viewer>` element:
+
+#### `<template data-type="host">`
+
+Use "host" template to configure property values:
 
 ```html
 <api-viewer src="./custom-elements.json">
-  <template data-element="fancy-accordion">
+  <template data-element="progress-bar" data-target="host">
+    <progress-bar max="100" min="1" value="50"></progress-bar>
+  </template>
+</api-viewer>
+```
+
+#### `<template data-type="slot">`
+
+Use "slot" template to configure complex content:
+
+```html
+<api-viewer src="./custom-elements.json">
+  <template data-element="fancy-accordion" data-target="slot">
     <expansion-panel>
       <div slot="header">Panel 1</div>
       <div>Content 1</div>
