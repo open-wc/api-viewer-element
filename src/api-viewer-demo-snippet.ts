@@ -45,17 +45,19 @@ const renderSnippet = (
   cssProps: CSSPropertyInfo[]
 ): TemplateResult => {
   let markup = `<${tag}`;
-  Object.keys(values).forEach((key: string) => {
-    const knob: KnobValue = values[key];
-    switch (knob.type) {
-      case 'boolean':
-        markup += knob.value ? ` ${key}` : '';
-        break;
-      default:
-        markup += knob.value != null ? ` ${key}="${knob.value}"` : '';
-        break;
-    }
-  });
+  Object.keys(values)
+    .sort((a, b) => (a > b ? 1 : -1))
+    .forEach((key: string) => {
+      const knob: KnobValue = values[key];
+      switch (knob.type) {
+        case 'boolean':
+          markup += knob.value ? ` ${key}` : '';
+          break;
+        default:
+          markup += knob.value != null ? ` ${key}="${knob.value}"` : '';
+          break;
+      }
+    });
 
   markup += `>`;
 
