@@ -16,7 +16,6 @@ import {
   SlotValue
 } from './lib/types.js';
 import { getSlotTemplate, normalizeType } from './lib/utils.js';
-import buttonStyle from './lib/button-style.js';
 import prismTheme from './lib/prism-theme.js';
 
 addLanguage('html', htmlSyntax);
@@ -118,21 +117,13 @@ export class ApiViewerDemoSnippet extends LitElement {
   @property({ attribute: false, hasChanged: () => true })
   cssProps: CSSPropertyInfo[] = [];
 
-  @property({ type: String }) protected btnText = 'copy';
-
   static get styles() {
     return [
-      buttonStyle,
       prismTheme,
       css`
         :host {
           display: block;
-          position: relative;
           padding: 0.75rem 1rem;
-        }
-
-        pre {
-          margin: 0;
         }
       `
     ];
@@ -140,35 +131,12 @@ export class ApiViewerDemoSnippet extends LitElement {
 
   protected render() {
     return html`
-      <button @click="${this._onCopyClick}">${this.btnText}</button>
       ${renderSnippet(this.tag, this.knobs, this.slots, this.cssProps)}
     `;
   }
 
-  private _onCopyClick() {
-    const range = document.createRange();
-    const source = this.renderRoot.querySelector('code');
-    if (source) {
-      range.selectNodeContents(source);
-      const selection = window.getSelection() as Selection;
-      selection.removeAllRanges();
-      selection.addRange(range);
-      try {
-        document.execCommand('copy');
-        this.btnText = 'done';
-      } catch (err) {
-        // Copy command is not available
-        console.error(err);
-        this.btnText = 'error';
-      }
-
-      // Return to the copy button after a second.
-      setTimeout(() => {
-        this.btnText = 'copy';
-      }, 1000);
-
-      selection.removeAllRanges();
-    }
+  get source() {
+    return this.renderRoot.querySelector('code');
   }
 }
 

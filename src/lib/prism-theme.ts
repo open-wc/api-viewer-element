@@ -2,6 +2,7 @@ import { css } from 'lit-element';
 
 export default css`
   pre {
+    margin: 0;
     color: black;
     background: none;
     font-family: var(--ave-monospace-font);

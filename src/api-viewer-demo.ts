@@ -2,7 +2,6 @@ import {
   LitElement,
   html,
   customElement,
-  css,
   property,
   TemplateResult
 } from 'lit-element';
@@ -60,16 +59,8 @@ export class ApiViewerDemo extends LitElement {
     `;
   }
 
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
-
-      .warn {
-        padding: 1rem;
-      }
-    `;
+  protected createRenderRoot() {
+    return this;
   }
 
   protected render() {

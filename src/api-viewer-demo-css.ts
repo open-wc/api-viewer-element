@@ -2,7 +2,6 @@ import {
   LitElement,
   html,
   customElement,
-  css,
   property,
   TemplateResult
 } from 'lit-element';
@@ -33,34 +32,13 @@ export class ApiViewerDemoCss extends LitElement {
   @property({ attribute: false, hasChanged: () => true })
   cssProps: CSSPropertyInfo[] = [];
 
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-        padding: 1rem;
-      }
-
-      section {
-        width: 50%;
-      }
-
-      td {
-        padding: 0.25rem 0.25rem 0.25rem 0;
-        font-size: 0.9375rem;
-        white-space: nowrap;
-      }
-
-      h3 {
-        font-size: 1rem;
-        font-weight: bold;
-        margin: 0 0 0.25rem;
-      }
-    `;
+  protected createRenderRoot() {
+    return this;
   }
 
   protected render() {
     return html`
-      <section>
+      <section class="column">
         <h3>Custom CSS Properties</h3>
         ${renderCssProps(this.cssProps)}
       </section>

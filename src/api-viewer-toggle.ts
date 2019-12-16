@@ -1,29 +1,18 @@
-import { LitElement, html, customElement, css, property } from 'lit-element';
+import { LitElement, html, customElement, property } from 'lit-element';
 
 @customElement('api-viewer-toggle')
 export class ApiViewerToggle extends LitElement {
   @property({ type: String }) section = 'docs';
 
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-        margin-right: 0.5rem;
-        color: var(--ave-header-color);
-        font-size: 0.875rem;
-      }
-
-      label {
-        padding-right: 0.5rem;
-      }
-    `;
+  protected createRenderRoot() {
+    return this;
   }
 
   protected render() {
     const { section } = this;
 
     return html`
-      <label>
+      <label class="radio-label">
         <input
           type="radio"
           name="section"
@@ -32,7 +21,7 @@ export class ApiViewerToggle extends LitElement {
         />
         <span>Docs</span>
       </label>
-      <label>
+      <label class="radio-label">
         <input
           type="radio"
           name="section"

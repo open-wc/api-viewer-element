@@ -2,7 +2,6 @@ import {
   LitElement,
   html,
   customElement,
-  css,
   property,
   PropertyValues
 } from 'lit-element';
@@ -71,26 +70,10 @@ export class ApiViewerDemoLayout extends LitElement {
   @property({ attribute: false, hasChanged: () => true })
   knobs: KnobValues = {};
 
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
+  @property({ type: String }) protected copyBtnText = 'copy';
 
-      api-viewer-tabs {
-        border-top: solid 1px var(--ave-border-color);
-      }
-
-      api-viewer-panel {
-        box-sizing: border-box;
-        background: #fafafa;
-      }
-
-      .rendered {
-        padding: 1.5rem;
-        border-top: solid 1px var(--ave-border-color);
-      }
-    `;
+  protected createRenderRoot() {
+    return this;
   }
 
   protected render() {
@@ -107,9 +90,10 @@ export class ApiViewerDemoLayout extends LitElement {
           this.processedCss
         )}
       </div>
-      <api-viewer-tabs>
+      <api-viewer-tabs class="demo-tabs">
         <api-viewer-tab heading="Source" slot="tab"></api-viewer-tab>
-        <api-viewer-panel slot="panel">
+        <api-viewer-panel slot="panel" class="source">
+          <button @click="${this._onCopyClick}">${this.copyBtnText}</button>
           <api-viewer-demo-snippet
             .tag="${this.tag}"
             .knobs="${this.knobs}"
@@ -191,6 +175,32 @@ export class ApiViewerDemoLayout extends LitElement {
     const tab = this.renderRoot.querySelector('.events') as HTMLElement;
     if (tab) {
       tab.focus();
+    }
+  }
+
+  private _onCopyClick() {
+    const snippet = this.renderRoot.querySelector('api-viewer-demo-snippet');
+    if (snippet && snippet.source) {
+      const range = document.createRange();
+      range.selectNodeContents(snippet.source);
+      const selection = window.getSelection() as Selection;
+      selection.removeAllRanges();
+      selection.addRange(range);
+      try {
+        document.execCommand('copy');
+        this.copyBtnText = 'done';
+      } catch (err) {
+        // Copy command is not available
+        console.error(err);
+        this.copyBtnText = 'error';
+      }
+
+      // Return to the copy button after a second.
+      setTimeout(() => {
+        this.copyBtnText = 'copy';
+      }, 1000);
+
+      selection.removeAllRanges();
     }
   }
 

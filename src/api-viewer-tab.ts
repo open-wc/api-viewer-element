@@ -27,6 +27,7 @@ export class ApiViewerTab extends LitElement {
         flex-shrink: 0;
         box-sizing: border-box;
         position: relative;
+        max-width: 150px;
         overflow: hidden;
         min-height: 3rem;
         padding: 0 1rem;

@@ -2,7 +2,6 @@ import {
   LitElement,
   html,
   customElement,
-  css,
   property,
   TemplateResult
 } from 'lit-element';
@@ -102,53 +101,20 @@ export class ApiViewerDemoKnobs extends LitElement {
   @property({ attribute: false, hasChanged: () => true })
   slots: SlotValue[] = [];
 
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-        padding: 1rem;
-      }
-
-      .columns {
-        display: flex;
-      }
-
-      section {
-        width: 50%;
-      }
-
-      td {
-        padding: 0.25rem 0.25rem 0.25rem 0;
-        font-size: 0.9375rem;
-      }
-
-      h3 {
-        font-size: 1rem;
-        font-weight: bold;
-        margin: 0 0 0.25rem;
-      }
-
-      @media (max-width: 480px) {
-        .columns {
-          flex-direction: column;
-        }
-
-        section:not(:last-child) {
-          margin-bottom: 1rem;
-        }
-      }
-    `;
+  protected createRenderRoot() {
+    return this;
   }
 
   protected render() {
     return html`
       <div class="columns">
-        <section>
+        <section class="column">
           <h3>Properties</h3>
           ${renderPropKnobs(this.props)}
         </section>
         <section
           ?hidden="${hasSlotTemplate(this.tag) || this.slots.length === 0}"
+          class="column"
         >
           <h3>Slots</h3>
           ${renderSlotKnobs(this.slots)}

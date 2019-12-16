@@ -1,4 +1,4 @@
-import { LitElement, html, customElement, css, property } from 'lit-element';
+import { LitElement, html, customElement, property } from 'lit-element';
 import { cache } from 'lit-html/directives/cache.js';
 import { ElementInfo } from './lib/types.js';
 import { EMPTY_ELEMENT } from './lib/constants.js';
@@ -16,36 +16,8 @@ export class ApiViewerContent extends LitElement {
 
   @property({ type: String }) section = 'docs';
 
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
-
-      api-viewer-marked {
-        display: block;
-        padding: 0 1rem;
-        border-bottom: solid 1px var(--ave-border-color);
-      }
-
-      api-viewer-marked[hidden] {
-        display: none;
-      }
-
-      p {
-        margin: 1rem 0;
-        font-size: 0.9375rem;
-        line-height: 1.5;
-      }
-
-      a {
-        color: var(--ave-link-color);
-      }
-
-      a:hover {
-        color: var(--ave-link-hover-color);
-      }
-    `;
+  protected createRenderRoot() {
+    return this;
   }
 
   protected render() {
@@ -94,6 +66,7 @@ export class ApiViewerContent extends LitElement {
               <api-viewer-marked
                 .content="${description}"
                 ?hidden="${description === ''}"
+                class="description"
               ></api-viewer-marked>
               <api-viewer-docs
                 .name="${name}"

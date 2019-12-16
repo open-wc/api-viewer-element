@@ -2,7 +2,6 @@ import {
   LitElement,
   html,
   customElement,
-  css,
   property,
   PropertyValues
 } from 'lit-element';
@@ -88,28 +87,8 @@ export class ApiViewerDocs extends LitElement {
   @property({ attribute: false, hasChanged: () => true })
   cssProps: CSSPropertyInfo[] = [];
 
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
-
-      api-viewer-item:not(:first-of-type) {
-        border-top: solid 1px var(--ave-border-color);
-      }
-
-      api-viewer-tab {
-        max-width: 150px;
-      }
-
-      api-viewer-tab[heading^='CSS'] {
-        font-size: 0.8125rem;
-      }
-
-      .warn {
-        padding: 1rem;
-      }
-    `;
+  protected createRenderRoot() {
+    return this;
   }
 
   protected render() {
