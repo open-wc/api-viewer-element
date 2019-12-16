@@ -6,6 +6,7 @@ import {
   property,
   PropertyValues
 } from 'lit-element';
+import { renderer } from './lib/renderer.js';
 import {
   ComponentWithProps,
   CSSPropertyInfo,
@@ -21,7 +22,6 @@ import {
   isEmptyArray,
   normalizeType
 } from './lib/utils.js';
-import './api-viewer-demo-renderer.js';
 import './api-viewer-demo-knobs.js';
 import './api-viewer-demo-snippet.js';
 import './api-viewer-demo-events.js';
@@ -85,6 +85,11 @@ export class ApiViewerDemoLayout extends LitElement {
         box-sizing: border-box;
         background: #fafafa;
       }
+
+      .rendered {
+        padding: 1.5rem;
+        border-top: solid 1px var(--ave-border-color);
+      }
     `;
   }
 
@@ -94,13 +99,14 @@ export class ApiViewerDemoLayout extends LitElement {
     const noKnobs = isEmptyArray(this.props) && isEmptyArray(this.slots);
 
     return html`
-      <api-viewer-demo-renderer
-        .tag="${this.tag}"
-        .knobs="${this.knobs}"
-        .slots="${this.processedSlots}"
-        .cssProps="${this.processedCss}"
-        @rendered="${this._onRendered}"
-      ></api-viewer-demo-renderer>
+      <div class="rendered" @rendered="${this._onRendered}">
+        ${renderer(
+          this.tag,
+          this.knobs,
+          this.processedSlots,
+          this.processedCss
+        )}
+      </div>
       <api-viewer-tabs>
         <api-viewer-tab heading="Source" slot="tab"></api-viewer-tab>
         <api-viewer-panel slot="panel">
