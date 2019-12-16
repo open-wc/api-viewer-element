@@ -15,7 +15,12 @@ import {
   EventInfo,
   KnobValues
 } from './lib/types.js';
-import { getSlotTitle, hasHostTemplate, isEmptyArray } from './lib/utils.js';
+import {
+  getSlotTitle,
+  hasHostTemplate,
+  isEmptyArray,
+  normalizeType
+} from './lib/utils.js';
 import './api-viewer-demo-renderer.js';
 import './api-viewer-demo-knobs.js';
 import './api-viewer-demo-snippet.js';
@@ -28,7 +33,7 @@ import './api-viewer-tabs.js';
 const getDefault = (
   prop: PropertyInfo
 ): string | number | boolean | null | undefined => {
-  switch (prop.type.replace(' | undefined', '').replace(' | null', '')) {
+  switch (normalizeType(prop.type)) {
     case 'boolean':
       return prop.default !== 'false';
     case 'number':

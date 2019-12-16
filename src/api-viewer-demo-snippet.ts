@@ -15,7 +15,7 @@ import {
   KnobValue,
   SlotValue
 } from './lib/types.js';
-import { getSlotTemplate } from './lib/utils.js';
+import { getSlotTemplate, normalizeType } from './lib/utils.js';
 import buttonStyle from './lib/button-style.js';
 import prismTheme from './lib/prism-theme.js';
 
@@ -49,7 +49,7 @@ const renderSnippet = (
     .sort((a, b) => (a > b ? 1 : -1))
     .forEach((key: string) => {
       const knob: KnobValue = values[key];
-      switch (knob.type) {
+      switch (normalizeType(knob.type)) {
         case 'boolean':
           markup += knob.value ? ` ${key}` : '';
           break;

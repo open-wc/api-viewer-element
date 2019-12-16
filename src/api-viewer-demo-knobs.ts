@@ -7,10 +7,10 @@ import {
   TemplateResult
 } from 'lit-element';
 import { PropertyInfo, SlotValue } from './lib/types.js';
-import { getSlotTitle, hasSlotTemplate } from './lib/utils.js';
+import { getSlotTitle, hasSlotTemplate, normalizeType } from './lib/utils.js';
 
 const getInputType = (type: string) => {
-  switch (type.replace(' | undefined', '').replace(' | null', '')) {
+  switch (normalizeType(type)) {
     case 'boolean':
       return 'checkbox';
     case 'number':
@@ -27,7 +27,7 @@ const getInput = (name: string, type: string, value: unknown) => {
     input = html`
       <input type="${inputType}" data-name="${name}" data-type="${type}" />
     `;
-  } else if (type === 'boolean') {
+  } else if (normalizeType(type) === 'boolean') {
     input = html`
       <input
         type="checkbox"
@@ -177,7 +177,10 @@ export class ApiViewerDemoKnobs extends LitElement {
               detail: {
                 name: target.dataset.name,
                 type,
-                value: type === 'boolean' ? target.checked : target.value
+                value:
+                  normalizeType(type as string) === 'boolean'
+                    ? target.checked
+                    : target.value
               }
             })
           );

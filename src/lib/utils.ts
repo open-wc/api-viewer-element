@@ -34,3 +34,6 @@ export const hasHostTemplate = (name: string) => {
 };
 
 export const isEmptyArray = (array: unknown[]) => array.length === 0;
+
+export const normalizeType = (type: string) =>
+  type.replace(' | undefined', '').replace(' | null', '');
