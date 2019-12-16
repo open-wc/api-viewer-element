@@ -6,7 +6,6 @@ import './api-viewer-docs.js';
 import './api-viewer-demo.js';
 import './api-viewer-header.js';
 import './api-viewer-marked.js';
-import './api-viewer-select.js';
 import './api-viewer-toggle.js';
 
 @customElement('api-viewer-content')
@@ -69,18 +68,25 @@ export class ApiViewerContent extends LitElement {
       a.name > b.name ? 1 : -1
     );
 
+    const selectedTag = tags.find((_, index) => this.selected === index) || '';
+
     return html`
       <api-viewer-header .heading="${name}">
         <api-viewer-toggle
           .section="${section}"
           @section-changed="${this._onToggle}"
         ></api-viewer-toggle>
-        <api-viewer-select
-          .options="${tags}"
-          .selected="${selected}"
-          @selected-changed="${this._onSelect}"
-          ?hidden="${elements.length === 1}"
-        ></api-viewer-select>
+        <select
+          @change="${this._onSelect}"
+          .value="${selectedTag}"
+          ?hidden="${tags.length === 1}"
+        >
+          ${tags.map(option => {
+            return html`
+              <option>${option}</option>
+            `;
+          })}
+        </select>
       </api-viewer-header>
       ${cache(
         section === 'docs'
@@ -113,7 +119,7 @@ export class ApiViewerContent extends LitElement {
   }
 
   private _onSelect(e: CustomEvent) {
-    const { selected } = e.detail;
+    const selected = (e.target as HTMLSelectElement).value;
     this.selected = this.elements.findIndex(el => el.name === selected);
   }
 
