@@ -6,7 +6,6 @@ import './api-viewer-docs.js';
 import './api-viewer-demo.js';
 import './api-viewer-header.js';
 import './api-viewer-marked.js';
-import './api-viewer-toggle.js';
 
 @customElement('api-viewer-content')
 export class ApiViewerContent extends LitElement {
@@ -44,10 +43,26 @@ export class ApiViewerContent extends LitElement {
 
     return html`
       <api-viewer-header .heading="${name}">
-        <api-viewer-toggle
-          .section="${section}"
-          @section-changed="${this._onToggle}"
-        ></api-viewer-toggle>
+        <label class="radio-label">
+          <input
+            type="radio"
+            name="section"
+            value="docs"
+            ?checked="${section === 'docs'}"
+            @change="${this._onToggle}"
+          />
+          <span>Docs</span>
+        </label>
+        <label class="radio-label">
+          <input
+            type="radio"
+            name="section"
+            value="demo"
+            ?checked="${section === 'demo'}"
+            @change="${this._onToggle}"
+          />
+          <span>Demo</span>
+        </label>
         <select
           @change="${this._onSelect}"
           .value="${selectedTag}"
@@ -97,7 +112,7 @@ export class ApiViewerContent extends LitElement {
   }
 
   private _onToggle(e: CustomEvent) {
-    this.section = e.detail.section;
+    this.section = (e.target as HTMLInputElement).value;
   }
 }
 

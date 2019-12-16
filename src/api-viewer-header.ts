@@ -37,7 +37,7 @@ export class ApiViewerHeader extends LitElement {
         }
       }
 
-      ::slotted(api-viewer-toggle) {
+      ::slotted(label) {
         display: block;
         margin-right: 0.5rem;
         color: var(--ave-header-color);
