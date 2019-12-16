@@ -3,6 +3,7 @@ import { css } from 'lit-element';
 export default css`
   :host {
     display: block;
+    text-align: left;
     box-sizing: border-box;
     max-width: 800px;
     min-width: 360px;
