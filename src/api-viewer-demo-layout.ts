@@ -165,8 +165,6 @@ export class ApiViewerDemoLayout extends LitElement {
   }
 
   protected updated(props: PropertyValues) {
-    super.updated(props);
-
     if (props.has('slots') && this.slots) {
       this.processedSlots = this.slots.map((slot: SlotInfo) => {
         return {

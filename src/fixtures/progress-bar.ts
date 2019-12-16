@@ -163,8 +163,6 @@ export class ProgressBar extends LitElement {
   }
 
   protected updated(props: PropertyValues) {
-    super.updated(props);
-
     const minChanged = props.has('min');
     if (minChanged) {
       this._minChanged(this.min);

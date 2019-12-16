@@ -185,8 +185,6 @@ export class ApiViewerDocs extends LitElement {
   }
 
   protected updated(props: PropertyValues) {
-    super.updated(props);
-
     if (props.has('name') && props.get('name')) {
       const tabs = this.renderRoot.querySelector('api-viewer-tabs');
       if (tabs instanceof ApiViewerTabs) {

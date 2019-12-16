@@ -146,8 +146,6 @@ export class ApiViewerTab extends LitElement {
   }
 
   protected updated(props: PropertyValues) {
-    super.updated(props);
-
     if (props.has('selected')) {
       this.setAttribute('aria-selected', String(this.selected));
       this.setAttribute('tabindex', this.selected ? '0' : '-1');
