@@ -1,4 +1,4 @@
-import { LitElement, html, customElement, css, query } from 'lit-element';
+import { LitElement, html, customElement, css } from 'lit-element';
 import { ApiViewerTab } from './api-viewer-tab.js';
 import { ApiViewerPanel } from './api-viewer-panel.js';
 
@@ -13,10 +13,6 @@ const KEYCODE = {
 
 @customElement('api-viewer-tabs')
 export class ApiViewerTabs extends LitElement {
-  @query('slot[name="tab"]') private tabSlot?: HTMLSlotElement;
-
-  @query('slot[name="panel"]') private panelSlot?: HTMLSlotElement;
-
   private _boundSlotChange = this._onSlotChange.bind(this);
 
   static get styles() {
@@ -60,9 +56,13 @@ export class ApiViewerTabs extends LitElement {
     this.addEventListener('keydown', this._onKeyDown);
     this.addEventListener('click', this._onClick);
 
-    if (this.tabSlot && this.panelSlot) {
-      this.tabSlot.addEventListener('slotchange', this._boundSlotChange);
-      this.panelSlot.addEventListener('slotchange', this._boundSlotChange);
+    const [tabSlot, panelSlot] = Array.from(
+      this.renderRoot.querySelectorAll('slot')
+    );
+
+    if (tabSlot && panelSlot) {
+      tabSlot.addEventListener('slotchange', this._boundSlotChange);
+      panelSlot.addEventListener('slotchange', this._boundSlotChange);
     }
 
     Promise.all(
