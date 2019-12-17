@@ -29,10 +29,6 @@
       animation: fadein 3s;
     }
 
-    .hidden {
-      display: none;
-    }
-
     @keyframes fadein {
       from {
         opacity: 0;
@@ -69,28 +65,30 @@
     </api-viewer>
   </section>
 
-  <section class="parts hidden">
-    <h2>Bonus: CSS shadow parts</h2>
-    <api-viewer src="./custom-elements.json" class="custom">
-      <template data-element="fancy-accordion" data-target="slot">
-        <expansion-panel>
-          <div slot="header">Panel 1</div>
-          <div>Content 1</div>
-        </expansion-panel>
-        <expansion-panel disabled>
-          <div slot="header">Panel 2</div>
-          <div>Content 2</div>
-        </expansion-panel>
-        <expansion-panel>
-          <div slot="header">Panel 3</div>
-          <div>Content 3</div>
-        </expansion-panel>
-      </template>
-      <template data-element="progress-bar" data-target="host">
-        <progress-bar max="100" min="1" value="50"></progress-bar>
-      </template>
-    </api-viewer>
-  </section>
+  <template id="parts">
+    <section class="parts">
+      <h2>Bonus: CSS shadow parts</h2>
+      <api-viewer src="./custom-elements.json" class="custom">
+        <template data-element="fancy-accordion" data-target="slot">
+          <expansion-panel>
+            <div slot="header">Panel 1</div>
+            <div>Content 1</div>
+          </expansion-panel>
+          <expansion-panel disabled>
+            <div slot="header">Panel 2</div>
+            <div>Content 2</div>
+          </expansion-panel>
+          <expansion-panel>
+            <div slot="header">Panel 3</div>
+            <div>Content 3</div>
+          </expansion-panel>
+        </template>
+        <template data-element="progress-bar" data-target="host">
+          <progress-bar max="100" min="1" value="50"></progress-bar>
+        </template>
+      </api-viewer>
+    </section>
+  </template>
 
   <script type="module" src="../lib/fixtures/expansion-panel.js"></script>
   <script type="module" src="../lib/fixtures/fancy-accordion.js"></script>
@@ -100,7 +98,8 @@
   <script>
     if ('part' in HTMLElement.prototype) {
       window.requestAnimationFrame(() => {
-        document.querySelector('.parts').classList.remove('hidden');
+        const tpl = document.getElementById('parts');
+        document.body.insertBefore(tpl.content.cloneNode(true), tpl);
       });
     }
   </script>
