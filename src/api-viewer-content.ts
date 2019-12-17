@@ -39,8 +39,6 @@ export class ApiViewerContent extends LitElement {
       a.name > b.name ? 1 : -1
     );
 
-    const selectedTag = tags.find((_, index) => this.selected === index) || '';
-
     return html`
       <api-viewer-header .heading="${name}" part="header">
         <input
@@ -66,13 +64,13 @@ export class ApiViewerContent extends LitElement {
         <label part="select-label">
           <select
             @change="${this._onSelect}"
-            .value="${selectedTag}"
+            .value="${String(selected)}"
             ?hidden="${tags.length === 1}"
             part="select"
           >
-            ${tags.map(option => {
+            ${tags.map((tag, idx) => {
               return html`
-                <option>${option}</option>
+                <option value="${idx}">${tag}</option>
               `;
             })}
           </select>
@@ -110,8 +108,7 @@ export class ApiViewerContent extends LitElement {
   }
 
   private _onSelect(e: CustomEvent) {
-    const selected = (e.target as HTMLSelectElement).value;
-    this.selected = this.elements.findIndex(el => el.name === selected);
+    this.selected = Number((e.target as HTMLSelectElement).value);
   }
 
   private _onToggle(e: CustomEvent) {
