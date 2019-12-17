@@ -16,6 +16,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.3.0] - 2019-12-17
+
+### Added
+
+- CSS shadow parts are now available for styling
+- Docs: support default values for properties
+- Demo: support `<template data-target="host">`
+- Added `--ave-tab-indicator-size` custom property
+
+### Changed
+
+- Updated `web-component-analyzer` to 1.0.0
+- Updated `marked` to 0.8.0 with ES modules
+- Replaced `prismjs` with `illuminate-js`
+- Simplified visual appearance of tabs
+- Improved responsive layout in header
+- Demo: added labels for knobs inputs
+- Extracted `ApiViewerBase` base class
+
+### Fixed
+
+- Demo: fix handling types with null and undefined
+
 ## [0.2.9] - 2019-12-02
 
 ### Fixed
