@@ -22,25 +22,25 @@ export class ApiViewerItem extends LitElement {
     const { name, description, valueType, attribute, value } = this;
 
     return html`
-      <div class="api-row">
-        <div class="api-col">
-          <div class="api-label">Name</div>
-          <div class="api-value accent">${name}</div>
+      <div part="docs-row">
+        <div part="docs-column">
+          <div part="docs-label">Name</div>
+          <div part="docs-value" class="accent">${name}</div>
         </div>
         ${attribute === undefined
           ? nothing
           : html`
-              <div class="api-col">
-                <div class="api-label">Attribute</div>
-                <div class="api-value">${attribute}</div>
+              <div part="docs-column">
+                <div part="docs-label">Attribute</div>
+                <div part="docs-value">${attribute}</div>
               </div>
             `}
         ${valueType === undefined
           ? nothing
           : html`
-              <div class="api-col api-col-type">
-                <div class="api-label">Type</div>
-                <div class="api-value">
+              <div part="docs-column" class="column-type">
+                <div part="docs-label">Type</div>
+                <div part="docs-value">
                   ${valueType.toLowerCase()}
                   ${value === undefined
                     ? nothing
@@ -52,8 +52,11 @@ export class ApiViewerItem extends LitElement {
             `}
       </div>
       <div ?hidden="${description === undefined}">
-        <div class="api-label">Description</div>
-        <api-viewer-marked content="${description}"></api-viewer-marked>
+        <div part="docs-label">Description</div>
+        <api-viewer-marked
+          part="docs-markdown"
+          content="${description}"
+        ></api-viewer-marked>
       </div>
     `;
   }

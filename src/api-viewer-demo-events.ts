@@ -23,7 +23,7 @@ const renderEvents = (log: CustomEvent[]): TemplateResult => {
   return html`
     ${log.map(e => {
       return html`
-        <p class="event">
+        <p part="event-record">
           event: "${e.type}". detail: ${renderDetail(e.detail)}
         </p>
       `;
@@ -43,14 +43,20 @@ export class ApiViewerDemoEvents extends LitElement {
   protected render() {
     const { log } = this;
     return html`
-      <button @click="${this._onClearClick}" ?hidden="${!log.length}">
+      <button
+        @click="${this._onClearClick}"
+        ?hidden="${!log.length}"
+        part="button"
+      >
         Clear
       </button>
       ${cache(
         log.length
           ? renderEvents(log)
           : html`
-              <p class="event">Interact with component to see the event log.</p>
+              <p part="event-record">
+                Interact with component to see the event log.
+              </p>
             `
       )}
     `;

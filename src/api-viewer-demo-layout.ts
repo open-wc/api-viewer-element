@@ -82,7 +82,7 @@ export class ApiViewerDemoLayout extends LitElement {
     const noKnobs = isEmptyArray(this.props) && isEmptyArray(this.slots);
 
     return html`
-      <div class="rendered" @rendered="${this._onRendered}">
+      <div part="demo-output" @rendered="${this._onRendered}">
         ${renderer(
           this.tag,
           this.knobs,
@@ -91,9 +91,11 @@ export class ApiViewerDemoLayout extends LitElement {
         )}
       </div>
       <api-viewer-tabs class="demo-tabs">
-        <api-viewer-tab heading="Source" slot="tab"></api-viewer-tab>
-        <api-viewer-panel slot="panel" class="source">
-          <button @click="${this._onCopyClick}">${this.copyBtnText}</button>
+        <api-viewer-tab heading="Source" slot="tab" part="tab"></api-viewer-tab>
+        <api-viewer-panel slot="panel" part="tab-panel">
+          <button @click="${this._onCopyClick}" part="button">
+            ${this.copyBtnText}
+          </button>
           <api-viewer-demo-snippet
             .tag="${this.tag}"
             .knobs="${this.knobs}"
@@ -104,9 +106,10 @@ export class ApiViewerDemoLayout extends LitElement {
         <api-viewer-tab
           heading="Knobs"
           slot="tab"
+          part="tab"
           ?hidden="${noKnobs}"
         ></api-viewer-tab>
-        <api-viewer-panel slot="panel">
+        <api-viewer-panel slot="panel" part="tab-panel">
           <api-viewer-demo-knobs
             .tag="${this.tag}"
             .props="${this.props}"
@@ -119,9 +122,10 @@ export class ApiViewerDemoLayout extends LitElement {
         <api-viewer-tab
           heading="Styles"
           slot="tab"
+          part="tab"
           ?hidden="${noCss}"
         ></api-viewer-tab>
-        <api-viewer-panel slot="panel">
+        <api-viewer-panel slot="panel" part="tab-panel">
           <api-viewer-demo-css
             ?hidden="${noCss}"
             .cssProps="${this.processedCss}"
@@ -129,16 +133,18 @@ export class ApiViewerDemoLayout extends LitElement {
           ></api-viewer-demo-css>
         </api-viewer-panel>
         <api-viewer-tab
+          id="events"
           heading="Events"
           slot="tab"
+          part="tab"
           ?hidden="${noEvents}"
-          class="events"
         ></api-viewer-tab>
-        <api-viewer-panel slot="panel">
+        <api-viewer-panel slot="panel" part="tab-panel">
           <api-viewer-demo-events
             ?hidden="${noEvents}"
             .log="${this.eventLog}"
             @clear="${this._onLogClear}"
+            part="event-log"
           ></api-viewer-demo-events>
         </api-viewer-panel>
       </api-viewer-tabs>
@@ -172,7 +178,7 @@ export class ApiViewerDemoLayout extends LitElement {
 
   private _onLogClear() {
     this.eventLog = [];
-    const tab = this.renderRoot.querySelector('.events') as HTMLElement;
+    const tab = this.renderRoot.querySelector('#events') as HTMLElement;
     if (tab) {
       tab.focus();
     }

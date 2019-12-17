@@ -37,13 +37,6 @@ export class ApiViewerHeader extends LitElement {
           margin-bottom: 0.5rem;
         }
       }
-
-      ::slotted(label) {
-        display: block;
-        margin-right: 0.5rem;
-        color: var(--ave-header-color);
-        font-size: 0.875rem;
-      }
     `;
   }
 

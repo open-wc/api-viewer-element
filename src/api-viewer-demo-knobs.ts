@@ -33,6 +33,7 @@ const getInput = (name: string, type: string, value: unknown) => {
         .checked="${Boolean(value)}"
         data-name="${name}"
         data-type="${type}"
+        part="checkbox"
       />
     `;
   } else {
@@ -42,6 +43,7 @@ const getInput = (name: string, type: string, value: unknown) => {
         .value="${String(value)}"
         data-name="${name}"
         data-type="${type}"
+        part="input"
       />
     `;
   }
@@ -78,6 +80,7 @@ const renderSlotKnobs = (slots: SlotValue[]): TemplateResult => {
             .value="${content}"
             data-type="slot"
             data-slot="${name}"
+            part="input"
           />
         </td>
       </tr>
@@ -108,15 +111,15 @@ export class ApiViewerDemoKnobs extends LitElement {
   protected render() {
     return html`
       <div class="columns">
-        <section class="column">
-          <h3>Properties</h3>
+        <section part="knobs-column">
+          <h3 part="knobs-header">Properties</h3>
           ${renderPropKnobs(this.props)}
         </section>
         <section
           ?hidden="${hasSlotTemplate(this.tag) || this.slots.length === 0}"
-          class="column"
+          part="knobs-column"
         >
-          <h3>Slots</h3>
+          <h3 part="knobs-header">Slots</h3>
           ${renderSlotKnobs(this.slots)}
         </section>
       </div>

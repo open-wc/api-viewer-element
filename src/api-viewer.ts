@@ -43,7 +43,7 @@ export class ApiViewer extends LitElement {
           ></api-viewer-content>
         `
       : html`
-          <div class="warn">
+          <div part="warning">
             No custom elements found in the JSON file.
           </div>
         `;

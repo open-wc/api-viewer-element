@@ -42,9 +42,10 @@ const renderTab = (
     <api-viewer-tab
       heading="${heading}"
       slot="tab"
+      part="tab"
       ?hidden="${hidden}"
     ></api-viewer-tab>
-    <api-viewer-panel slot="panel" ?hidden="${hidden}">
+    <api-viewer-panel slot="panel" part="tab-panel" ?hidden="${hidden}">
       ${content}
     </api-viewer-panel>
   `;
@@ -59,6 +60,7 @@ const renderEntity = (
         <api-viewer-item
           .name="${item.name}"
           .description="${item.description}"
+          part="docs-item"
         ></api-viewer-item>
       `
     )}
@@ -108,7 +110,7 @@ export class ApiViewerDocs extends LitElement {
 
     return emptyDocs
       ? html`
-          <div class="warn">
+          <div part="warning">
             The element &lt;${this.name}&gt; does not provide any documented
             API.
           </div>
@@ -127,6 +129,7 @@ export class ApiViewerDocs extends LitElement {
                       .valueType="${prop.type}"
                       .attribute="${prop.attribute}"
                       .value="${prop.default}"
+                      part="docs-item"
                     ></api-viewer-item>
                   `
                 )}
@@ -142,6 +145,7 @@ export class ApiViewerDocs extends LitElement {
                       .name="${attr.name}"
                       .description="${attr.description}"
                       .valueType="${attr.type}"
+                      part="docs-item"
                     ></api-viewer-item>
                   `
                 )}

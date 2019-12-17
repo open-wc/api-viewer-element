@@ -53,7 +53,7 @@ export class ApiViewerDemo extends LitElement {
 
   private renderWarning(): TemplateResult {
     return html`
-      <div class="warn">
+      <div part="warning">
         Element "${this.name}" is not defined. Have you imported it?
       </div>
     `;

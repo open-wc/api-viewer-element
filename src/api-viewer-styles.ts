@@ -32,10 +32,6 @@ export default css`
     display: none !important;
   }
 
-  .warn {
-    padding: 1rem;
-  }
-
   p {
     margin: 1rem 0;
     font-size: 0.9375rem;
@@ -80,61 +76,71 @@ export default css`
     padding: 1rem;
   }
 
-  .description {
-    display: block;
-    padding: 0 1rem;
-    border-bottom: solid 1px var(--ave-border-color);
+  [part='warning'] {
+    padding: 1rem;
   }
 
-  .radio-label {
-    padding-right: 0.5rem;
+  [part='radio-label'] {
+    margin: 0 0.75rem 0 0.25rem;
+    color: var(--ave-header-color);
+    font-size: 0.875rem;
+  }
+
+  [part='select-label'] {
+    margin-left: 0.5rem;
   }
 
   /* Docs styles */
-  api-viewer-tab[heading^='CSS'] {
+  [part='tab'][heading^='CSS'] {
     font-size: 0.8125rem;
   }
 
-  api-viewer-item {
+  [part='docs-item'] {
     display: block;
     padding: 0.5rem;
     color: var(--ave-item-color);
   }
 
-  .api-row {
+  [part='docs-description'] {
+    display: block;
+    padding: 0 1rem;
+    border-bottom: solid 1px var(--ave-border-color);
+  }
+
+  [part='docs-row'] {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 1rem;
   }
 
-  .api-col {
+  [part='docs-column'] {
     box-sizing: border-box;
     flex-basis: 25%;
     padding-right: 0.5rem;
   }
 
-  .api-col:only-child {
+  [part='docs-column']:only-child {
     flex-basis: 100%;
   }
 
-  .api-col-type {
+  .column-type {
     flex-basis: 50%;
   }
 
-  .api-label {
+  [part='docs-label'] {
     color: var(--ave-label-color);
     font-size: 0.75rem;
     line-height: 1rem;
     letter-spacing: 0.1rem;
   }
 
-  .api-value {
+  [part='docs-value'] {
     font-family: var(--ave-monospace-font);
     font-size: 0.875rem;
     line-height: 1.5rem;
   }
 
-  .api-row p {
+  [part='docs-markdown'] p {
     margin: 0.5rem 0;
   }
 
@@ -145,16 +151,16 @@ export default css`
   /* Demo styles */
   api-viewer-item:not(:first-of-type),
   .demo-tabs,
-  .rendered {
+  [part='demo-output'] {
     border-top: solid 1px var(--ave-border-color);
   }
 
-  .demo-tabs api-viewer-panel {
+  .demo-tabs [part='tab-panel'] {
     box-sizing: border-box;
     background: #fafafa;
   }
 
-  .rendered {
+  [part='demo-output'] {
     padding: 1.5rem;
   }
 
@@ -166,11 +172,11 @@ export default css`
     display: flex;
   }
 
-  .column {
+  [part='knobs-column'] {
     width: 50%;
   }
 
-  .column h3 {
+  [part='knobs-header'] {
     font-size: 1rem;
     font-weight: bold;
     margin: 0 0 0.25rem;
@@ -182,7 +188,7 @@ export default css`
     white-space: nowrap;
   }
 
-  api-viewer-demo-events {
+  [part='event-log'] {
     display: block;
     position: relative;
     padding: 0 1rem;
@@ -191,17 +197,17 @@ export default css`
     overflow: auto;
   }
 
-  .event {
+  [part='event-record'] {
     margin: 0 0 0.25rem;
     font-family: var(--ave-monospace-font);
     font-size: 0.875rem;
   }
 
-  .event:first-of-type {
+  [part='event-record']:first-of-type {
     margin-top: 1rem;
   }
 
-  .event:last-of-type {
+  [part='event-record']:last-of-type {
     margin-bottom: 1rem;
   }
 
@@ -215,7 +221,7 @@ export default css`
       flex-direction: column;
     }
 
-    .column:not(:last-child) {
+    [part='knobs-column']:not(:last-child) {
       margin-bottom: 1rem;
     }
   }

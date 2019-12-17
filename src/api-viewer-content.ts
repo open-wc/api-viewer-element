@@ -42,38 +42,41 @@ export class ApiViewerContent extends LitElement {
     const selectedTag = tags.find((_, index) => this.selected === index) || '';
 
     return html`
-      <api-viewer-header .heading="${name}">
-        <label class="radio-label">
-          <input
-            type="radio"
-            name="section"
-            value="docs"
-            ?checked="${section === 'docs'}"
-            @change="${this._onToggle}"
-          />
-          <span>Docs</span>
+      <api-viewer-header .heading="${name}" part="header">
+        <input
+          id="docs"
+          type="radio"
+          name="section"
+          value="docs"
+          ?checked="${section === 'docs'}"
+          @change="${this._onToggle}"
+          part="radio-button"
+        />
+        <label part="radio-label" for="docs">Docs</label>
+        <input
+          id="demo"
+          type="radio"
+          name="section"
+          value="demo"
+          ?checked="${section === 'demo'}"
+          @change="${this._onToggle}"
+          part="radio-button"
+        />
+        <label part="radio-label" for="demo">Demo</label>
+        <label part="select-label">
+          <select
+            @change="${this._onSelect}"
+            .value="${selectedTag}"
+            ?hidden="${tags.length === 1}"
+            part="select"
+          >
+            ${tags.map(option => {
+              return html`
+                <option>${option}</option>
+              `;
+            })}
+          </select>
         </label>
-        <label class="radio-label">
-          <input
-            type="radio"
-            name="section"
-            value="demo"
-            ?checked="${section === 'demo'}"
-            @change="${this._onToggle}"
-          />
-          <span>Demo</span>
-        </label>
-        <select
-          @change="${this._onSelect}"
-          .value="${selectedTag}"
-          ?hidden="${tags.length === 1}"
-        >
-          ${tags.map(option => {
-            return html`
-              <option>${option}</option>
-            `;
-          })}
-        </select>
       </api-viewer-header>
       ${cache(
         section === 'docs'
@@ -81,7 +84,7 @@ export class ApiViewerContent extends LitElement {
               <api-viewer-marked
                 .content="${description}"
                 ?hidden="${description === ''}"
-                class="description"
+                part="docs-description"
               ></api-viewer-marked>
               <api-viewer-docs
                 .name="${name}"

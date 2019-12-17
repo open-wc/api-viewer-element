@@ -14,7 +14,12 @@ const renderCssProps = (props: CSSPropertyInfo[]): TemplateResult => {
       <tr>
         <td>${name}</td>
         <td>
-          <input type="text" .value="${String(value)}" data-name="${name}" />
+          <input
+            type="text"
+            .value="${String(value)}"
+            data-name="${name}"
+            part="input"
+          />
         </td>
       </tr>
     `;
@@ -38,8 +43,8 @@ export class ApiViewerDemoCss extends LitElement {
 
   protected render() {
     return html`
-      <section class="column">
-        <h3>Custom CSS Properties</h3>
+      <section part="knobs-column">
+        <h3 part="knobs-header">Custom CSS Properties</h3>
         ${renderCssProps(this.cssProps)}
       </section>
     `;
