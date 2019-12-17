@@ -10,11 +10,13 @@ import { CSSPropertyInfo } from './lib/types.js';
 const renderCssProps = (props: CSSPropertyInfo[]): TemplateResult => {
   const rows = props.map(prop => {
     const { name, value } = prop;
+    const id = `prop-${name}`;
     return html`
       <tr>
-        <td>${name}</td>
+        <td><label for="${id}" part="knob-label">${name}</label></td>
         <td>
           <input
+            id="${id}"
             type="text"
             .value="${String(value)}"
             data-name="${name}"

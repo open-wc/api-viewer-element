@@ -232,6 +232,7 @@ The following CSS shadow parts are available:
 | `event-record`           | `<p>` used as a record in the event log                 |
 | `knobs-column`           | Column in the properties / styles knobs panel           |
 | `knobs-header`           | Header of the properties / styles knobs column          |
+| `knob-label`             | Label associated with an input in the knobs panel       |
 
 #### Interactive elements
 

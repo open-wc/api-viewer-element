@@ -19,16 +19,22 @@ const getInputType = (type: string) => {
   }
 };
 
-const getInput = (name: string, type: string, value: unknown) => {
+const getInput = (name: string, type: string, value: unknown, id: string) => {
   const inputType = getInputType(type);
   let input;
   if (value === undefined) {
     input = html`
-      <input type="${inputType}" data-name="${name}" data-type="${type}" />
+      <input
+        id="${id}"
+        type="${inputType}"
+        data-name="${name}"
+        data-type="${type}"
+      />
     `;
   } else if (normalizeType(type) === 'boolean') {
     input = html`
       <input
+        id="${id}"
         type="checkbox"
         .checked="${Boolean(value)}"
         data-name="${name}"
@@ -39,6 +45,7 @@ const getInput = (name: string, type: string, value: unknown) => {
   } else {
     input = html`
       <input
+        id="${id}"
         type="${inputType}"
         .value="${String(value)}"
         data-name="${name}"
@@ -53,10 +60,11 @@ const getInput = (name: string, type: string, value: unknown) => {
 const renderPropKnobs = (props: PropertyInfo[]): TemplateResult => {
   const rows = props.map(prop => {
     const { name, type, value } = prop;
+    const id = `prop-${name}`;
     return html`
       <tr>
-        <td>${name}</td>
-        <td>${getInput(name, type, value)}</td>
+        <td><label for="${id}" part="knob-label">${name}</label></td>
+        <td>${getInput(name, type, value, id)}</td>
       </tr>
     `;
   });
@@ -71,11 +79,17 @@ const renderPropKnobs = (props: PropertyInfo[]): TemplateResult => {
 const renderSlotKnobs = (slots: SlotValue[]): TemplateResult => {
   const rows = slots.map(slot => {
     const { name, content } = slot;
+    const id = `slot-${name || 'default'}`;
     return html`
       <tr>
-        <td>${getSlotTitle(name)}</td>
+        <td>
+          <label for="${id}" part="knob-label">
+            ${getSlotTitle(name)}
+          </label>
+        </td>
         <td>
           <input
+            id="${id}"
             type="text"
             .value="${content}"
             data-type="slot"
