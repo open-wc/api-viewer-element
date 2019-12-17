@@ -176,6 +176,8 @@ Use "slot" template to configure complex content:
 
 ## Styling
 
+### Custom CSS properties
+
 The following custom CSS properties are available:
 
 | Property                         | Description                                     |
@@ -194,6 +196,56 @@ The following custom CSS properties are available:
 | `--ave-monospace-font`           | Monospace font stack for the API items          |
 | `--ave-primary-color`            | Primary color, used for header and active tab   |
 | `--ave-tab-color`                | Inactive tabs color                             |
+| `--ave-tab-indicator-size`       | Size of the selected tab indicator              |
+
+### CSS shadow parts
+
+The following CSS shadow parts are available:
+
+### Common UI parts
+
+| Part                     | Description                                             |
+| -------------------------| --------------------------------------------------------|
+| `header`                 | Header containing element name and navigation controls  |
+| `tab`                    | `<api-viewer-tab>` component used in docs and demo      |
+| `tab-panel`              | `<api-viewer-panel>` component used in docs and demo    |
+| `warning`                | Message shown when no elements or API docs are found    |
+
+#### API docs
+
+| Part                     | Description                                             |
+| -------------------------| --------------------------------------------------------|
+| `docs-description`       | Custom element description                              |
+| `docs-column`            | Column, child of a `docs-row` part                      |
+| `docs-item`              | Item representing a single entry  (property, event etc) |
+| `docs-label`             | Label (name, attribute, type, description)              |
+| `docs-markdown`          | Iem description with parsed markdown content            |
+| `docs-row`               | Row containing columns. Child of a `docs-item` part     |
+| `docs-value`             | Sibling of a `docs-label` part (name, attribute, type)  |
+
+#### Live demo
+
+| Part                     | Description                                             |
+| -------------------------| ------------------------------------------------------- |
+| `demo-output`            | Wrapper of the rendered component in the live demo      |
+| `event-log`              | Wrapper of the event log tab content                    |
+| `event-record`           | `<p>` used as a record in the event log                 |
+| `knobs-column`           | Column in the properties / styles knobs panel           |
+| `knobs-header`           | Header of the properties / styles knobs column          |
+
+#### Interactive elements
+
+| Part                     | Description                                             |
+| ------------------------ | ------------------------------------------------------- |
+| `button`                 | `<button>` used to copy code / clear events log         |
+| `checkbox`               | `<input type="checkbox">` used by boolean knobs         |
+| `input`                  | `<input type="text">` used by knobs                     |
+| `radio-button`           | `<input type="radio">` used to toggle docs / demo       |
+| `radio-label`            | `<label>` associated with the radio button element      |
+| `select`                 | `<select>` used to choose displayed component           |
+| `select-label`           | `<label>` associated with the select element            |
+
+Read more about using `::part()` at [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/CSS/::part).
 
 ## Contributing
 
