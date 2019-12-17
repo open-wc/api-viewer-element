@@ -12,6 +12,30 @@ import { queryTemplates } from './lib/utils.js';
 import './api-viewer-content.js';
 import styles from './api-viewer-styles.js';
 
+async function renderDocs(
+  jsonFetched: Promise<ElementInfo[]>,
+  section: string,
+  selected?: string
+): Promise<TemplateResult> {
+  const elements = await jsonFetched;
+
+  const index = elements.findIndex(el => el.name === selected);
+
+  return elements.length
+    ? html`
+        <api-viewer-content
+          .elements="${elements}"
+          .section="${section}"
+          .selected="${index >= 0 ? index : 0}"
+        ></api-viewer-content>
+      `
+    : html`
+        <div part="warning">
+          No custom elements found in the JSON file.
+        </div>
+      `;
+}
+
 @customElement('api-viewer')
 export class ApiViewer extends LitElement {
   @property({ type: String }) src?: string;
@@ -23,31 +47,6 @@ export class ApiViewer extends LitElement {
   private jsonFetched: Promise<ElementInfo[]> = Promise.resolve([]);
 
   private lastSrc?: string;
-
-  // eslint-disable-next-line class-methods-use-this
-  private async renderDocs(
-    jsonFetched: Promise<ElementInfo[]>,
-    section: string,
-    selected?: string
-  ): Promise<TemplateResult> {
-    const elements = await jsonFetched;
-
-    const index = elements.findIndex(el => el.name === selected);
-
-    return elements.length
-      ? html`
-          <api-viewer-content
-            .elements="${elements}"
-            .section="${section}"
-            .selected="${index >= 0 ? index : 0}"
-          ></api-viewer-content>
-        `
-      : html`
-          <div part="warning">
-            No custom elements found in the JSON file.
-          </div>
-        `;
-  }
 
   static get styles() {
     return styles;
@@ -62,7 +61,7 @@ export class ApiViewer extends LitElement {
     }
 
     return html`
-      ${until(this.renderDocs(this.jsonFetched, this.section, this.selected))}
+      ${until(renderDocs(this.jsonFetched, this.section, this.selected))}
     `;
   }
 
