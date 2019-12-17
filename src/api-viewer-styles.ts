@@ -157,6 +157,7 @@ export default css`
 
   .demo-tabs [part='tab-panel'] {
     box-sizing: border-box;
+    position: relative;
     background: #fafafa;
   }
 
@@ -190,7 +191,6 @@ export default css`
 
   [part='event-log'] {
     display: block;
-    position: relative;
     padding: 0 1rem;
     min-height: 50px;
     max-height: 200px;
