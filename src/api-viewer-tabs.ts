@@ -185,7 +185,6 @@ export class ApiViewerTabs extends LitElement {
     }
     newTab.selected = true;
     newPanel.hidden = false;
-    newTab.focus();
   }
 
   private _onKeyDown(event: KeyboardEvent) {
@@ -220,12 +219,14 @@ export class ApiViewerTabs extends LitElement {
 
     event.preventDefault();
     this._selectTab(newTab);
+    newTab.focus();
   }
 
   private _onClick(event: MouseEvent) {
     const { target } = event;
     if (target && target instanceof ApiViewerTab) {
       this._selectTab(target);
+      target.focus();
     }
   }
 }
