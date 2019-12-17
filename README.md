@@ -34,6 +34,12 @@ API documentation and live playground for Web Components. Based on [web-componen
 $ npm install api-viewer-element
 ```
 
+Or grab from [unpkg.com CDN](https://unpkg.com/api-viewer-element?module):
+
+```html
+<script src="https://unpkg.com/api-viewer-element?module" type="module"></script>
+```
+
 ## Usage
 
 1. Install [web-component-analyzer](https://github.com/runem/web-component-analyzer):
