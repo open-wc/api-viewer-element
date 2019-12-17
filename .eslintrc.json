@@ -39,5 +39,13 @@
     "no-param-reassign": "off",
     "no-plusplus": "off",
     "no-underscore-dangle": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": [ "src/@types/*.d.ts" ],
+      "rules": {
+        "@typescript-eslint/no-explicit-any": "off"
+      }
+    }
+  ]
 }

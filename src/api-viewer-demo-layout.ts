@@ -2,10 +2,10 @@ import {
   LitElement,
   html,
   customElement,
-  css,
   property,
   PropertyValues
 } from 'lit-element';
+import { renderer } from './lib/renderer.js';
 import {
   ComponentWithProps,
   CSSPropertyInfo,
@@ -15,8 +15,12 @@ import {
   EventInfo,
   KnobValues
 } from './lib/types.js';
-import { getSlotTitle, isEmptyArray } from './lib/utils.js';
-import './api-viewer-demo-renderer.js';
+import {
+  getSlotTitle,
+  hasHostTemplate,
+  isEmptyArray,
+  normalizeType
+} from './lib/utils.js';
 import './api-viewer-demo-knobs.js';
 import './api-viewer-demo-snippet.js';
 import './api-viewer-demo-events.js';
@@ -24,6 +28,19 @@ import './api-viewer-demo-css.js';
 import './api-viewer-panel.js';
 import './api-viewer-tab.js';
 import './api-viewer-tabs.js';
+
+const getDefault = (
+  prop: PropertyInfo
+): string | number | boolean | null | undefined => {
+  switch (normalizeType(prop.type)) {
+    case 'boolean':
+      return prop.default !== 'false';
+    case 'number':
+      return Number(prop.default);
+    default:
+      return prop.default;
+  }
+};
 
 @customElement('api-viewer-demo-layout')
 export class ApiViewerDemoLayout extends LitElement {
@@ -53,21 +70,10 @@ export class ApiViewerDemoLayout extends LitElement {
   @property({ attribute: false, hasChanged: () => true })
   knobs: KnobValues = {};
 
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
+  @property({ type: String }) protected copyBtnText = 'copy';
 
-      api-viewer-tabs {
-        border-top: solid 1px var(--ave-border-color);
-      }
-
-      api-viewer-panel {
-        box-sizing: border-box;
-        background: #fafafa;
-      }
-    `;
+  protected createRenderRoot() {
+    return this;
   }
 
   protected render() {
@@ -76,16 +82,20 @@ export class ApiViewerDemoLayout extends LitElement {
     const noKnobs = isEmptyArray(this.props) && isEmptyArray(this.slots);
 
     return html`
-      <api-viewer-demo-renderer
-        .tag="${this.tag}"
-        .knobs="${this.knobs}"
-        .slots="${this.processedSlots}"
-        .cssProps="${this.processedCss}"
-        @rendered="${this._onRendered}"
-      ></api-viewer-demo-renderer>
-      <api-viewer-tabs>
-        <api-viewer-tab heading="Source" slot="tab"></api-viewer-tab>
-        <api-viewer-panel slot="panel">
+      <div part="demo-output" @rendered="${this._onRendered}">
+        ${renderer(
+          this.tag,
+          this.knobs,
+          this.processedSlots,
+          this.processedCss
+        )}
+      </div>
+      <api-viewer-tabs class="demo-tabs">
+        <api-viewer-tab heading="Source" slot="tab" part="tab"></api-viewer-tab>
+        <api-viewer-panel slot="panel" part="tab-panel">
+          <button @click="${this._onCopyClick}" part="button">
+            ${this.copyBtnText}
+          </button>
           <api-viewer-demo-snippet
             .tag="${this.tag}"
             .knobs="${this.knobs}"
@@ -96,9 +106,10 @@ export class ApiViewerDemoLayout extends LitElement {
         <api-viewer-tab
           heading="Knobs"
           slot="tab"
+          part="tab"
           ?hidden="${noKnobs}"
         ></api-viewer-tab>
-        <api-viewer-panel slot="panel">
+        <api-viewer-panel slot="panel" part="tab-panel">
           <api-viewer-demo-knobs
             .tag="${this.tag}"
             .props="${this.props}"
@@ -111,9 +122,10 @@ export class ApiViewerDemoLayout extends LitElement {
         <api-viewer-tab
           heading="Styles"
           slot="tab"
+          part="tab"
           ?hidden="${noCss}"
         ></api-viewer-tab>
-        <api-viewer-panel slot="panel">
+        <api-viewer-panel slot="panel" part="tab-panel">
           <api-viewer-demo-css
             ?hidden="${noCss}"
             .cssProps="${this.processedCss}"
@@ -121,25 +133,39 @@ export class ApiViewerDemoLayout extends LitElement {
           ></api-viewer-demo-css>
         </api-viewer-panel>
         <api-viewer-tab
+          id="events"
           heading="Events"
           slot="tab"
+          part="tab"
           ?hidden="${noEvents}"
-          class="events"
         ></api-viewer-tab>
-        <api-viewer-panel slot="panel">
+        <api-viewer-panel slot="panel" part="tab-panel">
           <api-viewer-demo-events
             ?hidden="${noEvents}"
             .log="${this.eventLog}"
             @clear="${this._onLogClear}"
+            part="event-log"
           ></api-viewer-demo-events>
         </api-viewer-panel>
       </api-viewer-tabs>
     `;
   }
 
-  protected updated(props: PropertyValues) {
-    super.updated(props);
+  protected firstUpdated(props: PropertyValues) {
+    if (props.has('props')) {
+      // Apply default property values from analyzer
+      this.props = this.props.map((prop: PropertyInfo) => {
+        return typeof prop.default === 'string'
+          ? {
+              ...prop,
+              value: getDefault(prop)
+            }
+          : prop;
+      });
+    }
+  }
 
+  protected updated(props: PropertyValues) {
     if (props.has('slots') && this.slots) {
       this.processedSlots = this.slots.map((slot: SlotInfo) => {
         return {
@@ -152,9 +178,35 @@ export class ApiViewerDemoLayout extends LitElement {
 
   private _onLogClear() {
     this.eventLog = [];
-    const tab = this.renderRoot.querySelector('.events') as HTMLElement;
+    const tab = this.renderRoot.querySelector('#events') as HTMLElement;
     if (tab) {
       tab.focus();
+    }
+  }
+
+  private _onCopyClick() {
+    const snippet = this.renderRoot.querySelector('api-viewer-demo-snippet');
+    if (snippet && snippet.source) {
+      const range = document.createRange();
+      range.selectNodeContents(snippet.source);
+      const selection = window.getSelection() as Selection;
+      selection.removeAllRanges();
+      selection.addRange(range);
+      try {
+        document.execCommand('copy');
+        this.copyBtnText = 'done';
+      } catch (err) {
+        // Copy command is not available
+        console.error(err);
+        this.copyBtnText = 'error';
+      }
+
+      // Return to the copy button after a second.
+      setTimeout(() => {
+        this.copyBtnText = 'copy';
+      }, 1000);
+
+      selection.removeAllRanges();
     }
   }
 
@@ -189,16 +241,15 @@ export class ApiViewerDemoLayout extends LitElement {
 
   private _onRendered(e: CustomEvent) {
     const { component } = e.detail;
-    const { props } = this;
-    // TODO: get default values from analyzer
-    this.props = props.map((prop: PropertyInfo) => {
-      const { name } = prop;
-      const result = prop;
-      if (component[name] !== undefined) {
-        result.value = component[name];
-      }
-      return result;
-    });
+
+    if (hasHostTemplate(this.tag)) {
+      // Apply property values from template
+      this.props
+        .filter(prop => component[prop.name] !== getDefault(prop))
+        .forEach(({ name, type }) => {
+          this._syncKnob(component, name, type);
+        });
+    }
 
     this.events.forEach(event => {
       this._listen(component, event.name);

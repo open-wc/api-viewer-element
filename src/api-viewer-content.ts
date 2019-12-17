@@ -1,4 +1,4 @@
-import { LitElement, html, customElement, css, property } from 'lit-element';
+import { LitElement, html, customElement, property } from 'lit-element';
 import { cache } from 'lit-html/directives/cache.js';
 import { ElementInfo } from './lib/types.js';
 import { EMPTY_ELEMENT } from './lib/constants.js';
@@ -6,8 +6,6 @@ import './api-viewer-docs.js';
 import './api-viewer-demo.js';
 import './api-viewer-header.js';
 import './api-viewer-marked.js';
-import './api-viewer-select.js';
-import './api-viewer-toggle.js';
 
 @customElement('api-viewer-content')
 export class ApiViewerContent extends LitElement {
@@ -17,41 +15,12 @@ export class ApiViewerContent extends LitElement {
 
   @property({ type: String }) section = 'docs';
 
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
-
-      api-viewer-marked {
-        display: block;
-        padding: 0 1rem;
-        border-bottom: solid 1px var(--ave-border-color);
-      }
-
-      api-viewer-marked[hidden] {
-        display: none;
-      }
-
-      p {
-        margin: 1rem 0;
-        font-size: 0.9375rem;
-        line-height: 1.5;
-      }
-
-      a {
-        color: var(--ave-link-color);
-      }
-
-      a:hover {
-        color: var(--ave-link-hover-color);
-      }
-    `;
+  protected createRenderRoot() {
+    return this;
   }
 
   protected render() {
     const { elements, selected, section } = this;
-    const tags = elements.map((tag: ElementInfo) => tag.name);
 
     const {
       name,
@@ -70,17 +39,41 @@ export class ApiViewerContent extends LitElement {
     );
 
     return html`
-      <api-viewer-header .heading="${name}">
-        <api-viewer-toggle
-          .section="${section}"
-          @section-changed="${this._onToggle}"
-        ></api-viewer-toggle>
-        <api-viewer-select
-          .options="${tags}"
-          .selected="${selected}"
-          @selected-changed="${this._onSelect}"
-          ?hidden="${elements.length === 1}"
-        ></api-viewer-select>
+      <api-viewer-header .heading="${name}" part="header">
+        <input
+          id="docs"
+          type="radio"
+          name="section"
+          value="docs"
+          ?checked="${section === 'docs'}"
+          @change="${this._onToggle}"
+          part="radio-button"
+        />
+        <label part="radio-label" for="docs">Docs</label>
+        <input
+          id="demo"
+          type="radio"
+          name="section"
+          value="demo"
+          ?checked="${section === 'demo'}"
+          @change="${this._onToggle}"
+          part="radio-button"
+        />
+        <label part="radio-label" for="demo">Demo</label>
+        <label part="select-label">
+          <select
+            @change="${this._onSelect}"
+            .value="${String(selected)}"
+            ?hidden="${elements.length === 1}"
+            part="select"
+          >
+            ${elements.map((tag, idx) => {
+              return html`
+                <option value="${idx}">${tag.name}</option>
+              `;
+            })}
+          </select>
+        </label>
       </api-viewer-header>
       ${cache(
         section === 'docs'
@@ -88,6 +81,7 @@ export class ApiViewerContent extends LitElement {
               <api-viewer-marked
                 .content="${description}"
                 ?hidden="${description === ''}"
+                part="docs-description"
               ></api-viewer-marked>
               <api-viewer-docs
                 .name="${name}"
@@ -113,12 +107,11 @@ export class ApiViewerContent extends LitElement {
   }
 
   private _onSelect(e: CustomEvent) {
-    const { selected } = e.detail;
-    this.selected = this.elements.findIndex(el => el.name === selected);
+    this.selected = Number((e.target as HTMLSelectElement).value);
   }
 
   private _onToggle(e: CustomEvent) {
-    this.section = e.detail.section;
+    this.section = (e.target as HTMLInputElement).value;
   }
 }
 

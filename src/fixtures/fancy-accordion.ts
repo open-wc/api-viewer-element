@@ -28,11 +28,11 @@ import { ExpansionPanel } from './expansion-panel.js';
 @customElement('fancy-accordion')
 export class FancyAccordion extends LitElement {
   /**
-   * Index of the currently opened panel. First panel is opened by
-   * default. Only one panel can be opened at the same time.
-   * Setting `undefined` closes all the accordion panels.
+   * Index of the currently opened panel. By default all the panels are closed.
+   * Only one panel can be opened at the same time. Setting `null` or `undefined`
+   * closes all the accordion panels.
    */
-  @property({ type: Number }) opened? = 0;
+  @property({ type: Number }) opened: number | null | undefined = null;
 
   protected _items: ExpansionPanel[] = [];
 
@@ -93,7 +93,7 @@ export class FancyAccordion extends LitElement {
 
   protected update(props: PropertyValues) {
     if (props.has('opened') && this._items) {
-      const item = this.opened === undefined ? null : this._items[this.opened];
+      const item = this.opened == null ? null : this._items[this.opened];
       this._items.forEach(el => {
         el.opened = el === item;
       });

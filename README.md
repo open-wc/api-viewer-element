@@ -67,9 +67,7 @@ $ wca analyze my-element.js --outFile custom-elements.json --format json
 
 4. Use [es-dev-server](https://open-wc.org/developing/es-dev-server.html) to serve your HTML page.
 
-## Examples
-
-### Playground
+## Playground
 
 Import the components documented in JSON file to enable demos:
 
@@ -80,23 +78,9 @@ Import the components documented in JSON file to enable demos:
 <api-viewer src="./custom-elements.json"></api-viewer>
 ```
 
-### Section
-
-By default, the API documentation is shown. If you want to show the playground instead, set the
-`section` property to `demo`:
-
-```html
-<api-viewer src="./custom-elements.json" section="demo"></api-viewer>
-```
-
-### Selected tag
-
-By default, the first element found in JSON file is shown. Set the `selected` property to configure
-it to a different tag name:
-
-```html
-<api-viewer src="./custom-elements.json" selected="my-element"></api-viewer>
-```
+In order to ensure that all the playground features work properly and knobs for properties and CSS
+custom properties are in sync, please read the following sections and update the code of your custom
+elements accordingly if needed.
 
 ### Knobs
 
@@ -131,13 +115,51 @@ button {
 }
 ```
 
+## Configuration
+
+### Properties
+
+The following properties can be set on the `<api-viewer>` element:
+
+#### `section`
+
+Use `section` property to toggle between demo and API docs:
+
+```html
+<api-viewer src="./custom-elements.json" section="demo"></api-viewer>
+```
+
+#### `selected`
+
+Use `selected` property to configure the displayed element:
+
+```html
+<api-viewer src="./custom-elements.json" selected="my-element"></api-viewer>
+```
+
 ### Templates
 
-Use `<template data-element="my-element">` for configuring complex content:
+The following templates can be passed to `<api-viewer>` element:
+
+#### `<template data-type="host">`
+
+Use "host" template to configure property values:
 
 ```html
 <api-viewer src="./custom-elements.json">
-  <template data-element="fancy-accordion">
+  <template data-element="progress-bar" data-target="host">
+    <progress-bar max="100" min="1" value="50"></progress-bar>
+  </template>
+</api-viewer>
+```
+
+#### `<template data-type="slot">`
+
+Use "slot" template to configure complex content:
+
+```html
+<api-viewer src="./custom-elements.json">
+  <template data-element="fancy-accordion" data-target="slot">
     <expansion-panel>
       <div slot="header">Panel 1</div>
       <div>Content 1</div>
@@ -153,6 +175,8 @@ Use `<template data-element="my-element">` for configuring complex content:
 *Note*: do not minify HTML to keep proper indentation.
 
 ## Styling
+
+### Custom CSS properties
 
 The following custom CSS properties are available:
 
@@ -172,6 +196,57 @@ The following custom CSS properties are available:
 | `--ave-monospace-font`           | Monospace font stack for the API items          |
 | `--ave-primary-color`            | Primary color, used for header and active tab   |
 | `--ave-tab-color`                | Inactive tabs color                             |
+| `--ave-tab-indicator-size`       | Size of the selected tab indicator              |
+
+### CSS shadow parts
+
+The following CSS shadow parts are available:
+
+### Common UI parts
+
+| Part                     | Description                                             |
+| -------------------------| --------------------------------------------------------|
+| `header`                 | Header containing element name and navigation controls  |
+| `tab`                    | `<api-viewer-tab>` component used in docs and demo      |
+| `tab-panel`              | `<api-viewer-panel>` component used in docs and demo    |
+| `warning`                | Message shown when no elements or API docs are found    |
+
+#### API docs
+
+| Part                     | Description                                             |
+| -------------------------| --------------------------------------------------------|
+| `docs-description`       | Custom element description                              |
+| `docs-column`            | Column, child of a `docs-row` part                      |
+| `docs-item`              | Item representing a single entry  (property, event etc) |
+| `docs-label`             | Label (name, attribute, type, description)              |
+| `docs-markdown`          | Iem description with parsed markdown content            |
+| `docs-row`               | Row containing columns. Child of a `docs-item` part     |
+| `docs-value`             | Sibling of a `docs-label` part (name, attribute, type)  |
+
+#### Live demo
+
+| Part                     | Description                                             |
+| -------------------------| ------------------------------------------------------- |
+| `demo-output`            | Wrapper of the rendered component in the live demo      |
+| `event-log`              | Wrapper of the event log tab content                    |
+| `event-record`           | `<p>` used as a record in the event log                 |
+| `knobs-column`           | Column in the properties / styles knobs panel           |
+| `knobs-header`           | Header of the properties / styles knobs column          |
+| `knob-label`             | Label associated with an input in the knobs panel       |
+
+#### Interactive elements
+
+| Part                     | Description                                             |
+| ------------------------ | ------------------------------------------------------- |
+| `button`                 | `<button>` used to copy code / clear events log         |
+| `checkbox`               | `<input type="checkbox">` used by boolean knobs         |
+| `input`                  | `<input type="text">` used by knobs                     |
+| `radio-button`           | `<input type="radio">` used to toggle docs / demo       |
+| `radio-label`            | `<label>` associated with the radio button element      |
+| `select`                 | `<select>` used to choose displayed component           |
+| `select-label`           | `<label>` associated with the select element            |
+
+Read more about using `::part()` at [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/CSS/::part).
 
 ## Contributing
 

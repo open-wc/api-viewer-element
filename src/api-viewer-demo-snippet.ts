@@ -7,26 +7,20 @@ import {
   TemplateResult
 } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
-import 'prismjs';
+import { addLanguage, highlight } from 'illuminate-js';
+import { html as htmlSyntax } from 'illuminate-js/esm/languages';
 import {
   CSSPropertyInfo,
   KnobValues,
   KnobValue,
   SlotValue
 } from './lib/types.js';
-import { getTemplate } from './lib/utils.js';
-import buttonStyle from './lib/button-style.js';
+import { getSlotTemplate, normalizeType } from './lib/utils.js';
 import prismTheme from './lib/prism-theme.js';
 
-const { highlight, languages } = window.Prism;
+addLanguage('html', htmlSyntax);
 
 const INDENT = '  ';
-
-declare global {
-  interface Window {
-    Prism: typeof import('prismjs');
-  }
-}
 
 const unindent = (text: string) => {
   if (!text) return text;
@@ -50,32 +44,43 @@ const renderSnippet = (
   cssProps: CSSPropertyInfo[]
 ): TemplateResult => {
   let markup = `<${tag}`;
-  Object.keys(values).forEach((key: string) => {
-    const knob: KnobValue = values[key];
-    switch (knob.type) {
-      case 'boolean':
-        markup += knob.value ? ` ${key}` : '';
-        break;
-      default:
-        // eslint-disable-next-line eqeqeq
-        markup += knob.value != undefined ? ` ${key}="${knob.value}"` : '';
-        break;
-    }
-  });
+  Object.keys(values)
+    .sort((a, b) => (a > b ? 1 : -1))
+    .forEach((key: string) => {
+      const knob: KnobValue = values[key];
+      switch (normalizeType(knob.type)) {
+        case 'boolean':
+          markup += knob.value ? ` ${key}` : '';
+          break;
+        default:
+          markup += knob.value != null ? ` ${key}="${knob.value}"` : '';
+          break;
+      }
+    });
 
   markup += `>`;
 
-  const template = getTemplate(tag);
+  const template = getSlotTemplate(tag);
   if (template instanceof HTMLTemplateElement) {
     const tpl = template.innerHTML.replace(/\s+$/, '').replace(/(="")/g, '');
     markup += unindent(tpl);
     markup += `\n`;
   } else if (slots.length) {
-    slots.forEach(slot => {
-      const { name, content } = slot;
-      const div = name ? `<div slot="${name}">` : '<div>';
-      markup += `\n${INDENT}${div}${content}</div>`;
-    });
+    slots
+      .sort((a: SlotValue, b: SlotValue) => {
+        if (a.name === '') {
+          return 1;
+        }
+        if (b.name === '') {
+          return -1;
+        }
+        return a.name.localeCompare(b.name);
+      })
+      .forEach(slot => {
+        const { name, content } = slot;
+        const div = name ? `<div slot="${name}">` : '<div>';
+        markup += `\n${INDENT}${div}${content}</div>`;
+      });
     markup += `\n`;
   }
 
@@ -92,7 +97,7 @@ const renderSnippet = (
     markup += `${INDENT}}\n</style>`;
   }
 
-  const snippet = unsafeHTML(highlight(markup, languages.markup, 'html'));
+  const snippet = unsafeHTML(highlight(markup, 'html'));
 
   return html`
     <pre><code>${snippet}</code></pre>
@@ -112,21 +117,13 @@ export class ApiViewerDemoSnippet extends LitElement {
   @property({ attribute: false, hasChanged: () => true })
   cssProps: CSSPropertyInfo[] = [];
 
-  @property({ type: String }) protected btnText = 'copy';
-
   static get styles() {
     return [
-      buttonStyle,
       prismTheme,
       css`
         :host {
           display: block;
-          position: relative;
           padding: 0.75rem 1rem;
-        }
-
-        pre {
-          margin: 0;
         }
       `
     ];
@@ -134,35 +131,12 @@ export class ApiViewerDemoSnippet extends LitElement {
 
   protected render() {
     return html`
-      <button @click="${this._onCopyClick}">${this.btnText}</button>
       ${renderSnippet(this.tag, this.knobs, this.slots, this.cssProps)}
     `;
   }
 
-  private _onCopyClick() {
-    const range = document.createRange();
-    const source = this.renderRoot.querySelector('code');
-    if (source) {
-      range.selectNodeContents(source);
-      const selection = window.getSelection() as Selection;
-      selection.removeAllRanges();
-      selection.addRange(range);
-      try {
-        document.execCommand('copy');
-        this.btnText = 'done';
-      } catch (err) {
-        // Copy command is not available
-        console.error(err);
-        this.btnText = 'error';
-      }
-
-      // Return to the copy button after a second.
-      setTimeout(() => {
-        this.btnText = 'copy';
-      }, 1000);
-
-      selection.removeAllRanges();
-    }
+  get source() {
+    return this.renderRoot.querySelector('code');
   }
 }
 

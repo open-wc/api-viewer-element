@@ -25,14 +25,15 @@ export class ApiViewerHeader extends LitElement {
 
       .controls {
         display: flex;
+        align-items: center;
       }
 
       @media (max-width: 480px) {
-        .controls {
+        :host {
           flex-direction: column;
         }
 
-        .controls ::slotted(:not(:last-child)) {
+        .heading {
           margin-bottom: 0.5rem;
         }
       }

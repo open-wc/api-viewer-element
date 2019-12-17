@@ -2,7 +2,6 @@ import {
   LitElement,
   html,
   customElement,
-  css,
   property,
   TemplateResult
 } from 'lit-element';
@@ -54,22 +53,14 @@ export class ApiViewerDemo extends LitElement {
 
   private renderWarning(): TemplateResult {
     return html`
-      <div class="warn">
+      <div part="warning">
         Element "${this.name}" is not defined. Have you imported it?
       </div>
     `;
   }
 
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
-
-      .warn {
-        padding: 1rem;
-      }
-    `;
+  protected createRenderRoot() {
+    return this;
   }
 
   protected render() {

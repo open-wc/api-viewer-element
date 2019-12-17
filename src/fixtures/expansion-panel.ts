@@ -246,8 +246,6 @@ export class ExpansionPanel extends LitElement {
   }
 
   protected updated(props: PropertyValues) {
-    super.updated(props);
-
     if (props.has('opened')) {
       this.dispatchEvent(
         new CustomEvent('opened-changed', {

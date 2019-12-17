@@ -2,6 +2,7 @@ import { css } from 'lit-element';
 
 export default css`
   pre {
+    margin: 0;
     color: black;
     background: none;
     font-family: var(--ave-monospace-font);
@@ -21,10 +22,7 @@ export default css`
     font-family: inherit;
   }
 
-  .token.comment,
-  .token.prolog,
-  .token.doctype,
-  .token.cdata {
+  .token.comment {
     color: slategray;
   }
 
@@ -32,39 +30,29 @@ export default css`
     color: #999;
   }
 
-  .namespace {
-    opacity: 0.7;
-  }
-
   .token.property,
   .token.tag,
   .token.boolean,
   .token.number,
-  .token.constant,
-  .token.symbol,
-  .token.deleted {
+  .token.constant {
     color: #905;
   }
 
   .token.selector,
   .token.attr-name,
   .token.string,
-  .token.char,
-  .token.builtin,
-  .token.inserted {
+  .token.char {
     color: #690;
   }
 
   .token.operator,
   .token.entity,
   .token.url,
-  .language-css .token.string,
   .style .token.string {
     color: #9a6e3a;
     background: hsla(0, 0%, 100%, 0.5);
   }
 
-  .token.atrule,
   .token.attr-value,
   .token.keyword {
     color: #07a;
@@ -75,7 +63,6 @@ export default css`
     color: #dd4a68;
   }
 
-  .token.regex,
   .token.important,
   .token.variable {
     color: #e90;
@@ -85,6 +72,7 @@ export default css`
   .token.bold {
     font-weight: bold;
   }
+
   .token.italic {
     font-style: italic;
   }
