@@ -36,7 +36,6 @@ export class ApiViewerTab extends LitElement {
         line-height: 1.2;
         font-weight: 500;
         text-transform: uppercase;
-        transition: box-shadow 0.3s;
         outline: none;
         cursor: pointer;
         -webkit-user-select: none;
@@ -50,6 +49,26 @@ export class ApiViewerTab extends LitElement {
 
       :host::before {
         content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: var(--ave-tab-indicator-size);
+        background-color: var(--ave-primary-color);
+        opacity: 0;
+      }
+
+      :host([selected]) {
+        color: var(--ave-primary-color);
+      }
+
+      :host([selected])::before {
+        opacity: 1;
+      }
+
+      :host::after {
+        content: '';
         position: absolute;
         top: 0;
         right: 0;
@@ -60,51 +79,16 @@ export class ApiViewerTab extends LitElement {
         transition: opacity 0.1s linear;
       }
 
-      :host(:hover)::before {
-        opacity: 0.04;
+      :host(:hover)::after {
+        opacity: 0.08;
       }
 
-      :host([focus-ring])::before {
-        opacity: 0.1;
+      :host([focus-ring])::after {
+        opacity: 0.12;
       }
 
-      :host([selected]) {
-        color: var(--ave-primary-color);
-        box-shadow: inset 2px 0 0 0 var(--ave-primary-color);
-      }
-
-      :host::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        transform: translate(-50%, -50%) scale(0);
-        background-color: var(--ave-primary-color);
-        opacity: 0;
-        transition: transform 0s cubic-bezier(0.05, 0.8, 0.5, 1),
-          opacity 0s linear;
-      }
-
-      :host([focused]:not([focus-ring]))::after,
-      :host([focused][active])::after,
-      :host([focus-ring][selected])::after {
-        transform: translate(-50%, -50%) scale(3);
-        opacity: 0;
-        transition-duration: 2s, 0.6s;
-      }
-
-      :host([active]:not([selected]))::after {
-        opacity: 0.2;
-        transition-duration: 2s, 0s;
-      }
-
-      @media (pointer: coarse) {
-        :host(:hover)::before {
-          display: none;
-        }
+      :host([active])::after {
+        opacity: 0.16;
       }
 
       @media (max-width: 600px) {
@@ -113,8 +97,11 @@ export class ApiViewerTab extends LitElement {
           text-align: center;
         }
 
-        :host([selected]) {
-          box-shadow: inset 0 -2px 0 0 var(--ave-primary-color);
+        :host::before {
+          top: auto;
+          right: 0;
+          width: 100%;
+          height: var(--ave-tab-indicator-size);
         }
       }
     `;

@@ -22,6 +22,7 @@ export default css`
     --ave-label-color: #424242;
     --ave-link-color: #01579b;
     --ave-link-hover-color: #d63200;
+    --ave-tab-indicator-size: 2px;
     --ave-tab-color: rgba(0, 0, 0, 0.54);
     --ave-monospace-font: Menlo, 'DejaVu Sans Mono', 'Liberation Mono', Consolas,
       'Courier New', monospace;
