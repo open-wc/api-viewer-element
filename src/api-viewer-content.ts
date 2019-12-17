@@ -21,7 +21,6 @@ export class ApiViewerContent extends LitElement {
 
   protected render() {
     const { elements, selected, section } = this;
-    const tags = elements.map((tag: ElementInfo) => tag.name);
 
     const {
       name,
@@ -65,12 +64,12 @@ export class ApiViewerContent extends LitElement {
           <select
             @change="${this._onSelect}"
             .value="${String(selected)}"
-            ?hidden="${tags.length === 1}"
+            ?hidden="${elements.length === 1}"
             part="select"
           >
-            ${tags.map((tag, idx) => {
+            ${elements.map((tag, idx) => {
               return html`
-                <option value="${idx}">${tag}</option>
+                <option value="${idx}">${tag.name}</option>
               `;
             })}
           </select>
