@@ -124,7 +124,7 @@ export class ApiViewerDemoKnobs extends LitElement {
 
   protected render() {
     return html`
-      <div class="columns">
+      <div class="columns" @change="${this._onChange}">
         <section part="knobs-column">
           <h3 part="knobs-header">Properties</h3>
           ${renderPropKnobs(this.props)}
@@ -140,36 +140,34 @@ export class ApiViewerDemoKnobs extends LitElement {
     `;
   }
 
-  protected firstUpdated() {
-    this.renderRoot.addEventListener('change', (e: Event) => {
-      const target = e.composedPath()[0];
-      if (target && target instanceof HTMLInputElement) {
-        const { type } = target.dataset;
-        if (type === 'slot') {
-          this.dispatchEvent(
-            new CustomEvent('slot-changed', {
-              detail: {
-                name: target.dataset.slot,
-                content: target.value
-              }
-            })
-          );
-        } else {
-          this.dispatchEvent(
-            new CustomEvent('prop-changed', {
-              detail: {
-                name: target.dataset.name,
-                type,
-                value:
-                  normalizeType(type as string) === 'boolean'
-                    ? target.checked
-                    : target.value
-              }
-            })
-          );
-        }
+  protected _onChange(e: Event) {
+    const target = e.composedPath()[0];
+    if (target && target instanceof HTMLInputElement) {
+      const { type } = target.dataset;
+      if (type === 'slot') {
+        this.dispatchEvent(
+          new CustomEvent('slot-changed', {
+            detail: {
+              name: target.dataset.slot,
+              content: target.value
+            }
+          })
+        );
+      } else {
+        this.dispatchEvent(
+          new CustomEvent('prop-changed', {
+            detail: {
+              name: target.dataset.name,
+              type,
+              value:
+                normalizeType(type as string) === 'boolean'
+                  ? target.checked
+                  : target.value
+            }
+          })
+        );
       }
-    });
+    }
   }
 }
 

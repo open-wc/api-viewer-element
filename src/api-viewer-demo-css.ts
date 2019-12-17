@@ -45,27 +45,25 @@ export class ApiViewerDemoCss extends LitElement {
 
   protected render() {
     return html`
-      <section part="knobs-column">
+      <section part="knobs-column" @change="${this._onChange}">
         <h3 part="knobs-header">Custom CSS Properties</h3>
         ${renderCssProps(this.cssProps)}
       </section>
     `;
   }
 
-  protected firstUpdated() {
-    this.renderRoot.addEventListener('change', (e: Event) => {
-      const target = e.composedPath()[0];
-      if (target && target instanceof HTMLInputElement) {
-        this.dispatchEvent(
-          new CustomEvent('css-changed', {
-            detail: {
-              name: target.dataset.name,
-              value: target.value
-            }
-          })
-        );
-      }
-    });
+  protected _onChange(e: Event) {
+    const target = e.composedPath()[0];
+    if (target && target instanceof HTMLInputElement) {
+      this.dispatchEvent(
+        new CustomEvent('css-changed', {
+          detail: {
+            name: target.dataset.name,
+            value: target.value
+          }
+        })
+      );
+    }
   }
 }
 
