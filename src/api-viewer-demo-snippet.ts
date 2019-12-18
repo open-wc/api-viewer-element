@@ -7,18 +7,27 @@ import {
   TemplateResult
 } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
-import { addLanguage, highlight } from 'illuminate-js';
-import { html as htmlSyntax } from 'illuminate-js/esm/languages';
+import { htmlRender } from 'highlight-ts/es/render/html.js';
+import { registerLanguages } from 'highlight-ts/es/languages.js';
+import { XML } from 'highlight-ts/es/languages/xml.js';
+import { init, process } from 'highlight-ts/es/process.js';
 import {
   CSSPropertyInfo,
   KnobValues,
   KnobValue,
   SlotValue
 } from './lib/types.js';
+import { CSS } from './lib/highlight-css.js';
 import { getSlotTemplate, normalizeType } from './lib/utils.js';
-import prismTheme from './lib/prism-theme.js';
+import highlightTheme from './lib/highlight-theme.js';
 
-addLanguage('html', htmlSyntax);
+// register languages
+registerLanguages(CSS, XML);
+
+// initialize highlighter
+const highlighter = init(htmlRender, {
+  classPrefix: ''
+});
 
 const INDENT = '  ';
 
@@ -97,10 +106,10 @@ const renderSnippet = (
     markup += `${INDENT}}\n</style>`;
   }
 
-  const snippet = unsafeHTML(highlight(markup, 'html'));
+  const { value } = process(highlighter, markup, ['xml', 'css']);
 
   return html`
-    <pre><code>${snippet}</code></pre>
+    <pre><code>${unsafeHTML(value)}</code></pre>
   `;
 };
 
@@ -119,7 +128,7 @@ export class ApiViewerDemoSnippet extends LitElement {
 
   static get styles() {
     return [
-      prismTheme,
+      highlightTheme,
       css`
         :host {
           display: block;

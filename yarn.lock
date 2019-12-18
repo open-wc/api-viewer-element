@@ -2926,6 +2926,13 @@ he@^1.2.0:
   resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
   integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
 
+highlight-ts@^9.12.1-2:
+  version "9.12.1-2"
+  resolved "https://registry.yarnpkg.com/highlight-ts/-/highlight-ts-9.12.1-2.tgz#792e79b3f8e1e7c9f017cf1cc52fc4cfe694fbee"
+  integrity sha512-CkLnKaxdwUasdPbzM9YP3EQTYfY/jgLQ4dyl7FFa65h1Ymq/qm+FOsevfNRqI7ZKGlz9scPkAy9OXYvwEtcJSw==
+  dependencies:
+    tslib "^1"
+
 hosted-git-info@^2.1.4:
   version "2.8.5"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.5.tgz#759cfcf2c4d156ade59b0b2dfabddc42a6b9c70c"
@@ -3023,11 +3030,6 @@ ignore@^5.1.1, ignore@^5.1.4:
   version "5.1.4"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.1.4.tgz#84b7b3dbe64552b6ef0eca99f6743dbec6d97adf"
   integrity sha512-MzbUSahkTW1u7JpKKjY7LCARd1fU5W2rLdxlM4kdkayuCwZImjkpluF9CM1aLewYJguPDqewLam18Y6AU69A8A==
-
-illuminate-js@1.0.0-alpha.2:
-  version "1.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/illuminate-js/-/illuminate-js-1.0.0-alpha.2.tgz#bc9e782b038f921e6b27da91ad5978c0d667a112"
-  integrity sha512-Qjwvjwsu4RXfkpM0mSqOMZlom3KevYC2/JalIzFlslb4gtRcURIN6Ydq9QHlP74l8j/SxhkP4v8VSscQxcULrQ==
 
 import-fresh@^2.0.0:
   version "2.0.0"
@@ -6051,7 +6053,7 @@ tsc-watch@^4.0.0:
     string-argv "^0.1.1"
     strip-ansi "^4.0.0"
 
-tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0:
+tslib@^1, tslib@^1.10.0, tslib@^1.8.1, tslib@^1.9.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
