@@ -5,7 +5,7 @@ import {
   property,
   PropertyValues
 } from 'lit-element';
-import { TemplateResult } from 'lit-html';
+import { nothing, TemplateResult } from 'lit-html';
 import {
   PropertyInfo,
   SlotInfo,
@@ -15,8 +15,8 @@ import {
   CSSPropertyInfo
 } from './lib/types.js';
 import { isEmptyArray } from './lib/utils.js';
+import { parse } from './lib/markdown.js';
 
-import './api-viewer-item.js';
 import './api-viewer-panel.js';
 import './api-viewer-tab.js';
 
@@ -30,6 +30,52 @@ const processAttrs = (
   props: PropertyInfo[]
 ): AttributeInfo[] => {
   return attrs.filter(attr => !props.some(prop => prop.name === attr.name));
+};
+
+const renderItem = (
+  name: string,
+  description: string,
+  valueType?: string,
+  attribute?: string,
+  value?: unknown
+): TemplateResult => {
+  return html`
+    <div part="docs-item">
+      <div part="docs-row">
+        <div part="docs-column">
+          <div part="docs-label">Name</div>
+          <div part="docs-value" class="accent">${name}</div>
+        </div>
+        ${attribute === undefined
+          ? nothing
+          : html`
+              <div part="docs-column">
+                <div part="docs-label">Attribute</div>
+                <div part="docs-value">${attribute}</div>
+              </div>
+            `}
+        ${valueType === undefined
+          ? nothing
+          : html`
+              <div part="docs-column" class="column-type">
+                <div part="docs-label">Type</div>
+                <div part="docs-value">
+                  ${valueType.toLowerCase()}
+                  ${value === undefined
+                    ? nothing
+                    : html`
+                        = <span class="accent">${value}</span>
+                      `}
+                </div>
+              </div>
+            `}
+      </div>
+      <div ?hidden="${description === undefined}">
+        <div part="docs-label">Description</div>
+        <div part="docs-markdown">${parse(description)}</div>
+      </div>
+    </div>
+  `;
 };
 
 const renderTab = (
@@ -48,22 +94,6 @@ const renderTab = (
     <api-viewer-panel slot="panel" part="tab-panel" ?hidden="${hidden}">
       ${content}
     </api-viewer-panel>
-  `;
-};
-
-const renderEntity = (
-  items: Array<SlotInfo | EventInfo | CSSPartInfo | CSSPropertyInfo>
-): TemplateResult => {
-  return html`
-    ${items.map(
-      (item: SlotInfo | EventInfo | CSSPartInfo | CSSPropertyInfo) => html`
-        <api-viewer-item
-          .name="${item.name}"
-          .description="${item.description}"
-          part="docs-item"
-        ></api-viewer-item>
-      `
-    )}
   `;
 };
 
@@ -121,47 +151,62 @@ export class ApiViewerDocs extends LitElement {
               'Properties',
               properties.length,
               html`
-                ${properties.map(
-                  prop => html`
-                    <api-viewer-item
-                      .name="${prop.name}"
-                      .description="${prop.description}"
-                      .valueType="${prop.type}"
-                      .attribute="${prop.attribute}"
-                      .value="${prop.default}"
-                      part="docs-item"
-                    ></api-viewer-item>
-                  `
-                )}
+                ${properties.map(prop => {
+                  const { name, description, type, attribute } = prop;
+                  return renderItem(
+                    name,
+                    description,
+                    type,
+                    attribute,
+                    prop.default
+                  );
+                })}
               `
             )}
             ${renderTab(
               'Attributes',
               attributes.length,
               html`
-                ${attributes.map(
-                  attr => html`
-                    <api-viewer-item
-                      .name="${attr.name}"
-                      .description="${attr.description}"
-                      .valueType="${attr.type}"
-                      part="docs-item"
-                    ></api-viewer-item>
-                  `
+                ${attributes.map(({ name, description, type }) =>
+                  renderItem(name, description, type)
                 )}
               `
             )}
-            ${renderTab('Slots', slots.length, renderEntity(slots))}
-            ${renderTab('Events', events.length, renderEntity(events))}
+            ${renderTab(
+              'Slots',
+              slots.length,
+              html`
+                ${slots.map(({ name, description }) =>
+                  renderItem(name, description)
+                )}
+              `
+            )}
+            ${renderTab(
+              'Events',
+              events.length,
+              html`
+                ${events.map(({ name, description }) =>
+                  renderItem(name, description)
+                )}
+              `
+            )}
             ${renderTab(
               'CSS Custom Properties',
               cssProps.length,
-              renderEntity(cssProps)
+              html`
+                ${cssProps.map(({ name, description }) =>
+                  renderItem(name, description)
+                )}
+              `
             )}
             ${renderTab(
               'CSS Shadow Parts',
               cssParts.length,
-              renderEntity(cssParts)
+              html`
+                ${cssParts.map(({ name, description }) =>
+                  renderItem(name, description)
+                )}
+              `
             )}
           </api-viewer-tabs>
         `;

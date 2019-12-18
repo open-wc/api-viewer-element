@@ -149,7 +149,7 @@ export default css`
   }
 
   /* Demo styles */
-  api-viewer-item:not(:first-of-type),
+  [part='docs-item']:not(:first-of-type),
   .demo-tabs,
   [part='demo-output'] {
     border-top: solid 1px var(--ave-border-color);
