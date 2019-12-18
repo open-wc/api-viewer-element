@@ -1,6 +1,6 @@
 import { LitElement, html, customElement, property } from 'lit-element';
 import { nothing } from 'lit-html';
-import './api-viewer-marked.js';
+import { parse } from './lib/markdown.js';
 
 @customElement('api-viewer-item')
 export class ApiViewerItem extends LitElement {
@@ -53,10 +53,7 @@ export class ApiViewerItem extends LitElement {
       </div>
       <div ?hidden="${description === undefined}">
         <div part="docs-label">Description</div>
-        <api-viewer-marked
-          part="docs-markdown"
-          content="${description}"
-        ></api-viewer-marked>
+        <div part="docs-markdown">${parse(description)}</div>
       </div>
     `;
   }

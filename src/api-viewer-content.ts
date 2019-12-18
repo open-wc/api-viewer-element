@@ -2,10 +2,10 @@ import { LitElement, html, customElement, property } from 'lit-element';
 import { cache } from 'lit-html/directives/cache.js';
 import { ElementInfo } from './lib/types.js';
 import { EMPTY_ELEMENT } from './lib/constants.js';
+import { parse } from './lib/markdown.js';
 import './api-viewer-docs.js';
 import './api-viewer-demo.js';
 import './api-viewer-header.js';
-import './api-viewer-marked.js';
 
 @customElement('api-viewer-content')
 export class ApiViewerContent extends LitElement {
@@ -78,11 +78,9 @@ export class ApiViewerContent extends LitElement {
       ${cache(
         section === 'docs'
           ? html`
-              <api-viewer-marked
-                .content="${description}"
-                ?hidden="${description === ''}"
-                part="docs-description"
-              ></api-viewer-marked>
+              <div ?hidden="${description === ''}" part="docs-description">
+                ${parse(description)}
+              </div>
               <api-viewer-docs
                 .name="${name}"
                 .props="${properties}"
