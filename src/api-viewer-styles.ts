@@ -76,6 +76,28 @@ export default css`
     padding: 1rem;
   }
 
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem;
+    background: var(--ave-primary-color);
+    border-top-left-radius: var(--ave-border-radius);
+    border-top-right-radius: var(--ave-border-radius);
+  }
+
+  .tag-name {
+    color: var(--ave-header-color);
+    font-family: var(--ave-monospace-font);
+    font-size: 0.875rem;
+    line-height: 1.5rem;
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+  }
+
   [part='warning'] {
     padding: 1rem;
   }
@@ -212,6 +234,14 @@ export default css`
   }
 
   @media (max-width: 480px) {
+    header {
+      flex-direction: column;
+    }
+
+    nav {
+      margin-top: 0.5rem;
+    }
+
     .api-col-type {
       flex-basis: 100%;
       margin-top: 1rem;

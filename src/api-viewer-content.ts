@@ -5,7 +5,6 @@ import { EMPTY_ELEMENT } from './lib/constants.js';
 import { parse } from './lib/markdown.js';
 import './api-viewer-docs.js';
 import './api-viewer-demo.js';
-import './api-viewer-header.js';
 
 @customElement('api-viewer-content')
 export class ApiViewerContent extends LitElement {
@@ -39,42 +38,45 @@ export class ApiViewerContent extends LitElement {
     );
 
     return html`
-      <api-viewer-header .heading="${name}" part="header">
-        <input
-          id="docs"
-          type="radio"
-          name="section"
-          value="docs"
-          ?checked="${section === 'docs'}"
-          @change="${this._onToggle}"
-          part="radio-button"
-        />
-        <label part="radio-label" for="docs">Docs</label>
-        <input
-          id="demo"
-          type="radio"
-          name="section"
-          value="demo"
-          ?checked="${section === 'demo'}"
-          @change="${this._onToggle}"
-          part="radio-button"
-        />
-        <label part="radio-label" for="demo">Demo</label>
-        <label part="select-label">
-          <select
-            @change="${this._onSelect}"
-            .value="${String(selected)}"
-            ?hidden="${elements.length === 1}"
-            part="select"
-          >
-            ${elements.map((tag, idx) => {
-              return html`
-                <option value="${idx}">${tag.name}</option>
-              `;
-            })}
-          </select>
-        </label>
-      </api-viewer-header>
+      <header part="header">
+        <div class="tag-name">&lt;${name}&gt;</div>
+        <nav>
+          <input
+            id="docs"
+            type="radio"
+            name="section"
+            value="docs"
+            ?checked="${section === 'docs'}"
+            @change="${this._onToggle}"
+            part="radio-button"
+          />
+          <label part="radio-label" for="docs">Docs</label>
+          <input
+            id="demo"
+            type="radio"
+            name="section"
+            value="demo"
+            ?checked="${section === 'demo'}"
+            @change="${this._onToggle}"
+            part="radio-button"
+          />
+          <label part="radio-label" for="demo">Demo</label>
+          <label part="select-label">
+            <select
+              @change="${this._onSelect}"
+              .value="${String(selected)}"
+              ?hidden="${elements.length === 1}"
+              part="select"
+            >
+              ${elements.map((tag, idx) => {
+                return html`
+                  <option value="${idx}">${tag.name}</option>
+                `;
+              })}
+            </select>
+          </label>
+        </nav>
+      </header>
       ${cache(
         section === 'docs'
           ? html`
