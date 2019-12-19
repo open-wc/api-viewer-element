@@ -16,6 +16,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.3.1] - 2019-12-19
+
+### Added
+
+- Added `knobs` CSS shadow part for theming
+
+### Fixed
+
+- Fixed radio buttons scoping issue in Safari
+
+### Changed
+
+- Replaced `illuminate-js` with `highlight-ts`
+- Refactored and simplified internal components
+
 ## [0.3.0] - 2019-12-17
 
 ### Added
