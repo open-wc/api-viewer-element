@@ -30,8 +30,8 @@
     "@types/dompurify": "^2.0.0",
     "dompurify": "^2.0.7",
     "highlight-ts": "^9.12.1-2",
-    "lit-element": "^2.2.1",
-    "lit-html": "^1.1.2",
+    "lit-element": "^2.0.0",
+    "lit-html": "^1.0.0",
     "marked": "^0.8.0",
     "tslib": "^1.10.0"
   },
