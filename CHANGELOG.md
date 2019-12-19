@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.3.3] - 2019-12-19
+
+### Fixed
+
+- Updated `highlight-ts` to work with unpkg.com CDN
+
 ## [0.3.2] - 2019-12-19
 
 ### Fixed
