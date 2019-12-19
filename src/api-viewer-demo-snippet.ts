@@ -7,10 +7,10 @@ import {
   TemplateResult
 } from 'lit-element';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
-import { htmlRender } from 'highlight-ts/es/render/html.js';
-import { registerLanguages } from 'highlight-ts/es/languages.js';
-import { XML } from 'highlight-ts/es/languages/xml.js';
-import { init, process } from 'highlight-ts/es/process.js';
+import { htmlRender } from 'highlight-ts/es/render/html';
+import { registerLanguages } from 'highlight-ts/es/languages';
+import { XML } from 'highlight-ts/es/languages/xml';
+import { init, process } from 'highlight-ts/es/process';
 import {
   CSSPropertyInfo,
   KnobValues,
