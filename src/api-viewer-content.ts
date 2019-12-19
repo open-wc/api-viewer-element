@@ -6,6 +6,8 @@ import { parse } from './lib/markdown.js';
 import './api-viewer-docs.js';
 import './api-viewer-demo.js';
 
+let radioId = 0;
+
 @customElement('api-viewer-content')
 export class ApiViewerContent extends LitElement {
   @property({ attribute: false }) elements: ElementInfo[] = [];
@@ -13,6 +15,14 @@ export class ApiViewerContent extends LitElement {
   @property({ type: Number }) selected = 0;
 
   @property({ type: String }) section = 'docs';
+
+  protected _id?: number;
+
+  constructor() {
+    super();
+
+    this._id = ++radioId;
+  }
 
   protected createRenderRoot() {
     return this;
@@ -44,7 +54,7 @@ export class ApiViewerContent extends LitElement {
           <input
             id="docs"
             type="radio"
-            name="section"
+            name="section-${this._id}"
             value="docs"
             ?checked="${section === 'docs'}"
             @change="${this._onToggle}"
@@ -54,7 +64,7 @@ export class ApiViewerContent extends LitElement {
           <input
             id="demo"
             type="radio"
-            name="section"
+            name="section-${this._id}"
             value="demo"
             ?checked="${section === 'demo'}"
             @change="${this._onToggle}"
