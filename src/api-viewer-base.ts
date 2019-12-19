@@ -1,12 +1,29 @@
 import { LitElement, html, property, TemplateResult } from 'lit-element';
 import { until } from 'lit-html/directives/until.js';
-import { fetchJson } from './lib/fetch-json.js';
-import { ElementInfo } from './lib/types.js';
+import { ElementInfo, ElementSetInfo } from './lib/types.js';
 import { queryTemplates } from './lib/utils.js';
 import './api-viewer-content.js';
 
+type ElementPromise = Promise<ElementInfo[]>;
+
+async function fetchJson(src: string): ElementPromise {
+  let result: ElementInfo[] = [];
+  try {
+    const file = await fetch(src);
+    const json = (await file.json()) as ElementSetInfo;
+    if (Array.isArray(json.tags) && json.tags.length) {
+      result = json.tags;
+    } else {
+      console.error(`No element definitions found at ${src}`);
+    }
+  } catch (e) {
+    console.error(e);
+  }
+  return result;
+}
+
 async function renderDocs(
-  jsonFetched: Promise<ElementInfo[]>,
+  jsonFetched: ElementPromise,
   section: string,
   selected?: string
 ): Promise<TemplateResult> {
@@ -36,7 +53,7 @@ export class ApiViewerBase extends LitElement {
 
   @property({ type: String }) selected?: string;
 
-  private jsonFetched: Promise<ElementInfo[]> = Promise.resolve([]);
+  private jsonFetched: ElementPromise = Promise.resolve([]);
 
   private lastSrc?: string;
 
