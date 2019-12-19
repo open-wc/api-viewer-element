@@ -236,6 +236,7 @@ The following CSS shadow parts are available:
 | `demo-output`            | Wrapper of the rendered component in the live demo      |
 | `event-log`              | Wrapper of the event log tab content                    |
 | `event-record`           | `<p>` used as a record in the event log                 |
+| `knobs`                  | Wrapper of in the properties / styles knobs panel       |
 | `knobs-column`           | Column in the properties / styles knobs panel           |
 | `knobs-header`           | Header of the properties / styles knobs column          |
 | `knob-label`             | Label associated with an input in the knobs panel       |
