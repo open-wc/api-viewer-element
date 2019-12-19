@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.3.2] - 2019-12-19
+
+### Fixed
+
+- Reverted accidental lit-html and lit-element bump
+
 ## [0.3.1] - 2019-12-19
 
 ### Added
