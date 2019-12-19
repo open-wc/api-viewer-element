@@ -16,15 +16,20 @@ import {
   KnobValues
 } from './lib/types.js';
 import {
+  cssPropRenderer,
+  propRenderer,
+  renderKnobs,
+  slotRenderer
+} from './lib/knobs.js';
+import {
   getSlotTitle,
   hasHostTemplate,
+  hasSlotTemplate,
   isEmptyArray,
   normalizeType
 } from './lib/utils.js';
-import './api-viewer-demo-knobs.js';
 import './api-viewer-demo-snippet.js';
 import './api-viewer-demo-events.js';
-import './api-viewer-demo-css.js';
 import './api-viewer-panel.js';
 import './api-viewer-tab.js';
 import './api-viewer-tabs.js';
@@ -79,7 +84,8 @@ export class ApiViewerDemoLayout extends LitElement {
   protected render() {
     const noEvents = isEmptyArray(this.events);
     const noCss = isEmptyArray(this.cssProps);
-    const noKnobs = isEmptyArray(this.props) && isEmptyArray(this.slots);
+    const noSlots = isEmptyArray(this.slots);
+    const noKnobs = isEmptyArray(this.props) && noSlots;
 
     return html`
       <div part="demo-output" @rendered="${this._onRendered}">
@@ -110,14 +116,20 @@ export class ApiViewerDemoLayout extends LitElement {
           ?hidden="${noKnobs}"
         ></api-viewer-tab>
         <api-viewer-panel slot="panel" part="tab-panel">
-          <api-viewer-demo-knobs
-            .tag="${this.tag}"
-            .props="${this.props}"
-            .slots="${this.processedSlots}"
-            @prop-changed="${this._onPropChanged}"
-            @slot-changed="${this._onSlotChanged}"
-            ?hidden="${noKnobs}"
-          ></api-viewer-demo-knobs>
+          <div part="knobs" ?hidden="${noKnobs}">
+            <section part="knobs-column" @change="${this._onPropChanged}">
+              <h3 part="knobs-header">Properties</h3>
+              ${renderKnobs(this.props, 'prop', propRenderer)}
+            </section>
+            <section
+              ?hidden="${hasSlotTemplate(this.tag) || noSlots}"
+              part="knobs-column"
+              @change="${this._onSlotChanged}"
+            >
+              <h3 part="knobs-header">Slots</h3>
+              ${renderKnobs(this.processedSlots, 'slot', slotRenderer)}
+            </section>
+          </div>
         </api-viewer-panel>
         <api-viewer-tab
           heading="Styles"
@@ -126,11 +138,12 @@ export class ApiViewerDemoLayout extends LitElement {
           ?hidden="${noCss}"
         ></api-viewer-tab>
         <api-viewer-panel slot="panel" part="tab-panel">
-          <api-viewer-demo-css
-            ?hidden="${noCss}"
-            .cssProps="${this.processedCss}"
-            @css-changed="${this._onCssChanged}"
-          ></api-viewer-demo-css>
+          <div part="knobs" ?hidden="${noCss}">
+            <section part="knobs-column" @change="${this._onCssChanged}">
+              <h3 part="knobs-header">Custom CSS Properties</h3>
+              ${renderKnobs(this.cssProps, 'css-prop', cssPropRenderer)}
+            </section>
+          </div>
         </api-viewer-panel>
         <api-viewer-tab
           id="events"
@@ -211,7 +224,10 @@ export class ApiViewerDemoLayout extends LitElement {
   }
 
   private _onCssChanged(e: CustomEvent) {
-    const { name, value } = e.detail;
+    const target = e.composedPath()[0] as HTMLInputElement;
+    const { value, dataset } = target;
+    const { name } = dataset;
+
     this.processedCss = this.processedCss.map(prop => {
       return prop.name === name
         ? {
@@ -222,13 +238,24 @@ export class ApiViewerDemoLayout extends LitElement {
     });
   }
 
-  private _onPropChanged(e: CustomEvent) {
-    const { name, type, value } = e.detail;
-    this.knobs = Object.assign(this.knobs, { [name]: { type, value } });
+  private _onPropChanged(e: Event) {
+    const target = e.composedPath()[0] as HTMLInputElement;
+    const { name, type } = target.dataset;
+    const value =
+      normalizeType(type as string) === 'boolean'
+        ? target.checked
+        : target.value;
+
+    this.knobs = Object.assign(this.knobs, {
+      [name as string]: { type, value }
+    });
   }
 
-  private _onSlotChanged(e: CustomEvent) {
-    const { name, content } = e.detail;
+  private _onSlotChanged(e: Event) {
+    const target = e.composedPath()[0] as HTMLInputElement;
+    const name = target.dataset.slot;
+    const content = target.value;
+
     this.processedSlots = this.processedSlots.map(slot => {
       return slot.name === name
         ? {

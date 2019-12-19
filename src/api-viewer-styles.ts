@@ -70,12 +70,6 @@ export default css`
     display: block;
   }
 
-  api-viewer-demo-css,
-  api-viewer-demo-knobs {
-    display: block;
-    padding: 1rem;
-  }
-
   header {
     display: flex;
     align-items: center;
@@ -191,8 +185,9 @@ export default css`
     position: relative;
   }
 
-  .columns {
+  [part='knobs'] {
     display: flex;
+    padding: 1rem;
   }
 
   [part='knobs-column'] {
