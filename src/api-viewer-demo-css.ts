@@ -1,36 +1,18 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  property,
-  TemplateResult
-} from 'lit-element';
+import { LitElement, html, customElement, property } from 'lit-element';
+import { InputRenderer, Knob, renderKnobs } from './lib/knobs.js';
 import { CSSPropertyInfo } from './lib/types.js';
 
-const renderCssProps = (props: CSSPropertyInfo[]): TemplateResult => {
-  const rows = props.map(prop => {
-    const { name, value } = prop;
-    const id = `prop-${name}`;
-    return html`
-      <tr>
-        <td><label for="${id}" part="knob-label">${name}</label></td>
-        <td>
-          <input
-            id="${id}"
-            type="text"
-            .value="${String(value)}"
-            data-name="${name}"
-            part="input"
-          />
-        </td>
-      </tr>
-    `;
-  });
+const cssPropRenderer: InputRenderer = (knob: Knob, id: string) => {
+  const { name, value } = knob as CSSPropertyInfo;
 
   return html`
-    <table>
-      ${rows}
-    </table>
+    <input
+      id="${id}"
+      type="text"
+      .value="${String(value)}"
+      data-name="${name}"
+      part="input"
+    />
   `;
 };
 
@@ -47,7 +29,7 @@ export class ApiViewerDemoCss extends LitElement {
     return html`
       <section part="knobs-column" @change="${this._onChange}">
         <h3 part="knobs-header">Custom CSS Properties</h3>
-        ${renderCssProps(this.cssProps)}
+        ${renderKnobs(this.cssProps, 'css-prop', cssPropRenderer)}
       </section>
     `;
   }

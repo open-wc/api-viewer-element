@@ -1,12 +1,7 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  property,
-  TemplateResult
-} from 'lit-element';
+import { LitElement, html, customElement, property } from 'lit-element';
+import { InputRenderer, Knob, renderKnobs } from './lib/knobs.js';
 import { PropertyInfo, SlotValue } from './lib/types.js';
-import { getSlotTitle, hasSlotTemplate, normalizeType } from './lib/utils.js';
+import { hasSlotTemplate, normalizeType } from './lib/utils.js';
 
 const getInputType = (type: string) => {
   switch (normalizeType(type)) {
@@ -19,7 +14,8 @@ const getInputType = (type: string) => {
   }
 };
 
-const getInput = (name: string, type: string, value: unknown, id: string) => {
+const propRenderer: InputRenderer = (knob: Knob, id: string) => {
+  const { name, type, value } = knob as PropertyInfo;
   const inputType = getInputType(type);
   let input;
   if (value === undefined) {
@@ -57,54 +53,18 @@ const getInput = (name: string, type: string, value: unknown, id: string) => {
   return input;
 };
 
-const renderPropKnobs = (props: PropertyInfo[]): TemplateResult => {
-  const rows = props.map(prop => {
-    const { name, type, value } = prop;
-    const id = `prop-${name}`;
-    return html`
-      <tr>
-        <td><label for="${id}" part="knob-label">${name}</label></td>
-        <td>${getInput(name, type, value, id)}</td>
-      </tr>
-    `;
-  });
+const slotRenderer: InputRenderer = (knob: Knob, id: string) => {
+  const { name, content } = knob as SlotValue;
 
   return html`
-    <table>
-      ${rows}
-    </table>
-  `;
-};
-
-const renderSlotKnobs = (slots: SlotValue[]): TemplateResult => {
-  const rows = slots.map(slot => {
-    const { name, content } = slot;
-    const id = `slot-${name || 'default'}`;
-    return html`
-      <tr>
-        <td>
-          <label for="${id}" part="knob-label">
-            ${getSlotTitle(name)}
-          </label>
-        </td>
-        <td>
-          <input
-            id="${id}"
-            type="text"
-            .value="${content}"
-            data-type="slot"
-            data-slot="${name}"
-            part="input"
-          />
-        </td>
-      </tr>
-    `;
-  });
-
-  return html`
-    <table>
-      ${rows}
-    </table>
+    <input
+      id="${id}"
+      type="text"
+      .value="${content}"
+      data-type="slot"
+      data-slot="${name}"
+      part="input"
+    />
   `;
 };
 
@@ -127,14 +87,14 @@ export class ApiViewerDemoKnobs extends LitElement {
       <div class="columns" @change="${this._onChange}">
         <section part="knobs-column">
           <h3 part="knobs-header">Properties</h3>
-          ${renderPropKnobs(this.props)}
+          ${renderKnobs(this.props, 'prop', propRenderer)}
         </section>
         <section
           ?hidden="${hasSlotTemplate(this.tag) || this.slots.length === 0}"
           part="knobs-column"
         >
           <h3 part="knobs-header">Slots</h3>
-          ${renderSlotKnobs(this.slots)}
+          ${renderKnobs(this.slots, 'slot', slotRenderer)}
         </section>
       </div>
     `;
