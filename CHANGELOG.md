@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.3.4] - 2019-12-20
+
+### Fixed
+
+- Demo: do not throw when property type is empty
+
 ## [0.3.3] - 2019-12-19
 
 ### Fixed
