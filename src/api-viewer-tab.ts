@@ -121,7 +121,14 @@ export class ApiViewerTab extends LitElement {
     }
 
     this.addEventListener('focus', () => this._setFocused(true), true);
-    this.addEventListener('blur', () => this._setFocused(false), true);
+    this.addEventListener(
+      'blur',
+      () => {
+        this._setFocused(false);
+        this._setActive(false);
+      },
+      true
+    );
 
     this.addEventListener('mousedown', () => {
       this._setActive((this._mousedown = true));
@@ -141,24 +148,12 @@ export class ApiViewerTab extends LitElement {
   }
 
   private _setActive(active: boolean) {
-    if (active) {
-      this.setAttribute('active', '');
-    } else {
-      this.removeAttribute('active');
-    }
+    this.toggleAttribute('active', active);
   }
 
   private _setFocused(focused: boolean) {
-    if (focused) {
-      this.setAttribute('focused', '');
-      if (!this._mousedown) {
-        this.setAttribute('focus-ring', '');
-      }
-    } else {
-      this.removeAttribute('focused');
-      this.removeAttribute('focus-ring');
-      this._setActive(false);
-    }
+    this.toggleAttribute('focused', focused);
+    this.toggleAttribute('focus-ring', focused && !this._mousedown);
   }
 }
 
