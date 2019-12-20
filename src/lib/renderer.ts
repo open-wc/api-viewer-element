@@ -3,29 +3,25 @@ import {
   ComponentWithProps,
   CSSPropertyInfo,
   KnobValues,
-  KnobValue,
   SlotValue
 } from './types.js';
 import {
   getHostTemplateNode,
   getSlotTemplate,
-  hasSlotTemplate
+  hasSlotTemplate,
+  normalizeType
 } from './utils.js';
 
 const caches = new WeakMap();
 
 const applyKnobs = (component: Element, knobs: KnobValues) => {
   Object.keys(knobs).forEach((key: string) => {
-    const knob: KnobValue = knobs[key];
+    const { type, value } = knobs[key];
 
-    if (knob.type === 'boolean') {
-      if (knob.value) {
-        component.setAttribute(key, '');
-      } else {
-        component.removeAttribute(key);
-      }
+    if (normalizeType(type) === 'boolean') {
+      component.toggleAttribute(key, Boolean(value));
     } else {
-      ((component as unknown) as ComponentWithProps)[key] = knob.value;
+      ((component as unknown) as ComponentWithProps)[key] = value;
     }
   });
 };
