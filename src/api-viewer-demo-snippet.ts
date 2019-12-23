@@ -75,21 +75,11 @@ const renderSnippet = (
     markup += unindent(tpl);
     markup += `\n`;
   } else if (slots.length) {
-    slots
-      .sort((a: SlotValue, b: SlotValue) => {
-        if (a.name === '') {
-          return 1;
-        }
-        if (b.name === '') {
-          return -1;
-        }
-        return a.name.localeCompare(b.name);
-      })
-      .forEach(slot => {
-        const { name, content } = slot;
-        const div = name ? `<div slot="${name}">` : '<div>';
-        markup += `\n${INDENT}${div}${content}</div>`;
-      });
+    slots.forEach(slot => {
+      const { name, content } = slot;
+      const div = name ? `<div slot="${name}">` : '<div>';
+      markup += `\n${INDENT}${div}${content}</div>`;
+    });
     markup += `\n`;
   }
 

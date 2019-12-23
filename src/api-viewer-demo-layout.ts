@@ -180,12 +180,22 @@ export class ApiViewerDemoLayout extends LitElement {
 
   protected updated(props: PropertyValues) {
     if (props.has('slots') && this.slots) {
-      this.processedSlots = this.slots.map((slot: SlotInfo) => {
-        return {
-          ...slot,
-          content: getSlotTitle(slot.name)
-        };
-      });
+      this.processedSlots = this.slots
+        .sort((a: SlotInfo, b: SlotInfo) => {
+          if (a.name === '') {
+            return 1;
+          }
+          if (b.name === '') {
+            return -1;
+          }
+          return a.name.localeCompare(b.name);
+        })
+        .map((slot: SlotInfo) => {
+          return {
+            ...slot,
+            content: getSlotTitle(slot.name)
+          };
+        });
     }
   }
 
