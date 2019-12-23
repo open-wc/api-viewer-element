@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.3.5] - 2019-12-23
+
+### Fixed
+
+- Docs: do not convert property type to lower case
+- Demo: prevent unexpected slots knobs reordering
+
 ## [0.3.4] - 2019-12-20
 
 ### Fixed
