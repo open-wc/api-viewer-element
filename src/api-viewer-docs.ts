@@ -60,7 +60,7 @@ const renderItem = (
               <div part="docs-column" class="column-type">
                 <div part="docs-label">Type</div>
                 <div part="docs-value">
-                  ${valueType.toLowerCase()}
+                  ${valueType}
                   ${value === undefined
                     ? nothing
                     : html`
