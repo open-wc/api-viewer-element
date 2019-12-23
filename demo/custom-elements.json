@@ -20,12 +20,12 @@
         {
           "name": "focused",
           "description": "State attribute set when element has focus.",
-          "type": "Boolean"
+          "type": "boolean"
         },
         {
           "name": "focus-ring",
           "description": "State attribute set when focused from keyboard.",
-          "type": "Boolean"
+          "type": "boolean"
         }
       ],
       "properties": [

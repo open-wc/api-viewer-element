@@ -17,8 +17,8 @@ import { styleMap } from 'lit-html/directives/style-map.js';
  * @slot - Slot fot panel content
  * @slot header - Slot for panel header
  *
- * @attr {Boolean} focused - State attribute set when element has focus.
- * @attr {Boolean} focus-ring - State attribute set when focused from keyboard.
+ * @attr {boolean} focused - State attribute set when element has focus.
+ * @attr {boolean} focus-ring - State attribute set when focused from keyboard.
  *
  * @cssprop --panel-header-background - Default panel header background color.
  * @cssprop --panel-header-min-height - Panel header minimum height.
