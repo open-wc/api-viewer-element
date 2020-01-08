@@ -42,6 +42,7 @@ export const propRenderer: InputRenderer = (knob: Knob, id: string) => {
         type="${inputType}"
         data-name="${name}"
         data-type="${type}"
+        part="input"
       />
     `;
   } else if (normalizeType(type) === 'boolean') {
