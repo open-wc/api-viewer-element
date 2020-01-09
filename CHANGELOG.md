@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.3.6] - 2020-01-09
+
+### Fixed
+
+- Demo: do not include getters to property knobs
+- Demo: use `text-align: initial` to not override
+- Demo: add missing `input` part for property knob
+
 ## [0.3.5] - 2019-12-23
 
 ### Fixed
