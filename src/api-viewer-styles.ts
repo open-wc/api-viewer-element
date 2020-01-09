@@ -171,10 +171,6 @@ export default css`
     border-top: solid 1px var(--ave-border-color);
   }
 
-  [part='demo-output'] {
-    text-align: initial;
-  }
-
   .demo-tabs [part='tab-panel'] {
     box-sizing: border-box;
     position: relative;
@@ -183,6 +179,7 @@ export default css`
 
   [part='demo-output'] {
     padding: 1.5rem;
+    text-align: initial;
   }
 
   .source {
