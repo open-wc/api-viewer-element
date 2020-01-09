@@ -51,14 +51,6 @@ export class ApiViewerDemo extends LitElement {
     `;
   }
 
-  private renderWarning(): TemplateResult {
-    return html`
-      <div part="warning">
-        Element "${this.name}" is not defined. Have you imported it?
-      </div>
-    `;
-  }
-
   protected createRenderRoot() {
     return this;
   }
@@ -72,7 +64,14 @@ export class ApiViewerDemo extends LitElement {
     }
 
     return html`
-      ${until(this.renderDemoLayout(this.whenDefined), this.renderWarning())}
+      ${until(
+        this.renderDemoLayout(this.whenDefined),
+        html`
+          <div part="warning">
+            Element "${this.name}" is not defined. Have you imported it?
+          </div>
+        `
+      )}
     `;
   }
 }
