@@ -281,10 +281,17 @@ export class ApiViewerDemoLayout extends LitElement {
   private _onPropChanged(e: Event) {
     const target = e.composedPath()[0] as HTMLInputElement;
     const { name, type } = target.dataset;
-    const value =
-      normalizeType(type as string) === 'boolean'
-        ? target.checked
-        : target.value;
+    let value;
+    switch (normalizeType(type)) {
+      case 'boolean':
+        value = target.checked;
+        break;
+      case 'number':
+        value = Number(target.value);
+        break;
+      default:
+        value = target.value;
+    }
 
     this.knobs = Object.assign(this.knobs, {
       [name as string]: { type, value }
