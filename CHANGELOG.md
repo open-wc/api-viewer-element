@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.3.7] - 2020-01-09
+
+### Fixed
+
+- Demo: fix handling numeric property knobs
+
 ## [0.3.6] - 2020-01-09
 
 ### Fixed
