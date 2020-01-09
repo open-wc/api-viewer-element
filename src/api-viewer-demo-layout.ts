@@ -47,6 +47,32 @@ const getDefault = (
   }
 };
 
+type CustomElement = new () => HTMLElement;
+
+// TODO: remove when analyzer outputs "readOnly" to JSON
+const isGetter = (element: Element, prop: string): boolean => {
+  function getDescriptor(obj: CustomElement): PropertyDescriptor | undefined {
+    return obj === HTMLElement
+      ? undefined
+      : Object.getOwnPropertyDescriptor(obj.prototype, prop) ||
+          getDescriptor(Object.getPrototypeOf(obj));
+  }
+
+  if (element) {
+    const descriptor = getDescriptor(element.constructor as CustomElement);
+    return Boolean(
+      descriptor && descriptor.get && descriptor.set === undefined
+    );
+  }
+
+  return false;
+};
+
+const filterProps = (tag: string, props: PropertyInfo[]): PropertyInfo[] => {
+  const element = document.createElement(tag);
+  return props.filter(prop => !isGetter(element, prop.name));
+};
+
 @customElement('api-viewer-demo-layout')
 export class ApiViewerDemoLayout extends LitElement {
   @property({ type: String }) tag = '';
@@ -119,7 +145,11 @@ export class ApiViewerDemoLayout extends LitElement {
           <div part="knobs" ?hidden="${noKnobs}">
             <section part="knobs-column" @change="${this._onPropChanged}">
               <h3 part="knobs-header">Properties</h3>
-              ${renderKnobs(this.props, 'prop', propRenderer)}
+              ${renderKnobs(
+                filterProps(this.tag, this.props),
+                'prop',
+                propRenderer
+              )}
             </section>
             <section
               ?hidden="${hasSlotTemplate(this.tag) || noSlots}"
