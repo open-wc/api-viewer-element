@@ -102,7 +102,7 @@ export class FancyAccordion extends LitElement {
     super.update(props);
   }
 
-  protected get focused() {
+  get focused(): Element | null {
     const root = this.getRootNode();
     return ((root as unknown) as DocumentOrShadowRoot).activeElement;
   }
