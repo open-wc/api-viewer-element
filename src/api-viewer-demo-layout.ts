@@ -350,9 +350,11 @@ export class ApiViewerDemoLayout extends LitElement {
       const s = '-changed';
       if (event.endsWith(s)) {
         const name = event.replace(s, '');
-        const prop = this.props.find(p => p.name === name) as PropertyInfo;
+        const prop = this.props.find(
+          p => p.attribute === name || p.name === name
+        ) as PropertyInfo;
         if (prop) {
-          this._syncKnob(component, name, prop.type);
+          this._syncKnob(component, prop.name, prop.type);
         }
       }
 
