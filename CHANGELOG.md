@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.3.8] - 2020-02-03
+
+### Fixed
+
+- Docs: match attribute with different name
+- Demo: fix empty value for numeric knobs
+- Demo: support attribute with different name
+
 ## [0.3.7] - 2020-01-09
 
 ### Fixed
