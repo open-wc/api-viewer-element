@@ -94,15 +94,15 @@
       "description": "A custom element implementing the accordion widget: a vertically stacked set of expandable panels\nthat wraps several instances of the `<expansion-panel>` element. Only one panel can be opened\n(expanded) at a time.\n\nPanel headings function as controls that enable users to open (expand) or hide (collapse) their\nassociated sections of content. The user can toggle panels by mouse click, Enter and Space keys.\n\nThe component supports keyboard navigation and is aligned with the\n[WAI-ARIA Authoring Practices](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion).",
       "attributes": [
         {
-          "name": "opened",
+          "name": "opened-index",
           "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels.",
           "type": "number | null | undefined"
         }
       ],
       "properties": [
         {
-          "name": "opened",
-          "attribute": "opened",
+          "name": "openedIndex",
+          "attribute": "opened-index",
           "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels.",
           "type": "number | null | undefined"
         },
@@ -113,8 +113,8 @@
       ],
       "events": [
         {
-          "name": "opened-changed",
-          "description": "Event fired when expanding / collapsing"
+          "name": "opened-index-changed",
+          "description": "Event fired when changing currently opened panel."
         }
       ],
       "slots": [

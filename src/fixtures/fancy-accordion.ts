@@ -23,7 +23,7 @@ import { ExpansionPanel } from './expansion-panel.js';
  *
  * @slot - Slot fot panel elements.
  *
- * @fires opened-changed - Event fired when expanding / collapsing
+ * @fires opened-index-changed - Event fired when changing currently opened panel.
  */
 @customElement('fancy-accordion')
 export class FancyAccordion extends LitElement {
@@ -32,7 +32,8 @@ export class FancyAccordion extends LitElement {
    * Only one panel can be opened at the same time. Setting `null` or `undefined`
    * closes all the accordion panels.
    */
-  @property({ type: Number }) opened: number | null | undefined = null;
+  @property({ type: Number, attribute: 'opened-index' })
+  openedIndex: number | null | undefined = null;
 
   protected _items: ExpansionPanel[] = [];
 
@@ -92,8 +93,9 @@ export class FancyAccordion extends LitElement {
   }
 
   protected update(props: PropertyValues) {
-    if (props.has('opened') && this._items) {
-      const item = this.opened == null ? null : this._items[this.opened];
+    if (props.has('openedIndex') && this._items) {
+      const item =
+        this.openedIndex == null ? null : this._items[this.openedIndex];
       this._items.forEach(el => {
         el.opened = el === item;
       });
@@ -172,7 +174,7 @@ export class FancyAccordion extends LitElement {
         return;
       }
 
-      this.opened = idx;
+      this.openedIndex = idx;
       this._notifyOpen();
 
       this._items.forEach(item => {
@@ -181,16 +183,16 @@ export class FancyAccordion extends LitElement {
         }
       });
     } else if (!this._items.some(item => item.opened)) {
-      this.opened = undefined;
+      this.openedIndex = undefined;
       this._notifyOpen();
     }
   }
 
   private _notifyOpen() {
     this.dispatchEvent(
-      new CustomEvent('opened-changed', {
+      new CustomEvent('opened-index-changed', {
         detail: {
-          value: this.opened
+          value: this.openedIndex
         }
       })
     );
