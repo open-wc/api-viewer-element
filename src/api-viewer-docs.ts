@@ -29,7 +29,10 @@ const processAttrs = (
   attrs: AttributeInfo[],
   props: PropertyInfo[]
 ): AttributeInfo[] => {
-  return attrs.filter(attr => !props.some(prop => prop.name === attr.name));
+  return attrs.filter(
+    ({ name }) =>
+      !props.some(prop => prop.attribute === name || prop.name === name)
+  );
 };
 
 const renderItem = (
