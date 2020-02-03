@@ -287,7 +287,7 @@ export class ApiViewerDemoLayout extends LitElement {
         value = target.checked;
         break;
       case 'number':
-        value = Number(target.value);
+        value = target.value === '' ? null : Number(target.value);
         break;
       default:
         value = target.value;
