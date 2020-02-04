@@ -57,12 +57,13 @@ const renderSnippet = (
     .sort((a, b) => (a > b ? 1 : -1))
     .forEach((key: string) => {
       const knob: KnobValue = values[key];
+      const attr = knob.attribute || key;
       switch (normalizeType(knob.type)) {
         case 'boolean':
-          markup += knob.value ? ` ${key}` : '';
+          markup += knob.value ? ` ${attr}` : '';
           break;
         default:
-          markup += knob.value != null ? ` ${key}="${knob.value}"` : '';
+          markup += knob.value != null ? ` ${attr}="${knob.value}"` : '';
           break;
       }
     });
