@@ -32,7 +32,9 @@ export default css`
     display: none !important;
   }
 
-  p {
+  p,
+  ul,
+  ol {
     margin: 1rem 0;
     font-size: 0.9375rem;
     line-height: 1.5;
@@ -156,7 +158,9 @@ export default css`
     line-height: 1.5rem;
   }
 
-  [part='docs-markdown'] p {
+  [part='docs-markdown'] p,
+  [part='docs-markdown'] ul,
+  [part='docs-markdown'] ol {
     margin: 0.5rem 0;
   }
 
