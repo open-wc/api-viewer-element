@@ -16,6 +16,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.3.10] - 2020-02-04
+
+### Added
+
+- Added `demo-parts` CSS shadow part for styling
+
+### Fixed
+
+- Docs: apply font styles to lists in markdown
+
 ## [0.3.9] - 2020-02-04
 
 ### Fixed
