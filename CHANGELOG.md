@@ -16,6 +16,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.3.11] - 2020-02-04
+
+### Changed
+
+- Demo: wait for LitElement / Stencil update
+
+### Fixed
+
+- Demo: sync property knobs when true by default
+
 ## [0.3.10] - 2020-02-04
 
 ### Added
