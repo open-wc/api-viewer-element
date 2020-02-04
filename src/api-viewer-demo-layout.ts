@@ -122,7 +122,7 @@ export class ApiViewerDemoLayout extends LitElement {
           this.processedCss
         )}
       </div>
-      <api-viewer-tabs class="demo-tabs">
+      <api-viewer-tabs part="demo-tabs">
         <api-viewer-tab heading="Source" slot="tab" part="tab"></api-viewer-tab>
         <api-viewer-panel slot="panel" part="tab-panel">
           <button @click="${this._onCopyClick}" part="button">

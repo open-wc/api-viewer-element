@@ -170,12 +170,12 @@ export default css`
 
   /* Demo styles */
   [part='docs-item']:not(:first-of-type),
-  .demo-tabs,
+  [part='demo-tabs'],
   [part='demo-output'] {
     border-top: solid 1px var(--ave-border-color);
   }
 
-  .demo-tabs [part='tab-panel'] {
+  [part='demo-tabs'] [part='tab-panel'] {
     box-sizing: border-box;
     position: relative;
     background: #fafafa;
