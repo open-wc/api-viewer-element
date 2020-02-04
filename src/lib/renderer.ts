@@ -54,6 +54,44 @@ const applyCssProps = (component: HTMLElement, cssProps: CSSPropertyInfo[]) => {
   });
 };
 
+const isDefinedPromise = (action: unknown) =>
+  typeof action === 'object' && Promise.resolve(action) === action;
+
+interface PossiblyAsyncElement {
+  updateComplete?: Promise<unknown>;
+  componentOnReady?: () => Promise<unknown>;
+}
+
+/**
+ * Awaits for "update complete promises" of elements
+ * - for [lit-element](https://github.com/polymer/lit-element) that is `el.updateComplete`;
+ * - for [stencil](https://github.com/ionic-team/stencil/) that is `el.componentOnReady()`;
+ *
+ * If none of those Promise hooks are found, it will wait for `setTimeout`.
+ */
+async function elementUpdated(element: HTMLElement) {
+  let hasSpecificAwait = false;
+  const el = element as PossiblyAsyncElement;
+
+  const litPromise = el.updateComplete;
+  if (isDefinedPromise(litPromise)) {
+    await litPromise;
+    hasSpecificAwait = true;
+  }
+
+  const stencilPromise = el.componentOnReady ? el.componentOnReady() : false;
+  if (isDefinedPromise(stencilPromise)) {
+    await stencilPromise;
+    hasSpecificAwait = true;
+  }
+
+  if (!hasSpecificAwait) {
+    await new Promise(resolve => setTimeout(() => resolve()));
+  }
+
+  return el;
+}
+
 export const renderer = directive(
   (
     tag: string,
@@ -85,10 +123,10 @@ export const renderer = directive(
 
       caches.set(part, component);
 
-      const instance = part.value as Element;
+      const instance = part.value as HTMLElement;
 
       // wait for rendering
-      setTimeout(() => {
+      elementUpdated(instance).then(() => {
         instance.dispatchEvent(
           new CustomEvent('rendered', {
             detail: {
