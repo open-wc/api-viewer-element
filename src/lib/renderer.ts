@@ -16,10 +16,10 @@ const caches = new WeakMap();
 
 const applyKnobs = (component: Element, knobs: KnobValues) => {
   Object.keys(knobs).forEach((key: string) => {
-    const { type, value } = knobs[key];
+    const { type, attribute, value } = knobs[key];
 
     if (normalizeType(type) === 'boolean') {
-      component.toggleAttribute(key, Boolean(value));
+      component.toggleAttribute(attribute || key, Boolean(value));
     } else {
       ((component as unknown) as ComponentWithProps)[key] = value;
     }

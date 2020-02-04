@@ -229,6 +229,12 @@ export class ApiViewerDemoLayout extends LitElement {
     }
   }
 
+  private _getProp(name: string) {
+    return this.props.find(
+      p => p.attribute === name || p.name === name
+    ) as PropertyInfo;
+  }
+
   private _onLogClear() {
     this.eventLog = [];
     const tab = this.renderRoot.querySelector('#events') as HTMLElement;
@@ -293,8 +299,9 @@ export class ApiViewerDemoLayout extends LitElement {
         value = target.value;
     }
 
+    const { attribute } = this._getProp(name as string);
     this.knobs = Object.assign(this.knobs, {
-      [name as string]: { type, value }
+      [name as string]: { type, value, attribute }
     });
   }
 
@@ -320,8 +327,8 @@ export class ApiViewerDemoLayout extends LitElement {
       // Apply property values from template
       this.props
         .filter(prop => component[prop.name] !== getDefault(prop))
-        .forEach(({ name, type }) => {
-          this._syncKnob(component, name, type);
+        .forEach(prop => {
+          this._syncKnob(component, prop);
         });
     }
 
@@ -349,12 +356,9 @@ export class ApiViewerDemoLayout extends LitElement {
     component.addEventListener(event, ((e: CustomEvent) => {
       const s = '-changed';
       if (event.endsWith(s)) {
-        const name = event.replace(s, '');
-        const prop = this.props.find(
-          p => p.attribute === name || p.name === name
-        ) as PropertyInfo;
+        const prop = this._getProp(event.replace(s, ''));
         if (prop) {
-          this._syncKnob(component, prop.name, prop.type);
+          this._syncKnob(component, prop);
         }
       }
 
@@ -362,11 +366,14 @@ export class ApiViewerDemoLayout extends LitElement {
     }) as EventListener);
   }
 
-  private _syncKnob(component: Element, name: string, type: string) {
+  private _syncKnob(component: Element, changed: PropertyInfo) {
+    const { name, type, attribute } = changed;
     const value = ((component as unknown) as ComponentWithProps)[name];
 
     // update knobs to avoid duplicate event
-    this.knobs = Object.assign(this.knobs, { [name]: { type, value } });
+    this.knobs = Object.assign(this.knobs, {
+      [name]: { type, value, attribute }
+    });
 
     this.props = this.props.map(prop => {
       return prop.name === name

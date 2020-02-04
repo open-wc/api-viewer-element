@@ -29,6 +29,7 @@ export interface PropertyInfo extends Info {
 
 export interface KnobValue {
   type: string;
+  attribute: string | undefined;
   value: string | number | boolean | null;
 }
 
