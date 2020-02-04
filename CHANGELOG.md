@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.3.9] - 2020-02-04
+
+### Fixed
+
+- Demo: fix handling dash-case attributes in knobs
+- Demo: fix handling attributes in code snippet
+
 ## [0.3.8] - 2020-02-03
 
 ### Fixed
