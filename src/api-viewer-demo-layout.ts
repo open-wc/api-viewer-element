@@ -326,7 +326,14 @@ export class ApiViewerDemoLayout extends LitElement {
     if (hasHostTemplate(this.tag)) {
       // Apply property values from template
       this.props
-        .filter(prop => component[prop.name] !== getDefault(prop))
+        .filter(prop => {
+          const { name, type } = prop;
+          const defaultValue = getDefault(prop);
+          return (
+            component[name] !== defaultValue ||
+            (normalizeType(type) === 'boolean' && defaultValue)
+          );
+        })
         .forEach(prop => {
           this._syncKnob(component, prop);
         });
