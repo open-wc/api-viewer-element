@@ -147,7 +147,7 @@ Use `selected` property to configure the displayed element:
 
 The following templates can be passed to `<api-viewer>` element:
 
-#### `<template data-type="host">`
+#### `<template data-target="host">`
 
 Use "host" template to configure property values:
 
@@ -159,7 +159,7 @@ Use "host" template to configure property values:
 </api-viewer>
 ```
 
-#### `<template data-type="slot">`
+#### `<template data-target="slot">`
 
 Use "slot" template to configure complex content:
 
