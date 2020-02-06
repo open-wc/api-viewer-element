@@ -40,6 +40,10 @@ export default css`
     line-height: 1.5;
   }
 
+  pre {
+    white-space: pre-wrap;
+  }
+
   a {
     color: var(--ave-link-color);
   }
