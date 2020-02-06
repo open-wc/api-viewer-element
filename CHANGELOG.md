@@ -16,6 +16,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.3.12] - 2020-02-06
+
+### Changed
+
+- Docs: use white-space: pre-wrap for &lt;pre&gt;
+- Demo: make sure demo output clips content
+- Docs & demo: remove max-height from panels
+
 ## [0.3.11] - 2020-02-04
 
 ### Changed
