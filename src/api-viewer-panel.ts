@@ -10,8 +10,6 @@ export class ApiViewerPanel extends LitElement {
         display: block;
         box-sizing: border-box;
         width: 100%;
-        max-height: 800px;
-        overflow: auto;
       }
 
       :host([hidden]) {
