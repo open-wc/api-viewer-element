@@ -188,6 +188,8 @@ export default css`
   [part='demo-output'] {
     padding: 1.5rem;
     text-align: initial;
+    transform: translateZ(0);
+    overflow: hidden;
   }
 
   .source {
