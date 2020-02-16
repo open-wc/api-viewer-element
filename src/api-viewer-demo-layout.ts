@@ -68,11 +68,6 @@ const isGetter = (element: Element, prop: string): boolean => {
   return false;
 };
 
-const filterProps = (tag: string, props: PropertyInfo[]): PropertyInfo[] => {
-  const element = document.createElement(tag);
-  return props.filter(prop => !isGetter(element, prop.name));
-};
-
 @customElement('api-viewer-demo-layout')
 export class ApiViewerDemoLayout extends LitElement {
   @property({ type: String }) tag = '';
@@ -145,11 +140,7 @@ export class ApiViewerDemoLayout extends LitElement {
           <div part="knobs" ?hidden="${noKnobs}">
             <section part="knobs-column" @change="${this._onPropChanged}">
               <h3 part="knobs-header">Properties</h3>
-              ${renderKnobs(
-                filterProps(this.tag, this.props),
-                'prop',
-                propRenderer
-              )}
+              ${renderKnobs(this.props, 'prop', propRenderer)}
             </section>
             <section
               ?hidden="${hasSlotTemplate(this.tag) || noSlots}"
@@ -196,15 +187,19 @@ export class ApiViewerDemoLayout extends LitElement {
 
   protected firstUpdated(props: PropertyValues) {
     if (props.has('props')) {
+      const element = document.createElement(this.tag);
       // Apply default property values from analyzer
-      this.props = this.props.map((prop: PropertyInfo) => {
-        return typeof prop.default === 'string'
-          ? {
-              ...prop,
-              value: getDefault(prop)
-            }
-          : prop;
-      });
+      // Do not include getters to prevent exception
+      this.props = this.props
+        .filter(({ name }) => !isGetter(element, name))
+        .map((prop: PropertyInfo) => {
+          return typeof prop.default === 'string'
+            ? {
+                ...prop,
+                value: getDefault(prop)
+              }
+            : prop;
+        });
     }
   }
 
