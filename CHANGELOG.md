@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.3.13] - 2020-02-16
+
+### Fixed
+
+- Demo: do not set value for readonly properties
+
 ## [0.3.12] - 2020-02-06
 
 ### Changed
