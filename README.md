@@ -228,6 +228,23 @@ The following CSS shadow parts are available:
 | `docs-markdown`          | Iem description with parsed markdown content            |
 | `docs-row`               | Row containing columns. Child of a `docs-item` part     |
 | `docs-value`             | Sibling of a `docs-label` part (name, attribute, type)  |
+| `md-h1`                  | Markdown `<h1>` elements                                |
+| `md-h2`                  | Markdown `<h2>` elements                                |
+| `md-h3`                  | Markdown `<h3>` elements                                |
+| `md-h4`                  | Markdown `<h4>` elements                                |
+| `md-h5`                  | Markdown `<h5>` elements                                |
+| `md-h6`                  | Markdown `<h6>` elements                                |
+| `md-a`                   | Markdown `<a>` elements                                 |
+| `md-p`                   | Markdown `<p>` elements                                 |
+| `md-ul`                  | Markdown `<ul>` elements                                |
+| `md-ol`                  | Markdown `<ol>` elements                                |
+| `md-li`                  | Markdown `<li>` elements                                |
+| `md-pre`                 | Markdown `<pre>` elements                               |
+| `md-code`                | Markdown `<code>` elements                              |
+| `md-strong`              | Markdown `<strong>` elements                            |
+| `md-em`                  | Markdown `<em>` elements                                |
+| `md-blockquote`          | Markdown `<blockquote>` elements                        |
+| `md-del`                 | Markdown `<del>` elements                               |
 
 #### Live demo
 
