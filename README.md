@@ -151,6 +151,21 @@ Use `exclude-knobs` attribute to exclude properties from demo:
 <api-viewer src="./custom-elements.json" exclude-knobs="autofocus"></api-viewer>
 ```
 
+#### `elements`
+
+Use `elements` property instead of `src` to pass data directly:
+
+```html
+<api-viewer></api-viewer>
+<script>
+  fetch('./custom-elements.json')
+    .then(res => res.json())
+    .then(data => {
+      document.querySelector('api-viewer').elements = data.tags;
+    });
+</script>
+```
+
 ### Templates
 
 The following templates can be passed to `<api-viewer>` element:
