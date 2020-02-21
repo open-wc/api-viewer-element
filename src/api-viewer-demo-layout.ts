@@ -190,6 +190,9 @@ export class ApiViewerDemoLayout extends LitElement {
   }
 
   protected firstUpdated(props: PropertyValues) {
+    // When a selected tag name is changed by the user,
+    // the whole api-viewer-demo component is re-rendered,
+    // so this callback is invoked again for new element.
     if (props.has('props')) {
       const element = document.createElement(this.tag);
       // Store properties without getters
