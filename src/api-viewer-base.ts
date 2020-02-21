@@ -57,6 +57,9 @@ export class ApiViewerBase extends LitElement {
 
   @property({ type: String, attribute: 'exclude-knobs' }) excludeKnobs?: string;
 
+  @property({ attribute: false })
+  elements?: ElementInfo[];
+
   private jsonFetched: ElementPromise = Promise.resolve([]);
 
   private lastSrc?: string;
@@ -64,7 +67,9 @@ export class ApiViewerBase extends LitElement {
   protected render() {
     const { src } = this;
 
-    if (src && this.lastSrc !== src) {
+    if (Array.isArray(this.elements)) {
+      this.jsonFetched = Promise.resolve(this.elements);
+    } else if (src && this.lastSrc !== src) {
       this.lastSrc = src;
       this.jsonFetched = fetchJson(src);
     }
