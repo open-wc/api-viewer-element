@@ -143,6 +143,14 @@ Use `selected` property to configure the displayed element:
 <api-viewer src="./custom-elements.json" selected="my-element"></api-viewer>
 ```
 
+#### `exclude-knobs`
+
+Use `exclude-knobs` attribute to exclude properties from demo:
+
+```html
+<api-viewer src="./custom-elements.json" exclude-knobs="autofocus"></api-viewer>
+```
+
 ### Templates
 
 The following templates can be passed to `<api-viewer>` element:
