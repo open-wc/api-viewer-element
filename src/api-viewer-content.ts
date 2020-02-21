@@ -16,6 +16,8 @@ export class ApiViewerContent extends LitElement {
 
   @property({ type: String }) section = 'docs';
 
+  @property({ type: String }) exclude = '';
+
   protected _id?: number;
 
   constructor() {
@@ -29,7 +31,7 @@ export class ApiViewerContent extends LitElement {
   }
 
   protected render() {
-    const { elements, selected, section } = this;
+    const { elements, selected, section, exclude } = this;
 
     const {
       name,
@@ -110,6 +112,7 @@ export class ApiViewerContent extends LitElement {
                 .slots="${slots}"
                 .events="${events}"
                 .cssProps="${cssProps}"
+                .exclude="${exclude}"
               ></api-viewer-demo>
             `
       )}
