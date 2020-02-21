@@ -192,12 +192,10 @@ export class ApiViewerDemoLayout extends LitElement {
   protected firstUpdated(props: PropertyValues) {
     if (props.has('props')) {
       const element = document.createElement(this.tag);
-      // Apply default property values from analyzer
-      // Do not include getters to prevent exception
+      // Store properties without getters
       this._savedProps = this.props.filter(
         ({ name }) => !isGetter(element, name)
       );
-      this.props = this._filterProps();
     }
   }
 
