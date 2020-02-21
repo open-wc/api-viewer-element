@@ -31,6 +31,8 @@ export class ApiViewerDemo extends LitElement {
   @property({ attribute: false, hasChanged: () => true })
   cssProps: CSSPropertyInfo[] = [];
 
+  @property({ type: String }) exclude = '';
+
   private whenDefined: Promise<unknown> = Promise.resolve();
 
   private lastName?: string;
@@ -47,6 +49,7 @@ export class ApiViewerDemo extends LitElement {
         .slots="${this.slots}"
         .events="${this.events}"
         .cssProps="${this.cssProps}"
+        .exclude="${this.exclude}"
       ></api-viewer-demo-layout>
     `;
   }

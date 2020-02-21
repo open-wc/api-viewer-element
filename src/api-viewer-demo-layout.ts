@@ -84,6 +84,8 @@ export class ApiViewerDemoLayout extends LitElement {
   @property({ attribute: false, hasChanged: () => true })
   cssProps: CSSPropertyInfo[] = [];
 
+  @property({ type: String }) exclude = '';
+
   @property({ attribute: false, hasChanged: () => true })
   protected processedSlots: SlotValue[] = [];
 
@@ -97,6 +99,8 @@ export class ApiViewerDemoLayout extends LitElement {
   knobs: KnobValues = {};
 
   @property({ type: String }) protected copyBtnText = 'copy';
+
+  private _savedProps: PropertyInfo[] = [];
 
   protected createRenderRoot() {
     return this;
@@ -190,20 +194,18 @@ export class ApiViewerDemoLayout extends LitElement {
       const element = document.createElement(this.tag);
       // Apply default property values from analyzer
       // Do not include getters to prevent exception
-      this.props = this.props
-        .filter(({ name }) => !isGetter(element, name))
-        .map((prop: PropertyInfo) => {
-          return typeof prop.default === 'string'
-            ? {
-                ...prop,
-                value: getDefault(prop)
-              }
-            : prop;
-        });
+      this._savedProps = this.props.filter(
+        ({ name }) => !isGetter(element, name)
+      );
+      this.props = this._filterProps();
     }
   }
 
   protected updated(props: PropertyValues) {
+    if (props.has('exclude')) {
+      this.props = this._filterProps();
+    }
+
     if (props.has('slots') && this.slots) {
       this.processedSlots = this.slots
         .sort((a: SlotInfo, b: SlotInfo) => {
@@ -222,6 +224,20 @@ export class ApiViewerDemoLayout extends LitElement {
           };
         });
     }
+  }
+
+  private _filterProps() {
+    const exclude = this.exclude.split(',');
+    return this._savedProps
+      .filter(({ name }) => !exclude.includes(name))
+      .map((prop: PropertyInfo) => {
+        return typeof prop.default === 'string'
+          ? {
+              ...prop,
+              value: getDefault(prop)
+            }
+          : prop;
+      });
   }
 
   private _getProp(name: string) {

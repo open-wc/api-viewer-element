@@ -25,7 +25,8 @@ async function fetchJson(src: string): ElementPromise {
 async function renderDocs(
   jsonFetched: ElementPromise,
   section: string,
-  selected?: string
+  selected?: string,
+  exclude = ''
 ): Promise<TemplateResult> {
   const elements = await jsonFetched;
 
@@ -37,6 +38,7 @@ async function renderDocs(
           .elements="${elements}"
           .section="${section}"
           .selected="${index >= 0 ? index : 0}"
+          .exclude="${exclude}"
         ></api-viewer-content>
       `
     : html`
@@ -53,6 +55,8 @@ export class ApiViewerBase extends LitElement {
 
   @property({ type: String }) selected?: string;
 
+  @property({ type: String, attribute: 'exclude-knobs' }) excludeKnobs?: string;
+
   private jsonFetched: ElementPromise = Promise.resolve([]);
 
   private lastSrc?: string;
@@ -66,7 +70,14 @@ export class ApiViewerBase extends LitElement {
     }
 
     return html`
-      ${until(renderDocs(this.jsonFetched, this.section, this.selected))}
+      ${until(
+        renderDocs(
+          this.jsonFetched,
+          this.section,
+          this.selected,
+          this.excludeKnobs
+        )
+      )}
     `;
   }
 
