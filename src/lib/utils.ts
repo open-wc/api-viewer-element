@@ -2,10 +2,10 @@ export const getSlotTitle = (name: string) => {
   return name === '' ? 'Default' : name[0].toUpperCase() + name.slice(1);
 };
 
-let templates: HTMLTemplateElement[] = [];
+const templates: Array<HTMLTemplateElement[]> = [];
 
-export const queryTemplates = (node: Element) => {
-  templates = Array.from(node.querySelectorAll('template'));
+export const setTemplates = (id: number, tpl: HTMLTemplateElement[]) => {
+  templates[id] = tpl;
 };
 
 const HOST = 'host';
@@ -18,19 +18,19 @@ const getTemplate = (name: string, type: string) => (
   return element === name && target === type;
 };
 
-export const getSlotTemplate = (name: string) =>
-  templates.find(getTemplate(name, SLOT));
+export const getSlotTemplate = (id: number, name: string) =>
+  templates[id].find(getTemplate(name, SLOT));
 
-export const hasSlotTemplate = (name: string) =>
-  templates.some(getTemplate(name, SLOT));
+export const hasSlotTemplate = (id: number, name: string) =>
+  templates[id].some(getTemplate(name, SLOT));
 
-export const getHostTemplateNode = (name: string) => {
-  const tpl = templates.find(getTemplate(name, HOST));
+export const getHostTemplateNode = (id: number, name: string) => {
+  const tpl = templates[id].find(getTemplate(name, HOST));
   return tpl && (tpl.content as DocumentFragment).firstElementChild;
 };
 
-export const hasHostTemplate = (name: string) =>
-  templates.some(getTemplate(name, HOST));
+export const hasHostTemplate = (id: number, name: string) =>
+  templates[id].some(getTemplate(name, HOST));
 
 export const isEmptyArray = (array: unknown[]) => array.length === 0;
 

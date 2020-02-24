@@ -33,6 +33,8 @@ export class ApiViewerDemo extends LitElement {
 
   @property({ type: String }) exclude = '';
 
+  @property({ type: Number }) vid?: number;
+
   private whenDefined: Promise<unknown> = Promise.resolve();
 
   private lastName?: string;
@@ -50,6 +52,7 @@ export class ApiViewerDemo extends LitElement {
         .events="${this.events}"
         .cssProps="${this.cssProps}"
         .exclude="${this.exclude}"
+        .vid="${this.vid}"
       ></api-viewer-demo-layout>
     `;
   }
