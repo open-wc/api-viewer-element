@@ -86,6 +86,8 @@ export class ApiViewerDemoLayout extends LitElement {
 
   @property({ type: String }) exclude = '';
 
+  @property({ type: Number }) vid?: number;
+
   @property({ attribute: false, hasChanged: () => true })
   protected processedSlots: SlotValue[] = [];
 
@@ -111,10 +113,12 @@ export class ApiViewerDemoLayout extends LitElement {
     const noCss = isEmptyArray(this.cssProps);
     const noSlots = isEmptyArray(this.slots);
     const noKnobs = isEmptyArray(this.props) && noSlots;
+    const id = this.vid as number;
 
     return html`
       <div part="demo-output" @rendered="${this._onRendered}">
         ${renderer(
+          id,
           this.tag,
           this.knobs,
           this.processedSlots,
@@ -132,6 +136,7 @@ export class ApiViewerDemoLayout extends LitElement {
             .knobs="${this.knobs}"
             .slots="${this.processedSlots}"
             .cssProps="${this.processedCss}"
+            .vid="${this.vid}"
           ></api-viewer-demo-snippet>
         </api-viewer-panel>
         <api-viewer-tab
@@ -147,7 +152,7 @@ export class ApiViewerDemoLayout extends LitElement {
               ${renderKnobs(this.props, 'prop', propRenderer)}
             </section>
             <section
-              ?hidden="${hasSlotTemplate(this.tag) || noSlots}"
+              ?hidden="${hasSlotTemplate(id, this.tag) || noSlots}"
               part="knobs-column"
               @change="${this._onSlotChanged}"
             >
@@ -335,7 +340,7 @@ export class ApiViewerDemoLayout extends LitElement {
   private _onRendered(e: CustomEvent) {
     const { component } = e.detail;
 
-    if (hasHostTemplate(this.tag)) {
+    if (hasHostTemplate(this.vid as number, this.tag)) {
       // Apply property values from template
       this.props
         .filter(prop => {

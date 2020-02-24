@@ -47,6 +47,7 @@ const unindent = (text: string) => {
 };
 
 const renderSnippet = (
+  id: number,
   tag: string,
   values: KnobValues,
   slots: SlotValue[],
@@ -70,7 +71,7 @@ const renderSnippet = (
 
   markup += `>`;
 
-  const template = getSlotTemplate(tag);
+  const template = getSlotTemplate(id, tag);
   if (template instanceof HTMLTemplateElement) {
     const tpl = template.innerHTML.replace(/\s+$/, '').replace(/(="")/g, '');
     markup += unindent(tpl);
@@ -117,6 +118,8 @@ export class ApiViewerDemoSnippet extends LitElement {
   @property({ attribute: false, hasChanged: () => true })
   cssProps: CSSPropertyInfo[] = [];
 
+  @property({ type: Number }) vid?: number;
+
   static get styles() {
     return [
       highlightTheme,
@@ -131,7 +134,13 @@ export class ApiViewerDemoSnippet extends LitElement {
 
   protected render() {
     return html`
-      ${renderSnippet(this.tag, this.knobs, this.slots, this.cssProps)}
+      ${renderSnippet(
+        this.vid as number,
+        this.tag,
+        this.knobs,
+        this.slots,
+        this.cssProps
+      )}
     `;
   }
 

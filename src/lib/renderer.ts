@@ -94,6 +94,7 @@ async function elementUpdated(element: HTMLElement) {
 
 export const renderer = directive(
   (
+    id: number,
     tag: string,
     knobs: KnobValues,
     slots: SlotValue[],
@@ -105,7 +106,7 @@ export const renderer = directive(
 
     let component = caches.get(part);
     if (component === undefined || component.tagName.toLowerCase() !== tag) {
-      const node = getHostTemplateNode(tag);
+      const node = getHostTemplateNode(id, tag);
       if (node) {
         component = node.cloneNode(true);
       } else {
@@ -115,7 +116,7 @@ export const renderer = directive(
       part.setValue(component);
       part.commit();
 
-      const template = getSlotTemplate(tag);
+      const template = getSlotTemplate(id, tag);
       if (template instanceof HTMLTemplateElement) {
         const clone = document.importNode(template.content, true);
         component.appendChild(clone);
@@ -141,7 +142,7 @@ export const renderer = directive(
 
     applyKnobs(component, knobs);
 
-    if (!hasSlotTemplate(tag) && slots.length) {
+    if (!hasSlotTemplate(id, tag) && slots.length) {
       applySlots(component, slots);
     }
 

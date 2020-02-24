@@ -1,7 +1,7 @@
 import { LitElement, html, property, TemplateResult } from 'lit-element';
 import { until } from 'lit-html/directives/until.js';
 import { ElementInfo, ElementSetInfo } from './lib/types.js';
-import { queryTemplates } from './lib/utils.js';
+import { setTemplates } from './lib/utils.js';
 import './api-viewer-content.js';
 
 type ElementPromise = Promise<ElementInfo[]>;
@@ -26,6 +26,7 @@ async function renderDocs(
   jsonFetched: ElementPromise,
   section: string,
   selected?: string,
+  id?: number,
   exclude = ''
 ): Promise<TemplateResult> {
   const elements = await jsonFetched;
@@ -39,6 +40,7 @@ async function renderDocs(
           .section="${section}"
           .selected="${index >= 0 ? index : 0}"
           .exclude="${exclude}"
+          .vid="${id}"
         ></api-viewer-content>
       `
     : html`
@@ -47,6 +49,8 @@ async function renderDocs(
         </div>
       `;
 }
+
+let id = 0;
 
 export class ApiViewerBase extends LitElement {
   @property({ type: String }) src?: string;
@@ -64,6 +68,14 @@ export class ApiViewerBase extends LitElement {
 
   private lastSrc?: string;
 
+  protected _id?: number;
+
+  constructor() {
+    super();
+
+    this._id = ++id;
+  }
+
   protected render() {
     const { src } = this;
 
@@ -80,6 +92,7 @@ export class ApiViewerBase extends LitElement {
           this.jsonFetched,
           this.section,
           this.selected,
+          this._id,
           this.excludeKnobs
         )
       )}
@@ -87,6 +100,13 @@ export class ApiViewerBase extends LitElement {
   }
 
   protected firstUpdated() {
-    queryTemplates(this);
+    this.setTemplates();
+  }
+
+  protected setTemplates() {
+    setTemplates(
+      this._id as number,
+      Array.from(this.querySelectorAll('template'))
+    );
   }
 }
