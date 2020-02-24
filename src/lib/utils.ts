@@ -12,26 +12,24 @@ const isTemplate = (tpl: HTMLTemplateElement, name: string) => {
   return tpl.dataset.element === name;
 };
 
-const isHostTemplate = (tpl: HTMLTemplateElement) => {
-  return tpl.dataset.target === 'host';
-};
+const HOST = 'host';
+const SLOT = 'slot';
 
-export const getSlotTemplate = (name: string) => {
-  return templates.find(t => isTemplate(t, name) && !isHostTemplate(t));
-};
+const getTarget = (tpl: HTMLTemplateElement) => tpl.dataset.target;
 
-export const hasSlotTemplate = (name: string) => {
-  return templates.some(t => isTemplate(t, name) && !isHostTemplate(t));
-};
+export const getSlotTemplate = (name: string) =>
+  templates.find(t => isTemplate(t, name) && getTarget(t) === SLOT);
+
+export const hasSlotTemplate = (name: string) =>
+  templates.some(t => isTemplate(t, name) && getTarget(t) === SLOT);
 
 export const getHostTemplateNode = (name: string) => {
-  const tpl = templates.find(t => isTemplate(t, name) && isHostTemplate(t));
+  const tpl = templates.find(t => isTemplate(t, name) && getTarget(t) === HOST);
   return tpl && (tpl.content as DocumentFragment).firstElementChild;
 };
 
-export const hasHostTemplate = (name: string) => {
-  return templates.some(tpl => isTemplate(tpl, name) && isHostTemplate(tpl));
-};
+export const hasHostTemplate = (name: string) =>
+  templates.some(t => isTemplate(t, name) && getTarget(t) === HOST);
 
 export const isEmptyArray = (array: unknown[]) => array.length === 0;
 
