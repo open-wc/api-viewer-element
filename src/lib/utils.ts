@@ -8,28 +8,29 @@ export const queryTemplates = (node: Element) => {
   templates = Array.from(node.querySelectorAll('template'));
 };
 
-const isTemplate = (tpl: HTMLTemplateElement, name: string) => {
-  return tpl.dataset.element === name;
-};
-
 const HOST = 'host';
 const SLOT = 'slot';
 
-const getTarget = (tpl: HTMLTemplateElement) => tpl.dataset.target;
+const getTemplate = (name: string, type: string) => (
+  tpl: HTMLTemplateElement
+) => {
+  const { element, target } = tpl.dataset;
+  return element === name && target === type;
+};
 
 export const getSlotTemplate = (name: string) =>
-  templates.find(t => isTemplate(t, name) && getTarget(t) === SLOT);
+  templates.find(getTemplate(name, SLOT));
 
 export const hasSlotTemplate = (name: string) =>
-  templates.some(t => isTemplate(t, name) && getTarget(t) === SLOT);
+  templates.some(getTemplate(name, SLOT));
 
 export const getHostTemplateNode = (name: string) => {
-  const tpl = templates.find(t => isTemplate(t, name) && getTarget(t) === HOST);
+  const tpl = templates.find(getTemplate(name, HOST));
   return tpl && (tpl.content as DocumentFragment).firstElementChild;
 };
 
 export const hasHostTemplate = (name: string) =>
-  templates.some(t => isTemplate(t, name) && getTarget(t) === HOST);
+  templates.some(getTemplate(name, HOST));
 
 export const isEmptyArray = (array: unknown[]) => array.length === 0;
 
