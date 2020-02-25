@@ -23,10 +23,10 @@ import {
 } from './lib/knobs.js';
 import {
   getSlotTitle,
-  hasHostTemplate,
-  hasSlotTemplate,
+  hasTemplate,
   isEmptyArray,
-  normalizeType
+  normalizeType,
+  TemplateTypes
 } from './lib/utils.js';
 import './api-viewer-demo-snippet.js';
 import './api-viewer-demo-events.js';
@@ -46,6 +46,8 @@ const getDefault = (
       return prop.default;
   }
 };
+
+const { HOST, SLOT } = TemplateTypes;
 
 type CustomElement = new () => HTMLElement;
 
@@ -152,7 +154,7 @@ export class ApiViewerDemoLayout extends LitElement {
               ${renderKnobs(this.props, 'prop', propRenderer)}
             </section>
             <section
-              ?hidden="${hasSlotTemplate(id, this.tag) || noSlots}"
+              ?hidden="${noSlots || hasTemplate(id, this.tag, SLOT)}"
               part="knobs-column"
               @change="${this._onSlotChanged}"
             >
@@ -340,7 +342,7 @@ export class ApiViewerDemoLayout extends LitElement {
   private _onRendered(e: CustomEvent) {
     const { component } = e.detail;
 
-    if (hasHostTemplate(this.vid as number, this.tag)) {
+    if (hasTemplate(this.vid as number, this.tag, HOST)) {
       // Apply property values from template
       this.props
         .filter(prop => {

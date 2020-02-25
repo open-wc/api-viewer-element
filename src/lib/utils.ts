@@ -8,29 +8,26 @@ export const setTemplates = (id: number, tpl: HTMLTemplateElement[]) => {
   templates[id] = tpl;
 };
 
-const HOST = 'host';
-const SLOT = 'slot';
+export const TemplateTypes = Object.freeze({
+  HOST: 'host',
+  SLOT: 'slot'
+});
 
-const getTemplate = (name: string, type: string) => (
+export const isTemplate = (node: unknown): node is HTMLTemplateElement =>
+  node instanceof HTMLTemplateElement;
+
+const matchTemplate = (name: string, type: string) => (
   tpl: HTMLTemplateElement
 ) => {
   const { element, target } = tpl.dataset;
   return element === name && target === type;
 };
 
-export const getSlotTemplate = (id: number, name: string) =>
-  templates[id].find(getTemplate(name, SLOT));
+export const getTemplate = (id: number, name: string, type: string) =>
+  templates[id].find(matchTemplate(name, type));
 
-export const hasSlotTemplate = (id: number, name: string) =>
-  templates[id].some(getTemplate(name, SLOT));
-
-export const getHostTemplateNode = (id: number, name: string) => {
-  const tpl = templates[id].find(getTemplate(name, HOST));
-  return tpl && (tpl.content as DocumentFragment).firstElementChild;
-};
-
-export const hasHostTemplate = (id: number, name: string) =>
-  templates[id].some(getTemplate(name, HOST));
+export const hasTemplate = (id: number, name: string, type: string) =>
+  templates[id].some(matchTemplate(name, type));
 
 export const isEmptyArray = (array: unknown[]) => array.length === 0;
 
