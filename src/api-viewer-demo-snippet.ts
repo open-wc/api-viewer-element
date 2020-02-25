@@ -18,7 +18,12 @@ import {
   SlotValue
 } from './lib/types.js';
 import { CSS } from './lib/highlight-css.js';
-import { getSlotTemplate, normalizeType } from './lib/utils.js';
+import {
+  getTemplate,
+  isTemplate,
+  normalizeType,
+  TemplateTypes
+} from './lib/utils.js';
 import highlightTheme from './lib/highlight-theme.js';
 
 // register languages
@@ -71,8 +76,8 @@ const renderSnippet = (
 
   markup += `>`;
 
-  const template = getSlotTemplate(id, tag);
-  if (template instanceof HTMLTemplateElement) {
+  const template = getTemplate(id, tag, TemplateTypes.SLOT);
+  if (isTemplate(template)) {
     const tpl = template.innerHTML.replace(/\s+$/, '').replace(/(="")/g, '');
     markup += unindent(tpl);
     markup += `\n`;
