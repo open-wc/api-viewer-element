@@ -20,6 +20,7 @@ import {
 import { CSS } from './lib/highlight-css.js';
 import {
   getTemplate,
+  getTemplateNode,
   isTemplate,
   normalizeType,
   TemplateTypes
@@ -34,9 +35,11 @@ const highlighter = init(htmlRender, {
   classPrefix: ''
 });
 
+const { PREFIX, SLOT, SUFFIX, WRAPPER } = TemplateTypes;
+
 const INDENT = '  ';
 
-const unindent = (text: string) => {
+const unindent = (text: string, prepend: string) => {
   if (!text) return text;
   const lines = text.replace(/\t/g, INDENT).split('\n');
   const indent = lines.reduce((prev: number | null, line: string) => {
@@ -48,7 +51,15 @@ const unindent = (text: string) => {
     return (lineIndent as number) < prev ? lineIndent : prev;
   }, null);
 
-  return lines.map(l => INDENT + l.substr(indent as number)).join('\n');
+  return lines.map(l => prepend + l.substr(indent as number)).join('\n');
+};
+
+const getTplContent = (
+  template: HTMLTemplateElement,
+  prepend: string
+): string => {
+  const tpl = template.innerHTML.replace(/\s+$/, '').replace(/(="")/g, '');
+  return unindent(tpl, prepend);
 };
 
 const renderSnippet = (
@@ -58,7 +69,27 @@ const renderSnippet = (
   slots: SlotValue[],
   cssProps: CSSPropertyInfo[]
 ): TemplateResult => {
-  let markup = `<${tag}`;
+  let markup = '';
+  const prefix = getTemplate(id, tag, PREFIX);
+  if (isTemplate(prefix)) {
+    markup += `${getTplContent(prefix, '').trim()}\n`;
+  }
+
+  let prepend = '';
+  let wrap = null;
+
+  const wrapper = getTemplate(id, tag, WRAPPER);
+  const wrapNode = getTemplateNode(wrapper);
+  if (wrapNode) {
+    prepend = INDENT;
+    const match = wrapNode.outerHTML.match(/<([a-z]+)[^>]*(?<!\/)>/);
+    if (match) {
+      wrap = wrapNode.tagName.toLowerCase();
+      markup += `${match[0]}\n${INDENT}`;
+    }
+  }
+
+  markup += `<${tag}`;
   Object.keys(values)
     .sort((a, b) => (a > b ? 1 : -1))
     .forEach((key: string) => {
@@ -76,21 +107,28 @@ const renderSnippet = (
 
   markup += `>`;
 
-  const template = getTemplate(id, tag, TemplateTypes.SLOT);
+  const template = getTemplate(id, tag, SLOT);
   if (isTemplate(template)) {
-    const tpl = template.innerHTML.replace(/\s+$/, '').replace(/(="")/g, '');
-    markup += unindent(tpl);
-    markup += `\n`;
+    markup += `${getTplContent(template, `${prepend}${INDENT}`)}\n`;
   } else if (slots.length) {
     slots.forEach(slot => {
       const { name, content } = slot;
       const div = name ? `<div slot="${name}">` : '<div>';
-      markup += `\n${INDENT}${div}${content}</div>`;
+      markup += `\n${prepend}${INDENT}${div}${content}</div>`;
     });
     markup += `\n`;
   }
 
-  markup += `</${tag}>`;
+  markup += `${prepend}</${tag}>`;
+
+  if (wrap) {
+    markup += `\n</${wrap}>`;
+  }
+
+  const suffix = getTemplate(id, tag, SUFFIX);
+  if (isTemplate(suffix)) {
+    markup += `\n${getTplContent(suffix, '').trim()}\n`;
+  }
 
   const cssValues = cssProps.filter(p => p.value !== p.defaultValue);
   if (cssValues.length) {
