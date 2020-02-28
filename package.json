@@ -64,7 +64,7 @@
     "stylelint-processor-styled-components": "1.9.0",
     "tsc-watch": "^4.0.0",
     "typescript": "^3.7.4",
-    "web-component-analyzer": "^1.0.1"
+    "web-component-analyzer": "^1.0.3"
   },
   "husky": {
     "hooks": {
