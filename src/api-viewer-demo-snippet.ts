@@ -130,7 +130,7 @@ const renderSnippet = (
     markup += `\n${getTplContent(suffix, '').trim()}\n`;
   }
 
-  const cssValues = cssProps.filter(p => p.value !== p.defaultValue);
+  const cssValues = cssProps.filter(p => p.value !== p.default);
   if (cssValues.length) {
     markup += `\n<style>\n${INDENT}${tag} {\n`;
     cssValues.forEach(prop => {

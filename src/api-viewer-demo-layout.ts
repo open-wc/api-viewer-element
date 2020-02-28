@@ -26,7 +26,8 @@ import {
   hasTemplate,
   isEmptyArray,
   normalizeType,
-  TemplateTypes
+  TemplateTypes,
+  unquote
 } from './lib/utils.js';
 import './api-viewer-demo-snippet.js';
 import './api-viewer-demo-events.js';
@@ -43,12 +44,8 @@ const getDefault = (
       return value !== 'false';
     case 'number':
       return Number(value);
-    case 'string':
-      return typeof value === 'string'
-        ? value.slice(1, value.length - 1)
-        : value;
     default:
-      return value;
+      return unquote(value as string);
   }
 };
 
@@ -371,11 +368,13 @@ export class ApiViewerDemoLayout extends LitElement {
       const style = getComputedStyle(component);
 
       this.processedCss = this.cssProps.map(cssProp => {
-        let value = style.getPropertyValue(cssProp.name);
+        let value = cssProp.default
+          ? unquote(cssProp.default)
+          : style.getPropertyValue(cssProp.name);
         const result = cssProp;
         if (value) {
           value = value.trim();
-          result.defaultValue = value;
+          result.default = value;
           result.value = value;
         }
         return result;

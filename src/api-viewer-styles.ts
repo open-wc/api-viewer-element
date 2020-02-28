@@ -145,6 +145,7 @@ export default css`
     flex-basis: 100%;
   }
 
+  .column-name-css,
   .column-type {
     flex-basis: 50%;
   }
@@ -248,7 +249,7 @@ export default css`
       margin-top: 0.5rem;
     }
 
-    .api-col-type {
+    .column-type {
       flex-basis: 100%;
       margin-top: 1rem;
     }
