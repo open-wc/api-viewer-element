@@ -45,6 +45,17 @@
   <section>
     <h2>&lt;api-viewer&gt; element</h2>
     <api-viewer src="./custom-elements.json">
+      <template data-element="intl-currency" data-target="prefix">
+        <em>
+          Shipping:
+        </em>
+      </template>
+      <template data-element="intl-currency" data-target="suffix">
+        <strong style="text-transform: uppercase">free!</strong>
+      </template>
+      <template data-element="intl-currency" data-target="wrapper">
+        <s></s>
+      </template>
       <template data-element="fancy-accordion" data-target="slot">
         <expansion-panel>
           <div slot="header">Panel 1</div>
@@ -92,6 +103,7 @@
 
   <script type="module" src="../lib/fixtures/expansion-panel.js"></script>
   <script type="module" src="../lib/fixtures/fancy-accordion.js"></script>
+  <script type="module" src="../lib/fixtures/intl-currency.js"></script>
   <script type="module" src="../lib/fixtures/progress-bar.js"></script>
   <script type="module" src="../lib/api-viewer.js"></script>
 
