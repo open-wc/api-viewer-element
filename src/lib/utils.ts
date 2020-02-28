@@ -10,6 +10,7 @@ export const setTemplates = (id: number, tpl: HTMLTemplateElement[]) => {
 
 export const TemplateTypes = Object.freeze({
   HOST: 'host',
+  KNOB: 'knob',
   SLOT: 'slot',
   PREFIX: 'prefix',
   SUFFIX: 'suffix',
@@ -31,6 +32,9 @@ export const getTemplateNode = (node: unknown) =>
 
 export const getTemplate = (id: number, name: string, type: string) =>
   templates[id].find(matchTemplate(name, type));
+
+export const getTemplates = (id: number, name: string, type: string) =>
+  templates[id].filter(matchTemplate(name, type));
 
 export const hasTemplate = (id: number, name: string, type: string) =>
   templates[id].some(matchTemplate(name, type));

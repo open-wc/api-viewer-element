@@ -23,11 +23,13 @@ import {
 } from './lib/knobs.js';
 import {
   getSlotTitle,
+  getTemplates,
   hasTemplate,
   isEmptyArray,
   normalizeType,
   TemplateTypes,
-  unquote
+  unquote,
+  getTemplateNode
 } from './lib/utils.js';
 import './api-viewer-demo-snippet.js';
 import './api-viewer-demo-events.js';
@@ -49,7 +51,7 @@ const getDefault = (
   }
 };
 
-const { HOST, SLOT } = TemplateTypes;
+const { HOST, KNOB, SLOT } = TemplateTypes;
 
 type CustomElement = new () => HTMLElement;
 
@@ -236,9 +238,38 @@ export class ApiViewerDemoLayout extends LitElement {
     }
   }
 
+  private _getExtraKnobs() {
+    return getTemplates(this.vid as number, this.tag, KNOB)
+      .map(template => {
+        const { attr, type } = template.dataset;
+        let result = null;
+        if (attr && type === 'select') {
+          const node = getTemplateNode(template);
+          const options = node
+            ? Array.from(node.children)
+                .filter(
+                  (c): c is HTMLOptionElement => c instanceof HTMLOptionElement
+                )
+                .map(option => option.value)
+            : [];
+          if (node instanceof HTMLSelectElement && options.length > 1) {
+            result = {
+              name: attr,
+              attribute: attr,
+              type,
+              options
+            } as PropertyInfo;
+          }
+        }
+        return result;
+      })
+      .filter(Boolean) as PropertyInfo[];
+  }
+
   private _filterProps() {
     const exclude = this.exclude.split(',');
     return this._savedProps
+      .concat(this._getExtraKnobs())
       .filter(({ name }) => !exclude.includes(name))
       .map((prop: PropertyInfo) => {
         return typeof prop.default === 'string'
