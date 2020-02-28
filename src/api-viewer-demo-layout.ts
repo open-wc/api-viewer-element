@@ -37,13 +37,18 @@ import './api-viewer-tabs.js';
 const getDefault = (
   prop: PropertyInfo
 ): string | number | boolean | null | undefined => {
-  switch (normalizeType(prop.type)) {
+  const { type, default: value } = prop;
+  switch (normalizeType(type)) {
     case 'boolean':
-      return prop.default !== 'false';
+      return value !== 'false';
     case 'number':
-      return Number(prop.default);
+      return Number(value);
+    case 'string':
+      return typeof value === 'string'
+        ? value.slice(1, value.length - 1)
+        : value;
     default:
-      return prop.default;
+      return value;
   }
 };
 
