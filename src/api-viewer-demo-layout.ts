@@ -104,6 +104,9 @@ export class ApiViewerDemoLayout extends LitElement {
   protected eventLog: CustomEvent[] = [];
 
   @property({ attribute: false, hasChanged: () => true })
+  customKnobs: PropertyInfo[] = [];
+
+  @property({ attribute: false, hasChanged: () => true })
   knobs: KnobValues = {};
 
   @property({ type: String }) protected copyBtnText = 'copy';
@@ -118,7 +121,8 @@ export class ApiViewerDemoLayout extends LitElement {
     const noEvents = isEmptyArray(this.events);
     const noCss = isEmptyArray(this.cssProps);
     const noSlots = isEmptyArray(this.slots);
-    const noKnobs = isEmptyArray(this.props) && noSlots;
+    const noCustomKnobs = isEmptyArray(this.customKnobs);
+    const noKnobs = isEmptyArray(this.props) && noCustomKnobs && noSlots;
     const id = this.vid as number;
 
     return html`
@@ -156,6 +160,8 @@ export class ApiViewerDemoLayout extends LitElement {
             <section part="knobs-column" @change="${this._onPropChanged}">
               <h3 part="knobs-header">Properties</h3>
               ${renderKnobs(this.props, 'prop', propRenderer)}
+              <h3 part="knobs-header" ?hidden="${noCustomKnobs}">Attributes</h3>
+              ${renderKnobs(this.customKnobs, 'prop', propRenderer)}
             </section>
             <section
               ?hidden="${noSlots || hasTemplate(id, this.tag, SLOT)}"
@@ -211,6 +217,7 @@ export class ApiViewerDemoLayout extends LitElement {
         ({ name }) => !isGetter(element, name)
       );
     }
+    this.customKnobs = this._getCustomKnobs();
   }
 
   protected updated(props: PropertyValues) {
@@ -238,7 +245,7 @@ export class ApiViewerDemoLayout extends LitElement {
     }
   }
 
-  private _getExtraKnobs() {
+  private _getCustomKnobs() {
     return getTemplates(this.vid as number, this.tag, KNOB)
       .map(template => {
         const { attr, type } = template.dataset;
@@ -279,7 +286,6 @@ export class ApiViewerDemoLayout extends LitElement {
   private _filterProps() {
     const exclude = this.exclude.split(',');
     return this._savedProps
-      .concat(this._getExtraKnobs())
       .filter(({ name }) => !exclude.includes(name))
       .map((prop: PropertyInfo) => {
         return typeof prop.default === 'string'
@@ -291,10 +297,20 @@ export class ApiViewerDemoLayout extends LitElement {
       });
   }
 
-  private _getProp(name: string) {
-    return this.props.find(
-      p => p.attribute === name || p.name === name
-    ) as PropertyInfo;
+  private _getProp(name: string): { prop?: PropertyInfo; custom?: boolean } {
+    const isMatch = (p: PropertyInfo) =>
+      p.attribute === name || p.name === name;
+    const prop = this.props.find(isMatch);
+    let result = {};
+    if (prop) {
+      result = { prop };
+    } else {
+      result = {
+        prop: this.customKnobs.find(isMatch),
+        custom: true
+      };
+    }
+    return result;
   }
 
   private _onLogClear() {
@@ -361,10 +377,13 @@ export class ApiViewerDemoLayout extends LitElement {
         value = target.value;
     }
 
-    const { attribute } = this._getProp(name as string);
-    this.knobs = Object.assign(this.knobs, {
-      [name as string]: { type, value, attribute }
-    });
+    const { prop, custom } = this._getProp(name as string);
+    if (prop) {
+      const { attribute } = prop;
+      this.knobs = Object.assign(this.knobs, {
+        [name as string]: { type, value, attribute, custom }
+      });
+    }
   }
 
   private _onSlotChanged(e: Event) {
@@ -427,7 +446,7 @@ export class ApiViewerDemoLayout extends LitElement {
     component.addEventListener(event, ((e: CustomEvent) => {
       const s = '-changed';
       if (event.endsWith(s)) {
-        const prop = this._getProp(event.replace(s, ''));
+        const { prop } = this._getProp(event.replace(s, ''));
         if (prop) {
           this._syncKnob(component, prop);
         }

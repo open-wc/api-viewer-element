@@ -20,8 +20,8 @@ const caches = new WeakMap();
 
 const applyKnobs = (component: Element, knobs: KnobValues) => {
   Object.keys(knobs).forEach((key: string) => {
-    const { type, attribute, value } = knobs[key];
-    if (type === 'select' && attribute) {
+    const { type, attribute, value, custom } = knobs[key];
+    if (custom && attribute) {
       if (typeof value === 'string' && value) {
         component.setAttribute(attribute, value);
       } else {
