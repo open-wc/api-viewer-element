@@ -26,6 +26,7 @@ import {
   getTemplates,
   hasTemplate,
   isEmptyArray,
+  isPropMatch,
   normalizeType,
   TemplateTypes,
   unquote,
@@ -298,19 +299,14 @@ export class ApiViewerDemoLayout extends LitElement {
   }
 
   private _getProp(name: string): { prop?: PropertyInfo; custom?: boolean } {
-    const isMatch = (p: PropertyInfo) =>
-      p.attribute === name || p.name === name;
+    const isMatch = isPropMatch(name);
     const prop = this.props.find(isMatch);
-    let result = {};
-    if (prop) {
-      result = { prop };
-    } else {
-      result = {
-        prop: this.customKnobs.find(isMatch),
-        custom: true
-      };
-    }
-    return result;
+    return prop
+      ? { prop }
+      : {
+          prop: this.customKnobs.find(isMatch),
+          custom: true
+        };
   }
 
   private _onLogClear() {
