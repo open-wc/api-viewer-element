@@ -243,22 +243,32 @@ export class ApiViewerDemoLayout extends LitElement {
       .map(template => {
         const { attr, type } = template.dataset;
         let result = null;
-        if (attr && type === 'select') {
-          const node = getTemplateNode(template);
-          const options = node
-            ? Array.from(node.children)
-                .filter(
-                  (c): c is HTMLOptionElement => c instanceof HTMLOptionElement
-                )
-                .map(option => option.value)
-            : [];
-          if (node instanceof HTMLSelectElement && options.length > 1) {
+        if (attr) {
+          if (type === 'select') {
+            const node = getTemplateNode(template);
+            const options = node
+              ? Array.from(node.children)
+                  .filter(
+                    (c): c is HTMLOptionElement =>
+                      c instanceof HTMLOptionElement
+                  )
+                  .map(option => option.value)
+              : [];
+            if (node instanceof HTMLSelectElement && options.length > 1) {
+              result = {
+                name: attr,
+                attribute: attr,
+                type,
+                options
+              };
+            }
+          }
+          if (type === 'string' || type === 'boolean') {
             result = {
               name: attr,
               attribute: attr,
-              type,
-              options
-            } as PropertyInfo;
+              type
+            };
           }
         }
         return result;
