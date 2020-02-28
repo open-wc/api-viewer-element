@@ -199,7 +199,7 @@ export default css`
 
   [part='knobs'] {
     display: flex;
-    padding: 1rem;
+    padding: 0 1rem 1rem;
   }
 
   [part='knobs-column'] {
@@ -209,7 +209,7 @@ export default css`
   [part='knobs-header'] {
     font-size: 1rem;
     font-weight: bold;
-    margin: 0 0 0.25rem;
+    margin: 1rem 0 0.25rem;
   }
 
   td {
