@@ -165,6 +165,11 @@ export class ExpansionPanel extends LitElement {
       :host([opened]) [part='toggle'] {
         transform: rotate(225deg);
       }
+
+      :host([dir='rtl']) [part='toggle'] {
+        left: 8px;
+        right: auto;
+      }
     `;
   }
 

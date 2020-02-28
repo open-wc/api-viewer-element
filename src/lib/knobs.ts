@@ -32,10 +32,25 @@ export const cssPropRenderer: InputRenderer = (knob: Knob, id: string) => {
 };
 
 export const propRenderer: InputRenderer = (knob: Knob, id: string) => {
-  const { name, type, value } = knob as PropertyInfo;
+  const { name, type, value, options } = knob as PropertyInfo;
   const inputType = getInputType(type);
   let input;
-  if (value === undefined) {
+  if (type === 'select' && Array.isArray(options)) {
+    input = html`
+      <select
+        id="${id}"
+        type="${inputType}"
+        data-name="${name}"
+        data-type="${type}"
+        part="select"
+        >${options.map(
+          option => html`
+            <option value="${option}">${option}</option>
+          `
+        )}
+      </select>
+    `;
+  } else if (value === undefined) {
     input = html`
       <input
         id="${id}"
