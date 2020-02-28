@@ -109,17 +109,17 @@ const renderSnippet = (
 
   const template = getTemplate(id, tag, SLOT);
   if (isTemplate(template)) {
-    markup += `${getTplContent(template, `${prepend}${INDENT}`)}\n`;
+    markup += `${getTplContent(template, `${prepend}${INDENT}`)}\n${prepend}`;
   } else if (slots.length) {
     slots.forEach(slot => {
       const { name, content } = slot;
       const div = name ? `<div slot="${name}">` : '<div>';
       markup += `\n${prepend}${INDENT}${div}${content}</div>`;
     });
-    markup += `\n`;
+    markup += `\n${prepend}`;
   }
 
-  markup += `${prepend}</${tag}>`;
+  markup += `</${tag}>`;
 
   if (wrap) {
     markup += `\n</${wrap}>`;
