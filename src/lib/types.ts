@@ -51,7 +51,8 @@ export interface CSSPartInfo extends Info {}
 
 export interface CSSPropertyInfo extends Info {
   value?: string;
-  defaultValue?: string;
+  default?: string;
+  type?: string;
 }
 
 export type ComponentWithProps = {

@@ -20,9 +20,9 @@ import { styleMap } from 'lit-html/directives/style-map.js';
  * @attr {boolean} focused - State attribute set when element has focus.
  * @attr {boolean} focus-ring - State attribute set when focused from keyboard.
  *
- * @cssprop --panel-header-background - Default panel header background color.
- * @cssprop --panel-header-min-height - Panel header minimum height.
- * @cssprop --panel-ripple-background - Active toggle button ripple background.
+ * @cssprop {Background} [--panel-header-background=#fff] - Default panel header background color.
+ * @cssprop [--panel-header-min-height=48px] - Panel header minimum height.
+ * @cssprop {Background} [--panel-ripple-background=rgba(0, 0, 0, 0.38)] - Active toggle button ripple background.
  *
  * @csspart header - An element wrapping the `header` slot.
  * @csspart toggle - A toggle button, child of the header part.

@@ -64,15 +64,20 @@
       "cssProperties": [
         {
           "name": "--panel-header-background",
-          "description": "Default panel header background color."
+          "description": "Default panel header background color.",
+          "type": "Background",
+          "default": "\"#fff\""
         },
         {
           "name": "--panel-header-min-height",
-          "description": "Panel header minimum height."
+          "description": "Panel header minimum height.",
+          "default": "\"48px\""
         },
         {
           "name": "--panel-ripple-background",
-          "description": "Active toggle button ripple background."
+          "description": "Active toggle button ripple background.",
+          "type": "Background",
+          "default": "\"rgba(0, 0, 0, 0.38)\""
         }
       ],
       "cssParts": [
@@ -237,11 +242,14 @@
       "cssProperties": [
         {
           "name": "--progress-bar-fill-color",
-          "description": "Color of the filled progress bar part."
+          "description": "Color of the filled progress bar part.",
+          "type": "Color",
+          "default": "\"#6200ee\""
         },
         {
           "name": "--progress-bar-opacity",
-          "description": "Opacity set on the underlying track."
+          "description": "Opacity set on the underlying track.",
+          "default": "\"0.16\""
         }
       ],
       "cssParts": [

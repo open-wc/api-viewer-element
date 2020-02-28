@@ -49,7 +49,7 @@ const applyCssProps = (component: HTMLElement, cssProps: CSSPropertyInfo[]) => {
   cssProps.forEach(prop => {
     const { name, value } = prop;
     if (value) {
-      if (value === prop.defaultValue) {
+      if (value === prop.default) {
         component.style.removeProperty(name);
       } else {
         component.style.setProperty(name, value);
