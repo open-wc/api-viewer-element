@@ -1,3 +1,5 @@
+import { PropertyInfo } from './types';
+
 export const getSlotTitle = (name: string) => {
   return name === '' ? 'Default' : name[0].toUpperCase() + name.slice(1);
 };
@@ -40,6 +42,9 @@ export const hasTemplate = (id: number, name: string, type: string) =>
   templates[id].some(matchTemplate(name, type));
 
 export const isEmptyArray = (array: unknown[]) => array.length === 0;
+
+export const isPropMatch = (name: string) => (prop: PropertyInfo) =>
+  prop.attribute === name || prop.name === name;
 
 export const normalizeType = (type: string | undefined = '') =>
   type.replace(' | undefined', '').replace(' | null', '');

@@ -14,7 +14,7 @@ import {
   CSSPartInfo,
   CSSPropertyInfo
 } from './lib/types.js';
-import { isEmptyArray, unquote } from './lib/utils.js';
+import { isEmptyArray, isPropMatch, unquote } from './lib/utils.js';
 import { parse } from './lib/markdown.js';
 
 import './api-viewer-panel.js';
@@ -24,16 +24,6 @@ import './api-viewer-tab.js';
 import './api-viewer-tabs.js';
 import { ApiViewerTabs } from './api-viewer-tabs.js';
 /* eslint-enable import/no-duplicates */
-
-const processAttrs = (
-  attrs: AttributeInfo[],
-  props: PropertyInfo[]
-): AttributeInfo[] => {
-  return attrs.filter(
-    ({ name }) =>
-      !props.some(prop => prop.attribute === name || prop.name === name)
-  );
-};
 
 const renderItem = (
   prefix: string,
@@ -132,7 +122,9 @@ export class ApiViewerDocs extends LitElement {
     const { slots, props, attrs, events, cssParts, cssProps } = this;
 
     const properties = props || [];
-    const attributes = processAttrs(attrs || [], properties);
+    const attributes = (attrs || []).filter(
+      ({ name }) => !properties.some(isPropMatch(name))
+    );
 
     const emptyDocs = [
       properties,
