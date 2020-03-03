@@ -37,13 +37,8 @@ export const propRenderer: InputRenderer = (knob: Knob, id: string) => {
   let input;
   if (type === 'select' && Array.isArray(options)) {
     input = html`
-      <select
-        id="${id}"
-        type="${inputType}"
-        data-name="${name}"
-        data-type="${type}"
-        part="select"
-        >${options.map(
+      <select id="${id}" data-name="${name}" data-type="${type}" part="select">
+        ${options.map(
           option => html`
             <option value="${option}">${option}</option>
           `
