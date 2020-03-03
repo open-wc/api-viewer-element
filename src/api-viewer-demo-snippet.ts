@@ -11,12 +11,7 @@ import { htmlRender } from 'highlight-ts/es/render/html';
 import { registerLanguages } from 'highlight-ts/es/languages';
 import { XML } from 'highlight-ts/es/languages/xml';
 import { init, process } from 'highlight-ts/es/process';
-import {
-  CSSPropertyInfo,
-  KnobValues,
-  KnobValue,
-  SlotValue
-} from './lib/types.js';
+import { CSSPropertyInfo, KnobValues, SlotValue } from './lib/types.js';
 import { CSS } from './lib/highlight-css.js';
 import {
   getTemplate,
@@ -93,14 +88,17 @@ const renderSnippet = (
   Object.keys(values)
     .sort((a, b) => (a > b ? 1 : -1))
     .forEach((key: string) => {
-      const knob: KnobValue = values[key];
-      const attr = knob.attribute || key;
-      switch (normalizeType(knob.type)) {
+      const { value, type, attribute } = values[key];
+      const attr = attribute || key;
+      switch (normalizeType(type)) {
         case 'boolean':
-          markup += knob.value ? ` ${attr}` : '';
+          markup += value ? ` ${attr}` : '';
+          break;
+        case 'select':
+          markup += value !== '' ? ` ${attr}="${value}"` : '';
           break;
         default:
-          markup += knob.value != null ? ` ${attr}="${knob.value}"` : '';
+          markup += value != null ? ` ${attr}="${value}"` : '';
           break;
       }
     });
