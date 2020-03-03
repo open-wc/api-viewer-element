@@ -11,6 +11,8 @@ export interface ElementInfo extends Info {
   cssParts: CSSPartInfo[];
 }
 
+export type ElementPromise = Promise<ElementInfo[]>;
+
 export interface Info {
   name: string;
   description: string;
