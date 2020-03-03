@@ -125,16 +125,11 @@ export class ApiViewerDemoLayout extends LitElement {
     const noCustomKnobs = isEmptyArray(this.customKnobs);
     const noKnobs = isEmptyArray(this.props) && noCustomKnobs && noSlots;
     const id = this.vid as number;
+    const slots = this.processedSlots;
 
     return html`
       <div part="demo-output" @rendered="${this._onRendered}">
-        ${renderer(
-          id,
-          this.tag,
-          this.knobs,
-          this.processedSlots,
-          this.processedCss
-        )}
+        ${renderer(id, this.tag, this.knobs, slots, this.processedCss)}
       </div>
       <api-viewer-tabs part="demo-tabs">
         <api-viewer-tab heading="Source" slot="tab" part="tab"></api-viewer-tab>
@@ -145,7 +140,7 @@ export class ApiViewerDemoLayout extends LitElement {
           <api-viewer-demo-snippet
             .tag="${this.tag}"
             .knobs="${this.knobs}"
-            .slots="${this.processedSlots}"
+            .slots="${slots}"
             .cssProps="${this.processedCss}"
             .vid="${this.vid}"
           ></api-viewer-demo-snippet>
@@ -170,7 +165,7 @@ export class ApiViewerDemoLayout extends LitElement {
               @change="${this._onSlotChanged}"
             >
               <h3 part="knobs-header">Slots</h3>
-              ${renderKnobs(this.processedSlots, 'slot', slotRenderer)}
+              ${renderKnobs(slots, 'slot', slotRenderer)}
             </section>
           </div>
         </api-viewer-panel>
