@@ -43,7 +43,7 @@ export class ApiViewerContent extends LitElement {
 
     return html`
       <header part="header">
-        <div class="tag-name">&lt;${name}&gt;</div>
+        <div part="header-title">&lt;${name}&gt;</div>
         <nav>
           <input
             id="docs"
