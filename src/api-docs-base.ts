@@ -1,7 +1,7 @@
 import { LitElement, html, TemplateResult } from 'lit-element';
 import { until } from 'lit-html/directives/until.js';
 import { ElementPromise } from './lib/types.js';
-import { ApiViewerMixin } from './api-viewer-mixin.js';
+import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';
 import './api-docs-content.js';
 
 async function renderDocs(
@@ -19,11 +19,7 @@ async function renderDocs(
           .selected="${index >= 0 ? index : 0}"
         ></api-docs-content>
       `
-    : html`
-        <div part="warning">
-          No custom elements found in the JSON file.
-        </div>
-      `;
+    : emptyDataWarning;
 }
 
 export class ApiDocsBase extends ApiViewerMixin(LitElement) {
