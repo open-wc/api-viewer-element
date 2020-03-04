@@ -1,4 +1,4 @@
-import { LitElement, property, PropertyValues } from 'lit-element';
+import { LitElement, html, property, PropertyValues } from 'lit-element';
 import { ElementInfo, ElementPromise, ElementSetInfo } from './lib/types.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -29,6 +29,12 @@ export async function fetchJson(src: string): ElementPromise {
   }
   return result;
 }
+
+export const emptyDataWarning = html`
+  <div part="warning">
+    No custom elements found in the JSON file.
+  </div>
+`;
 
 export const ApiViewerMixin = <T extends Constructor<LitElement>>(
   base: T

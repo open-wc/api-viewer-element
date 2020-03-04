@@ -2,7 +2,7 @@ import { LitElement, html, property, TemplateResult } from 'lit-element';
 import { until } from 'lit-html/directives/until.js';
 import { ElementPromise } from './lib/types.js';
 import { setTemplates } from './lib/utils.js';
-import { ApiViewerMixin } from './api-viewer-mixin.js';
+import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';
 import './api-viewer-content.js';
 
 async function renderDocs(
@@ -26,11 +26,7 @@ async function renderDocs(
           .vid="${id}"
         ></api-viewer-content>
       `
-    : html`
-        <div part="warning">
-          No custom elements found in the JSON file.
-        </div>
-      `;
+    : emptyDataWarning;
 }
 
 let id = 0;
