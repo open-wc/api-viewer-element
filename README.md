@@ -73,6 +73,34 @@ $ wca analyze my-element.js --outFile custom-elements.json --format json
 
 4. Use [es-dev-server](https://open-wc.org/developing/es-dev-server.html) to serve your HTML page.
 
+## Usage options
+
+Starting from `0.4.0` release, the following components are available:
+
+### `<api-viewer>` element
+
+A custom element that provides both API docs and live playground.
+
+```js
+import 'api-viewer-element';
+```
+
+### `<api-docs>` element
+
+A custom element that only provides API docs (no live playground).
+
+```js
+import 'api-viewer-element/lib/api-docs.js';
+```
+
+### `<api-demo>` element
+
+A custom element that only provides live playground (no API docs).
+
+```js
+import 'api-viewer-element/lib/api-demo.js';
+```
+
 ## Playground
 
 Import the components documented in JSON file to enable demos:
