@@ -1,7 +1,6 @@
 import { LitElement, html, property, TemplateResult } from 'lit-element';
 import { until } from 'lit-html/directives/until.js';
 import { ElementPromise } from './lib/types.js';
-import { setTemplates } from './lib/utils.js';
 import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';
 import './api-demo-content.js';
 
@@ -46,16 +45,5 @@ export class ApiDemoBase extends ApiViewerMixin(LitElement) {
         renderDemo(this.jsonFetched, this.selected, this._id, this.excludeKnobs)
       )}
     `;
-  }
-
-  protected firstUpdated() {
-    this.setTemplates();
-  }
-
-  protected setTemplates() {
-    setTemplates(
-      this._id as number,
-      Array.from(this.querySelectorAll('template'))
-    );
   }
 }

@@ -166,6 +166,24 @@ Use `elements` property instead of `src` to pass data directly:
 </script>
 ```
 
+### Methods
+
+#### `setTemplates`
+
+Use `setTemplates` method to override `<template>` elements:
+
+```js
+// gather the template elements placed in the DOM
+const templates = document.querySelectorAll('template[data-target]');
+
+// configure the api-viewer to use the templates
+document.querySelector('api-viewer').setTemplates(templates);
+```
+
+*Note*: the method is available on `api-viewer` and `api-demo` elements only. Corresponding base
+classes do not have it. When extending a base class, you have to re-implement it yourself if you
+need to preserve the existing behavior.
+
 ### Templates
 
 The following templates can be passed to `<api-viewer>` element:

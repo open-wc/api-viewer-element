@@ -62,10 +62,10 @@ export class ApiViewerBase extends ApiViewerMixin(LitElement) {
     this.setTemplates();
   }
 
-  protected setTemplates() {
+  public setTemplates(templates?: HTMLTemplateElement[]) {
     setTemplates(
       this._id as number,
-      Array.from(this.querySelectorAll('template'))
+      templates || Array.from(this.querySelectorAll('template'))
     );
   }
 }

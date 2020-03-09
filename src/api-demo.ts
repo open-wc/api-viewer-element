@@ -1,5 +1,6 @@
 import { customElement, css } from 'lit-element';
 import { ApiDemoBase } from './api-demo-base.js';
+import { setTemplates } from './lib/utils.js';
 import demoStyles from './api-demo-styles.js';
 import sharedStyles from './shared-styles.js';
 
@@ -15,6 +16,17 @@ export class ApiDemo extends ApiDemoBase {
         }
       `
     ];
+  }
+
+  protected firstUpdated() {
+    this.setTemplates();
+  }
+
+  public setTemplates(templates?: HTMLTemplateElement[]) {
+    setTemplates(
+      this._id as number,
+      templates || Array.from(this.querySelectorAll('template'))
+    );
   }
 }
 
