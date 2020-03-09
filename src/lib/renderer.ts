@@ -40,13 +40,16 @@ const applySlots = (component: Element, slots: SlotValue[]) => {
     component.removeChild(component.firstChild);
   }
   slots.forEach(slot => {
-    const div = document.createElement('div');
+    let node: Element | Text;
     const { name, content } = slot;
     if (name) {
-      div.setAttribute('slot', name);
+      node = document.createElement('div');
+      node.setAttribute('slot', name);
+      node.textContent = content;
+    } else {
+      node = document.createTextNode(content);
     }
-    div.textContent = content;
-    component.appendChild(div);
+    component.appendChild(node);
   });
 };
 

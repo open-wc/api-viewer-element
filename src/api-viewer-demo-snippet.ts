@@ -109,12 +109,16 @@ const renderSnippet = (
   if (isTemplate(template)) {
     markup += `${getTplContent(template, `${prepend}${INDENT}`)}\n${prepend}`;
   } else if (slots.length) {
-    slots.forEach(slot => {
-      const { name, content } = slot;
-      const div = name ? `<div slot="${name}">` : '<div>';
-      markup += `\n${prepend}${INDENT}${div}${content}</div>`;
-    });
-    markup += `\n${prepend}`;
+    if (slots.length === 1 && !slots[0].name) {
+      markup += slots[0].content;
+    } else {
+      markup += slots.reduce((result: string, slot) => {
+        const { name, content } = slot;
+        const line = name ? `<div slot="${name}">${content}</div>` : content;
+        return `${result}\n${prepend}${INDENT}${line}`;
+      }, '');
+      markup += `\n${prepend}`;
+    }
   }
 
   markup += `</${tag}>`;
