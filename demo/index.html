@@ -5,12 +5,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
   <title>API viewer demo</title>
-  <!-- Uncomment to run demo in Edge
-  <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
-  -->
   <style>
     body {
       margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        'Oxygen-Sans', Ubuntu, Cantarell, sans-serif;
     }
 
     section {
@@ -20,29 +19,49 @@
 
     h2 {
       margin: 0 0 0.5rem;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-        'Oxygen-Sans', Ubuntu, Cantarell, sans-serif;
       text-align: center;
     }
 
-    .parts h2 {
-      animation: fadein 3s;
+    nav {
+      display: flex;
+      justify-content: space-between;
+      max-width: 480px;
+      margin: 0 auto;
     }
 
-    @keyframes fadein {
-      from {
-        opacity: 0;
-      }
+    a {
+      display: block;
+      padding: 8px;
+      color: #01579b;
+    }
 
-      to {
-        opacity: 1;
-      }
+    a:hover {
+      color: red;
+    }
+
+    #bonus {
+      display: none;
+    }
+
+    section:not(:target) {
+      display: none;
+    }
+
+    section:target {
+      display: block;
     }
   </style>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <section>
+  <nav>
+    <a href="#api-viewer">&lt;api-viewer&gt;</a>
+    <a href="#api-docs">&lt;api-docs&gt;</a>
+    <a href="#api-demo">&lt;api-demo&gt;</a>
+    <a href="#shadow-parts" id="bonus">Shadow Parts</a>
+  </nav>
+
+  <section id="api-viewer" class="initial">
     <h2>&lt;api-viewer&gt; element</h2>
     <api-viewer src="./custom-elements.json">
       <template data-element="expansion-panel" data-target="knob" data-attr="dir" data-type="select">
@@ -51,17 +70,6 @@
           <option value="ltr"></option>
           <option value="rtl"></option>
         </select>
-      </template>
-      <template data-element="intl-currency" data-target="prefix">
-        <em>
-          Shipping:
-        </em>
-      </template>
-      <template data-element="intl-currency" data-target="suffix">
-        <strong style="text-transform: uppercase">free!</strong>
-      </template>
-      <template data-element="intl-currency" data-target="wrapper">
-        <s></s>
       </template>
       <template data-element="fancy-accordion" data-target="slot">
         <expansion-panel>
@@ -77,16 +85,80 @@
           <div>Content 3</div>
         </expansion-panel>
       </template>
+      <template data-element="intl-currency" data-target="prefix">
+        <em>
+          Shipping:
+        </em>
+      </template>
+      <template data-element="intl-currency" data-target="suffix">
+        <strong style="text-transform: uppercase">free!</strong>
+      </template>
+      <template data-element="intl-currency" data-target="wrapper">
+        <s></s>
+      </template>
       <template data-element="progress-bar" data-target="host">
         <progress-bar max="100" min="1" value="50"></progress-bar>
       </template>
     </api-viewer>
   </section>
 
+  <section id="api-docs">
+    <h2>&lt;api-docs&gt; element</h2>
+    <api-docs src="./custom-elements.json"></api-docs>
+  </section>
+
+  <section id="api-demo">
+    <h2>&lt;api-demo&gt; element</h2>
+    <api-demo src="./custom-elements.json">
+      <template data-element="expansion-panel" data-target="knob" data-attr="dir" data-type="select">
+        <select>
+          <option value=""></option>
+          <option value="ltr"></option>
+          <option value="rtl"></option>
+        </select>
+      </template>
+      <template data-element="fancy-accordion" data-target="slot">
+        <expansion-panel>
+          <div slot="header">Panel 1</div>
+          <div>Content 1</div>
+        </expansion-panel>
+        <expansion-panel disabled>
+          <div slot="header">Panel 2</div>
+          <div>Content 2</div>
+        </expansion-panel>
+        <expansion-panel>
+          <div slot="header">Panel 3</div>
+          <div>Content 3</div>
+        </expansion-panel>
+      </template>
+      <template data-element="intl-currency" data-target="prefix">
+        <em>
+          Shipping:
+        </em>
+      </template>
+      <template data-element="intl-currency" data-target="suffix">
+        <strong style="text-transform: uppercase">free!</strong>
+      </template>
+      <template data-element="intl-currency" data-target="wrapper">
+        <s></s>
+      </template>
+      <template data-element="progress-bar" data-target="host">
+        <progress-bar max="100" min="1" value="50"></progress-bar>
+      </template>
+    </api-demo>
+  </section>
+
   <template id="parts">
-    <section class="parts">
-      <h2>Bonus: CSS shadow parts</h2>
+    <section id="shadow-parts" class="parts">
+      <h2>CSS shadow parts</h2>
       <api-viewer src="./custom-elements.json" class="custom">
+        <template data-element="expansion-panel" data-target="knob" data-attr="dir" data-type="select">
+          <select>
+            <option value=""></option>
+            <option value="ltr"></option>
+            <option value="rtl"></option>
+          </select>
+        </template>
         <template data-element="fancy-accordion" data-target="slot">
           <expansion-panel>
             <div slot="header">Panel 1</div>
@@ -101,6 +173,17 @@
             <div>Content 3</div>
           </expansion-panel>
         </template>
+        <template data-element="intl-currency" data-target="prefix">
+          <em>
+            Shipping:
+          </em>
+        </template>
+        <template data-element="intl-currency" data-target="suffix">
+          <strong style="text-transform: uppercase">free!</strong>
+        </template>
+        <template data-element="intl-currency" data-target="wrapper">
+          <s></s>
+        </template>
         <template data-element="progress-bar" data-target="host">
           <progress-bar max="100" min="1" value="50"></progress-bar>
         </template>
@@ -113,12 +196,29 @@
   <script type="module" src="../lib/fixtures/intl-currency.js"></script>
   <script type="module" src="../lib/fixtures/progress-bar.js"></script>
   <script type="module" src="../lib/api-viewer.js"></script>
+  <script type="module" src="../lib/api-docs.js"></script>
+  <script type="module" src="../lib/api-demo.js"></script>
 
   <script>
+    if (window.location.hash === '') {
+      history.pushState({}, '', '#api-viewer');
+    }
+
+    Array.from(document.querySelectorAll('a[href^="#"]')).forEach(link => {
+      link.addEventListener('click', event => {
+        event.preventDefault();
+        history.pushState({}, '', link.href);
+        history.pushState({}, '', link.href);
+        history.back();
+      });
+    });
+
     if ('part' in HTMLElement.prototype) {
       window.requestAnimationFrame(() => {
         const tpl = document.getElementById('parts');
         document.body.insertBefore(tpl.content.cloneNode(true), tpl);
+
+        document.getElementById('bonus').style.display = 'block';
       });
     }
   </script>
