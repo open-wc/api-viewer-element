@@ -282,6 +282,7 @@ The following CSS shadow parts are available:
 | Part                     | Description                                             |
 | -------------------------| --------------------------------------------------------|
 | `header`                 | Header containing element name and navigation controls  |
+| `header-title`           | Title element placed in the header (element tag name)   |
 | `tab`                    | `<api-viewer-tab>` component used in docs and demo      |
 | `tab-panel`              | `<api-viewer-panel>` component used in docs and demo    |
 | `warning`                | Message shown when no elements or API docs are found    |
