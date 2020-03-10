@@ -6,19 +6,28 @@ import {
   SlotValue
 } from './types.js';
 import {
-  getHostTemplateNode,
-  getSlotTemplate,
-  hasSlotTemplate,
-  normalizeType
+  getTemplate,
+  getTemplateNode,
+  hasTemplate,
+  isTemplate,
+  normalizeType,
+  TemplateTypes
 } from './utils.js';
+
+const { HOST, PREFIX, SLOT, SUFFIX, WRAPPER } = TemplateTypes;
 
 const caches = new WeakMap();
 
 const applyKnobs = (component: Element, knobs: KnobValues) => {
   Object.keys(knobs).forEach((key: string) => {
-    const { type, attribute, value } = knobs[key];
-
-    if (normalizeType(type) === 'boolean') {
+    const { type, attribute, value, custom } = knobs[key];
+    if (custom && attribute) {
+      if (typeof value === 'string' && value) {
+        component.setAttribute(attribute, value);
+      } else {
+        component.removeAttribute(attribute);
+      }
+    } else if (normalizeType(type) === 'boolean') {
       component.toggleAttribute(attribute || key, Boolean(value));
     } else {
       ((component as unknown) as ComponentWithProps)[key] = value;
@@ -31,13 +40,16 @@ const applySlots = (component: Element, slots: SlotValue[]) => {
     component.removeChild(component.firstChild);
   }
   slots.forEach(slot => {
-    const div = document.createElement('div');
+    let node: Element | Text;
     const { name, content } = slot;
     if (name) {
-      div.setAttribute('slot', name);
+      node = document.createElement('div');
+      node.setAttribute('slot', name);
+      node.textContent = content;
+    } else {
+      node = document.createTextNode(content);
     }
-    div.textContent = content;
-    component.appendChild(div);
+    component.appendChild(node);
   });
 };
 
@@ -45,7 +57,7 @@ const applyCssProps = (component: HTMLElement, cssProps: CSSPropertyInfo[]) => {
   cssProps.forEach(prop => {
     const { name, value } = prop;
     if (value) {
-      if (value === prop.defaultValue) {
+      if (value === prop.default) {
         component.style.removeProperty(name);
       } else {
         component.style.setProperty(name, value);
@@ -92,8 +104,18 @@ async function elementUpdated(element: HTMLElement) {
   return el;
 }
 
+const makePart = (part: NodePart): NodePart => {
+  const newPart = new NodePart(part.options);
+  newPart.appendIntoPart(part);
+  return newPart;
+};
+
+const importTemplate = (tpl: HTMLTemplateElement) =>
+  document.importNode(tpl.content, true);
+
 export const renderer = directive(
   (
+    id: number,
     tag: string,
     knobs: KnobValues,
     slots: SlotValue[],
@@ -105,25 +127,60 @@ export const renderer = directive(
 
     let component = caches.get(part);
     if (component === undefined || component.tagName.toLowerCase() !== tag) {
-      const node = getHostTemplateNode(tag);
+      const [host, prefix, suffix, slot, wrapper] = [
+        HOST,
+        PREFIX,
+        SUFFIX,
+        SLOT,
+        WRAPPER
+      ].map(type => getTemplate(id, tag, type));
+
+      const node = getTemplateNode(host);
       if (node) {
         component = node.cloneNode(true);
       } else {
         component = document.createElement(tag);
       }
 
-      part.setValue(component);
-      part.commit();
+      let targetPart = part;
 
-      const template = getSlotTemplate(tag);
-      if (template instanceof HTMLTemplateElement) {
-        const clone = document.importNode(template.content, true);
-        component.appendChild(clone);
+      if (isTemplate(prefix)) {
+        const prefixPart = makePart(part);
+        prefixPart.setValue(importTemplate(prefix));
+        prefixPart.commit();
+      }
+
+      const wrapNode = getTemplateNode(wrapper);
+      if (wrapNode) {
+        const wrapperPart = makePart(part);
+        const clone = wrapNode.cloneNode(true) as HTMLElement;
+        clone.innerHTML = '';
+        wrapperPart.setValue(clone);
+        wrapperPart.commit();
+        const innerPart = new NodePart(part.options);
+        innerPart.appendInto(clone);
+        targetPart = innerPart;
+      } else if (isTemplate(prefix) || isTemplate(suffix)) {
+        const contentPart = makePart(part);
+        targetPart = contentPart;
+      }
+
+      targetPart.setValue(component);
+      targetPart.commit();
+
+      if (isTemplate(suffix)) {
+        const suffixPart = makePart(part);
+        suffixPart.setValue(importTemplate(suffix));
+        suffixPart.commit();
+      }
+
+      if (isTemplate(slot)) {
+        component.appendChild(importTemplate(slot));
       }
 
       caches.set(part, component);
 
-      const instance = part.value as HTMLElement;
+      const instance = targetPart.value as HTMLElement;
 
       // wait for rendering
       elementUpdated(instance).then(() => {
@@ -141,7 +198,7 @@ export const renderer = directive(
 
     applyKnobs(component, knobs);
 
-    if (!hasSlotTemplate(tag) && slots.length) {
+    if (!hasTemplate(id, tag, SLOT) && slots.length) {
       applySlots(component, slots);
     }
 

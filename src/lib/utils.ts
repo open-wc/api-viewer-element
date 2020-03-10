@@ -1,39 +1,59 @@
-export const getSlotTitle = (name: string) => {
-  return name === '' ? 'Default' : name[0].toUpperCase() + name.slice(1);
+import { PropertyInfo } from './types';
+
+const getSlotDefault = (name: string, initial: string) => {
+  return name === '' ? initial : name[0].toUpperCase() + name.slice(1);
 };
 
-let templates: HTMLTemplateElement[] = [];
+export const getSlotContent = (name: string) => getSlotDefault(name, 'Content');
 
-export const queryTemplates = (node: Element) => {
-  templates = Array.from(node.querySelectorAll('template'));
+export const getSlotTitle = (name: string) => getSlotDefault(name, 'Default');
+
+const templates: Array<HTMLTemplateElement[]> = [];
+
+export const setTemplates = (id: number, tpl: HTMLTemplateElement[]) => {
+  templates[id] = tpl;
 };
 
-const isTemplate = (tpl: HTMLTemplateElement, name: string) => {
-  return tpl.dataset.element === name;
+export const TemplateTypes = Object.freeze({
+  HOST: 'host',
+  KNOB: 'knob',
+  SLOT: 'slot',
+  PREFIX: 'prefix',
+  SUFFIX: 'suffix',
+  WRAPPER: 'wrapper'
+});
+
+export const isTemplate = (node: unknown): node is HTMLTemplateElement =>
+  node instanceof HTMLTemplateElement;
+
+const matchTemplate = (name: string, type: string) => (
+  tpl: HTMLTemplateElement
+) => {
+  const { element, target } = tpl.dataset;
+  return element === name && target === type;
 };
 
-const isHostTemplate = (tpl: HTMLTemplateElement) => {
-  return tpl.dataset.target === 'host';
-};
+export const getTemplateNode = (node: unknown) =>
+  isTemplate(node) && node.content.firstElementChild;
 
-export const getSlotTemplate = (name: string) => {
-  return templates.find(t => isTemplate(t, name) && !isHostTemplate(t));
-};
+export const getTemplate = (id: number, name: string, type: string) =>
+  templates[id].find(matchTemplate(name, type));
 
-export const hasSlotTemplate = (name: string) => {
-  return templates.some(t => isTemplate(t, name) && !isHostTemplate(t));
-};
+export const getTemplates = (id: number, name: string, type: string) =>
+  templates[id].filter(matchTemplate(name, type));
 
-export const getHostTemplateNode = (name: string) => {
-  const tpl = templates.find(t => isTemplate(t, name) && isHostTemplate(t));
-  return tpl && (tpl.content as DocumentFragment).firstElementChild;
-};
-
-export const hasHostTemplate = (name: string) => {
-  return templates.some(tpl => isTemplate(tpl, name) && isHostTemplate(tpl));
-};
+export const hasTemplate = (id: number, name: string, type: string) =>
+  templates[id].some(matchTemplate(name, type));
 
 export const isEmptyArray = (array: unknown[]) => array.length === 0;
 
+export const isPropMatch = (name: string) => (prop: PropertyInfo) =>
+  prop.attribute === name || prop.name === name;
+
 export const normalizeType = (type: string | undefined = '') =>
   type.replace(' | undefined', '').replace(' | null', '');
+
+export const unquote = (value?: string) =>
+  typeof value === 'string' && value.startsWith('"') && value.endsWith('"')
+    ? value.slice(1, value.length - 1)
+    : value;

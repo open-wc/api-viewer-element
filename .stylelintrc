@@ -20,6 +20,7 @@
     }],
     "selector-type-no-unknown": [true, {
       "ignoreTypes": ["/^[a-zA-Z]([a-zA-Z0-9]*-[a-zA-Z0-9]+)+/"],
-    }]
+    }],
+    "value-keyword-case": null
   }
 }

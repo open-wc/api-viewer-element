@@ -1,13 +1,11 @@
 import { LitElement, html, property, TemplateResult } from 'lit-element';
 import { until } from 'lit-html/directives/until.js';
 import { ElementPromise } from './lib/types.js';
-import { setTemplates } from './lib/utils.js';
 import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';
-import './api-viewer-content.js';
+import './api-demo-content.js';
 
-async function renderDocs(
+async function renderDemo(
   jsonFetched: ElementPromise,
-  section: string,
   selected?: string,
   id?: number,
   exclude = ''
@@ -18,22 +16,19 @@ async function renderDocs(
 
   return elements.length
     ? html`
-        <api-viewer-content
+        <api-demo-content
           .elements="${elements}"
-          .section="${section}"
           .selected="${index >= 0 ? index : 0}"
           .exclude="${exclude}"
           .vid="${id}"
-        ></api-viewer-content>
+        ></api-demo-content>
       `
     : emptyDataWarning;
 }
 
 let id = 0;
 
-export class ApiViewerBase extends ApiViewerMixin(LitElement) {
-  @property({ type: String }) section = 'docs';
-
+export class ApiDemoBase extends ApiViewerMixin(LitElement) {
   @property({ type: String, attribute: 'exclude-knobs' }) excludeKnobs?: string;
 
   protected _id?: number;
@@ -47,25 +42,8 @@ export class ApiViewerBase extends ApiViewerMixin(LitElement) {
   protected render() {
     return html`
       ${until(
-        renderDocs(
-          this.jsonFetched,
-          this.section,
-          this.selected,
-          this._id,
-          this.excludeKnobs
-        )
+        renderDemo(this.jsonFetched, this.selected, this._id, this.excludeKnobs)
       )}
     `;
-  }
-
-  protected firstUpdated() {
-    this.setTemplates();
-  }
-
-  public setTemplates(templates?: HTMLTemplateElement[]) {
-    setTemplates(
-      this._id as number,
-      templates || Array.from(this.querySelectorAll('template'))
-    );
   }
 }

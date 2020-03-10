@@ -73,6 +73,34 @@ $ wca analyze my-element.js --outFile custom-elements.json --format json
 
 4. Use [es-dev-server](https://open-wc.org/developing/es-dev-server.html) to serve your HTML page.
 
+## Usage options
+
+Starting from `0.4.0` release, the following components are available:
+
+### `<api-viewer>` element
+
+A custom element that provides both API docs and live playground.
+
+```js
+import 'api-viewer-element';
+```
+
+### `<api-docs>` element
+
+A custom element that only provides API docs (no live playground).
+
+```js
+import 'api-viewer-element/lib/api-docs.js';
+```
+
+### `<api-demo>` element
+
+A custom element that only provides live playground (no API docs).
+
+```js
+import 'api-viewer-element/lib/api-demo.js';
+```
+
 ## Playground
 
 Import the components documented in JSON file to enable demos:
@@ -142,6 +170,47 @@ Use `selected` property to configure the displayed element:
 ```html
 <api-viewer src="./custom-elements.json" selected="my-element"></api-viewer>
 ```
+
+#### `exclude-knobs`
+
+Use `exclude-knobs` attribute to exclude properties from demo:
+
+```html
+<api-viewer src="./custom-elements.json" exclude-knobs="autofocus,items"></api-viewer>
+```
+
+#### `elements`
+
+Use `elements` property instead of `src` to pass data directly:
+
+```html
+<api-viewer></api-viewer>
+<script>
+  fetch('./custom-elements.json')
+    .then(res => res.json())
+    .then(data => {
+      document.querySelector('api-viewer').elements = data.tags;
+    });
+</script>
+```
+
+### Methods
+
+#### `setTemplates`
+
+Use `setTemplates` method to override `<template>` elements:
+
+```js
+// gather the template elements placed in the DOM
+const templates = document.querySelectorAll('template[data-target]');
+
+// configure the api-viewer to use the templates
+document.querySelector('api-viewer').setTemplates(templates);
+```
+
+*Note*: the method is available on `api-viewer` and `api-demo` elements only. Corresponding base
+classes do not have it. When extending a base class, you have to re-implement it yourself if you
+need to preserve the existing behavior.
 
 ### Templates
 
@@ -213,6 +282,7 @@ The following CSS shadow parts are available:
 | Part                     | Description                                             |
 | -------------------------| --------------------------------------------------------|
 | `header`                 | Header containing element name and navigation controls  |
+| `header-title`           | Title element placed in the header (element tag name)   |
 | `tab`                    | `<api-viewer-tab>` component used in docs and demo      |
 | `tab-panel`              | `<api-viewer-panel>` component used in docs and demo    |
 | `warning`                | Message shown when no elements or API docs are found    |
@@ -228,6 +298,23 @@ The following CSS shadow parts are available:
 | `docs-markdown`          | Iem description with parsed markdown content            |
 | `docs-row`               | Row containing columns. Child of a `docs-item` part     |
 | `docs-value`             | Sibling of a `docs-label` part (name, attribute, type)  |
+| `md-h1`                  | Markdown `<h1>` elements                                |
+| `md-h2`                  | Markdown `<h2>` elements                                |
+| `md-h3`                  | Markdown `<h3>` elements                                |
+| `md-h4`                  | Markdown `<h4>` elements                                |
+| `md-h5`                  | Markdown `<h5>` elements                                |
+| `md-h6`                  | Markdown `<h6>` elements                                |
+| `md-a`                   | Markdown `<a>` elements                                 |
+| `md-p`                   | Markdown `<p>` elements                                 |
+| `md-ul`                  | Markdown `<ul>` elements                                |
+| `md-ol`                  | Markdown `<ol>` elements                                |
+| `md-li`                  | Markdown `<li>` elements                                |
+| `md-pre`                 | Markdown `<pre>` elements                               |
+| `md-code`                | Markdown `<code>` elements                              |
+| `md-strong`              | Markdown `<strong>` elements                            |
+| `md-em`                  | Markdown `<em>` elements                                |
+| `md-blockquote`          | Markdown `<blockquote>` elements                        |
+| `md-del`                 | Markdown `<del>` elements                               |
 
 #### Live demo
 

@@ -16,6 +16,31 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.4.0] - 2020-03-10
+
+### Added
+
+- Two new elements: `<api-docs>` and `<api-demo>`
+- Public `elements` property for passing data directly
+- Public `exclude-knobs` property for excluding knobs
+- Public `setTemplates` method for using custom templates
+- New shadow part `header-title`, placed inside `header`
+- Docs: custom CSS properties type and default value
+- Docs: add `part` attribute to rendered markdown elements
+- Demo: `prefix`, `suffix` and `wrapper` templates
+- Demo: custom attribute knobs (string, boolean, select)
+
+### Fixed
+
+- Demo: fixed quotes in default value for string knobs
+
+### Changed
+
+- Templates are now stored separately for each instance
+- Demo: do not wrap default slot content with `<div>`
+- Demo: default slot knob value changed to "Content"
+- Docs: removed `id` from headers in rendered markdown
+
 ## [0.3.13] - 2020-02-16
 
 ### Fixed

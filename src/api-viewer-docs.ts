@@ -14,7 +14,7 @@ import {
   CSSPartInfo,
   CSSPropertyInfo
 } from './lib/types.js';
-import { isEmptyArray } from './lib/utils.js';
+import { isEmptyArray, isPropMatch, unquote } from './lib/utils.js';
 import { parse } from './lib/markdown.js';
 
 import './api-viewer-panel.js';
@@ -25,27 +25,18 @@ import './api-viewer-tabs.js';
 import { ApiViewerTabs } from './api-viewer-tabs.js';
 /* eslint-enable import/no-duplicates */
 
-const processAttrs = (
-  attrs: AttributeInfo[],
-  props: PropertyInfo[]
-): AttributeInfo[] => {
-  return attrs.filter(
-    ({ name }) =>
-      !props.some(prop => prop.attribute === name || prop.name === name)
-  );
-};
-
 const renderItem = (
+  prefix: string,
   name: string,
   description: string,
   valueType?: string,
-  attribute?: string,
-  value?: unknown
+  value?: unknown,
+  attribute?: string
 ): TemplateResult => {
   return html`
     <div part="docs-item">
       <div part="docs-row">
-        <div part="docs-column">
+        <div part="docs-column" class="column-name-${prefix}">
           <div part="docs-label">Name</div>
           <div part="docs-value" class="accent">${name}</div>
         </div>
@@ -57,13 +48,14 @@ const renderItem = (
                 <div part="docs-value">${attribute}</div>
               </div>
             `}
-        ${valueType === undefined
+        ${valueType === undefined && value === undefined
           ? nothing
           : html`
               <div part="docs-column" class="column-type">
                 <div part="docs-label">Type</div>
                 <div part="docs-value">
-                  ${valueType}
+                  ${valueType ||
+                    (Number.isNaN(Number(value)) ? typeof value : 'number')}
                   ${value === undefined
                     ? nothing
                     : html`
@@ -104,22 +96,22 @@ const renderTab = (
 export class ApiViewerDocs extends LitElement {
   @property({ type: String }) name = '';
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   props: PropertyInfo[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   attrs: AttributeInfo[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   slots: SlotInfo[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   events: EventInfo[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   cssParts: CSSPartInfo[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   cssProps: CSSPropertyInfo[] = [];
 
   protected createRenderRoot() {
@@ -130,7 +122,9 @@ export class ApiViewerDocs extends LitElement {
     const { slots, props, attrs, events, cssParts, cssProps } = this;
 
     const properties = props || [];
-    const attributes = processAttrs(attrs || [], properties);
+    const attributes = (attrs || []).filter(
+      ({ name }) => !properties.some(isPropMatch(name))
+    );
 
     const emptyDocs = [
       properties,
@@ -157,11 +151,12 @@ export class ApiViewerDocs extends LitElement {
                 ${properties.map(prop => {
                   const { name, description, type, attribute } = prop;
                   return renderItem(
+                    'prop',
                     name,
                     description,
                     type,
-                    attribute,
-                    prop.default
+                    prop.default,
+                    attribute
                   );
                 })}
               `
@@ -171,7 +166,7 @@ export class ApiViewerDocs extends LitElement {
               attributes.length,
               html`
                 ${attributes.map(({ name, description, type }) =>
-                  renderItem(name, description, type)
+                  renderItem('attr', name, description, type)
                 )}
               `
             )}
@@ -180,7 +175,7 @@ export class ApiViewerDocs extends LitElement {
               slots.length,
               html`
                 ${slots.map(({ name, description }) =>
-                  renderItem(name, description)
+                  renderItem('slot', name, description)
                 )}
               `
             )}
@@ -189,7 +184,7 @@ export class ApiViewerDocs extends LitElement {
               events.length,
               html`
                 ${events.map(({ name, description }) =>
-                  renderItem(name, description)
+                  renderItem('event', name, description)
                 )}
               `
             )}
@@ -197,9 +192,16 @@ export class ApiViewerDocs extends LitElement {
               'CSS Custom Properties',
               cssProps.length,
               html`
-                ${cssProps.map(({ name, description }) =>
-                  renderItem(name, description)
-                )}
+                ${cssProps.map(prop => {
+                  const { name, description, type } = prop;
+                  return renderItem(
+                    'css',
+                    name,
+                    description,
+                    type,
+                    unquote(prop.default)
+                  );
+                })}
               `
             )}
             ${renderTab(
@@ -207,7 +209,7 @@ export class ApiViewerDocs extends LitElement {
               cssParts.length,
               html`
                 ${cssParts.map(({ name, description }) =>
-                  renderItem(name, description)
+                  renderItem('part', name, description)
                 )}
               `
             )}

@@ -11,6 +11,8 @@ export interface ElementInfo extends Info {
   cssParts: CSSPartInfo[];
 }
 
+export type ElementPromise = Promise<ElementInfo[]>;
+
 export interface Info {
   name: string;
   description: string;
@@ -25,12 +27,14 @@ export interface PropertyInfo extends Info {
   attribute: string | undefined;
   value: string | number | boolean | null | undefined;
   default: string | number | boolean | null | undefined;
+  options?: string[];
 }
 
 export interface KnobValue {
   type: string;
   attribute: string | undefined;
   value: string | number | boolean | null;
+  custom?: boolean;
 }
 
 export type KnobValues = { [name: string]: KnobValue };
@@ -51,7 +55,8 @@ export interface CSSPartInfo extends Info {}
 
 export interface CSSPropertyInfo extends Info {
   value?: string;
-  defaultValue?: string;
+  default?: string;
+  type?: string;
 }
 
 export type ComponentWithProps = {

@@ -3,6 +3,7 @@
   "tags": [
     {
       "name": "expansion-panel",
+      "path": "./../src/fixtures/expansion-panel.ts",
       "description": "A custom element similar to the HTML5 `<details>` element.",
       "attributes": [
         {
@@ -63,15 +64,20 @@
       "cssProperties": [
         {
           "name": "--panel-header-background",
-          "description": "Default panel header background color."
+          "description": "Default panel header background color.",
+          "type": "Background",
+          "default": "\"#fff\""
         },
         {
           "name": "--panel-header-min-height",
-          "description": "Panel header minimum height."
+          "description": "Panel header minimum height.",
+          "default": "\"48px\""
         },
         {
           "name": "--panel-ripple-background",
-          "description": "Active toggle button ripple background."
+          "description": "Active toggle button ripple background.",
+          "type": "Background",
+          "default": "\"rgba(0, 0, 0, 0.38)\""
         }
       ],
       "cssParts": [
@@ -91,6 +97,7 @@
     },
     {
       "name": "fancy-accordion",
+      "path": "./../src/fixtures/fancy-accordion.ts",
       "description": "A custom element implementing the accordion widget: a vertically stacked set of expandable panels\nthat wraps several instances of the `<expansion-panel>` element. Only one panel can be opened\n(expanded) at a time.\n\nPanel headings function as controls that enable users to open (expand) or hide (collapse) their\nassociated sections of content. The user can toggle panels by mouse click, Enter and Space keys.\n\nThe component supports keyboard navigation and is aligned with the\n[WAI-ARIA Authoring Practices](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion).",
       "attributes": [
         {
@@ -125,7 +132,56 @@
       ]
     },
     {
+      "name": "intl-currency",
+      "path": "./../src/fixtures/intl-currency.ts",
+      "description": "A custom element that formats currency using Intl.",
+      "attributes": [
+        {
+          "name": "value",
+          "description": "Amount to be formatted.",
+          "type": "number",
+          "default": "0"
+        },
+        {
+          "name": "currency",
+          "description": "Currency code used for formatting.",
+          "type": "string | null | undefined",
+          "default": "\"EUR\""
+        },
+        {
+          "name": "locale",
+          "description": "Locale code used for formatting.",
+          "type": "string | null | undefined",
+          "default": "\"en-GB\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "value",
+          "attribute": "value",
+          "description": "Amount to be formatted.",
+          "type": "number",
+          "default": "0"
+        },
+        {
+          "name": "currency",
+          "attribute": "currency",
+          "description": "Currency code used for formatting.",
+          "type": "string | null | undefined",
+          "default": "\"EUR\""
+        },
+        {
+          "name": "locale",
+          "attribute": "locale",
+          "description": "Locale code used for formatting.",
+          "type": "string | null | undefined",
+          "default": "\"en-GB\""
+        }
+      ]
+    },
+    {
       "name": "progress-bar",
+      "path": "./../src/fixtures/progress-bar.ts",
       "description": "A custom element similar to the HTML5 `<progress>` element.",
       "attributes": [
         {
@@ -186,11 +242,14 @@
       "cssProperties": [
         {
           "name": "--progress-bar-fill-color",
-          "description": "Color of the filled progress bar part."
+          "description": "Color of the filled progress bar part.",
+          "type": "Color",
+          "default": "\"#6200ee\""
         },
         {
           "name": "--progress-bar-opacity",
-          "description": "Opacity set on the underlying track."
+          "description": "Opacity set on the underlying track.",
+          "default": "\"0.16\""
         }
       ],
       "cssParts": [

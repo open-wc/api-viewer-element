@@ -33,7 +33,7 @@ const renderEvents = (log: CustomEvent[]): TemplateResult => {
 
 @customElement('api-viewer-demo-events')
 export class ApiViewerDemoEvents extends LitElement {
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   log: CustomEvent[] = [];
 
   protected createRenderRoot() {

@@ -19,17 +19,21 @@ import './api-viewer-demo-layout.js';
 export class ApiViewerDemo extends LitElement {
   @property({ type: String }) name = '';
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   props: PropertyInfo[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   slots: SlotInfo[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   events: EventInfo[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   cssProps: CSSPropertyInfo[] = [];
+
+  @property({ type: String }) exclude = '';
+
+  @property({ type: Number }) vid?: number;
 
   private whenDefined: Promise<unknown> = Promise.resolve();
 
@@ -47,6 +51,8 @@ export class ApiViewerDemo extends LitElement {
         .slots="${this.slots}"
         .events="${this.events}"
         .cssProps="${this.cssProps}"
+        .exclude="${this.exclude}"
+        .vid="${this.vid}"
       ></api-viewer-demo-layout>
     `;
   }

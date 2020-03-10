@@ -6,8 +6,6 @@ import { parse } from './lib/markdown.js';
 import './api-viewer-docs.js';
 import './api-viewer-demo.js';
 
-let radioId = 0;
-
 @customElement('api-viewer-content')
 export class ApiViewerContent extends LitElement {
   @property({ attribute: false }) elements: ElementInfo[] = [];
@@ -16,20 +14,16 @@ export class ApiViewerContent extends LitElement {
 
   @property({ type: String }) section = 'docs';
 
-  protected _id?: number;
+  @property({ type: String }) exclude = '';
 
-  constructor() {
-    super();
-
-    this._id = ++radioId;
-  }
+  @property({ type: Number }) vid?: number;
 
   protected createRenderRoot() {
     return this;
   }
 
   protected render() {
-    const { elements, selected, section } = this;
+    const { elements, selected, section, exclude, vid } = this;
 
     const {
       name,
@@ -49,12 +43,12 @@ export class ApiViewerContent extends LitElement {
 
     return html`
       <header part="header">
-        <div class="tag-name">&lt;${name}&gt;</div>
+        <div part="header-title">&lt;${name}&gt;</div>
         <nav>
           <input
             id="docs"
             type="radio"
-            name="section-${this._id}"
+            name="section-${this.vid}"
             value="docs"
             ?checked="${section === 'docs'}"
             @change="${this._onToggle}"
@@ -64,7 +58,7 @@ export class ApiViewerContent extends LitElement {
           <input
             id="demo"
             type="radio"
-            name="section-${this._id}"
+            name="section-${this.vid}"
             value="demo"
             ?checked="${section === 'demo'}"
             @change="${this._onToggle}"
@@ -110,6 +104,8 @@ export class ApiViewerContent extends LitElement {
                 .slots="${slots}"
                 .events="${events}"
                 .cssProps="${cssProps}"
+                .exclude="${exclude}"
+                .vid="${vid}"
               ></api-viewer-demo>
             `
       )}
