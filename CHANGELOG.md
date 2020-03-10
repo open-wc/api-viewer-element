@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.4.1] - 2020-03-10
+
+### Fixed
+
+- Demo: handle native events without `detail` properly
+
 ## [0.4.0] - 2020-03-10
 
 ### Added
