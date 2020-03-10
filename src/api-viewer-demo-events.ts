@@ -5,6 +5,7 @@ import {
   property,
   TemplateResult
 } from 'lit-element';
+import { nothing } from 'lit-html';
 import { cache } from 'lit-html/directives/cache.js';
 
 interface EventDetail {
@@ -16,15 +17,20 @@ const renderDetail = (detail: EventDetail): string => {
   if ('value' in detail && detail.value === undefined) {
     result.value = 'undefined';
   }
-  return JSON.stringify(detail).replace('"undefined"', 'undefined');
+  return ` detail: ${JSON.stringify(detail).replace(
+    '"undefined"',
+    'undefined'
+  )}`;
 };
 
 const renderEvents = (log: CustomEvent[]): TemplateResult => {
   return html`
     ${log.map(e => {
+      const { type, detail } = e;
       return html`
         <p part="event-record">
-          event: "${e.type}". detail: ${renderDetail(e.detail)}
+          event: "${type}".
+          ${detail === undefined ? nothing : renderDetail(detail)}
         </p>
       `;
     })}
