@@ -176,7 +176,7 @@ Use `selected` property to configure the displayed element:
 Use `exclude-knobs` attribute to exclude properties from demo:
 
 ```html
-<api-viewer src="./custom-elements.json" exclude-knobs="autofocus"></api-viewer>
+<api-viewer src="./custom-elements.json" exclude-knobs="autofocus,items"></api-viewer>
 ```
 
 #### `elements`
