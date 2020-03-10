@@ -96,22 +96,22 @@ const renderTab = (
 export class ApiViewerDocs extends LitElement {
   @property({ type: String }) name = '';
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   props: PropertyInfo[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   attrs: AttributeInfo[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   slots: SlotInfo[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   events: EventInfo[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   cssParts: CSSPartInfo[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   cssProps: CSSPropertyInfo[] = [];
 
   protected createRenderRoot() {

@@ -13,7 +13,8 @@ import {
   SlotInfo,
   SlotValue,
   EventInfo,
-  KnobValues
+  KnobValues,
+  KnobValue
 } from './lib/types.js';
 import {
   cssPropRenderer,
@@ -79,35 +80,35 @@ const isGetter = (element: Element, prop: string): boolean => {
 export class ApiViewerDemoLayout extends LitElement {
   @property({ type: String }) tag = '';
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   props: PropertyInfo[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   slots: SlotInfo[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   events: EventInfo[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   cssProps: CSSPropertyInfo[] = [];
 
   @property({ type: String }) exclude = '';
 
   @property({ type: Number }) vid?: number;
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   protected processedSlots: SlotValue[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   protected processedCss: CSSPropertyInfo[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   protected eventLog: CustomEvent[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   customKnobs: PropertyInfo[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   knobs: KnobValues = {};
 
   @property({ type: String }) protected copyBtnText = 'copy';
@@ -371,9 +372,10 @@ export class ApiViewerDemoLayout extends LitElement {
     const { prop, custom } = this._getProp(name as string);
     if (prop) {
       const { attribute } = prop;
-      this.knobs = Object.assign(this.knobs, {
-        [name as string]: { type, value, attribute, custom }
-      });
+      this.knobs = {
+        ...this.knobs,
+        [name as string]: { type, value, attribute, custom } as KnobValue
+      };
     }
   }
 
@@ -443,7 +445,7 @@ export class ApiViewerDemoLayout extends LitElement {
         }
       }
 
-      this.eventLog.push(e);
+      this.eventLog = [...this.eventLog, e];
     }) as EventListener);
   }
 
@@ -452,9 +454,10 @@ export class ApiViewerDemoLayout extends LitElement {
     const value = ((component as unknown) as ComponentWithProps)[name];
 
     // update knobs to avoid duplicate event
-    this.knobs = Object.assign(this.knobs, {
+    this.knobs = {
+      ...this.knobs,
       [name]: { type, value, attribute }
-    });
+    };
 
     this.props = this.props.map(prop => {
       return prop.name === name

@@ -154,13 +154,13 @@ const renderSnippet = (
 export class ApiViewerDemoSnippet extends LitElement {
   @property({ type: String }) tag = '';
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   knobs: KnobValues = {};
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   slots: SlotValue[] = [];
 
-  @property({ attribute: false, hasChanged: () => true })
+  @property({ attribute: false })
   cssProps: CSSPropertyInfo[] = [];
 
   @property({ type: Number }) vid?: number;
