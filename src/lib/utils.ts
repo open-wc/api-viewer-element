@@ -1,8 +1,12 @@
 import { PropertyInfo } from './types';
 
-export const getSlotTitle = (name: string) => {
-  return name === '' ? 'Default' : name[0].toUpperCase() + name.slice(1);
+const getSlotDefault = (name: string, initial: string) => {
+  return name === '' ? initial : name[0].toUpperCase() + name.slice(1);
 };
+
+export const getSlotContent = (name: string) => getSlotDefault(name, 'Content');
+
+export const getSlotTitle = (name: string) => getSlotDefault(name, 'Default');
 
 const templates: Array<HTMLTemplateElement[]> = [];
 

@@ -22,7 +22,7 @@ import {
   slotRenderer
 } from './lib/knobs.js';
 import {
-  getSlotTitle,
+  getSlotContent,
   getTemplates,
   hasTemplate,
   isEmptyArray,
@@ -235,7 +235,7 @@ export class ApiViewerDemoLayout extends LitElement {
         .map((slot: SlotInfo) => {
           return {
             ...slot,
-            content: getSlotTitle(slot.name)
+            content: getSlotContent(slot.name)
           };
         });
     }
