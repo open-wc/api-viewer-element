@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.4.2] - 2020-03-11
+
+### Fixed
+
+- Docs & demo: improve appearance on small screens
+- Demo: fix regression with code snippet styles
+
 ## [0.4.1] - 2020-03-10
 
 ### Fixed
