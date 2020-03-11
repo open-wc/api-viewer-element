@@ -17,6 +17,10 @@ export default css`
     color: var(--ave-link-hover-color);
   }
 
+  pre {
+    white-space: pre-wrap;
+  }
+
   api-viewer-docs {
     display: block;
   }

@@ -8,7 +8,7 @@ export default css`
     font-family: var(--ave-monospace-font);
     font-size: 0.875rem;
     text-align: left;
-    white-space: pre;
+    white-space: pre-wrap;
     word-spacing: normal;
     word-break: normal;
     word-wrap: normal;

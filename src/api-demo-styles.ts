@@ -1,10 +1,6 @@
 import { css } from 'lit-element';
 
 export default css`
-  pre {
-    white-space: pre-wrap;
-  }
-
   button {
     position: absolute;
     top: 0.5rem;
