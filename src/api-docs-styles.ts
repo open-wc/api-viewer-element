@@ -87,8 +87,16 @@ export default css`
 
   @media (max-width: 480px) {
     .column-type {
-      flex-basis: 100%;
       margin-top: 1rem;
+    }
+
+    .column-name-css,
+    .column-type {
+      flex-basis: 100%;
+    }
+
+    [part='tab'][heading^='CSS'] {
+      max-width: 125px;
     }
   }
 `;
