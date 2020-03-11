@@ -87,3 +87,9 @@
   text-transform: initial;
   font-weight: normal;
 }
+
+@media (max-width: 480px) {
+  .parts api-viewer::part(tab) {
+    max-width: 120px;
+  }
+}
