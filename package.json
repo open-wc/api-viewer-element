@@ -4,6 +4,23 @@
   "description": "Web Components API viewer element",
   "author": "Serhii Kulykov <iamkulykov@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/web-padawan/api-viewer-element.git"
+  },
+  "bugs": {
+    "url": "https://github.com/web-padawan/api-viewer-element/issues"
+  },
+  "keywords": [
+    "API",
+    "documentation",
+    "playground",
+    "web-components",
+    "webcomponents",
+    "customelements",
+    "custom-elements",
+    "lit-element"
+  ],
   "main": "lib/api-viewer.js",
   "module": "lib/api-viewer.js",
   "scripts": {
