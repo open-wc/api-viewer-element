@@ -55,7 +55,11 @@ export default css`
   }
 
   [part='knobs-column'] {
-    width: 50%;
+    flex-shrink: 1;
+  }
+
+  [part='knobs-column']:not(:only-child) {
+    flex-basis: 50%;
   }
 
   [part='knobs-header'] {
@@ -99,6 +103,10 @@ export default css`
 
     [part='knobs-column']:not(:last-child) {
       margin-bottom: 1rem;
+    }
+
+    [part='input'] {
+      max-width: 8rem;
     }
   }
 `;

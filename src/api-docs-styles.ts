@@ -22,6 +22,7 @@ export default css`
   }
 
   [part='tab'][heading^='CSS'] {
+    min-width: 120px;
     font-size: 0.8125rem;
   }
 
