@@ -29,12 +29,12 @@ export class IntlCurrency extends LitElement {
   /**
    * Currency code used for formatting.
    */
-  @property({ type: String }) currency: string | null | undefined = 'EUR';
+  @property() currency: string | null | undefined = 'EUR';
 
   /**
    * Locale code used for formatting.
    */
-  @property({ type: String }) locale: string | null | undefined = 'en-GB';
+  @property() locale: string | null | undefined = 'en-GB';
 
   static get styles() {
     return css`

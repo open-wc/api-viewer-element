@@ -40,12 +40,12 @@ export const ApiViewerMixin = <T extends Constructor<LitElement>>(
   base: T
 ): T & Constructor<ApiViewerInterface> => {
   class ApiViewer extends base {
-    @property({ type: String }) src?: string;
+    @property() src?: string;
 
     @property({ attribute: false })
     elements?: ElementInfo[];
 
-    @property({ type: String }) selected?: string;
+    @property() selected?: string;
 
     jsonFetched: ElementPromise = Promise.resolve([]);
 

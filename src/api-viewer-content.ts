@@ -12,9 +12,9 @@ export class ApiViewerContent extends LitElement {
 
   @property({ type: Number }) selected = 0;
 
-  @property({ type: String }) section = 'docs';
+  @property() section = 'docs';
 
-  @property({ type: String }) exclude = '';
+  @property() exclude = '';
 
   @property({ type: Number }) vid?: number;
 

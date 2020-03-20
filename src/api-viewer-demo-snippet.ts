@@ -152,7 +152,7 @@ const renderSnippet = (
 
 @customElement('api-viewer-demo-snippet')
 export class ApiViewerDemoSnippet extends LitElement {
-  @property({ type: String }) tag = '';
+  @property() tag = '';
 
   @property({ attribute: false })
   knobs: KnobValues = {};

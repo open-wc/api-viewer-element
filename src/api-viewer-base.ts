@@ -32,7 +32,7 @@ async function renderDocs(
 let id = 0;
 
 export class ApiViewerBase extends ApiViewerMixin(LitElement) {
-  @property({ type: String }) section = 'docs';
+  @property() section = 'docs';
 
   @property({ type: String, attribute: 'exclude-knobs' }) excludeKnobs?: string;
 

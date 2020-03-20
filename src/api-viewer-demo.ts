@@ -17,7 +17,7 @@ import './api-viewer-demo-layout.js';
 
 @customElement('api-viewer-demo')
 export class ApiViewerDemo extends LitElement {
-  @property({ type: String }) name = '';
+  @property() name = '';
 
   @property({ attribute: false })
   props: PropertyInfo[] = [];
@@ -31,7 +31,7 @@ export class ApiViewerDemo extends LitElement {
   @property({ attribute: false })
   cssProps: CSSPropertyInfo[] = [];
 
-  @property({ type: String }) exclude = '';
+  @property() exclude = '';
 
   @property({ type: Number }) vid?: number;
 

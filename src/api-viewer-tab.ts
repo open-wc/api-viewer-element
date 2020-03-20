@@ -13,7 +13,7 @@ let tabIdCounter = 0;
 export class ApiViewerTab extends LitElement {
   @property({ type: Boolean, reflect: true }) selected = false;
 
-  @property({ type: String }) heading = '';
+  @property() heading = '';
 
   @property({ type: Boolean }) active = false;
 

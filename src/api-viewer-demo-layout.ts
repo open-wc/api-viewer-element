@@ -78,7 +78,7 @@ const isGetter = (element: Element, prop: string): boolean => {
 
 @customElement('api-viewer-demo-layout')
 export class ApiViewerDemoLayout extends LitElement {
-  @property({ type: String }) tag = '';
+  @property() tag = '';
 
   @property({ attribute: false })
   props: PropertyInfo[] = [];
@@ -92,7 +92,7 @@ export class ApiViewerDemoLayout extends LitElement {
   @property({ attribute: false })
   cssProps: CSSPropertyInfo[] = [];
 
-  @property({ type: String }) exclude = '';
+  @property() exclude = '';
 
   @property({ type: Number }) vid?: number;
 
@@ -111,7 +111,7 @@ export class ApiViewerDemoLayout extends LitElement {
   @property({ attribute: false })
   knobs: KnobValues = {};
 
-  @property({ type: String }) protected copyBtnText = 'copy';
+  @property() protected copyBtnText = 'copy';
 
   private _savedProps: PropertyInfo[] = [];
 

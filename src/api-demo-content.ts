@@ -9,7 +9,7 @@ export class ApiDemoContent extends LitElement {
 
   @property({ type: Number }) selected = 0;
 
-  @property({ type: String }) exclude = '';
+  @property() exclude = '';
 
   @property({ type: Number }) vid?: number;
 

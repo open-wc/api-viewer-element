@@ -94,7 +94,7 @@ const renderTab = (
 
 @customElement('api-viewer-docs')
 export class ApiViewerDocs extends LitElement {
-  @property({ type: String }) name = '';
+  @property() name = '';
 
   @property({ attribute: false })
   props: PropertyInfo[] = [];
