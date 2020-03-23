@@ -14,13 +14,11 @@ interface EventDetail {
 
 const renderDetail = (detail: EventDetail): string => {
   const result = detail;
+  const undef = 'undefined';
   if ('value' in detail && detail.value === undefined) {
-    result.value = 'undefined';
+    result.value = undef;
   }
-  return ` detail: ${JSON.stringify(detail).replace(
-    '"undefined"',
-    'undefined'
-  )}`;
+  return ` detail: ${JSON.stringify(detail).replace(`"${undef}"`, undef)}`;
 };
 
 const renderEvents = (log: CustomEvent[]): TemplateResult => {

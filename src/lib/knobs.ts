@@ -1,10 +1,19 @@
 import { html, TemplateResult } from 'lit-html';
 import { CSSPropertyInfo, PropertyInfo, SlotValue } from './types.js';
-import { getSlotTitle, normalizeType } from './utils.js';
+import { normalizeType } from './utils.js';
+
+const DEFAULT = 'default';
 
 type Knob = CSSPropertyInfo | PropertyInfo | SlotValue;
 
 type InputRenderer = (item: Knob, id: string) => TemplateResult;
+
+const capitalize = (name: string) => name[0].toUpperCase() + name.slice(1);
+
+export const getSlotDefault = (name: string, initial: string) =>
+  capitalize(name === '' ? initial : name);
+
+export const getSlotContent = (name: string) => getSlotDefault(name, 'content');
 
 const getInputType = (type: string) => {
   switch (normalizeType(type)) {
@@ -98,13 +107,14 @@ export const slotRenderer: InputRenderer = (knob: Knob, id: string) => {
 
 export const renderKnobs = (
   items: Knob[],
+  header: string,
   type: string,
   renderer: InputRenderer
 ): TemplateResult => {
   const rows = items.map((item: Knob) => {
     const { name } = item;
-    const id = `${type}-${name || 'default'}`;
-    const label = type === 'slot' ? getSlotTitle(name) : name;
+    const id = `${type}-${name || DEFAULT}`;
+    const label = type === 'slot' ? getSlotDefault(name, DEFAULT) : name;
     return html`
       <tr>
         <td>
@@ -116,6 +126,7 @@ export const renderKnobs = (
   });
 
   return html`
+    <h3 part="knobs-header">${header}</h3>
     <table>
       ${rows}
     </table>

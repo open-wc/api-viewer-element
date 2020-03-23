@@ -1,13 +1,5 @@
 import { PropertyInfo } from './types';
 
-const getSlotDefault = (name: string, initial: string) => {
-  return name === '' ? initial : name[0].toUpperCase() + name.slice(1);
-};
-
-export const getSlotContent = (name: string) => getSlotDefault(name, 'Content');
-
-export const getSlotTitle = (name: string) => getSlotDefault(name, 'Default');
-
 const templates: Array<HTMLTemplateElement[]> = [];
 
 export const setTemplates = (id: number, tpl: HTMLTemplateElement[]) => {
@@ -44,8 +36,6 @@ export const getTemplates = (id: number, name: string, type: string) =>
 
 export const hasTemplate = (id: number, name: string, type: string) =>
   templates[id].some(matchTemplate(name, type));
-
-export const isEmptyArray = (array: unknown[]) => array.length === 0;
 
 export const isPropMatch = (name: string) => (prop: PropertyInfo) =>
   prop.attribute === name || prop.name === name;

@@ -18,15 +18,14 @@ import {
 } from './lib/types.js';
 import {
   cssPropRenderer,
+  getSlotDefault,
   propRenderer,
   renderKnobs,
   slotRenderer
 } from './lib/knobs.js';
 import {
-  getSlotContent,
   getTemplates,
   hasTemplate,
-  isEmptyArray,
   isPropMatch,
   normalizeType,
   TemplateTypes,
@@ -120,11 +119,15 @@ export class ApiViewerDemoLayout extends LitElement {
   }
 
   protected render() {
-    const noEvents = isEmptyArray(this.events);
-    const noCss = isEmptyArray(this.cssProps);
-    const noSlots = isEmptyArray(this.slots);
-    const noCustomKnobs = isEmptyArray(this.customKnobs);
-    const noKnobs = isEmptyArray(this.props) && noCustomKnobs && noSlots;
+    const [noCss, noEvents, noSlots, noCustomKnobs, noProps] = [
+      this.cssProps,
+      this.events,
+      this.slots,
+      this.customKnobs,
+      this.props
+    ].map(arr => arr.length === 0);
+
+    const noKnobs = noProps && noCustomKnobs && noSlots;
     const id = this.vid as number;
     const slots = this.processedSlots;
 
@@ -155,18 +158,20 @@ export class ApiViewerDemoLayout extends LitElement {
         <api-viewer-panel slot="panel" part="tab-panel">
           <div part="knobs" ?hidden="${noKnobs}">
             <section part="knobs-column" @change="${this._onPropChanged}">
-              <h3 part="knobs-header">Properties</h3>
-              ${renderKnobs(this.props, 'prop', propRenderer)}
-              <h3 part="knobs-header" ?hidden="${noCustomKnobs}">Attributes</h3>
-              ${renderKnobs(this.customKnobs, 'prop', propRenderer)}
+              ${renderKnobs(this.props, 'Properties', 'prop', propRenderer)}
+              ${renderKnobs(
+                this.customKnobs,
+                'Attributes',
+                'attr',
+                propRenderer
+              )}
             </section>
             <section
               ?hidden="${noSlots || hasTemplate(id, this.tag, SLOT)}"
               part="knobs-column"
               @change="${this._onSlotChanged}"
             >
-              <h3 part="knobs-header">Slots</h3>
-              ${renderKnobs(slots, 'slot', slotRenderer)}
+              ${renderKnobs(slots, 'Slots', 'slot', slotRenderer)}
             </section>
           </div>
         </api-viewer-panel>
@@ -179,8 +184,12 @@ export class ApiViewerDemoLayout extends LitElement {
         <api-viewer-panel slot="panel" part="tab-panel">
           <div part="knobs" ?hidden="${noCss}">
             <section part="knobs-column" @change="${this._onCssChanged}">
-              <h3 part="knobs-header">Custom CSS Properties</h3>
-              ${renderKnobs(this.cssProps, 'css-prop', cssPropRenderer)}
+              ${renderKnobs(
+                this.cssProps,
+                'Custom CSS Properties',
+                'css-prop',
+                cssPropRenderer
+              )}
             </section>
           </div>
         </api-viewer-panel>
@@ -236,7 +245,7 @@ export class ApiViewerDemoLayout extends LitElement {
         .map((slot: SlotInfo) => {
           return {
             ...slot,
-            content: getSlotContent(slot.name)
+            content: getSlotDefault(slot.name, 'content')
           };
         });
     }

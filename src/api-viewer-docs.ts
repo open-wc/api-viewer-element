@@ -14,7 +14,7 @@ import {
   CSSPartInfo,
   CSSPropertyInfo
 } from './lib/types.js';
-import { isEmptyArray, isPropMatch, unquote } from './lib/utils.js';
+import { isPropMatch, unquote } from './lib/utils.js';
 import { parse } from './lib/markdown.js';
 
 import './api-viewer-panel.js';
@@ -75,10 +75,10 @@ const renderItem = (
 
 const renderTab = (
   heading: string,
-  count: number,
+  array: unknown[],
   content: TemplateResult
 ): TemplateResult => {
-  const hidden = count === 0;
+  const hidden = array.length === 0;
   return html`
     <api-viewer-tab
       heading="${heading}"
@@ -133,7 +133,7 @@ export class ApiViewerDocs extends LitElement {
       events,
       cssProps,
       cssParts
-    ].every(isEmptyArray);
+    ].every(arr => arr.length === 0);
 
     return emptyDocs
       ? html`
@@ -146,7 +146,7 @@ export class ApiViewerDocs extends LitElement {
           <api-viewer-tabs>
             ${renderTab(
               'Properties',
-              properties.length,
+              properties,
               html`
                 ${properties.map(prop => {
                   const { name, description, type, attribute } = prop;
@@ -163,7 +163,7 @@ export class ApiViewerDocs extends LitElement {
             )}
             ${renderTab(
               'Attributes',
-              attributes.length,
+              attributes,
               html`
                 ${attributes.map(({ name, description, type }) =>
                   renderItem('attr', name, description, type)
@@ -172,7 +172,7 @@ export class ApiViewerDocs extends LitElement {
             )}
             ${renderTab(
               'Slots',
-              slots.length,
+              slots,
               html`
                 ${slots.map(({ name, description }) =>
                   renderItem('slot', name, description)
@@ -181,7 +181,7 @@ export class ApiViewerDocs extends LitElement {
             )}
             ${renderTab(
               'Events',
-              events.length,
+              events,
               html`
                 ${events.map(({ name, description }) =>
                   renderItem('event', name, description)
@@ -190,7 +190,7 @@ export class ApiViewerDocs extends LitElement {
             )}
             ${renderTab(
               'CSS Custom Properties',
-              cssProps.length,
+              cssProps,
               html`
                 ${cssProps.map(prop => {
                   const { name, description, type } = prop;
@@ -206,7 +206,7 @@ export class ApiViewerDocs extends LitElement {
             )}
             ${renderTab(
               'CSS Shadow Parts',
-              cssParts.length,
+              cssParts,
               html`
                 ${cssParts.map(({ name, description }) =>
                   renderItem('part', name, description)
