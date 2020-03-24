@@ -77,7 +77,7 @@ const renderSnippet = (
   const wrapNode = getTemplateNode(wrapper);
   if (wrapNode) {
     prepend = INDENT;
-    const match = wrapNode.outerHTML.match(/<([a-z]+)[^>]*(?<!\/)>/);
+    const match = wrapNode.outerHTML.match(/<([a-z]+)[^>]*>/);
     if (match) {
       wrap = wrapNode.tagName.toLowerCase();
       markup += `${match[0]}\n${INDENT}`;
