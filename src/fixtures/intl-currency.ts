@@ -42,6 +42,10 @@ export class IntlCurrency extends LitElement {
         all: inherit;
         display: inline-block;
       }
+
+      div {
+        text-decoration: inherit;
+      }
     `;
   }
 
