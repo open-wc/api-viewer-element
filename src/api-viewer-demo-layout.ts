@@ -127,9 +127,9 @@ export class ApiViewerDemoLayout extends LitElement {
       this.props
     ].map(arr => arr.length === 0);
 
-    const noKnobs = noProps && noCustomKnobs && noSlots;
     const id = this.vid as number;
     const slots = this.processedSlots;
+    const hideSlots = noSlots || hasTemplate(id, this.tag, SLOT);
 
     return html`
       <div part="demo-output" @rendered="${this._onRendered}">
@@ -153,10 +153,10 @@ export class ApiViewerDemoLayout extends LitElement {
           heading="Knobs"
           slot="tab"
           part="tab"
-          ?hidden="${noKnobs}"
+          ?hidden="${noProps && noCustomKnobs && hideSlots}"
         ></api-viewer-tab>
         <api-viewer-panel slot="panel" part="tab-panel">
-          <div part="knobs" ?hidden="${noKnobs}">
+          <div part="knobs">
             <section part="knobs-column" @change="${this._onPropChanged}">
               ${renderKnobs(this.props, 'Properties', 'prop', propRenderer)}
               ${renderKnobs(
@@ -167,7 +167,7 @@ export class ApiViewerDemoLayout extends LitElement {
               )}
             </section>
             <section
-              ?hidden="${noSlots || hasTemplate(id, this.tag, SLOT)}"
+              ?hidden="${hideSlots}"
               part="knobs-column"
               @change="${this._onSlotChanged}"
             >

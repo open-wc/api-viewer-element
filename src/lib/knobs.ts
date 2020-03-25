@@ -115,7 +115,7 @@ export const renderKnobs = (
   });
 
   return html`
-    <h3 part="knobs-header">${header}</h3>
+    <h3 part="knobs-header" ?hidden="${items.length === 0}">${header}</h3>
     <table>
       ${rows}
     </table>
