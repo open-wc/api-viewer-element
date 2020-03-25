@@ -42,7 +42,6 @@ export const cssPropRenderer: InputRenderer = (knob: Knob, id: string) => {
 
 export const propRenderer: InputRenderer = (knob: Knob, id: string) => {
   const { name, type, value, options } = knob as PropertyInfo;
-  const inputType = getInputType(type);
   let input;
   if (type === 'select' && Array.isArray(options)) {
     input = html`
@@ -53,16 +52,6 @@ export const propRenderer: InputRenderer = (knob: Knob, id: string) => {
           `
         )}
       </select>
-    `;
-  } else if (value === undefined) {
-    input = html`
-      <input
-        id="${id}"
-        type="${inputType}"
-        data-name="${name}"
-        data-type="${type}"
-        part="input"
-      />
     `;
   } else if (normalizeType(type) === 'boolean') {
     input = html`
@@ -79,8 +68,8 @@ export const propRenderer: InputRenderer = (knob: Knob, id: string) => {
     input = html`
       <input
         id="${id}"
-        type="${inputType}"
-        .value="${String(value)}"
+        type="${getInputType(type)}"
+        .value="${value == null ? '' : String(value)}"
         data-name="${name}"
         data-type="${type}"
         part="input"
