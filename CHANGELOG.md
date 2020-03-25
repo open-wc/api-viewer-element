@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.4.3] - 2020-03-25
+
+### Fixed
+
+- Demo: fix regex to not throw exception in Safari
+
 ## [0.4.2] - 2020-03-11
 
 ### Fixed
