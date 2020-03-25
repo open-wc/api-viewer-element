@@ -19,11 +19,7 @@ import { parse } from './lib/markdown.js';
 
 import './api-viewer-panel.js';
 import './api-viewer-tab.js';
-
-/* eslint-disable import/no-duplicates */
 import './api-viewer-tabs.js';
-import { ApiViewerTabs } from './api-viewer-tabs.js';
-/* eslint-enable import/no-duplicates */
 
 const renderItem = (
   prefix: string,
@@ -218,7 +214,7 @@ export class ApiViewerDocs extends LitElement {
   protected updated(props: PropertyValues) {
     if (props.has('name') && props.get('name')) {
       const tabs = this.renderRoot.querySelector('api-viewer-tabs');
-      if (tabs instanceof ApiViewerTabs) {
+      if (tabs) {
         tabs.selectFirst();
       }
     }
