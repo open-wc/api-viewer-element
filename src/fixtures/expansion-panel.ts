@@ -220,7 +220,7 @@ export class ExpansionPanel extends LitElement {
 
   protected firstUpdated() {
     this.setAttribute('tabindex', '0');
-    this.addEventListener('focusin', e => {
+    this.addEventListener('focusin', (e) => {
       if (e.composedPath()[0] === this) {
         if (this._isShiftTabbing) {
           return;
@@ -238,7 +238,7 @@ export class ExpansionPanel extends LitElement {
 
     this.addEventListener('focusout', () => this._setFocused(false));
 
-    this.addEventListener('keydown', e => {
+    this.addEventListener('keydown', (e) => {
       if (e.shiftKey && e.keyCode === 9) {
         this._isShiftTabbing = true;
         HTMLElement.prototype.focus.apply(this);

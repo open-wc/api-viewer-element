@@ -23,7 +23,7 @@ const renderDetail = (detail: EventDetail): string => {
 
 const renderEvents = (log: CustomEvent[]): TemplateResult => {
   return html`
-    ${log.map(e => {
+    ${log.map((e) => {
       const { type, detail } = e;
       return html`
         <p part="event-record">

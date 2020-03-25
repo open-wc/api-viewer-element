@@ -9,11 +9,7 @@
     "plugin:prettier/recommended",
     "prettier/@typescript-eslint"
   ],
-  "plugins": [
-    "@typescript-eslint",
-    "wc",
-    "prettier"
-  ],
+  "plugins": ["@typescript-eslint", "wc", "prettier"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "sourceType": "module",
@@ -42,7 +38,7 @@
   },
   "overrides": [
     {
-      "files": [ "src/@types/*.d.ts" ],
+      "files": ["src/@types/*.d.ts"],
       "rules": {
         "@typescript-eslint/no-explicit-any": "off"
       }

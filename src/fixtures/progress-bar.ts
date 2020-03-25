@@ -153,9 +153,7 @@ export class ProgressBar extends LitElement {
   }
 
   protected render() {
-    return html`
-      <div part="bar"><div part="value"></div></div>
-    `;
+    return html`<div part="bar"><div part="value"></div></div>`;
   }
 
   protected firstUpdated() {

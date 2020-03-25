@@ -14,7 +14,7 @@ async function renderDocs(
 ): Promise<TemplateResult> {
   const elements = await jsonFetched;
 
-  const index = elements.findIndex(el => el.name === selected);
+  const index = elements.findIndex((el) => el.name === selected);
 
   return elements.length
     ? html`

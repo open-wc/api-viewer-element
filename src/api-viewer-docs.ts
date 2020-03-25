@@ -55,12 +55,10 @@ const renderItem = (
                 <div part="docs-label">Type</div>
                 <div part="docs-value">
                   ${valueType ||
-                    (Number.isNaN(Number(value)) ? typeof value : 'number')}
+                  (Number.isNaN(Number(value)) ? typeof value : 'number')}
                   ${value === undefined
                     ? nothing
-                    : html`
-                        = <span class="accent">${value}</span>
-                      `}
+                    : html` = <span class="accent">${value}</span> `}
                 </div>
               </div>
             `}
@@ -133,7 +131,7 @@ export class ApiViewerDocs extends LitElement {
       events,
       cssProps,
       cssParts
-    ].every(arr => arr.length === 0);
+    ].every((arr) => arr.length === 0);
 
     return emptyDocs
       ? html`
@@ -148,7 +146,7 @@ export class ApiViewerDocs extends LitElement {
               'Properties',
               properties,
               html`
-                ${properties.map(prop => {
+                ${properties.map((prop) => {
                   const { name, description, type, attribute } = prop;
                   return renderItem(
                     'prop',
@@ -192,7 +190,7 @@ export class ApiViewerDocs extends LitElement {
               'CSS Custom Properties',
               cssProps,
               html`
-                ${cssProps.map(prop => {
+                ${cssProps.map((prop) => {
                   const { name, description, type } = prop;
                   return renderItem(
                     'css',

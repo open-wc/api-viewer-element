@@ -76,15 +76,13 @@ export class FancyAccordion extends LitElement {
   }
 
   protected render() {
-    return html`
-      <slot></slot>
-    `;
+    return html`<slot></slot>`;
   }
 
   protected firstUpdated() {
-    this.addEventListener('keydown', e => this._onKeydown(e));
+    this.addEventListener('keydown', (e) => this._onKeydown(e));
 
-    Array.from(this.children).forEach(node => {
+    Array.from(this.children).forEach((node) => {
       if (node instanceof ExpansionPanel) {
         this._items.push(node);
         node.addEventListener('opened-changed', this._boundOnOpened);
@@ -96,7 +94,7 @@ export class FancyAccordion extends LitElement {
     if (props.has('openedIndex') && this._items) {
       const item =
         this.openedIndex == null ? null : this._items[this.openedIndex];
-      this._items.forEach(el => {
+      this._items.forEach((el) => {
         el.opened = el === item;
       });
     }
@@ -177,12 +175,12 @@ export class FancyAccordion extends LitElement {
       this.openedIndex = idx;
       this._notifyOpen();
 
-      this._items.forEach(item => {
+      this._items.forEach((item) => {
         if (item !== target && item.opened) {
           item.opened = false;
         }
       });
-    } else if (!this._items.some(item => item.opened)) {
+    } else if (!this._items.some((item) => item.opened)) {
       this.openedIndex = undefined;
       this._notifyOpen();
     }

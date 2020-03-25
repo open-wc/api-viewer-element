@@ -47,9 +47,7 @@ export const propRenderer: InputRenderer = (knob: Knob, id: string) => {
     input = html`
       <select id="${id}" data-name="${name}" data-type="${type}" part="select">
         ${options.map(
-          option => html`
-            <option value="${option}">${option}</option>
-          `
+          (option) => html`<option value="${option}">${option}</option>`
         )}
       </select>
     `;

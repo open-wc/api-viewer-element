@@ -46,7 +46,7 @@ const unindent = (text: string, prepend: string) => {
     return (lineIndent as number) < prev ? lineIndent : prev;
   }, null);
 
-  return lines.map(l => prepend + l.substr(indent as number)).join('\n');
+  return lines.map((l) => prepend + l.substr(indent as number)).join('\n');
 };
 
 const getTplContent = (
@@ -132,10 +132,10 @@ const renderSnippet = (
     markup += `\n${getTplContent(suffix, '').trim()}\n`;
   }
 
-  const cssValues = cssProps.filter(p => p.value !== p.default);
+  const cssValues = cssProps.filter((p) => p.value !== p.default);
   if (cssValues.length) {
     markup += `\n<style>\n${INDENT}${tag} {\n`;
-    cssValues.forEach(prop => {
+    cssValues.forEach((prop) => {
       if (prop.value) {
         markup += `${INDENT}${INDENT}${prop.name}: ${prop.value};\n`;
       }
@@ -145,9 +145,7 @@ const renderSnippet = (
 
   const { value } = process(highlighter, markup, ['xml', 'css']);
 
-  return html`
-    <pre><code>${unsafeHTML(value)}</code></pre>
-  `;
+  return html`<pre><code>${unsafeHTML(value)}</code></pre>`;
 };
 
 @customElement('api-viewer-demo-snippet')

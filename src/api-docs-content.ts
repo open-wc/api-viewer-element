@@ -44,11 +44,9 @@ export class ApiDocsContent extends LitElement {
               ?hidden="${elements.length === 1}"
               part="select"
             >
-              ${elements.map((tag, idx) => {
-                return html`
-                  <option value="${idx}">${tag.name}</option>
-                `;
-              })}
+              ${elements.map(
+                (tag, idx) => html`<option value="${idx}">${tag.name}</option>`
+              )}
             </select>
           </label>
         </nav>

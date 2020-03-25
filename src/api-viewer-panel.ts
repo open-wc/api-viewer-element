@@ -20,9 +20,7 @@ export class ApiViewerPanel extends LitElement {
   }
 
   protected render() {
-    return html`
-      <slot></slot>
-    `;
+    return html`<slot></slot>`;
   }
 
   protected firstUpdated() {

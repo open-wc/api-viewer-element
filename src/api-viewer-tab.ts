@@ -108,9 +108,7 @@ export class ApiViewerTab extends LitElement {
   }
 
   protected render() {
-    return html`
-      ${this.heading}
-    `;
+    return html`${this.heading}`;
   }
 
   protected firstUpdated() {

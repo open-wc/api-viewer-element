@@ -125,7 +125,7 @@ export class ApiViewerDemoLayout extends LitElement {
       this.slots,
       this.customKnobs,
       this.props
-    ].map(arr => arr.length === 0);
+    ].map((arr) => arr.length === 0);
 
     const id = this.vid as number;
     const slots = this.processedSlots;
@@ -253,7 +253,7 @@ export class ApiViewerDemoLayout extends LitElement {
 
   private _getCustomKnobs() {
     return getTemplates(this.vid as number, this.tag, KNOB)
-      .map(template => {
+      .map((template) => {
         const { attr, type } = template.dataset;
         let result = null;
         if (attr) {
@@ -265,7 +265,7 @@ export class ApiViewerDemoLayout extends LitElement {
                     (c): c is HTMLOptionElement =>
                       c instanceof HTMLOptionElement
                   )
-                  .map(option => option.value)
+                  .map((option) => option.value)
               : [];
             if (node instanceof HTMLSelectElement && options.length > 1) {
               result = {
@@ -353,7 +353,7 @@ export class ApiViewerDemoLayout extends LitElement {
     const { value, dataset } = target;
     const { name } = dataset;
 
-    this.processedCss = this.processedCss.map(prop => {
+    this.processedCss = this.processedCss.map((prop) => {
       return prop.name === name
         ? {
             ...prop,
@@ -393,7 +393,7 @@ export class ApiViewerDemoLayout extends LitElement {
     const name = target.dataset.slot;
     const content = target.value;
 
-    this.processedSlots = this.processedSlots.map(slot => {
+    this.processedSlots = this.processedSlots.map((slot) => {
       return slot.name === name
         ? {
             ...slot,
@@ -409,7 +409,7 @@ export class ApiViewerDemoLayout extends LitElement {
     if (hasTemplate(this.vid as number, this.tag, HOST)) {
       // Apply property values from template
       this.props
-        .filter(prop => {
+        .filter((prop) => {
           const { name, type } = prop;
           const defaultValue = getDefault(prop);
           return (
@@ -417,19 +417,19 @@ export class ApiViewerDemoLayout extends LitElement {
             (normalizeType(type) === 'boolean' && defaultValue)
           );
         })
-        .forEach(prop => {
+        .forEach((prop) => {
           this._syncKnob(component, prop);
         });
     }
 
-    this.events.forEach(event => {
+    this.events.forEach((event) => {
       this._listen(component, event.name);
     });
 
     if (this.cssProps.length) {
       const style = getComputedStyle(component);
 
-      this.processedCss = this.cssProps.map(cssProp => {
+      this.processedCss = this.cssProps.map((cssProp) => {
         let value = cssProp.default
           ? unquote(cssProp.default)
           : style.getPropertyValue(cssProp.name);
@@ -468,7 +468,7 @@ export class ApiViewerDemoLayout extends LitElement {
       [name]: { type, value, attribute }
     };
 
-    this.props = this.props.map(prop => {
+    this.props = this.props.map((prop) => {
       return prop.name === name
         ? {
             ...prop,

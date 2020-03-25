@@ -7,7 +7,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "inlineSources": true,
-    "lib": [ "esnext", "es2017", "dom" ],
+    "lib": ["esnext", "es2017", "dom"],
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
@@ -21,10 +21,6 @@
     "allowSyntheticDefaultImports": true,
     "importHelpers": true
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "demo/**/.ts"
-  ]
+  "include": ["src/**/*.ts"],
+  "exclude": ["demo/**/.ts"]
 }

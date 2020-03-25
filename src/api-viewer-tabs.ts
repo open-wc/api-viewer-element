@@ -66,7 +66,7 @@ export class ApiViewerTabs extends LitElement {
     }
 
     Promise.all(
-      [...this._allTabs(), ...this._allPanels()].map(el => el.updateComplete)
+      [...this._allTabs(), ...this._allPanels()].map((el) => el.updateComplete)
     ).then(() => {
       this._linkPanels();
     });
@@ -78,13 +78,13 @@ export class ApiViewerTabs extends LitElement {
 
   private _linkPanels() {
     const tabs = this._allTabs();
-    tabs.forEach(tab => {
+    tabs.forEach((tab) => {
       const panel = tab.nextElementSibling as ApiViewerPanel;
       tab.setAttribute('aria-controls', panel.id);
       panel.setAttribute('aria-labelledby', tab.id);
     });
 
-    const selectedTab = tabs.find(tab => tab.selected) || tabs[0];
+    const selectedTab = tabs.find((tab) => tab.selected) || tabs[0];
 
     this._selectTab(selectedTab);
   }
@@ -126,7 +126,7 @@ export class ApiViewerTabs extends LitElement {
   private _prevTab() {
     const tabs = this._allTabs();
     const newIdx = this._getAvailableIndex(
-      tabs.findIndex(tab => tab.selected) - 1,
+      tabs.findIndex((tab) => tab.selected) - 1,
       -1
     );
     return tabs[(newIdx + tabs.length) % tabs.length];
@@ -145,7 +145,7 @@ export class ApiViewerTabs extends LitElement {
   private _nextTab() {
     const tabs = this._allTabs();
     const newIdx = this._getAvailableIndex(
-      tabs.findIndex(tab => tab.selected) + 1,
+      tabs.findIndex((tab) => tab.selected) + 1,
       1
     );
     return tabs[newIdx % tabs.length];
@@ -158,11 +158,11 @@ export class ApiViewerTabs extends LitElement {
     const tabs = this._allTabs();
     const panels = this._allPanels();
 
-    tabs.forEach(tab => {
+    tabs.forEach((tab) => {
       tab.selected = false;
     });
 
-    panels.forEach(panel => {
+    panels.forEach((panel) => {
       panel.hidden = true;
     });
   }

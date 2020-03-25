@@ -39,7 +39,7 @@ const applySlots = (component: Element, slots: SlotValue[]) => {
   while (component.firstChild) {
     component.removeChild(component.firstChild);
   }
-  slots.forEach(slot => {
+  slots.forEach((slot) => {
     let node: Element | Text;
     const { name, content } = slot;
     if (name) {
@@ -54,7 +54,7 @@ const applySlots = (component: Element, slots: SlotValue[]) => {
 };
 
 const applyCssProps = (component: HTMLElement, cssProps: CSSPropertyInfo[]) => {
-  cssProps.forEach(prop => {
+  cssProps.forEach((prop) => {
     const { name, value } = prop;
     if (value) {
       if (value === prop.default) {
@@ -98,7 +98,7 @@ async function elementUpdated(element: HTMLElement) {
   }
 
   if (!hasSpecificAwait) {
-    await new Promise(resolve => setTimeout(() => resolve()));
+    await new Promise((resolve) => setTimeout(() => resolve()));
   }
 
   return el;
@@ -133,7 +133,7 @@ export const renderer = directive(
         SUFFIX,
         SLOT,
         WRAPPER
-      ].map(type => getTemplate(id, tag, type));
+      ].map((type) => getTemplate(id, tag, type));
 
       const node = getTemplateNode(host);
       if (node) {

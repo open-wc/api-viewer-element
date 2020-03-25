@@ -10,7 +10,7 @@ async function renderDocs(
 ): Promise<TemplateResult> {
   const elements = await jsonFetched;
 
-  const index = elements.findIndex(el => el.name === selected);
+  const index = elements.findIndex((el) => el.name === selected);
 
   return elements.length
     ? html`
@@ -24,8 +24,6 @@ async function renderDocs(
 
 export class ApiDocsBase extends ApiViewerMixin(LitElement) {
   protected render() {
-    return html`
-      ${until(renderDocs(this.jsonFetched, this.selected))}
-    `;
+    return html`${until(renderDocs(this.jsonFetched, this.selected))}`;
   }
 }
