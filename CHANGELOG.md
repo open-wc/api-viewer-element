@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.4.4] - 2020-03-27
+
+### Fixed
+
+- Demo: fix logging custom events with empty detail
+
 ## [0.4.3] - 2020-03-25
 
 ### Fixed
