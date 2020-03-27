@@ -27,8 +27,7 @@ const renderEvents = (log: CustomEvent[]): TemplateResult => {
       const { type, detail } = e;
       return html`
         <p part="event-record">
-          event: "${type}".
-          ${detail === undefined ? nothing : renderDetail(detail)}
+          event: "${type}".${detail == null ? nothing : renderDetail(detail)}
         </p>
       `;
     })}
