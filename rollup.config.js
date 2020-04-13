@@ -1,20 +1,18 @@
-import cpy from 'rollup-plugin-cpy';
-import { createDefaultConfig } from '@open-wc/building-rollup';
+import merge from 'deepmerge';
+import copy from 'rollup-plugin-copy';
+import { createSpaConfig } from '@open-wc/building-rollup';
 
-const config = createDefaultConfig({
-  input: './demo/index.html',
-  indexHTMLPlugin: {
+const config = createSpaConfig({
+  html: {
     minify: false
   }
 });
 
-export default {
-  ...config,
+export default merge(config, {
+  input: './demo/index.html',
   plugins: [
-    ...config.plugins,
-    cpy({
-      files: ['demo/*.css'],
-      dest: 'dist'
+    copy({
+      targets: [{ src: './demo/*.css', dest: './dist' }]
     })
   ]
-};
+});
