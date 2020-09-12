@@ -11,6 +11,13 @@ declare module 'marked/lib/marked.esm.js' {
     callback?: (error: any | undefined, parseResult: string) => void
   ): string;
 
+  interface MarkedOptions {
+    /**
+     * Include an id attribute when emitting headings.
+     */
+    headerIds?: boolean;
+  }
+
   declare namespace marked {
     const defaults: MarkedOptions;
 
@@ -20,13 +27,6 @@ declare module 'marked/lib/marked.esm.js' {
      * @param options Hash of options
      */
     function setOptions(options: MarkedOptions): typeof marked;
-  }
-
-  interface MarkedOptions {
-    /**
-     * Include an id attribute when emitting headings.
-     */
-    headerIds?: boolean;
   }
 
   export default marked;

@@ -2,7 +2,7 @@ import { LitElement, html, property, PropertyValues } from 'lit-element';
 import { ElementInfo, ElementPromise, ElementSetInfo } from './lib/types.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export type Constructor<T = object> = new (...args: any[]) => T;
+export type Constructor<T = unknown> = new (...args: any[]) => T;
 
 export interface ApiViewerInterface {
   src?: string;
@@ -31,9 +31,7 @@ export async function fetchJson(src: string): ElementPromise {
 }
 
 export const emptyDataWarning = html`
-  <div part="warning">
-    No custom elements found in the JSON file.
-  </div>
+  <div part="warning">No custom elements found in the JSON file.</div>
 `;
 
 export const ApiViewerMixin = <T extends Constructor<LitElement>>(

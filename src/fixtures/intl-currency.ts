@@ -51,9 +51,7 @@ export class IntlCurrency extends LitElement {
 
   protected render() {
     return html`
-      <div part="value">
-        ${format(this.value, this.currency, this.locale)}
-      </div>
+      <div part="value">${format(this.value, this.currency, this.locale)}</div>
     `;
   }
 }

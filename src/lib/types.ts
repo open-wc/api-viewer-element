@@ -1,18 +1,3 @@
-export interface ElementSetInfo {
-  tags: ElementInfo[];
-}
-
-export interface ElementInfo extends Info {
-  attributes: AttributeInfo[];
-  events: EventInfo[];
-  properties: PropertyInfo[];
-  slots: SlotInfo[];
-  cssProperties: CSSPropertyInfo[];
-  cssParts: CSSPartInfo[];
-}
-
-export type ElementPromise = Promise<ElementInfo[]>;
-
 export interface Info {
   name: string;
   description: string;
@@ -30,20 +15,6 @@ export interface PropertyInfo extends Info {
   options?: string[];
 }
 
-export interface KnobValue {
-  type: string;
-  attribute: string | undefined;
-  value: string | number | boolean | null;
-  custom?: boolean;
-}
-
-export type KnobValues = { [name: string]: KnobValue };
-
-export interface SlotValue {
-  name: string;
-  content: string;
-}
-
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface SlotInfo extends Info {}
 
@@ -57,6 +28,35 @@ export interface CSSPropertyInfo extends Info {
   value?: string;
   default?: string;
   type?: string;
+}
+
+export interface ElementInfo extends Info {
+  attributes: AttributeInfo[];
+  events: EventInfo[];
+  properties: PropertyInfo[];
+  slots: SlotInfo[];
+  cssProperties: CSSPropertyInfo[];
+  cssParts: CSSPartInfo[];
+}
+
+export interface ElementSetInfo {
+  tags: ElementInfo[];
+}
+
+export type ElementPromise = Promise<ElementInfo[]>;
+
+export interface KnobValue {
+  type: string;
+  attribute: string | undefined;
+  value: string | number | boolean | null;
+  custom?: boolean;
+}
+
+export type KnobValues = { [name: string]: KnobValue };
+
+export interface SlotValue {
+  name: string;
+  content: string;
 }
 
 export type ComponentWithProps = {

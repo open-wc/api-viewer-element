@@ -60,7 +60,7 @@ const RULE = {
 
 export const CSS: LanguageDef = {
   name: 'css',
-  case_insensitive: true, // eslint-disable-line @typescript-eslint/camelcase
+  case_insensitive: true,
   illegal: /[=/|'$]/,
   contains: [
     C_BLOCK_COMMENT_MODE,
