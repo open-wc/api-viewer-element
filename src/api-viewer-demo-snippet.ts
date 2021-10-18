@@ -1,18 +1,18 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  css,
-  property,
-  TemplateResult
-} from 'lit-element';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import type * as Manifest from 'custom-elements-manifest/schema';
+import { css, TemplateResult, LitElement, html } from 'lit';
+
+import { customElement, property } from 'lit/decorators.js';
+
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+
 import { htmlRender } from 'highlight-ts/es/render/html';
 import { registerLanguages } from 'highlight-ts/es/languages';
 import { XML } from 'highlight-ts/es/languages/xml';
 import { init, process } from 'highlight-ts/es/process';
-import { CSSPropertyInfo, KnobValues, SlotValue } from './lib/types.js';
+
+import { CSSProp, KnobValues, SlotWithContent } from './lib/types.js';
 import { CSS } from './lib/highlight-css.js';
+
 import {
   getTemplate,
   getTemplateNode,
@@ -20,6 +20,7 @@ import {
   normalizeType,
   TemplateTypes
 } from './lib/utils.js';
+
 import highlightTheme from './lib/highlight-theme.js';
 
 // register languages
@@ -61,8 +62,8 @@ const renderSnippet = (
   id: number,
   tag: string,
   values: KnobValues,
-  slots: SlotValue[],
-  cssProps: CSSPropertyInfo[]
+  slots: SlotWithContent[],
+  cssProps: CSSProp[]
 ): TemplateResult => {
   let markup = '';
   const prefix = getTemplate(id, tag, PREFIX);
@@ -110,7 +111,7 @@ const renderSnippet = (
     markup += `${getTplContent(template, `${prepend}${INDENT}`)}\n${prepend}`;
   } else if (slots.length) {
     if (slots.length === 1 && !slots[0].name) {
-      markup += slots[0].content;
+      markup += slots[0].description;
     } else {
       markup += slots.reduce((result: string, slot) => {
         const { name, content } = slot;
@@ -156,24 +157,22 @@ export class ApiViewerDemoSnippet extends LitElement {
   knobs: KnobValues = {};
 
   @property({ attribute: false })
-  slots: SlotValue[] = [];
+  slots: SlotWithContent[] = [];
 
   @property({ attribute: false })
-  cssProps: CSSPropertyInfo[] = [];
+  cssProps: Manifest.CssCustomProperty[] = [];
 
   @property({ type: Number }) vid?: number;
 
-  static get styles() {
-    return [
-      highlightTheme,
-      css`
-        :host {
-          display: block;
-          padding: 0.75rem 1rem;
-        }
-      `
-    ];
-  }
+  static readonly styles = [
+    highlightTheme,
+    css`
+      :host {
+        display: block;
+        padding: 0.75rem 1rem;
+      }
+    `
+  ];
 
   protected render(): TemplateResult {
     return html`
@@ -187,7 +186,7 @@ export class ApiViewerDemoSnippet extends LitElement {
     `;
   }
 
-  get source() {
+  get source(): HTMLElement | null {
     return this.renderRoot.querySelector('code');
   }
 }

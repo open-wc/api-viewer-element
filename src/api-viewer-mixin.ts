@@ -1,37 +1,45 @@
-import { LitElement, html, property, PropertyValues } from 'lit-element';
-import { ElementInfo, ElementPromise, ElementSetInfo } from './lib/types.js';
+import type { CustomElement, Package } from 'custom-elements-manifest/schema';
+import type { PropertyValues } from 'lit';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-export type Constructor<T = unknown> = new (...args: any[]) => T;
+import { LitElement, html } from 'lit';
+import { property } from 'lit/decorators.js';
+import { Constructor } from './lib/types.js';
 
 export interface ApiViewerInterface {
   src?: string;
 
-  elements?: ElementInfo[];
+  elements?: CustomElement[];
+
+  package?: Package | null;
 
   selected?: string;
 
-  jsonFetched: ElementPromise;
+  jsonFetched?: Promise<Package | null>;
 }
 
-export async function fetchJson(src: string): ElementPromise {
-  let result: ElementInfo[] = [];
+function hasCustomElements(pkg?: Package): boolean {
+  return !!pkg?.modules?.some?.((x) =>
+    x.exports?.some?.((y) => y.kind === 'custom-element-definition')
+  );
+}
+
+export async function fetchJson(src: string): Promise<Package | null> {
   try {
     const file = await fetch(src);
-    const json = (await file.json()) as ElementSetInfo;
-    if (Array.isArray(json.tags) && json.tags.length) {
-      result = json.tags;
+    const json = (await file.json()) as Package;
+    if (!hasCustomElements(json)) {
+      throw new Error(`No element definitions found at ${src}`);
     } else {
-      console.error(`No element definitions found at ${src}`);
+      return json;
     }
   } catch (e) {
     console.error(e);
+    return null;
   }
-  return result;
 }
 
 export const emptyDataWarning = html`
-  <div part="warning">No custom elements found in the JSON file.</div>
+  <div part="warning">No custom elements found in the manifest.</div>
 `;
 
 export const ApiViewerMixin = <T extends Constructor<LitElement>>(
@@ -41,20 +49,23 @@ export const ApiViewerMixin = <T extends Constructor<LitElement>>(
     @property() src?: string;
 
     @property({ attribute: false })
-    elements?: ElementInfo[];
+    package?: Package;
+
+    @property({ attribute: false })
+    elements?: CustomElement[];
 
     @property() selected?: string;
 
-    jsonFetched: ElementPromise = Promise.resolve([]);
+    jsonFetched?: Promise<Package | null> = Promise.resolve(null);
 
     private lastSrc?: string;
 
     protected update(props: PropertyValues) {
       const { src } = this;
 
-      if (Array.isArray(this.elements)) {
+      if (hasCustomElements(this.package)) {
         this.lastSrc = undefined;
-        this.jsonFetched = Promise.resolve(this.elements);
+        this.jsonFetched = Promise.resolve(this.package ?? null);
       } else if (src && this.lastSrc !== src) {
         this.lastSrc = src;
         this.jsonFetched = fetchJson(src);

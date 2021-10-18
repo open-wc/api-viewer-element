@@ -1,12 +1,8 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  property,
-  TemplateResult
-} from 'lit-element';
-import { nothing } from 'lit-html';
-import { cache } from 'lit-html/directives/cache.js';
+import type { TemplateResult } from 'lit';
+
+import { LitElement, html, nothing } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { cache } from 'lit/directives/cache.js';
 
 interface EventDetail {
   value: string | number | boolean | null | undefined;
@@ -21,36 +17,30 @@ const renderDetail = (detail: EventDetail): string => {
   return ` detail: ${JSON.stringify(detail).replace(`"${undef}"`, undef)}`;
 };
 
-const renderEvents = (log: CustomEvent[]): TemplateResult => {
-  return html`
-    ${log.map((e) => {
-      const { type, detail } = e;
-      return html`
-        <p part="event-record">
-          event: "${type}".${detail == null ? nothing : renderDetail(detail)}
-        </p>
-      `;
-    })}
-  `;
-};
+const renderEvents = (log: CustomEvent[]): TemplateResult => html`
+  ${log.map((e) => {
+    const { type, detail } = e;
+    return html`
+      <p part="event-record">
+        event: ${type}.${detail == null ? nothing : renderDetail(detail)}
+      </p>
+    `;
+  })}
+`;
 
 @customElement('api-viewer-demo-events')
 export class ApiViewerDemoEvents extends LitElement {
   @property({ attribute: false })
   log: CustomEvent[] = [];
 
-  protected createRenderRoot() {
+  protected createRenderRoot(): this {
     return this;
   }
 
   protected render(): TemplateResult {
     const { log } = this;
     return html`
-      <button
-        @click="${this._onClearClick}"
-        ?hidden="${!log.length}"
-        part="button"
-      >
+      <button @click=${this._onClearClick} ?hidden=${!log.length} part="button">
         Clear
       </button>
       ${cache(

@@ -1,29 +1,22 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  css,
-  TemplateResult
-} from 'lit-element';
+import { LitElement, html, css } from 'lit';
+import { customElement } from 'lit/decorators.js';
 
 let panelIdCounter = 0;
 
 @customElement('api-viewer-panel')
 export class ApiViewerPanel extends LitElement {
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-        box-sizing: border-box;
-        width: 100%;
-        overflow: hidden;
-      }
+  static readonly styles = css`
+    :host {
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      overflow: hidden;
+    }
 
-      :host([hidden]) {
-        display: none !important;
-      }
-    `;
-  }
+    :host([hidden]) {
+      display: none !important;
+    }
+  `;
 
   protected render(): TemplateResult {
     return html`<slot></slot>`;

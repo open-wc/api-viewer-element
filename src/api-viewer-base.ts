@@ -1,29 +1,33 @@
-import { LitElement, html, property, TemplateResult } from 'lit-element';
-import { until } from 'lit-html/directives/until.js';
-import { ElementPromise } from './lib/types.js';
-import { setTemplates } from './lib/utils.js';
+import type * as Manifest from 'custom-elements-manifest/schema';
+import type { TemplateResult } from 'lit';
+
+import { LitElement, html } from 'lit';
+import { property } from 'lit/decorators.js';
+import { until } from 'lit/directives/until.js';
+
+import { getElements, setTemplates } from './lib/utils.js';
 import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';
 import './api-viewer-content.js';
 
 async function renderDocs(
-  jsonFetched: ElementPromise,
+  jsonFetched: Promise<Manifest.Package | null>,
   section: string,
   selected?: string,
   id?: number,
   exclude = ''
 ): Promise<TemplateResult> {
-  const elements = await jsonFetched;
+  const elements = await getElements(jsonFetched);
 
   const index = elements.findIndex((el) => el.name === selected);
 
   return elements.length
     ? html`
         <api-viewer-content
-          .elements="${elements}"
-          .section="${section}"
-          .selected="${index >= 0 ? index : 0}"
-          .exclude="${exclude}"
-          .vid="${id}"
+          .elements=${elements}
+          .section=${section}
+          .selected=${index >= 0 ? index : 0}
+          .exclude=${exclude}
+          .vid=${id}
         ></api-viewer-content>
       `
     : emptyDataWarning;
@@ -48,7 +52,7 @@ export class ApiViewerBase extends ApiViewerMixin(LitElement) {
     return html`
       ${until(
         renderDocs(
-          this.jsonFetched,
+          Promise.resolve(this.jsonFetched ?? null),
           this.section,
           this.selected,
           this._id,
@@ -58,11 +62,11 @@ export class ApiViewerBase extends ApiViewerMixin(LitElement) {
     `;
   }
 
-  protected firstUpdated() {
+  protected firstUpdated(): void {
     this.setTemplates();
   }
 
-  public setTemplates(templates?: HTMLTemplateElement[]) {
+  public setTemplates(templates?: HTMLTemplateElement[]): void {
     setTemplates(
       this._id as number,
       templates || Array.from(this.querySelectorAll('template'))

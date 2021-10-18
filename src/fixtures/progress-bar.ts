@@ -1,12 +1,8 @@
-import {
-  LitElement,
-  html,
-  css,
-  customElement,
-  property,
-  PropertyValues,
-  TemplateResult
-} from 'lit-element';
+import type { PropertyValues, TemplateResult } from 'lit';
+
+import { LitElement, html, css } from 'lit';
+
+import { customElement, property } from 'lit/decorators.js';
 
 const normalizeValue = (value: number, min: number, max: number) => {
   let nV;
@@ -58,110 +54,103 @@ export class ProgressBar extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) indeterminate = false;
 
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-        width: 100%;
-        height: 4px;
-        margin: 8px 0;
-        position: relative;
-        overflow: hidden;
+  static readonly styles = css`
+    :host {
+      display: block;
+      width: 100%;
+      height: 4px;
+      margin: 8px 0;
+      position: relative;
+      overflow: hidden;
 
-        --progress-bar-fill-color: #6200ee;
-        --progress-bar-opacity: 0.16;
-      }
+      --progress-bar-fill-color: #6200ee;
+      --progress-bar-opacity: 0.16;
+    }
 
-      :host::before {
-        content: '';
-        display: block;
-        height: 100%;
-        background-color: var(--progress-bar-fill-color);
-        opacity: var(--progress-bar-opacity);
-      }
+    :host::before {
+      content: '';
+      display: block;
+      height: 100%;
+      background-color: var(--progress-bar-fill-color);
+      opacity: var(--progress-bar-opacity);
+    }
 
-      :host([hidden]) {
-        display: none !important;
-      }
+    :host([hidden]) {
+      display: none !important;
+    }
 
-      [part='bar'] {
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        transform: scaleX(var(--progress-value));
-        transform-origin: 0 0;
-      }
+    [part='bar'] {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      transform: scaleX(var(--progress-value));
+      transform-origin: 0 0;
+    }
 
-      [part='value'] {
-        height: 100%;
-        background-color: var(--progress-bar-fill-color);
-      }
+    [part='value'] {
+      height: 100%;
+      background-color: var(--progress-bar-fill-color);
+    }
 
-      :host([indeterminate]) [part='bar'] {
-        left: -100%;
-        animation: progress-indeterminate-translate 2s infinite linear;
-      }
+    :host([indeterminate]) [part='bar'] {
+      left: -100%;
+      animation: progress-indeterminate-translate 2s infinite linear;
+    }
 
-      :host([indeterminate]) [part='value'] {
-        animation: progress-indeterminate-scale 2s infinite linear;
-      }
+    :host([indeterminate]) [part='value'] {
+      animation: progress-indeterminate-scale 2s infinite linear;
+    }
 
-      @keyframes progress-indeterminate-translate {
-        0% {
-          transform: translateX(0);
-        }
-        20% {
-          animation-timing-function: cubic-bezier(0.5, 0, 0.701732, 0.495819);
-          transform: translateX(0);
-        }
-        59.15% {
-          animation-timing-function: cubic-bezier(
-            0.302435,
-            0.381352,
-            0.55,
-            0.956352
-          );
-          transform: translateX(83.67142%);
-        }
-        100% {
-          transform: translateX(200.611057%);
-        }
+    @keyframes progress-indeterminate-translate {
+      0% {
+        transform: translateX(0);
       }
+      20% {
+        animation-timing-function: cubic-bezier(0.5, 0, 0.701732, 0.495819);
+        transform: translateX(0);
+      }
+      59.15% {
+        animation-timing-function: cubic-bezier(
+          0.302435,
+          0.381352,
+          0.55,
+          0.956352
+        );
+        transform: translateX(83.67142%);
+      }
+      100% {
+        transform: translateX(200.611057%);
+      }
+    }
 
-      @keyframes progress-indeterminate-scale {
-        0% {
-          transform: scaleX(0.08);
-        }
-        36.65% {
-          animation-timing-function: cubic-bezier(
-            0.334731,
-            0.12482,
-            0.785844,
-            1
-          );
-          transform: scaleX(0.08);
-        }
-        69.15% {
-          animation-timing-function: cubic-bezier(0.06, 0.11, 0.6, 1);
-          transform: scaleX(0.661479);
-        }
-        100% {
-          transform: scaleX(0.08);
-        }
+    @keyframes progress-indeterminate-scale {
+      0% {
+        transform: scaleX(0.08);
       }
-    `;
-  }
+      36.65% {
+        animation-timing-function: cubic-bezier(0.334731, 0.12482, 0.785844, 1);
+        transform: scaleX(0.08);
+      }
+      69.15% {
+        animation-timing-function: cubic-bezier(0.06, 0.11, 0.6, 1);
+        transform: scaleX(0.661479);
+      }
+      100% {
+        transform: scaleX(0.08);
+      }
+    }
+  `;
 
   protected render(): TemplateResult {
     return html`<div part="bar"><div part="value"></div></div>`;
   }
 
-  protected firstUpdated() {
+  protected firstUpdated(): void {
     this.setAttribute('role', 'progressbar');
   }
 
-  protected updated(props: PropertyValues) {
+  protected updated(props: PropertyValues<this>): void {
     const minChanged = props.has('min');
     if (minChanged) {
       this._minChanged(this.min);

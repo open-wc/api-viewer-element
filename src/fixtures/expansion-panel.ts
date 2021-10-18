@@ -1,13 +1,10 @@
-import {
-  LitElement,
-  html,
-  css,
-  customElement,
-  property,
-  query,
-  PropertyValues
-} from 'lit-element';
-import { styleMap } from 'lit-html/directives/style-map.js';
+import type { PropertyValues } from 'lit';
+
+import { LitElement, html, css } from 'lit';
+
+import { customElement, property, query } from 'lit/decorators.js';
+
+import { styleMap } from 'lit/directives/style-map.js';
 
 /**
  * A custom element similar to the HTML5 `<details>` element.
@@ -179,9 +176,9 @@ export class ExpansionPanel extends LitElement {
         <div
           role="button"
           part="header"
-          @click="${this._onToggleClick}"
-          @keydown="${this._onToggleKeyDown}"
-          aria-expanded="${this.opened ? 'true' : 'false'}"
+          @click=${this._onToggleClick}
+          @keydown=${this._onToggleKeyDown}
+          aria-expanded=${this.opened ? 'true' : 'false'}
           tabindex="0"
         >
           <span part="toggle"></span>
@@ -190,8 +187,8 @@ export class ExpansionPanel extends LitElement {
       </div>
       <div
         part="content"
-        style="${styleMap({ maxHeight: this.opened ? '' : '0px' })}"
-        aria-hidden="${this.opened ? 'false' : 'true'}"
+        style=${styleMap({ maxHeight: this.opened ? '' : '0px' })}
+        aria-hidden=${this.opened ? 'false' : 'true'}
       >
         <slot></slot>
       </div>

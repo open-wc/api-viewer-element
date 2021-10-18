@@ -1,15 +1,20 @@
-import { LitElement, property, PropertyValues } from 'lit-element';
-import { getSlotDefault } from './lib/knobs.js';
+import type * as Manifest from 'custom-elements-manifest/schema';
+import type { PropertyValues } from 'lit';
+
+import { LitElement } from 'lit';
+import { property } from 'lit/decorators.js';
+
+import { getSlotDefault, Knob } from './lib/knobs.js';
+
 import {
   ComponentWithProps,
-  CSSPropertyInfo,
-  PropertyInfo,
-  SlotInfo,
-  SlotValue,
-  EventInfo,
   KnobValues,
-  KnobValue
+  KnobValue,
+  SlotWithContent,
+  Prop,
+  CSSProp
 } from './lib/types.js';
+
 import {
   getTemplates,
   hasTemplate,
@@ -23,7 +28,7 @@ import {
 const { HOST, KNOB } = TemplateTypes;
 
 const getDefault = (
-  prop: PropertyInfo
+  prop: Prop
 ): string | number | boolean | null | undefined => {
   const { type, default: value } = prop;
   switch (normalizeType(type)) {
@@ -62,16 +67,16 @@ export type Constructor<T = unknown> = new (...args: any[]) => T;
 
 export interface ApiDemoLayoutInterface {
   tag: string;
-  props: PropertyInfo[];
-  slots: SlotInfo[];
-  events: EventInfo[];
-  cssProps: CSSPropertyInfo[];
+  members: Prop[];
+  slots: Manifest.Slot[];
+  events: Manifest.Event[];
+  cssProps: Manifest.CssCustomProperty[];
   exclude: string;
   vid?: number;
-  processedSlots: SlotValue[];
-  processedCss: CSSPropertyInfo[];
+  processedSlots: SlotWithContent[];
+  processedCss: Manifest.CssCustomProperty[];
   eventLog: CustomEvent[];
-  customKnobs: PropertyInfo[];
+  customKnobs: Knob[];
   knobs: KnobValues;
   setKnobs(target: HTMLInputElement): void;
   setSlots(target: HTMLInputElement): void;
@@ -86,37 +91,37 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
     @property() tag = '';
 
     @property({ attribute: false })
-    props: PropertyInfo[] = [];
+    members: Prop[] = [];
 
     @property({ attribute: false })
-    slots: SlotInfo[] = [];
+    slots: Manifest.Slot[] = [];
 
     @property({ attribute: false })
-    events: EventInfo[] = [];
+    events: Manifest.Event[] = [];
 
     @property({ attribute: false })
-    cssProps: CSSPropertyInfo[] = [];
+    cssProps: CSSProp[] = [];
 
     @property() exclude = '';
 
     @property({ type: Number }) vid?: number;
 
     @property({ attribute: false })
-    processedSlots: SlotValue[] = [];
+    processedSlots: SlotWithContent[] = [];
 
     @property({ attribute: false })
-    processedCss: CSSPropertyInfo[] = [];
+    processedCss: Manifest.CssCustomProperty[] = [];
 
     @property({ attribute: false })
     eventLog: CustomEvent[] = [];
 
     @property({ attribute: false })
-    customKnobs: PropertyInfo[] = [];
+    customKnobs: Knob[] = [];
 
     @property({ attribute: false })
     knobs: KnobValues = {};
 
-    private _savedProps: PropertyInfo[] = [];
+    private _savedProps: Prop[] = [];
 
     protected firstUpdated(props: PropertyValues) {
       // When a selected tag name is changed by the user,
@@ -125,7 +130,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
       if (props.has('props')) {
         const element = document.createElement(this.tag);
         // Store properties without getters
-        this._savedProps = this.props.filter(
+        this._savedProps = this.members.filter(
           ({ name }) => !isGetter(element, name)
         );
       }
@@ -134,12 +139,12 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
 
     protected updated(props: PropertyValues) {
       if (props.has('exclude')) {
-        this.props = this._filterProps();
+        this.members = this._filterProps();
       }
 
       if (props.has('slots') && this.slots) {
         this.processedSlots = this.slots
-          .sort((a: SlotInfo, b: SlotInfo) => {
+          .sort((a, b) => {
             if (a.name === '') {
               return 1;
             }
@@ -148,20 +153,18 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
             }
             return a.name.localeCompare(b.name);
           })
-          .map((slot: SlotInfo) => {
-            return {
-              ...slot,
-              content: getSlotDefault(slot.name, 'content')
-            };
-          });
+          .map((slot) => ({
+            ...slot,
+            content: getSlotDefault(slot.name, 'content')
+          }));
       }
     }
 
-    private _getCustomKnobs() {
+    private _getCustomKnobs(): Knob[] {
       return getTemplates(this.vid as number, this.tag, KNOB)
         .map((template) => {
           const { attr, type } = template.dataset;
-          let result = null;
+          let result: Knob;
           if (attr) {
             if (type === 'select') {
               const node = getTemplateNode(template);
@@ -177,7 +180,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
                 result = {
                   name: attr,
                   attribute: attr,
-                  type,
+                  type: { text: type },
                   options
                 };
               }
@@ -186,32 +189,32 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
               result = {
                 name: attr,
                 attribute: attr,
-                type
+                type: { text: type }
               };
             }
           }
           return result;
         })
-        .filter(Boolean) as PropertyInfo[];
+        .filter(Boolean);
     }
 
     private _filterProps() {
       const exclude = this.exclude.split(',');
       return this._savedProps
         .filter(({ name }) => !exclude.includes(name))
-        .map((prop: PropertyInfo) => {
-          return typeof prop.default === 'string'
+        .map((prop) =>
+          typeof prop.default === 'string'
             ? {
                 ...prop,
                 value: getDefault(prop)
               }
-            : prop;
-        });
+            : prop
+        );
     }
 
-    private _getProp(name: string): { prop?: PropertyInfo; custom?: boolean } {
+    private _getProp(name: string): { prop?: Prop; custom?: boolean } {
       const isMatch = isPropMatch(name);
-      const prop = this.props.find(isMatch);
+      const prop = this.members.find(isMatch);
       return prop
         ? { prop }
         : {
@@ -223,14 +226,14 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
     setCss(target: HTMLInputElement) {
       const { value, dataset } = target;
 
-      this.processedCss = this.processedCss.map((prop) => {
-        return prop.name === dataset.name
+      this.processedCss = this.processedCss.map((prop) =>
+        prop.name === dataset.name
           ? {
               ...prop,
               value
             }
-          : prop;
-      });
+          : prop
+      );
     }
 
     setKnobs(target: HTMLInputElement) {
@@ -261,14 +264,14 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
       const name = target.dataset.slot;
       const content = target.value;
 
-      this.processedSlots = this.processedSlots.map((slot) => {
-        return slot.name === name
+      this.processedSlots = this.processedSlots.map((slot) =>
+        slot.name === name
           ? {
               ...slot,
               content
             }
-          : slot;
-      });
+          : slot
+      );
     }
 
     onRendered(e: CustomEvent) {
@@ -276,8 +279,9 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
 
       if (hasTemplate(this.vid as number, this.tag, HOST)) {
         // Apply property values from template
-        this.props
+        this.members
           .filter((prop) => {
+            // todo: filter methods
             const { name, type } = prop;
             const defaultValue = getDefault(prop);
             return (
@@ -322,24 +326,25 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
       }
     }
 
-    private _syncKnob(component: Element, changed: PropertyInfo) {
+    private _syncKnob(component: Element, changed: Prop) {
       const { name, type, attribute } = changed;
       const value = (component as unknown as ComponentWithProps)[name];
 
       // update knobs to avoid duplicate event
       this.knobs = {
         ...this.knobs,
-        [name]: { type, value, attribute }
+        [name]: { type: type?.text ?? '', value, attribute }
       };
 
-      this.props = this.props.map((prop) => {
-        return prop.name === name
+      this.members = this.members.map((prop) =>
+        // todo: filter methods
+        prop.name === name
           ? {
               ...prop,
               value
             }
-          : prop;
-      });
+          : prop
+      );
     }
   }
 

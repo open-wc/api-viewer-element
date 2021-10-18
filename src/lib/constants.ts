@@ -1,11 +1,12 @@
-import { ElementInfo } from './types.js';
+import type * as Manifest from 'custom-elements-manifest/schema';
 
-export const EMPTY_ELEMENT: ElementInfo = {
+export const EMPTY_ELEMENT: Manifest.CustomElement = {
+  customElement: true,
   name: '',
   description: '',
   slots: [],
   attributes: [],
-  properties: [],
+  members: [],
   events: [],
   cssParts: [],
   cssProperties: []

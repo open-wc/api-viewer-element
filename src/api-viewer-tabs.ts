@@ -1,4 +1,8 @@
-import { LitElement, html, customElement, css } from 'lit-element';
+import type { TemplateResult } from 'lit';
+
+import { LitElement, html, css } from 'lit';
+import { customElement } from 'lit/decorators.js';
+
 import { ApiViewerTab } from './api-viewer-tab.js';
 import { ApiViewerPanel } from './api-viewer-panel.js';
 
@@ -15,33 +19,31 @@ const KEYCODE = {
 export class ApiViewerTabs extends LitElement {
   private _boundSlotChange = this._onSlotChange.bind(this);
 
-  static get styles() {
-    return css`
+  static readonly styles = css`
+    :host {
+      display: flex;
+    }
+
+    .tabs {
+      display: block;
+    }
+
+    @media (max-width: 600px) {
       :host {
-        display: flex;
+        flex-direction: column;
       }
 
       .tabs {
-        display: block;
+        flex-grow: 1;
+        display: flex;
+        align-self: stretch;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
       }
+    }
+  `;
 
-      @media (max-width: 600px) {
-        :host {
-          flex-direction: column;
-        }
-
-        .tabs {
-          flex-grow: 1;
-          display: flex;
-          align-self: stretch;
-          overflow-x: auto;
-          -webkit-overflow-scrolling: touch;
-        }
-      }
-    `;
-  }
-
-  render() {
+  render(): TemplateResult {
     return html`
       <div class="tabs">
         <slot name="tab"></slot>

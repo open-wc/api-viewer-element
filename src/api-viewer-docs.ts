@@ -1,25 +1,20 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  property,
-  PropertyValues
-} from 'lit-element';
-import { nothing, TemplateResult } from 'lit-html';
-import {
-  PropertyInfo,
-  SlotInfo,
-  AttributeInfo,
-  EventInfo,
-  CSSPartInfo,
-  CSSPropertyInfo
-} from './lib/types.js';
+import type * as Manifest from 'custom-elements-manifest/schema';
+import type { PropertyValues, TemplateResult } from 'lit';
+
+import { LitElement, html, nothing } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+
 import { isPropMatch, unquote } from './lib/utils.js';
 import { parse } from './lib/markdown.js';
 
 import './api-viewer-panel.js';
 import './api-viewer-tab.js';
 import './api-viewer-tabs.js';
+
+const isClassField = (m: Manifest.ClassMember): m is Manifest.ClassField =>
+  m.kind !== 'method';
+const isClassMethod = (m: Manifest.ClassMember): m is Manifest.ClassMethod =>
+  m.kind === 'method';
 
 const renderItem = (
   prefix: string,
@@ -28,59 +23,57 @@ const renderItem = (
   valueType?: string,
   value?: unknown,
   attribute?: string
-): TemplateResult => {
-  return html`
-    <div part="docs-item">
-      <div part="docs-row">
-        <div part="docs-column" class="column-name-${prefix}">
-          <div part="docs-label">Name</div>
-          <div part="docs-value" class="accent">${name}</div>
-        </div>
-        ${attribute === undefined
-          ? nothing
-          : html`
-              <div part="docs-column">
-                <div part="docs-label">Attribute</div>
-                <div part="docs-value">${attribute}</div>
-              </div>
-            `}
-        ${valueType === undefined && value === undefined
-          ? nothing
-          : html`
-              <div part="docs-column" class="column-type">
-                <div part="docs-label">Type</div>
-                <div part="docs-value">
-                  ${valueType ||
-                  (Number.isNaN(Number(value)) ? typeof value : 'number')}
-                  ${value === undefined
-                    ? nothing
-                    : html` = <span class="accent">${value}</span> `}
-                </div>
-              </div>
-            `}
+): TemplateResult => html`
+  <div part="docs-item">
+    <div part="docs-row">
+      <div part="docs-column" class="column-name-${prefix}">
+        <div part="docs-label">Name</div>
+        <div part="docs-value" class="accent">${name}</div>
       </div>
-      <div ?hidden="${description === undefined}">
-        <div part="docs-label">Description</div>
-        <div part="docs-markdown">${parse(description)}</div>
-      </div>
+      ${attribute === undefined
+        ? nothing
+        : html`
+            <div part="docs-column">
+              <div part="docs-label">Attribute</div>
+              <div part="docs-value">${attribute}</div>
+            </div>
+          `}
+      ${valueType === undefined && value === undefined
+        ? nothing
+        : html`
+            <div part="docs-column" class="column-type">
+              <div part="docs-label">Type</div>
+              <div part="docs-value">
+                ${valueType ||
+                (Number.isNaN(Number(value)) ? typeof value : 'number')}
+                ${value === undefined
+                  ? nothing
+                  : html` = <span class="accent">${value}</span> `}
+              </div>
+            </div>
+          `}
     </div>
-  `;
-};
+    <div ?hidden=${description === undefined}>
+      <div part="docs-label">Description</div>
+      <div part="docs-markdown">${parse(description)}</div>
+    </div>
+  </div>
+`;
 
 const renderTab = (
   heading: string,
-  array: unknown[],
+  array: (Manifest.ClassMember | Manifest.Attribute)[],
   content: TemplateResult
 ): TemplateResult => {
   const hidden = array.length === 0;
   return html`
     <api-viewer-tab
-      heading="${heading}"
+      heading=${heading}
       slot="tab"
       part="tab"
-      ?hidden="${hidden}"
+      ?hidden=${hidden}
     ></api-viewer-tab>
-    <api-viewer-panel slot="panel" part="tab-panel" ?hidden="${hidden}">
+    <api-viewer-panel slot="panel" part="tab-panel" ?hidden=${hidden}>
       ${content}
     </api-viewer-panel>
   `;
@@ -91,43 +84,45 @@ export class ApiViewerDocs extends LitElement {
   @property() name = '';
 
   @property({ attribute: false })
-  props: PropertyInfo[] = [];
+  members: Manifest.ClassMember[] = [];
 
   @property({ attribute: false })
-  attrs: AttributeInfo[] = [];
+  attrs: Manifest.Attribute[] = [];
 
   @property({ attribute: false })
-  slots: SlotInfo[] = [];
+  slots: Manifest.Slot[] = [];
 
   @property({ attribute: false })
-  events: EventInfo[] = [];
+  events: Manifest.Event[] = [];
 
   @property({ attribute: false })
-  cssParts: CSSPartInfo[] = [];
+  cssParts: Manifest.CssPart[] = [];
 
   @property({ attribute: false })
-  cssProps: CSSPropertyInfo[] = [];
+  cssProps: Manifest.CssCustomProperty[] = [];
 
-  protected createRenderRoot() {
+  protected createRenderRoot(): ApiViewerDocs {
     return this;
   }
 
   protected render(): TemplateResult {
-    const { slots, props, attrs, events, cssParts, cssProps } = this;
+    const { slots, members = [], attrs, events, cssParts, cssProps } = this;
 
-    const properties = props || [];
     const attributes = (attrs || []).filter(
-      ({ name }) => !properties.some(isPropMatch(name))
+      ({ name }) => !members.some(isPropMatch(name))
     );
 
     const emptyDocs = [
-      properties,
+      members,
       attributes,
       slots,
       events,
       cssProps,
       cssParts
     ].every((arr) => arr.length === 0);
+
+    const properties = emptyDocs ? [] : members.filter(isClassField);
+    const methods = emptyDocs ? [] : members.filter(isClassMethod);
 
     return emptyDocs
       ? html`
@@ -143,14 +138,17 @@ export class ApiViewerDocs extends LitElement {
               properties,
               html`
                 ${properties.map((prop) => {
-                  const { name, description, type, attribute } = prop;
+                  const { name, description = '', type } = prop;
+                  const attribute = attributes.find(
+                    (attr) => attr.fieldName === name
+                  );
                   return renderItem(
                     'prop',
                     name,
                     description,
-                    type,
+                    type?.text ?? '',
                     prop.default,
-                    attribute
+                    attribute?.name
                   );
                 })}
               `
@@ -159,8 +157,8 @@ export class ApiViewerDocs extends LitElement {
               'Attributes',
               attributes,
               html`
-                ${attributes.map(({ name, description, type }) =>
-                  renderItem('attr', name, description, type)
+                ${attributes.map(({ name, description = '', type }) =>
+                  renderItem('attr', name, description, type?.text)
                 )}
               `
             )}
@@ -168,7 +166,7 @@ export class ApiViewerDocs extends LitElement {
               'Slots',
               slots,
               html`
-                ${slots.map(({ name, description }) =>
+                ${slots.map(({ name, description = '' }) =>
                   renderItem('slot', name, description)
                 )}
               `
@@ -177,7 +175,7 @@ export class ApiViewerDocs extends LitElement {
               'Events',
               events,
               html`
-                ${events.map(({ name, description }) =>
+                ${events.map(({ name, description = '' }) =>
                   renderItem('event', name, description)
                 )}
               `
@@ -187,12 +185,12 @@ export class ApiViewerDocs extends LitElement {
               cssProps,
               html`
                 ${cssProps.map((prop) => {
-                  const { name, description, type } = prop;
+                  const { name, description = '' } = prop;
                   return renderItem(
                     'css',
                     name,
                     description,
-                    type,
+                    '',
                     unquote(prop.default)
                   );
                 })}
@@ -202,7 +200,7 @@ export class ApiViewerDocs extends LitElement {
               'CSS Shadow Parts',
               cssParts,
               html`
-                ${cssParts.map(({ name, description }) =>
+                ${cssParts.map(({ name, description = '' }) =>
                   renderItem('part', name, description)
                 )}
               `
@@ -211,7 +209,7 @@ export class ApiViewerDocs extends LitElement {
         `;
   }
 
-  protected updated(props: PropertyValues) {
+  protected updated(props: PropertyValues): void {
     if (props.has('name') && props.get('name')) {
       const tabs = this.renderRoot.querySelector('api-viewer-tabs');
       if (tabs) {

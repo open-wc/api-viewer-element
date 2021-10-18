@@ -1,35 +1,28 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  property,
-  TemplateResult
-} from 'lit-element';
-import { until } from 'lit-html/directives/until.js';
-import {
-  CSSPropertyInfo,
-  PropertyInfo,
-  SlotInfo,
-  EventInfo
-} from './lib/types.js';
+import type * as Manifest from 'custom-elements-manifest/schema';
+import type { TemplateResult } from 'lit';
+
+import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { until } from 'lit/directives/until.js';
 
 import './api-viewer-demo-layout.js';
+import { Prop } from './lib/types.js';
 
 @customElement('api-viewer-demo')
 export class ApiViewerDemo extends LitElement {
   @property() name = '';
 
   @property({ attribute: false })
-  props: PropertyInfo[] = [];
+  members: Prop[] = [];
 
   @property({ attribute: false })
-  slots: SlotInfo[] = [];
+  slots: Manifest.Slot[] = [];
 
   @property({ attribute: false })
-  events: EventInfo[] = [];
+  events: Manifest.Event[] = [];
 
   @property({ attribute: false })
-  cssProps: CSSPropertyInfo[] = [];
+  cssProps: Manifest.CssCustomProperty[] = [];
 
   @property() exclude = '';
 
@@ -46,18 +39,18 @@ export class ApiViewerDemo extends LitElement {
 
     return html`
       <api-viewer-demo-layout
-        .tag="${this.name}"
-        .props="${this.props}"
-        .slots="${this.slots}"
-        .events="${this.events}"
-        .cssProps="${this.cssProps}"
-        .exclude="${this.exclude}"
-        .vid="${this.vid}"
+        .tag=${this.name}
+        .members=${this.members}
+        .slots=${this.slots}
+        .events=${this.events}
+        .cssProps=${this.cssProps}
+        .exclude=${this.exclude}
+        .vid=${this.vid}
       ></api-viewer-demo-layout>
     `;
   }
 
-  protected createRenderRoot() {
+  protected createRenderRoot(): this {
     return this;
   }
 
@@ -74,7 +67,7 @@ export class ApiViewerDemo extends LitElement {
         this.renderDemoLayout(this.whenDefined),
         html`
           <div part="warning">
-            Element "${this.name}" is not defined. Have you imported it?
+            Element ${this.name} is not defined. Have you imported it?
           </div>
         `
       )}

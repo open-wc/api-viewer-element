@@ -1,11 +1,7 @@
-import {
-  LitElement,
-  html,
-  css,
-  customElement,
-  property,
-  TemplateResult
-} from 'lit-element';
+import type { TemplateResult } from 'lit';
+
+import { LitElement, html, css } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 
 const format = (
   value: number,
@@ -43,18 +39,16 @@ export class IntlCurrency extends LitElement {
    */
   @property() locale: string | null | undefined = 'en-GB';
 
-  static get styles() {
-    return css`
-      :host {
-        all: inherit;
-        display: inline-block;
-      }
+  static readonly styles = css`
+    :host {
+      all: inherit;
+      display: inline-block;
+    }
 
-      div {
-        text-decoration: inherit;
-      }
-    `;
-  }
+    div {
+      text-decoration: inherit;
+    }
+  `;
 
   protected render(): TemplateResult {
     return html`

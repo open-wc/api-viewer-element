@@ -1,17 +1,15 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  property,
-  TemplateResult
-} from 'lit-element';
-import { ElementInfo } from './lib/types.js';
+import type * as Manifest from 'custom-elements-manifest/schema';
+import type { TemplateResult } from 'lit';
+
+import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+
 import { EMPTY_ELEMENT } from './lib/constants.js';
 import './api-viewer-demo.js';
 
 @customElement('api-demo-content')
 export class ApiDemoContent extends LitElement {
-  @property({ attribute: false }) elements: ElementInfo[] = [];
+  @property({ attribute: false }) elements: Manifest.CustomElement[] = [];
 
   @property({ type: Number }) selected = 0;
 
@@ -19,14 +17,20 @@ export class ApiDemoContent extends LitElement {
 
   @property({ type: Number }) vid?: number;
 
-  protected createRenderRoot() {
+  protected createRenderRoot(): this {
     return this;
   }
 
   protected render(): TemplateResult {
     const { elements, selected, exclude, vid } = this;
 
-    const { name, properties, slots, events, cssProperties } = {
+    const {
+      name,
+      members = [],
+      slots,
+      events,
+      cssProperties
+    } = {
       ...EMPTY_ELEMENT,
       ...(elements[selected] || {})
     };
@@ -42,26 +46,26 @@ export class ApiDemoContent extends LitElement {
         <nav>
           <label part="select-label">
             <select
-              @change="${this._onSelect}"
-              .value="${String(selected)}"
-              ?hidden="${elements.length === 1}"
+              @change=${this._onSelect}
+              .value=${String(selected)}
+              ?hidden=${elements.length === 1}
               part="select"
             >
               ${elements.map(
-                (tag, idx) => html`<option value="${idx}">${tag.name}</option>`
+                (tag, idx) => html`<option value=${idx}>${tag.name}</option>`
               )}
             </select>
           </label>
         </nav>
       </header>
       <api-viewer-demo
-        .name="${name}"
-        .props="${properties}"
-        .slots="${slots}"
-        .events="${events}"
-        .cssProps="${cssProps}"
-        .exclude="${exclude}"
-        .vid="${vid}"
+        .name=${name}
+        .members=${members}
+        .slots=${slots}
+        .events=${events}
+        .cssProps=${cssProps}
+        .exclude=${exclude}
+        .vid=${vid}
       ></api-viewer-demo>
     `;
   }

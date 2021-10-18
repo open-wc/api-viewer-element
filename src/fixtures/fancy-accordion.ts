@@ -1,12 +1,9 @@
-import {
-  LitElement,
-  html,
-  css,
-  customElement,
-  property,
-  PropertyValues,
-  TemplateResult
-} from 'lit-element';
+import type { PropertyValues, TemplateResult } from 'lit';
+
+import { LitElement, html, css } from 'lit';
+
+import { customElement, property } from 'lit/decorators.js';
+
 import { ExpansionPanel } from './expansion-panel.js';
 
 /**
@@ -40,47 +37,45 @@ export class FancyAccordion extends LitElement {
 
   private _boundOnOpened = this._onOpened.bind(this) as EventListener;
 
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
+  static readonly styles = css`
+    :host {
+      display: block;
+    }
 
-      :host([hidden]) {
-        display: none !important;
-      }
+    :host([hidden]) {
+      display: none !important;
+    }
 
-      ::slotted([opened]:not(:first-child)) {
-        margin-top: 16px;
-      }
+    ::slotted([opened]:not(:first-child)) {
+      margin-top: 16px;
+    }
 
-      ::slotted([opened]:not(:last-child)) {
-        margin-bottom: 16px;
-      }
+    ::slotted([opened]:not(:last-child)) {
+      margin-bottom: 16px;
+    }
 
-      ::slotted(:not([opened])) {
-        position: relative;
-      }
+    ::slotted(:not([opened])) {
+      position: relative;
+    }
 
-      ::slotted(:not([opened]))::after {
-        content: '';
-        position: absolute;
-        bottom: -1px;
-        left: 0;
-        right: 0;
-        height: 1px;
-        opacity: 1;
-        z-index: 1;
-        background-color: rgba(0, 0, 0, 0.12);
-      }
-    `;
-  }
+    ::slotted(:not([opened]))::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      opacity: 1;
+      z-index: 1;
+      background-color: rgba(0, 0, 0, 0.12);
+    }
+  `;
 
   protected render(): TemplateResult {
     return html`<slot></slot>`;
   }
 
-  protected firstUpdated() {
+  protected firstUpdated(): void {
     this.addEventListener('keydown', (e) => this._onKeydown(e));
 
     Array.from(this.children).forEach((node) => {
@@ -91,7 +86,7 @@ export class FancyAccordion extends LitElement {
     });
   }
 
-  protected update(props: PropertyValues) {
+  protected update(props: PropertyValues): void {
     if (props.has('openedIndex') && this._items) {
       const item =
         this.openedIndex == null ? null : this._items[this.openedIndex];

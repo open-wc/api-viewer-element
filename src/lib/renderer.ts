@@ -1,10 +1,13 @@
-import { directive, Part, NodePart } from 'lit-html';
+import type * as Manifest from 'custom-elements-manifest/schema';
+import { ChildPart, directive, Part } from 'lit/directive.js';
+
 import {
   ComponentWithProps,
-  CSSPropertyInfo,
+  CSSProp,
   KnobValues,
-  SlotValue
+  SlotWithContent
 } from './types.js';
+
 import {
   getTemplate,
   getTemplateNode,
@@ -35,7 +38,7 @@ const applyKnobs = (component: Element, knobs: KnobValues) => {
   });
 };
 
-const applySlots = (component: Element, slots: SlotValue[]) => {
+const applySlots = (component: Element, slots: SlotWithContent[]) => {
   while (component.firstChild) {
     component.removeChild(component.firstChild);
   }
@@ -53,7 +56,7 @@ const applySlots = (component: Element, slots: SlotValue[]) => {
   });
 };
 
-const applyCssProps = (component: HTMLElement, cssProps: CSSPropertyInfo[]) => {
+const applyCssProps = (component: HTMLElement, cssProps: CSSProp[]) => {
   cssProps.forEach((prop) => {
     const { name, value } = prop;
     if (value) {
@@ -106,8 +109,8 @@ async function elementUpdated(
   return el;
 }
 
-const makePart = (part: NodePart): NodePart => {
-  const newPart = new NodePart(part.options);
+const makePart = (part: Part): ChildPart => {
+  const newPart = new ChildPart(part.options);
   newPart.appendIntoPart(part);
   return newPart;
 };

@@ -1,26 +1,30 @@
-import { LitElement, html, property, TemplateResult } from 'lit-element';
-import { until } from 'lit-html/directives/until.js';
-import { ElementPromise } from './lib/types.js';
+import type * as Manifest from 'custom-elements-manifest/schema';
+import type { TemplateResult } from 'lit';
+
+import { LitElement, html } from 'lit';
+import { property } from 'lit/decorators.js';
+import { until } from 'lit/directives/until.js';
 import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';
 import './api-demo-content.js';
+import { getElements } from './lib/utils.js';
 
 async function renderDemo(
-  jsonFetched: ElementPromise,
+  jsonFetched: Promise<Manifest.Package | null>,
   selected?: string,
   id?: number,
   exclude = ''
 ): Promise<TemplateResult> {
-  const elements = await jsonFetched;
+  const elements = await getElements(jsonFetched);
 
   const index = elements.findIndex((el) => el.name === selected);
 
   return elements.length
     ? html`
         <api-demo-content
-          .elements="${elements}"
-          .selected="${index >= 0 ? index : 0}"
-          .exclude="${exclude}"
-          .vid="${id}"
+          .elements=${elements}
+          .selected=${index >= 0 ? index : 0}
+          .exclude=${exclude}
+          .vid=${id}
         ></api-demo-content>
       `
     : emptyDataWarning;
@@ -42,7 +46,12 @@ export class ApiDemoBase extends ApiViewerMixin(LitElement) {
   protected render(): TemplateResult {
     return html`
       ${until(
-        renderDemo(this.jsonFetched, this.selected, this._id, this.excludeKnobs)
+        renderDemo(
+          Promise.resolve(this.jsonFetched ?? null),
+          this.selected,
+          this._id,
+          this.excludeKnobs
+        )
       )}
     `;
   }

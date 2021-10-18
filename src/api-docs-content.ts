@@ -1,22 +1,20 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  property,
-  TemplateResult
-} from 'lit-element';
-import { ElementInfo } from './lib/types.js';
+import type * as Manifest from 'custom-elements-manifest/schema';
+import type { TemplateResult } from 'lit';
+
+import { LitElement, html } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+
 import { EMPTY_ELEMENT } from './lib/constants.js';
 import { parse } from './lib/markdown.js';
 import './api-viewer-docs.js';
 
 @customElement('api-docs-content')
 export class ApiDocsContent extends LitElement {
-  @property({ attribute: false }) elements: ElementInfo[] = [];
+  @property({ attribute: false }) elements: Manifest.CustomElement[] = [];
 
   @property({ type: Number }) selected = 0;
 
-  protected createRenderRoot() {
+  protected createRenderRoot(): this {
     return this;
   }
 
@@ -26,7 +24,7 @@ export class ApiDocsContent extends LitElement {
     const {
       name,
       description,
-      properties,
+      members,
       attributes,
       slots,
       events,
@@ -45,29 +43,29 @@ export class ApiDocsContent extends LitElement {
         <nav>
           <label part="select-label">
             <select
-              @change="${this._onSelect}"
-              .value="${String(selected)}"
-              ?hidden="${elements.length === 1}"
+              @change=${this._onSelect}
+              .value=${String(selected)}
+              ?hidden=${elements.length === 1}
               part="select"
             >
               ${elements.map(
-                (tag, idx) => html`<option value="${idx}">${tag.name}</option>`
+                (tag, idx) => html`<option value=${idx}>${tag.name}</option>`
               )}
             </select>
           </label>
         </nav>
       </header>
-      <div ?hidden="${description === ''}" part="docs-description">
+      <div ?hidden=${description === ''} part="docs-description">
         ${parse(description)}
       </div>
       <api-viewer-docs
-        .name="${name}"
-        .props="${properties}"
-        .attrs="${attributes}"
-        .events="${events}"
-        .slots="${slots}"
-        .cssParts="${cssParts}"
-        .cssProps="${cssProps}"
+        .name=${name}
+        .members=${members}
+        .attrs=${attributes}
+        .events=${events}
+        .slots=${slots}
+        .cssParts=${cssParts}
+        .cssProps=${cssProps}
       ></api-viewer-docs>
     `;
   }
