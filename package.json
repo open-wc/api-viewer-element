@@ -85,6 +85,10 @@
     "typescript": "^4.4.4",
     "web-component-analyzer": "^1.1.6"
   },
+  "resolutions": {
+    "glob-parent": "5.1.1",
+    "set-value": "4.0.1"
+  },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
   },
