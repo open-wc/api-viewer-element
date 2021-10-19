@@ -3,7 +3,7 @@
   "tags": [
     {
       "name": "expansion-panel",
-      "path": "./../src/fixtures/expansion-panel.ts",
+      "path": "./src/fixtures/expansion-panel.ts",
       "description": "A custom element similar to the HTML5 `<details>` element.",
       "attributes": [
         {
@@ -97,7 +97,7 @@
     },
     {
       "name": "fancy-accordion",
-      "path": "./../src/fixtures/fancy-accordion.ts",
+      "path": "./src/fixtures/fancy-accordion.ts",
       "description": "A custom element implementing the accordion widget: a vertically stacked set of expandable panels\nthat wraps several instances of the `<expansion-panel>` element. Only one panel can be opened\n(expanded) at a time.\n\nPanel headings function as controls that enable users to open (expand) or hide (collapse) their\nassociated sections of content. The user can toggle panels by mouse click, Enter and Space keys.\n\nThe component supports keyboard navigation and is aligned with the\n[WAI-ARIA Authoring Practices](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion).",
       "attributes": [
         {
@@ -133,7 +133,7 @@
     },
     {
       "name": "intl-currency",
-      "path": "./../src/fixtures/intl-currency.ts",
+      "path": "./src/fixtures/intl-currency.ts",
       "description": "A custom element that formats currency using Intl.",
       "attributes": [
         {
@@ -181,7 +181,7 @@
     },
     {
       "name": "progress-bar",
-      "path": "./../src/fixtures/progress-bar.ts",
+      "path": "./src/fixtures/progress-bar.ts",
       "description": "A custom element similar to the HTML5 `<progress>` element.",
       "attributes": [
         {
@@ -249,7 +249,7 @@
         {
           "name": "--progress-bar-opacity",
           "description": "Opacity set on the underlying track.",
-          "default": "\"0.16\""
+          "default": "0.16"
         }
       ],
       "cssParts": [
