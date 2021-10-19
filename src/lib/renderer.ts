@@ -81,7 +81,9 @@ interface PossiblyAsyncElement {
  *
  * If none of those Promise hooks are found, it will wait for `setTimeout`.
  */
-async function elementUpdated(element: HTMLElement) {
+async function elementUpdated(
+  element: HTMLElement
+): Promise<PossiblyAsyncElement> {
   let hasSpecificAwait = false;
   const el = element as PossiblyAsyncElement;
 
@@ -98,7 +100,7 @@ async function elementUpdated(element: HTMLElement) {
   }
 
   if (!hasSpecificAwait) {
-    await new Promise((resolve) => setTimeout(() => resolve()));
+    await Promise.resolve();
   }
 
   return el;
