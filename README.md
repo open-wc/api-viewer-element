@@ -71,7 +71,7 @@ $ wca analyze my-element.js --outFile custom-elements.json --format json
 </html>
 ```
 
-4. Use [es-dev-server](https://open-wc.org/developing/es-dev-server.html) to serve your HTML page.
+4. Use [web-dev-server](https://modern-web.dev/docs/dev-server/overview/) to serve your HTML page.
 
 ## Usage options
 
@@ -357,7 +357,7 @@ $ yarn
 $ yarn dev
 ```
 
-Open http://127.0.0.1:8081/demo/
+Open http://127.0.0.1:8080
 
 ### Create dist folder
 
@@ -377,4 +377,4 @@ $ yarn serve:dist
 - Thanks to [@bahrus](https://github.com/bahrus) for [wc-info](https://github.com/bahrus/wc-info) component which inspired me.
 - The visual appearance is largely inspired by [Vuetify](https://vuetifyjs.com/en/getting-started/quick-start) API docs.
 - The tabs component is based on the [howto-tabs](https://developers.google.com/web/fundamentals/web-components/examples/howto-tabs) example.
-- Thanks to [open-wc.org](https://open-wc.org/) for [es-dev-server](https://github.com/open-wc/open-wc/tree/master/packages/es-dev-server) and [rollup preset](https://open-wc.org/building/building-rollup.html).
+- Thanks to [Modern Web](https://modern-web.dev) for [Web Dev Server](https://modern-web.dev/docs/dev-server/overview/) and [Rollup Plugin HTML](https://modern-web.dev/docs/building/rollup-plugin-html/).
