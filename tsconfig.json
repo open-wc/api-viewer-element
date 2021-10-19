@@ -19,6 +19,7 @@
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+    "useDefineForClassFields": false,
     "importHelpers": true
   },
   "include": ["src/**/*.ts"],
