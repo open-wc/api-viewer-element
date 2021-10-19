@@ -4,7 +4,8 @@ import {
   customElement,
   css,
   property,
-  PropertyValues
+  PropertyValues,
+  TemplateResult
 } from 'lit-element';
 
 let tabIdCounter = 0;
@@ -107,7 +108,7 @@ export class ApiViewerTab extends LitElement {
     `;
   }
 
-  protected render() {
+  protected render(): TemplateResult {
     return html`${this.heading}`;
   }
 

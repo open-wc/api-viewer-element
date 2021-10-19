@@ -1,4 +1,10 @@
-import { LitElement, html, customElement, property } from 'lit-element';
+import {
+  LitElement,
+  html,
+  customElement,
+  property,
+  TemplateResult
+} from 'lit-element';
 import { ElementInfo } from './lib/types.js';
 import { EMPTY_ELEMENT } from './lib/constants.js';
 import { parse } from './lib/markdown.js';
@@ -14,7 +20,7 @@ export class ApiDocsContent extends LitElement {
     return this;
   }
 
-  protected render() {
+  protected render(): TemplateResult {
     const { elements, selected } = this;
 
     const {

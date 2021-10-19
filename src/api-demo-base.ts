@@ -39,7 +39,7 @@ export class ApiDemoBase extends ApiViewerMixin(LitElement) {
     this._id = id++;
   }
 
-  protected render() {
+  protected render(): TemplateResult {
     return html`
       ${until(
         renderDemo(this.jsonFetched, this.selected, this._id, this.excludeKnobs)

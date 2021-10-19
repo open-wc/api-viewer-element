@@ -23,7 +23,7 @@ async function renderDocs(
 }
 
 export class ApiDocsBase extends ApiViewerMixin(LitElement) {
-  protected render() {
+  protected render(): TemplateResult {
     return html`${until(renderDocs(this.jsonFetched, this.selected))}`;
   }
 }

@@ -44,7 +44,7 @@ export class ApiViewerBase extends ApiViewerMixin(LitElement) {
     this._id = id++;
   }
 
-  protected render() {
+  protected render(): TemplateResult {
     return html`
       ${until(
         renderDocs(

@@ -4,7 +4,8 @@ import {
   css,
   customElement,
   property,
-  PropertyValues
+  PropertyValues,
+  TemplateResult
 } from 'lit-element';
 
 const normalizeValue = (value: number, min: number, max: number) => {
@@ -152,7 +153,7 @@ export class ProgressBar extends LitElement {
     `;
   }
 
-  protected render() {
+  protected render(): TemplateResult {
     return html`<div part="bar"><div part="value"></div></div>`;
   }
 

@@ -1,4 +1,10 @@
-import { LitElement, html, customElement, property } from 'lit-element';
+import {
+  LitElement,
+  html,
+  customElement,
+  property,
+  TemplateResult
+} from 'lit-element';
 import { cache } from 'lit-html/directives/cache.js';
 import { ElementInfo } from './lib/types.js';
 import { EMPTY_ELEMENT } from './lib/constants.js';
@@ -18,11 +24,11 @@ export class ApiViewerContent extends LitElement {
 
   @property({ type: Number }) vid?: number;
 
-  protected createRenderRoot() {
+  protected createRenderRoot(): this {
     return this;
   }
 
-  protected render() {
+  protected render(): TemplateResult {
     const { elements, selected, section, exclude, vid } = this;
 
     const {
