@@ -324,7 +324,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
 
     private _syncKnob(component: Element, changed: PropertyInfo) {
       const { name, type, attribute } = changed;
-      const value = ((component as unknown) as ComponentWithProps)[name];
+      const value = (component as unknown as ComponentWithProps)[name];
 
       // update knobs to avoid duplicate event
       this.knobs = {

@@ -30,7 +30,7 @@ const applyKnobs = (component: Element, knobs: KnobValues) => {
     } else if (normalizeType(type) === 'boolean') {
       component.toggleAttribute(attribute || key, Boolean(value));
     } else {
-      ((component as unknown) as ComponentWithProps)[key] = value;
+      (component as unknown as ComponentWithProps)[key] = value;
     }
   });
 };
@@ -115,95 +115,96 @@ const importTemplate = (tpl: HTMLTemplateElement) =>
 
 export const renderer = directive(
   (
-    id: number,
-    tag: string,
-    knobs: KnobValues,
-    slots: SlotValue[],
-    cssProps: CSSPropertyInfo[]
-  ) => (part: Part) => {
-    if (!(part instanceof NodePart)) {
-      throw new Error('renderer can only be used in text bindings');
+      id: number,
+      tag: string,
+      knobs: KnobValues,
+      slots: SlotValue[],
+      cssProps: CSSPropertyInfo[]
+    ) =>
+    (part: Part) => {
+      if (!(part instanceof NodePart)) {
+        throw new Error('renderer can only be used in text bindings');
+      }
+
+      let component = caches.get(part);
+      if (component === undefined || component.tagName.toLowerCase() !== tag) {
+        const [host, prefix, suffix, slot, wrapper] = [
+          HOST,
+          PREFIX,
+          SUFFIX,
+          SLOT,
+          WRAPPER
+        ].map((type) => getTemplate(id, tag, type));
+
+        const node = getTemplateNode(host);
+        if (node) {
+          component = node.cloneNode(true);
+        } else {
+          component = document.createElement(tag);
+        }
+
+        let targetPart = part;
+
+        if (isTemplate(prefix)) {
+          const prefixPart = makePart(part);
+          prefixPart.setValue(importTemplate(prefix));
+          prefixPart.commit();
+        }
+
+        const wrapNode = getTemplateNode(wrapper);
+        if (wrapNode) {
+          const wrapperPart = makePart(part);
+          const clone = wrapNode.cloneNode(true) as HTMLElement;
+          clone.innerHTML = '';
+          wrapperPart.setValue(clone);
+          wrapperPart.commit();
+          const innerPart = new NodePart(part.options);
+          innerPart.appendInto(clone);
+          targetPart = innerPart;
+        } else if (isTemplate(prefix) || isTemplate(suffix)) {
+          const contentPart = makePart(part);
+          targetPart = contentPart;
+        }
+
+        targetPart.setValue(component);
+        targetPart.commit();
+
+        if (isTemplate(suffix)) {
+          const suffixPart = makePart(part);
+          suffixPart.setValue(importTemplate(suffix));
+          suffixPart.commit();
+        }
+
+        if (isTemplate(slot)) {
+          component.appendChild(importTemplate(slot));
+        }
+
+        caches.set(part, component);
+
+        const instance = targetPart.value as HTMLElement;
+
+        // wait for rendering
+        elementUpdated(instance).then(() => {
+          instance.dispatchEvent(
+            new CustomEvent('rendered', {
+              detail: {
+                component
+              },
+              bubbles: true,
+              composed: true
+            })
+          );
+        });
+      }
+
+      applyKnobs(component, knobs);
+
+      if (!hasTemplate(id, tag, SLOT) && slots.length) {
+        applySlots(component, slots);
+      }
+
+      if (cssProps.length) {
+        applyCssProps(component, cssProps);
+      }
     }
-
-    let component = caches.get(part);
-    if (component === undefined || component.tagName.toLowerCase() !== tag) {
-      const [host, prefix, suffix, slot, wrapper] = [
-        HOST,
-        PREFIX,
-        SUFFIX,
-        SLOT,
-        WRAPPER
-      ].map((type) => getTemplate(id, tag, type));
-
-      const node = getTemplateNode(host);
-      if (node) {
-        component = node.cloneNode(true);
-      } else {
-        component = document.createElement(tag);
-      }
-
-      let targetPart = part;
-
-      if (isTemplate(prefix)) {
-        const prefixPart = makePart(part);
-        prefixPart.setValue(importTemplate(prefix));
-        prefixPart.commit();
-      }
-
-      const wrapNode = getTemplateNode(wrapper);
-      if (wrapNode) {
-        const wrapperPart = makePart(part);
-        const clone = wrapNode.cloneNode(true) as HTMLElement;
-        clone.innerHTML = '';
-        wrapperPart.setValue(clone);
-        wrapperPart.commit();
-        const innerPart = new NodePart(part.options);
-        innerPart.appendInto(clone);
-        targetPart = innerPart;
-      } else if (isTemplate(prefix) || isTemplate(suffix)) {
-        const contentPart = makePart(part);
-        targetPart = contentPart;
-      }
-
-      targetPart.setValue(component);
-      targetPart.commit();
-
-      if (isTemplate(suffix)) {
-        const suffixPart = makePart(part);
-        suffixPart.setValue(importTemplate(suffix));
-        suffixPart.commit();
-      }
-
-      if (isTemplate(slot)) {
-        component.appendChild(importTemplate(slot));
-      }
-
-      caches.set(part, component);
-
-      const instance = targetPart.value as HTMLElement;
-
-      // wait for rendering
-      elementUpdated(instance).then(() => {
-        instance.dispatchEvent(
-          new CustomEvent('rendered', {
-            detail: {
-              component
-            },
-            bubbles: true,
-            composed: true
-          })
-        );
-      });
-    }
-
-    applyKnobs(component, knobs);
-
-    if (!hasTemplate(id, tag, SLOT) && slots.length) {
-      applySlots(component, slots);
-    }
-
-    if (cssProps.length) {
-      applyCssProps(component, cssProps);
-    }
-  }
 );

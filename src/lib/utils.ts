@@ -18,12 +18,11 @@ export const TemplateTypes = Object.freeze({
 export const isTemplate = (node: unknown): node is HTMLTemplateElement =>
   node instanceof HTMLTemplateElement;
 
-const matchTemplate = (name: string, type: string) => (
-  tpl: HTMLTemplateElement
-) => {
-  const { element, target } = tpl.dataset;
-  return element === name && target === type;
-};
+const matchTemplate =
+  (name: string, type: string) => (tpl: HTMLTemplateElement) => {
+    const { element, target } = tpl.dataset;
+    return element === name && target === type;
+  };
 
 export const getTemplateNode = (node: unknown) =>
   isTemplate(node) && node.content.firstElementChild;
