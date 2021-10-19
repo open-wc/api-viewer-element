@@ -61,7 +61,7 @@ export class ApiViewerDemo extends LitElement {
     return this;
   }
 
-  protected render() {
+  protected render(): TemplateResult {
     const { name } = this;
 
     if (name && this.lastName !== name) {

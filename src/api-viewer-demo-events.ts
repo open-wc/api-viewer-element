@@ -43,7 +43,7 @@ export class ApiViewerDemoEvents extends LitElement {
     return this;
   }
 
-  protected render() {
+  protected render(): TemplateResult {
     const { log } = this;
     return html`
       <button

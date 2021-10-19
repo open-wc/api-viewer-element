@@ -175,7 +175,7 @@ export class ApiViewerDemoSnippet extends LitElement {
     ];
   }
 
-  protected render() {
+  protected render(): TemplateResult {
     return html`
       ${renderSnippet(
         this.vid as number,

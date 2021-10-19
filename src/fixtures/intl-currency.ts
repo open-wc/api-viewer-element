@@ -1,4 +1,11 @@
-import { LitElement, html, css, customElement, property } from 'lit-element';
+import {
+  LitElement,
+  html,
+  css,
+  customElement,
+  property,
+  TemplateResult
+} from 'lit-element';
 
 const format = (
   value: number,
@@ -49,7 +56,7 @@ export class IntlCurrency extends LitElement {
     `;
   }
 
-  protected render() {
+  protected render(): TemplateResult {
     return html`
       <div part="value">${format(this.value, this.currency, this.locale)}</div>
     `;

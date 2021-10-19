@@ -4,7 +4,8 @@ import {
   css,
   customElement,
   property,
-  PropertyValues
+  PropertyValues,
+  TemplateResult
 } from 'lit-element';
 import { ExpansionPanel } from './expansion-panel.js';
 
@@ -75,7 +76,7 @@ export class FancyAccordion extends LitElement {
     `;
   }
 
-  protected render() {
+  protected render(): TemplateResult {
     return html`<slot></slot>`;
   }
 

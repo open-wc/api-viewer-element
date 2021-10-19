@@ -112,7 +112,7 @@ export class ApiViewerDocs extends LitElement {
     return this;
   }
 
-  protected render() {
+  protected render(): TemplateResult {
     const { slots, props, attrs, events, cssParts, cssProps } = this;
 
     const properties = props || [];

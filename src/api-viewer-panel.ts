@@ -1,4 +1,10 @@
-import { LitElement, html, customElement, css } from 'lit-element';
+import {
+  LitElement,
+  html,
+  customElement,
+  css,
+  TemplateResult
+} from 'lit-element';
 
 let panelIdCounter = 0;
 
@@ -19,7 +25,7 @@ export class ApiViewerPanel extends LitElement {
     `;
   }
 
-  protected render() {
+  protected render(): TemplateResult {
     return html`<slot></slot>`;
   }
 

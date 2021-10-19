@@ -1,4 +1,10 @@
-import { LitElement, html, customElement, property } from 'lit-element';
+import {
+  LitElement,
+  html,
+  customElement,
+  property,
+  TemplateResult
+} from 'lit-element';
 import { renderer } from './lib/renderer.js';
 import {
   cssPropRenderer,
@@ -22,7 +28,7 @@ export class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
     return this;
   }
 
-  protected render() {
+  protected render(): TemplateResult {
     const [noCss, noEvents, noSlots, noCustomKnobs, noProps] = [
       this.cssProps,
       this.events,

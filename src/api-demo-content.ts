@@ -1,4 +1,10 @@
-import { LitElement, html, customElement, property } from 'lit-element';
+import {
+  LitElement,
+  html,
+  customElement,
+  property,
+  TemplateResult
+} from 'lit-element';
 import { ElementInfo } from './lib/types.js';
 import { EMPTY_ELEMENT } from './lib/constants.js';
 import './api-viewer-demo.js';
@@ -17,7 +23,7 @@ export class ApiDemoContent extends LitElement {
     return this;
   }
 
-  protected render() {
+  protected render(): TemplateResult {
     const { elements, selected, exclude, vid } = this;
 
     const { name, properties, slots, events, cssProperties } = {
