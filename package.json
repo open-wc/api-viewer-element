@@ -50,7 +50,7 @@
     "lit-element": "^2.0.0",
     "lit-html": "^1.0.0",
     "marked": "^2.0.0",
-    "tslib": "^2.0.1"
+    "tslib": "^2.3.1"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^11.0.0",
