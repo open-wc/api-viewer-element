@@ -58,7 +58,7 @@
       }
     }
   </style>
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./demo/styles.css">
 </head>
 <body>
   <nav>
@@ -198,15 +198,14 @@
     </section>
   </template>
 
-  <script type="module" src="../lib/fixtures/expansion-panel.js"></script>
-  <script type="module" src="../lib/fixtures/fancy-accordion.js"></script>
-  <script type="module" src="../lib/fixtures/intl-currency.js"></script>
-  <script type="module" src="../lib/fixtures/progress-bar.js"></script>
-  <script type="module" src="../lib/api-viewer.js"></script>
-  <script type="module" src="../lib/api-docs.js"></script>
-  <script type="module" src="../lib/api-demo.js"></script>
+  <script type="module">
+    import './lib/fixtures/expansion-panel.js';
+    import './lib/fixtures/fancy-accordion.js';
+    import './lib/fixtures/progress-bar.js';
+    import './lib/api-viewer.js';
+    import './lib/api-docs.js';
+    import './lib/api-demo.js';
 
-  <script>
     if (window.location.hash === '') {
       history.pushState({}, '', '#api-viewer');
     }

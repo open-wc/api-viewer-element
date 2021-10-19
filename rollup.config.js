@@ -1,18 +1,11 @@
-import merge from 'deepmerge';
-import copy from 'rollup-plugin-copy';
-import { createSpaConfig } from '@open-wc/building-rollup';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import { terser } from 'rollup-plugin-terser';
+import html from '@web/rollup-plugin-html';
 
-const config = createSpaConfig({
-  html: {
-    minify: false
-  }
-});
-
-export default merge(config, {
-  input: './demo/index.html',
-  plugins: [
-    copy({
-      targets: [{ src: './demo/*.css', dest: './dist' }]
-    })
-  ]
-});
+export default {
+  input: './index.html',
+  output: {
+    dir: './dist'
+  },
+  plugins: [html({ minify: false }), nodeResolve(), terser()]
+};

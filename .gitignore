@@ -2,3 +2,4 @@ node_modules
 /lib
 /dist
 entrypoint.hashmanifest.json
+custom-elements.json

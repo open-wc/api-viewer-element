@@ -26,8 +26,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "npm run watch & npm run serve",
-    "dist": "rimraf dist && rollup -c rollup.config.js && cp ./demo/*.json dist",
-    "fixtures": "wca analyze src/fixtures/*.ts --format json --outFile demo/custom-elements.json",
+    "dist": "rimraf dist && rollup -c rollup.config.js && cp custom-elements.json dist",
+    "fixtures": "wca analyze src/fixtures/*.ts --format json --outFile custom-elements.json",
     "lint:css": "stylelint src/*.ts",
     "lint:eslint": "eslint src --ext .ts",
     "lint:lit": "lit-analyzer src --strict",
@@ -53,11 +53,12 @@
     "tslib": "^2.0.1"
   },
   "devDependencies": {
-    "@open-wc/building-rollup": "^1.9.0",
+    "@rollup/plugin-node-resolve": "^11.0.0",
     "@size-limit/preset-small-lib": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "@web/dev-server": "^0.1.25",
+    "@web/rollup-plugin-html": "^1.10.1",
     "deepmerge": "4.2.2",
     "eslint": "^8.0.0",
     "eslint-config-airbnb-base": "^14.2.0",
@@ -74,6 +75,7 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.58.0",
     "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-terser": "^7.0.2",
     "size-limit": "^6.0.0",
     "stylelint": "^13.13.1",
     "stylelint-config-prettier": "^9.0.3",
