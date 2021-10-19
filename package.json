@@ -26,7 +26,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "npm run watch & npm run serve",
-    "dist": "rimraf dist && rollup -c rollup.config.js && cp custom-elements.json dist",
+    "dist": "rimraf dist && rollup -c rollup.config.js && npm run fixtures && cp custom-elements.json dist",
     "fixtures": "wca analyze src/fixtures/*.ts --format json --outFile custom-elements.json",
     "lint:css": "stylelint src/*.ts",
     "lint:eslint": "eslint src --ext .ts",
