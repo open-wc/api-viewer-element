@@ -100,7 +100,7 @@ async function elementUpdated(
   }
 
   if (!hasSpecificAwait) {
-    await Promise.resolve();
+    await new Promise(requestAnimationFrame);
   }
 
   return el;
