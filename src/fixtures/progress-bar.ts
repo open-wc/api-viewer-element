@@ -111,10 +111,12 @@ export class ProgressBar extends LitElement {
         0% {
           transform: translateX(0);
         }
+
         20% {
           animation-timing-function: cubic-bezier(0.5, 0, 0.701732, 0.495819);
           transform: translateX(0);
         }
+
         59.15% {
           animation-timing-function: cubic-bezier(
             0.302435,
@@ -124,6 +126,7 @@ export class ProgressBar extends LitElement {
           );
           transform: translateX(83.67142%);
         }
+
         100% {
           transform: translateX(200.611057%);
         }
@@ -133,6 +136,7 @@ export class ProgressBar extends LitElement {
         0% {
           transform: scaleX(0.08);
         }
+
         36.65% {
           animation-timing-function: cubic-bezier(
             0.334731,
@@ -142,10 +146,12 @@ export class ProgressBar extends LitElement {
           );
           transform: scaleX(0.08);
         }
+
         69.15% {
           animation-timing-function: cubic-bezier(0.06, 0.11, 0.6, 1);
           transform: scaleX(0.661479);
         }
+
         100% {
           transform: scaleX(0.08);
         }
