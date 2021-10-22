@@ -24,7 +24,7 @@ import './api-viewer-tabs.js';
 export class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
   @property() copyBtnText = 'copy';
 
-  protected createRenderRoot() {
+  protected createRenderRoot(): this {
     return this;
   }
 
@@ -122,7 +122,7 @@ export class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
     `;
   }
 
-  private _onLogClear() {
+  private _onLogClear(): void {
     this.eventLog = [];
     const tab = this.renderRoot.querySelector('#events') as HTMLElement;
     if (tab) {
@@ -130,7 +130,7 @@ export class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
     }
   }
 
-  private _onCopyClick() {
+  private _onCopyClick(): void {
     const snippet = this.renderRoot.querySelector('api-viewer-demo-snippet');
     if (snippet && snippet.source) {
       const range = document.createRange();
@@ -156,15 +156,15 @@ export class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
     }
   }
 
-  private _onCssChanged(e: CustomEvent) {
+  private _onCssChanged(e: CustomEvent): void {
     this.setCss(e.composedPath()[0] as HTMLInputElement);
   }
 
-  private _onPropChanged(e: Event) {
+  private _onPropChanged(e: Event): void {
     this.setKnobs(e.composedPath()[0] as HTMLInputElement);
   }
 
-  private _onSlotChanged(e: Event) {
+  private _onSlotChanged(e: Event): void {
     this.setSlots(e.composedPath()[0] as HTMLInputElement);
   }
 }

@@ -8,14 +8,15 @@ type Knob = CSSPropertyInfo | PropertyInfo | SlotValue;
 
 type InputRenderer = (item: Knob, id: string) => TemplateResult;
 
-const capitalize = (name: string) => name[0].toUpperCase() + name.slice(1);
+const capitalize = (name: string): string =>
+  name[0].toUpperCase() + name.slice(1);
 
-export const getSlotDefault = (name: string, initial: string) =>
+export const getSlotDefault = (name: string, initial: string): string =>
   capitalize(name === '' ? initial : name);
 
 export const getSlotContent = (name: string) => getSlotDefault(name, 'content');
 
-const getInputType = (type: string) => {
+const getInputType = (type: string): 'checkbox' | 'number' | 'text' => {
   switch (normalizeType(type)) {
     case 'boolean':
       return 'checkbox';
@@ -26,7 +27,10 @@ const getInputType = (type: string) => {
   }
 };
 
-export const cssPropRenderer: InputRenderer = (knob: Knob, id: string) => {
+export const cssPropRenderer: InputRenderer = (
+  knob: Knob,
+  id: string
+): TemplateResult => {
   const { name, value } = knob as CSSPropertyInfo;
 
   return html`
@@ -40,7 +44,10 @@ export const cssPropRenderer: InputRenderer = (knob: Knob, id: string) => {
   `;
 };
 
-export const propRenderer: InputRenderer = (knob: Knob, id: string) => {
+export const propRenderer: InputRenderer = (
+  knob: Knob,
+  id: string
+): TemplateResult => {
   const { name, type, value, options } = knob as PropertyInfo;
   let input;
   if (type === 'select' && Array.isArray(options)) {
@@ -77,7 +84,10 @@ export const propRenderer: InputRenderer = (knob: Knob, id: string) => {
   return input;
 };
 
-export const slotRenderer: InputRenderer = (knob: Knob, id: string) => {
+export const slotRenderer: InputRenderer = (
+  knob: Knob,
+  id: string
+): TemplateResult => {
   const { name, content } = knob as SlotValue;
 
   return html`

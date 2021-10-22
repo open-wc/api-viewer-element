@@ -39,7 +39,7 @@ export class ApiViewerDemoEvents extends LitElement {
   @property({ attribute: false })
   log: CustomEvent[] = [];
 
-  protected createRenderRoot() {
+  protected createRenderRoot(): this {
     return this;
   }
 
@@ -65,7 +65,7 @@ export class ApiViewerDemoEvents extends LitElement {
     `;
   }
 
-  private _onClearClick() {
+  private _onClearClick(): void {
     this.dispatchEvent(new CustomEvent('clear'));
   }
 }

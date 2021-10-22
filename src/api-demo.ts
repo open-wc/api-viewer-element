@@ -18,11 +18,11 @@ export class ApiDemo extends ApiDemoBase {
     ];
   }
 
-  protected firstUpdated() {
+  protected firstUpdated(): void {
     this.setTemplates();
   }
 
-  public setTemplates(templates?: HTMLTemplateElement[]) {
+  public setTemplates(templates?: HTMLTemplateElement[]): void {
     setTemplates(
       this._id as number,
       templates || Array.from(this.querySelectorAll('template'))

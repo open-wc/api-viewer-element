@@ -18,7 +18,7 @@ const { HOST, PREFIX, SLOT, SUFFIX, WRAPPER } = TemplateTypes;
 
 const caches = new WeakMap();
 
-const applyKnobs = (component: Element, knobs: KnobValues) => {
+const applyKnobs = (component: Element, knobs: KnobValues): void => {
   Object.keys(knobs).forEach((key: string) => {
     const { type, attribute, value, custom } = knobs[key];
     if (custom && attribute) {
@@ -35,7 +35,7 @@ const applyKnobs = (component: Element, knobs: KnobValues) => {
   });
 };
 
-const applySlots = (component: Element, slots: SlotValue[]) => {
+const applySlots = (component: Element, slots: SlotValue[]): void => {
   while (component.firstChild) {
     component.removeChild(component.firstChild);
   }
@@ -53,7 +53,10 @@ const applySlots = (component: Element, slots: SlotValue[]) => {
   });
 };
 
-const applyCssProps = (component: HTMLElement, cssProps: CSSPropertyInfo[]) => {
+const applyCssProps = (
+  component: HTMLElement,
+  cssProps: CSSPropertyInfo[]
+): void => {
   cssProps.forEach((prop) => {
     const { name, value } = prop;
     if (value) {
@@ -66,7 +69,7 @@ const applyCssProps = (component: HTMLElement, cssProps: CSSPropertyInfo[]) => {
   });
 };
 
-const isDefinedPromise = (action: unknown) =>
+const isDefinedPromise = (action: unknown): action is Promise<unknown> =>
   typeof action === 'object' && Promise.resolve(action) === action;
 
 interface PossiblyAsyncElement {
@@ -112,7 +115,7 @@ const makePart = (part: NodePart): NodePart => {
   return newPart;
 };
 
-const importTemplate = (tpl: HTMLTemplateElement) =>
+const importTemplate = (tpl: HTMLTemplateElement): DocumentFragment =>
   document.importNode(tpl.content, true);
 
 export const renderer = directive(

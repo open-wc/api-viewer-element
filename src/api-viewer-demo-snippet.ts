@@ -187,8 +187,8 @@ export class ApiViewerDemoSnippet extends LitElement {
     `;
   }
 
-  get source() {
-    return this.renderRoot.querySelector('code');
+  get source(): HTMLElement {
+    return this.renderRoot.querySelector('code') as HTMLElement;
   }
 }
 

@@ -163,11 +163,11 @@ export class ProgressBar extends LitElement {
     return html`<div part="bar"><div part="value"></div></div>`;
   }
 
-  protected firstUpdated() {
+  protected firstUpdated(): void {
     this.setAttribute('role', 'progressbar');
   }
 
-  protected updated(props: PropertyValues) {
+  protected updated(props: PropertyValues): void {
     const minChanged = props.has('min');
     if (minChanged) {
       this._minChanged(this.min);
@@ -188,20 +188,24 @@ export class ProgressBar extends LitElement {
     }
   }
 
-  private _normalizedValueChanged(value: number, min: number, max: number) {
+  private _normalizedValueChanged(
+    value: number,
+    min: number,
+    max: number
+  ): void {
     const newValue = normalizeValue(value, min, max);
     this.style.setProperty('--progress-value', `${newValue}`);
   }
 
-  private _valueChanged(value: number) {
+  private _valueChanged(value: number): void {
     this.setAttribute('aria-valuenow', `${value}`);
   }
 
-  private _minChanged(min: number) {
+  private _minChanged(min: number): void {
     this.setAttribute('aria-valuemin', `${min}`);
   }
 
-  private _maxChanged(max: number) {
+  private _maxChanged(max: number): void {
     this.setAttribute('aria-valuemax', `${max}`);
   }
 }
