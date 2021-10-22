@@ -112,7 +112,7 @@ export class ApiViewerTab extends LitElement {
     return html`${this.heading}`;
   }
 
-  protected firstUpdated() {
+  protected firstUpdated(): void {
     this.setAttribute('role', 'tab');
 
     if (!this.id) {
@@ -139,18 +139,18 @@ export class ApiViewerTab extends LitElement {
     });
   }
 
-  protected updated(props: PropertyValues) {
+  protected updated(props: PropertyValues): void {
     if (props.has('selected')) {
       this.setAttribute('aria-selected', String(this.selected));
       this.setAttribute('tabindex', this.selected ? '0' : '-1');
     }
   }
 
-  private _setActive(active: boolean) {
+  private _setActive(active: boolean): void {
     this.toggleAttribute('active', active);
   }
 
-  private _setFocused(focused: boolean) {
+  private _setFocused(focused: boolean): void {
     this.toggleAttribute('focused', focused);
     this.toggleAttribute('focus-ring', focused && !this._mousedown);
   }

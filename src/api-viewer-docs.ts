@@ -108,7 +108,7 @@ export class ApiViewerDocs extends LitElement {
   @property({ attribute: false })
   cssProps: CSSPropertyInfo[] = [];
 
-  protected createRenderRoot() {
+  protected createRenderRoot(): this {
     return this;
   }
 
@@ -211,7 +211,7 @@ export class ApiViewerDocs extends LitElement {
         `;
   }
 
-  protected updated(props: PropertyValues) {
+  protected updated(props: PropertyValues): void {
     if (props.has('name') && props.get('name')) {
       const tabs = this.renderRoot.querySelector('api-viewer-tabs');
       if (tabs) {

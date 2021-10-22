@@ -1,4 +1,10 @@
-import { LitElement, html, customElement, css } from 'lit-element';
+import {
+  LitElement,
+  html,
+  customElement,
+  css,
+  TemplateResult
+} from 'lit-element';
 import { ApiViewerTab } from './api-viewer-tab.js';
 import { ApiViewerPanel } from './api-viewer-panel.js';
 
@@ -41,7 +47,7 @@ export class ApiViewerTabs extends LitElement {
     `;
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
       <div class="tabs">
         <slot name="tab"></slot>
@@ -50,7 +56,7 @@ export class ApiViewerTabs extends LitElement {
     `;
   }
 
-  firstUpdated() {
+  firstUpdated(): void {
     this.setAttribute('role', 'tablist');
 
     this.addEventListener('keydown', this._onKeyDown);
@@ -72,11 +78,11 @@ export class ApiViewerTabs extends LitElement {
     });
   }
 
-  private _onSlotChange() {
+  private _onSlotChange(): void {
     this._linkPanels();
   }
 
-  private _linkPanels() {
+  private _linkPanels(): void {
     const tabs = this._allTabs();
     tabs.forEach((tab) => {
       const panel = tab.nextElementSibling as ApiViewerPanel;
@@ -97,7 +103,7 @@ export class ApiViewerTabs extends LitElement {
     return Array.from(this.querySelectorAll('api-viewer-tab'));
   }
 
-  private _getAvailableIndex(idx: number, increment: number) {
+  private _getAvailableIndex(idx: number, increment: number): number {
     const tabs = this._allTabs();
     const total = tabs.length;
     for (
@@ -123,7 +129,7 @@ export class ApiViewerTabs extends LitElement {
     return this.querySelector(`#${panelId}`);
   }
 
-  private _prevTab() {
+  private _prevTab(): ApiViewerTab {
     const tabs = this._allTabs();
     const newIdx = this._getAvailableIndex(
       tabs.findIndex((tab) => tab.selected) - 1,
@@ -132,17 +138,17 @@ export class ApiViewerTabs extends LitElement {
     return tabs[(newIdx + tabs.length) % tabs.length];
   }
 
-  private _firstTab() {
+  private _firstTab(): ApiViewerTab {
     const tabs = this._allTabs();
     return tabs[0];
   }
 
-  private _lastTab() {
+  private _lastTab(): ApiViewerTab {
     const tabs = this._allTabs();
     return tabs[tabs.length - 1];
   }
 
-  private _nextTab() {
+  private _nextTab(): ApiViewerTab {
     const tabs = this._allTabs();
     const newIdx = this._getAvailableIndex(
       tabs.findIndex((tab) => tab.selected) + 1,
@@ -154,7 +160,7 @@ export class ApiViewerTabs extends LitElement {
   /**
    * `reset()` marks all tabs as deselected and hides all the panels.
    */
-  public reset() {
+  public reset(): void {
     const tabs = this._allTabs();
     const panels = this._allPanels();
 
@@ -170,13 +176,13 @@ export class ApiViewerTabs extends LitElement {
   /**
    * `selectFirst()` automatically selects first non-hidden tab.
    */
-  public selectFirst() {
+  public selectFirst(): void {
     const tabs = this._allTabs();
     const idx = this._getAvailableIndex(0, 1);
     this._selectTab(tabs[idx % tabs.length]);
   }
 
-  private _selectTab(newTab: ApiViewerTab) {
+  private _selectTab(newTab: ApiViewerTab): void {
     this.reset();
 
     const newPanel = this._panelForTab(newTab);
@@ -187,7 +193,7 @@ export class ApiViewerTabs extends LitElement {
     newPanel.hidden = false;
   }
 
-  private _onKeyDown(event: KeyboardEvent) {
+  private _onKeyDown(event: KeyboardEvent): void {
     const { target } = event;
     if ((target && target instanceof ApiViewerTab) === false) {
       return;
@@ -222,7 +228,7 @@ export class ApiViewerTabs extends LitElement {
     newTab.focus();
   }
 
-  private _onClick(event: MouseEvent) {
+  private _onClick(event: MouseEvent): void {
     const { target } = event;
     if (target && target instanceof ApiViewerTab) {
       this._selectTab(target);

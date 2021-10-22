@@ -116,11 +116,11 @@ export class ApiViewerContent extends LitElement {
     `;
   }
 
-  private _onSelect(e: CustomEvent) {
+  private _onSelect(e: CustomEvent): void {
     this.selected = Number((e.target as HTMLSelectElement).value);
   }
 
-  private _onToggle(e: CustomEvent) {
+  private _onToggle(e: CustomEvent): void {
     this.section = (e.target as HTMLInputElement).value;
   }
 }

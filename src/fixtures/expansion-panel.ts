@@ -198,27 +198,27 @@ export class ExpansionPanel extends LitElement {
     `;
   }
 
-  connectedCallback() {
+  connectedCallback(): void {
     super.connectedCallback();
 
     document.body.addEventListener('keydown', this._boundBodyKeydown, true);
     document.body.addEventListener('keyup', this._boundBodyKeyup, true);
   }
 
-  disconnectedCallback() {
+  disconnectedCallback(): void {
     super.disconnectedCallback();
 
     document.body.removeEventListener('keydown', this._boundBodyKeydown, true);
     document.body.removeEventListener('keyup', this._boundBodyKeyup, true);
   }
 
-  focus() {
+  focus(): void {
     if (this.header) {
       this.header.focus();
     }
   }
 
-  protected firstUpdated() {
+  protected firstUpdated(): void {
     this.setAttribute('tabindex', '0');
     this.addEventListener('focusin', (e) => {
       if (e.composedPath()[0] === this) {
@@ -250,7 +250,7 @@ export class ExpansionPanel extends LitElement {
     });
   }
 
-  protected updated(props: PropertyValues) {
+  protected updated(props: PropertyValues): void {
     if (props.has('opened')) {
       this.dispatchEvent(
         new CustomEvent('opened-changed', {
@@ -270,7 +270,7 @@ export class ExpansionPanel extends LitElement {
     }
   }
 
-  private _setFocused(focused: boolean) {
+  private _setFocused(focused: boolean): void {
     if (focused) {
       this.setAttribute('focused', '');
     } else {
@@ -284,22 +284,22 @@ export class ExpansionPanel extends LitElement {
     }
   }
 
-  private _onToggleClick() {
+  private _onToggleClick(): void {
     this.opened = !this.opened;
   }
 
-  private _onToggleKeyDown(e: KeyboardEvent) {
+  private _onToggleKeyDown(e: KeyboardEvent): void {
     if ([13, 32].indexOf(e.keyCode) > -1) {
       e.preventDefault();
       this.opened = !this.opened;
     }
   }
 
-  private _onBodyKeydown(e: KeyboardEvent) {
+  private _onBodyKeydown(e: KeyboardEvent): void {
     this._tabPressed = e.keyCode === 9;
   }
 
-  private _onBodyKeyup() {
+  private _onBodyKeyup(): void {
     this._tabPressed = false;
   }
 }

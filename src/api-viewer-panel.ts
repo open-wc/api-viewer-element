@@ -29,7 +29,7 @@ export class ApiViewerPanel extends LitElement {
     return html`<slot></slot>`;
   }
 
-  protected firstUpdated() {
+  protected firstUpdated(): void {
     this.setAttribute('role', 'tabpanel');
 
     if (!this.id) {

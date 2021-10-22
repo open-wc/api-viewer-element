@@ -49,7 +49,7 @@ export const ApiViewerMixin = <T extends Constructor<LitElement>>(
 
     private lastSrc?: string;
 
-    protected update(props: PropertyValues) {
+    protected update(props: PropertyValues): void {
       const { src } = this;
 
       if (Array.isArray(this.elements)) {

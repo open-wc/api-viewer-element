@@ -57,7 +57,7 @@ export class ApiViewerDemo extends LitElement {
     `;
   }
 
-  protected createRenderRoot() {
+  protected createRenderRoot(): this {
     return this;
   }
 

@@ -19,7 +19,7 @@ export class ApiDemoContent extends LitElement {
 
   @property({ type: Number }) vid?: number;
 
-  protected createRenderRoot() {
+  protected createRenderRoot(): this {
     return this;
   }
 
@@ -66,7 +66,7 @@ export class ApiDemoContent extends LitElement {
     `;
   }
 
-  private _onSelect(e: CustomEvent) {
+  private _onSelect(e: CustomEvent): void {
     this.selected = Number((e.target as HTMLSelectElement).value);
   }
 }

@@ -80,7 +80,7 @@ export class FancyAccordion extends LitElement {
     return html`<slot></slot>`;
   }
 
-  protected firstUpdated() {
+  protected firstUpdated(): void {
     this.addEventListener('keydown', (e) => this._onKeydown(e));
 
     Array.from(this.children).forEach((node) => {
@@ -91,7 +91,7 @@ export class FancyAccordion extends LitElement {
     });
   }
 
-  protected update(props: PropertyValues) {
+  protected update(props: PropertyValues): void {
     if (props.has('openedIndex') && this._items) {
       const item =
         this.openedIndex == null ? null : this._items[this.openedIndex];
@@ -108,7 +108,7 @@ export class FancyAccordion extends LitElement {
     return (root as unknown as DocumentOrShadowRoot).activeElement;
   }
 
-  private _onKeydown(event: KeyboardEvent) {
+  private _onKeydown(event: KeyboardEvent): void {
     const target = event.composedPath()[0] as Element;
     if (target.getAttribute('part') !== 'header') {
       return;
@@ -144,7 +144,7 @@ export class FancyAccordion extends LitElement {
     }
   }
 
-  private _getAvailableIndex(index?: number, increment?: number) {
+  private _getAvailableIndex(index?: number, increment?: number): number {
     const total = this._items.length;
     let idx = index;
     for (
@@ -165,7 +165,7 @@ export class FancyAccordion extends LitElement {
     return -1;
   }
 
-  private _onOpened(e: CustomEvent) {
+  private _onOpened(e: CustomEvent): void {
     const target = e.composedPath()[0] as ExpansionPanel;
     const idx = this._items.indexOf(target);
     if (e.detail.value) {
@@ -187,7 +187,7 @@ export class FancyAccordion extends LitElement {
     }
   }
 
-  private _notifyOpen() {
+  private _notifyOpen(): void {
     this.dispatchEvent(
       new CustomEvent('opened-index-changed', {
         detail: {

@@ -118,7 +118,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
 
     private _savedProps: PropertyInfo[] = [];
 
-    protected firstUpdated(props: PropertyValues) {
+    protected firstUpdated(props: PropertyValues): void {
       // When a selected tag name is changed by the user,
       // the whole api-viewer-demo component is re-rendered,
       // so this callback is invoked again for new element.
@@ -132,7 +132,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
       this.customKnobs = this._getCustomKnobs();
     }
 
-    protected updated(props: PropertyValues) {
+    protected updated(props: PropertyValues): void {
       if (props.has('exclude')) {
         this.props = this._filterProps();
       }
@@ -157,7 +157,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
       }
     }
 
-    private _getCustomKnobs() {
+    private _getCustomKnobs(): PropertyInfo[] {
       return getTemplates(this.vid as number, this.tag, KNOB)
         .map((template) => {
           const { attr, type } = template.dataset;
@@ -195,7 +195,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
         .filter(Boolean) as PropertyInfo[];
     }
 
-    private _filterProps() {
+    private _filterProps(): PropertyInfo[] {
       const exclude = this.exclude.split(',');
       return this._savedProps
         .filter(({ name }) => !exclude.includes(name))
@@ -220,7 +220,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
           };
     }
 
-    setCss(target: HTMLInputElement) {
+    setCss(target: HTMLInputElement): void {
       const { value, dataset } = target;
 
       this.processedCss = this.processedCss.map((prop) => {
@@ -233,7 +233,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
       });
     }
 
-    setKnobs(target: HTMLInputElement) {
+    setKnobs(target: HTMLInputElement): void {
       const { name, type } = target.dataset;
       let value;
       switch (normalizeType(type)) {
@@ -257,7 +257,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
       }
     }
 
-    setSlots(target: HTMLInputElement) {
+    setSlots(target: HTMLInputElement): void {
       const name = target.dataset.slot;
       const content = target.value;
 
@@ -271,7 +271,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
       });
     }
 
-    onRendered(e: CustomEvent) {
+    onRendered(e: CustomEvent): void {
       const { component } = e.detail;
 
       if (hasTemplate(this.vid as number, this.tag, HOST)) {
@@ -322,7 +322,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
       }
     }
 
-    private _syncKnob(component: Element, changed: PropertyInfo) {
+    private _syncKnob(component: Element, changed: PropertyInfo): void {
       const { name, type, attribute } = changed;
       const value = (component as unknown as ComponentWithProps)[name];
 
