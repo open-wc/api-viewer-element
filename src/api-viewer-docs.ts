@@ -1,11 +1,5 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  property,
-  PropertyValues
-} from 'lit-element';
-import { nothing, TemplateResult } from 'lit-html';
+import { LitElement, html, nothing, PropertyValues, TemplateResult } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import {
   PropertyInfo,
   SlotInfo,

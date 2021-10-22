@@ -1,13 +1,6 @@
-import {
-  LitElement,
-  html,
-  css,
-  customElement,
-  property,
-  query,
-  PropertyValues
-} from 'lit-element';
-import { styleMap } from 'lit-html/directives/style-map.js';
+import { LitElement, html, css, PropertyValues, TemplateResult } from 'lit';
+import { customElement, property, query } from 'lit/decorators.js';
+import { styleMap } from 'lit/directives/style-map.js';
 
 /**
  * A custom element similar to the HTML5 `<details>` element.
@@ -173,7 +166,7 @@ export class ExpansionPanel extends LitElement {
     `;
   }
 
-  render() {
+  render(): TemplateResult {
     return html`
       <div role="heading">
         <div

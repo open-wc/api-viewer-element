@@ -1,4 +1,4 @@
-import { customElement } from 'lit-element';
+import { customElement } from 'lit/decorators.js';
 import { ApiViewerBase } from './api-viewer-base.js';
 import { setTemplates } from './lib/utils.js';
 import styles from './api-viewer-styles.js';

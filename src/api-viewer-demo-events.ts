@@ -1,12 +1,6 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  property,
-  TemplateResult
-} from 'lit-element';
-import { nothing } from 'lit-html';
-import { cache } from 'lit-html/directives/cache.js';
+import { LitElement, html, nothing, TemplateResult } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { cache } from 'lit/directives/cache.js';
 
 interface EventDetail {
   value: string | number | boolean | null | undefined;

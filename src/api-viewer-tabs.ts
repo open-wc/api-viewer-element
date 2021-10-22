@@ -1,10 +1,5 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  css,
-  TemplateResult
-} from 'lit-element';
+import { LitElement, html, css, TemplateResult } from 'lit';
+import { customElement } from 'lit/decorators.js';
 import { ApiViewerTab } from './api-viewer-tab.js';
 import { ApiViewerPanel } from './api-viewer-panel.js';
 

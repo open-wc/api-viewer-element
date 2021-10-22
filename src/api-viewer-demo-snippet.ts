@@ -1,12 +1,6 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  css,
-  property,
-  TemplateResult
-} from 'lit-element';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import { LitElement, html, css, TemplateResult } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { htmlRender } from 'highlight-ts/es/render/html';
 import { registerLanguages } from 'highlight-ts/es/languages';
 import { XML } from 'highlight-ts/es/languages/xml';

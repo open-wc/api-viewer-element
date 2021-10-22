@@ -1,10 +1,5 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  property,
-  TemplateResult
-} from 'lit-element';
+import { LitElement, html, TemplateResult } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { ElementInfo } from './lib/types.js';
 import { EMPTY_ELEMENT } from './lib/constants.js';
 import { parse } from './lib/markdown.js';

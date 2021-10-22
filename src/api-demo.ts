@@ -1,4 +1,5 @@
-import { customElement, css } from 'lit-element';
+import { css } from 'lit';
+import { customElement } from 'lit/decorators.js';
 import { ApiDemoBase } from './api-demo-base.js';
 import { setTemplates } from './lib/utils.js';
 import demoStyles from './api-demo-styles.js';

@@ -1,5 +1,6 @@
-import { LitElement, html, property, TemplateResult } from 'lit-element';
-import { until } from 'lit-html/directives/until.js';
+import { LitElement, html, TemplateResult } from 'lit';
+import { property } from 'lit/decorators.js';
+import { until } from 'lit/directives/until.js';
 import { ElementPromise } from './lib/types.js';
 import { setTemplates } from './lib/utils.js';
 import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';

@@ -1,12 +1,5 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  css,
-  property,
-  PropertyValues,
-  TemplateResult
-} from 'lit-element';
+import { LitElement, html, css, PropertyValues, TemplateResult } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 
 let tabIdCounter = 0;
 

@@ -1,10 +1,5 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  property,
-  TemplateResult
-} from 'lit-element';
+import { LitElement, html, TemplateResult } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { renderer } from './lib/renderer.js';
 import {
   cssPropRenderer,
@@ -43,7 +38,13 @@ export class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
 
     return html`
       <div part="demo-output" @rendered="${this.onRendered}">
-        ${renderer(id, this.tag, this.knobs, slots, this.processedCss)}
+        ${renderer({
+          id,
+          tag: this.tag,
+          knobs: this.knobs,
+          slots,
+          cssProps: this.processedCss
+        })}
       </div>
       <api-viewer-tabs part="demo-tabs">
         <api-viewer-tab heading="Source" slot="tab" part="tab"></api-viewer-tab>
