@@ -27,7 +27,13 @@ export type ComponentRendererOptions = {
 
 const { HOST, PREFIX, SLOT, SUFFIX, WRAPPER } = TemplateTypes;
 
-const applyKnobs = (component: Element, knobs: KnobValues): void => {
+const updateComponent = (
+  component: HTMLElement,
+  options: ComponentRendererOptions
+): void => {
+  const { id, tag, knobs, slots, cssProps } = options;
+
+  // Apply knobs using properties or attributes
   Object.keys(knobs).forEach((key: string) => {
     const { type, attribute, value, custom } = knobs[key];
     if (custom && attribute) {
@@ -42,40 +48,39 @@ const applyKnobs = (component: Element, knobs: KnobValues): void => {
       (component as unknown as ComponentWithProps)[key] = value;
     }
   });
-};
 
-const applySlots = (component: Element, slots: SlotValue[]): void => {
-  while (component.firstChild) {
-    component.removeChild(component.firstChild);
-  }
-  slots.forEach((slot) => {
-    let node: Element | Text;
-    const { name, content } = slot;
-    if (name) {
-      node = document.createElement('div');
-      node.setAttribute('slot', name);
-      node.textContent = content;
-    } else {
-      node = document.createTextNode(content);
+  // Apply slots content by re-creating nodes
+  if (!hasTemplate(id, tag, SLOT) && slots.length) {
+    while (component.firstChild) {
+      component.removeChild(component.firstChild);
     }
-    component.appendChild(node);
-  });
-};
-
-const applyCssProps = (
-  component: HTMLElement,
-  cssProps: CSSPropertyInfo[]
-): void => {
-  cssProps.forEach((prop) => {
-    const { name, value } = prop;
-    if (value) {
-      if (value === prop.default) {
-        component.style.removeProperty(name);
+    slots.forEach((slot) => {
+      let node: Element | Text;
+      const { name, content } = slot;
+      if (name) {
+        node = document.createElement('div');
+        node.setAttribute('slot', name);
+        node.textContent = content;
       } else {
-        component.style.setProperty(name, value);
+        node = document.createTextNode(content);
       }
-    }
-  });
+      component.appendChild(node);
+    });
+  }
+
+  // Apply CSS props
+  if (cssProps.length) {
+    cssProps.forEach((prop) => {
+      const { name, value } = prop;
+      if (value) {
+        if (value === prop.default) {
+          component.style.removeProperty(name);
+        } else {
+          component.style.setProperty(name, value);
+        }
+      }
+    });
+  }
 };
 
 const isDefinedPromise = (action: unknown): action is Promise<unknown> =>
@@ -116,23 +121,6 @@ async function elementUpdated(
   }
 
   return el;
-}
-
-function updateComponent(
-  target: HTMLElement,
-  options: ComponentRendererOptions
-) {
-  const { id, tag, knobs, slots, cssProps } = options;
-
-  applyKnobs(target, knobs);
-
-  if (!hasTemplate(id, tag, SLOT) && slots.length) {
-    applySlots(target, slots);
-  }
-
-  if (cssProps.length) {
-    applyCssProps(target, cssProps);
-  }
 }
 
 class Renderer extends Directive {
