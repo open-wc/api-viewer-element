@@ -1,5 +1,6 @@
 import { LitElement, html, css, TemplateResult } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { htmlRender } from 'highlight-ts/es/render/html';
 import { registerLanguages } from 'highlight-ts/es/languages';

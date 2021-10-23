@@ -1,5 +1,5 @@
 import { LitElement, PropertyValues } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property } from 'lit/decorators/property.js';
 import { getSlotDefault } from './lib/knobs.js';
 import {
   ComponentWithProps,

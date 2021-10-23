@@ -1,5 +1,5 @@
 import { css } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators/custom-element.js';
 import { ApiDocsBase } from './api-docs-base.js';
 import docsStyles from './api-docs-styles.js';
 import sharedStyles from './shared-styles.js';

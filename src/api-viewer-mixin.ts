@@ -1,5 +1,5 @@
 import { LitElement, html, PropertyValues } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property } from 'lit/decorators/property.js';
 import { ElementInfo, ElementPromise, ElementSetInfo } from './lib/types.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */

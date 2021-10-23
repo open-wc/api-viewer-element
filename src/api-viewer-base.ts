@@ -1,5 +1,5 @@
 import { LitElement, html, TemplateResult } from 'lit';
-import { property } from 'lit/decorators.js';
+import { property } from 'lit/decorators/property.js';
 import { until } from 'lit/directives/until.js';
 import { ElementPromise } from './lib/types.js';
 import { setTemplates } from './lib/utils.js';

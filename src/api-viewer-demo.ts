@@ -1,5 +1,6 @@
 import { LitElement, html, TemplateResult } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
 import { until } from 'lit/directives/until.js';
 import {
   CSSPropertyInfo,

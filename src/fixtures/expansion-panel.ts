@@ -1,5 +1,7 @@
 import { LitElement, html, css, PropertyValues, TemplateResult } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
+import { query } from 'lit/decorators/query.js';
 import { styleMap } from 'lit/directives/style-map.js';
 
 /**
