@@ -15,7 +15,7 @@ import './api-viewer-panel.js';
 import './api-viewer-tab.js';
 import './api-viewer-tabs.js';
 
-export class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
+class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
   @property() copyBtnText = 'copy';
 
   protected createRenderRoot(): this {

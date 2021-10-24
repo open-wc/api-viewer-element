@@ -80,7 +80,7 @@ const renderTab = (
   `;
 };
 
-export class ApiViewerDocs extends LitElement {
+class ApiViewerDocs extends LitElement {
   @property() name = '';
 
   @property({ attribute: false })

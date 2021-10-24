@@ -10,7 +10,7 @@ import {
 
 import './api-viewer-demo-layout.js';
 
-export class ApiViewerDemo extends LitElement {
+class ApiViewerDemo extends LitElement {
   @property() name = '';
 
   @property({ attribute: false })

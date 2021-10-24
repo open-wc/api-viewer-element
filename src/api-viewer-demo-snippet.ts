@@ -142,7 +142,7 @@ const renderSnippet = (
   return html`<pre><code>${unsafeHTML(value)}</code></pre>`;
 };
 
-export class ApiViewerDemoSnippet extends LitElement {
+class ApiViewerDemoSnippet extends LitElement {
   @property() tag = '';
 
   @property({ attribute: false })

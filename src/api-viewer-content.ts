@@ -7,7 +7,7 @@ import { parse } from './lib/markdown.js';
 import './api-viewer-docs.js';
 import './api-viewer-demo.js';
 
-export class ApiViewerContent extends LitElement {
+class ApiViewerContent extends LitElement {
   @property({ attribute: false }) elements: ElementInfo[] = [];
 
   @property({ type: Number }) selected = 0;

@@ -28,7 +28,7 @@ const renderEvents = (log: CustomEvent[]): TemplateResult => {
   `;
 };
 
-export class ApiViewerDemoEvents extends LitElement {
+class ApiViewerDemoEvents extends LitElement {
   @property({ attribute: false })
   log: CustomEvent[] = [];
 
