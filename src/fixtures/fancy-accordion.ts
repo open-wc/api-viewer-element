@@ -85,7 +85,7 @@ export class FancyAccordion extends LitElement {
     });
   }
 
-  protected update(props: PropertyValues): void {
+  willUpdate(props: PropertyValues): void {
     if (props.has('openedIndex') && this._items) {
       const item =
         this.openedIndex == null ? null : this._items[this.openedIndex];
@@ -93,8 +93,6 @@ export class FancyAccordion extends LitElement {
         el.opened = el === item;
       });
     }
-
-    super.update(props);
   }
 
   get focused(): Element | null {

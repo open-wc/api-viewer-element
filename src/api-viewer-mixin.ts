@@ -1,4 +1,4 @@
-import { LitElement, html, PropertyValues } from 'lit';
+import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { ElementInfo, ElementPromise, ElementSetInfo } from './lib/types.js';
 
@@ -50,7 +50,7 @@ export const ApiViewerMixin = <T extends Constructor<LitElement>>(
 
     private lastSrc?: string;
 
-    protected update(props: PropertyValues): void {
+    willUpdate(): void {
       const { src } = this;
 
       if (Array.isArray(this.elements)) {
@@ -60,8 +60,6 @@ export const ApiViewerMixin = <T extends Constructor<LitElement>>(
         this.lastSrc = src;
         this.jsonFetched = fetchJson(src);
       }
-
-      super.update(props);
     }
   }
 
