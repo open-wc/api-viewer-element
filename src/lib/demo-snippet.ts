@@ -1,20 +1,18 @@
-import { LitElement, html, css, TemplateResult } from 'lit';
-import { property } from 'lit/decorators/property.js';
+import { html, TemplateResult } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { htmlRender } from 'highlight-ts/es/render/html';
 import { registerLanguages } from 'highlight-ts/es/languages';
 import { XML } from 'highlight-ts/es/languages/xml';
 import { init, process } from 'highlight-ts/es/process';
-import { CSSPropertyInfo, KnobValues, SlotValue } from './lib/types.js';
-import { CSS } from './lib/highlight-css.js';
+import { CSSPropertyInfo, KnobValues, SlotValue } from './types.js';
+import { CSS } from './highlight-css.js';
 import {
   getTemplate,
   getTemplateNode,
   isTemplate,
   normalizeType,
   TemplateTypes
-} from './lib/utils.js';
-import highlightTheme from './lib/highlight-theme.js';
+} from './utils.js';
 
 // register languages
 registerLanguages(CSS, XML);
@@ -51,7 +49,7 @@ const getTplContent = (
   return unindent(tpl, prepend);
 };
 
-const renderSnippet = (
+export const renderSnippet = (
   id: number,
   tag: string,
   values: KnobValues,
@@ -141,54 +139,3 @@ const renderSnippet = (
 
   return html`<pre><code>${unsafeHTML(value)}</code></pre>`;
 };
-
-class ApiViewerDemoSnippet extends LitElement {
-  @property() tag = '';
-
-  @property({ attribute: false })
-  knobs: KnobValues = {};
-
-  @property({ attribute: false })
-  slots: SlotValue[] = [];
-
-  @property({ attribute: false })
-  cssProps: CSSPropertyInfo[] = [];
-
-  @property({ type: Number }) vid?: number;
-
-  static get styles() {
-    return [
-      highlightTheme,
-      css`
-        :host {
-          display: block;
-          padding: 0.75rem 1rem;
-        }
-      `
-    ];
-  }
-
-  protected render(): TemplateResult {
-    return html`
-      ${renderSnippet(
-        this.vid as number,
-        this.tag,
-        this.knobs,
-        this.slots,
-        this.cssProps
-      )}
-    `;
-  }
-
-  get source(): HTMLElement {
-    return this.renderRoot.querySelector('code') as HTMLElement;
-  }
-}
-
-customElements.define('api-viewer-demo-snippet', ApiViewerDemoSnippet);
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'api-viewer-demo-snippet': ApiViewerDemoSnippet;
-  }
-}

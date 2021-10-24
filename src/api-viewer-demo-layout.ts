@@ -1,5 +1,6 @@
 import { LitElement, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
+import { renderSnippet } from './lib/demo-snippet.js';
 import { renderer } from './lib/renderer.js';
 import {
   cssPropRenderer,
@@ -9,7 +10,6 @@ import {
 } from './lib/knobs.js';
 import { hasTemplate, TemplateTypes } from './lib/utils.js';
 import { ApiDemoLayoutMixin } from './api-demo-layout-mixin.js';
-import './api-viewer-demo-snippet.js';
 import './api-viewer-demo-events.js';
 import './api-viewer-panel.js';
 import './api-viewer-tab.js';
@@ -51,13 +51,15 @@ class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
           <button @click="${this._onCopyClick}" part="button">
             ${this.copyBtnText}
           </button>
-          <api-viewer-demo-snippet
-            .tag="${this.tag}"
-            .knobs="${this.knobs}"
-            .slots="${slots}"
-            .cssProps="${this.processedCss}"
-            .vid="${this.vid}"
-          ></api-viewer-demo-snippet>
+          <div part="demo-snippet">
+            ${renderSnippet(
+              this.vid as number,
+              this.tag,
+              this.knobs,
+              slots,
+              this.processedCss
+            )}
+          </div>
         </api-viewer-panel>
         <api-viewer-tab
           heading="Knobs"
@@ -131,10 +133,10 @@ class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
   }
 
   private _onCopyClick(): void {
-    const snippet = this.renderRoot.querySelector('api-viewer-demo-snippet');
-    if (snippet && snippet.source) {
+    const source = this.renderRoot.querySelector('[part="demo-snippet"] code');
+    if (source) {
       const range = document.createRange();
-      range.selectNodeContents(snippet.source);
+      range.selectNodeContents(source);
       const selection = window.getSelection() as Selection;
       selection.removeAllRanges();
       selection.addRange(range);
