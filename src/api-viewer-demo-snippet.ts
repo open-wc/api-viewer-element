@@ -1,5 +1,4 @@
 import { LitElement, html, css, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { htmlRender } from 'highlight-ts/es/render/html';
@@ -143,7 +142,6 @@ const renderSnippet = (
   return html`<pre><code>${unsafeHTML(value)}</code></pre>`;
 };
 
-@customElement('api-viewer-demo-snippet')
 export class ApiViewerDemoSnippet extends LitElement {
   @property() tag = '';
 
@@ -186,6 +184,8 @@ export class ApiViewerDemoSnippet extends LitElement {
     return this.renderRoot.querySelector('code') as HTMLElement;
   }
 }
+
+customElements.define('api-viewer-demo-snippet', ApiViewerDemoSnippet);
 
 declare global {
   interface HTMLElementTagNameMap {

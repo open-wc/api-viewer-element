@@ -1,10 +1,8 @@
 import { LitElement, html, css, PropertyValues, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
 let tabIdCounter = 0;
 
-@customElement('api-viewer-tab')
 export class ApiViewerTab extends LitElement {
   @property({ type: Boolean, reflect: true }) selected = false;
 
@@ -149,6 +147,8 @@ export class ApiViewerTab extends LitElement {
     this.toggleAttribute('focus-ring', focused && !this._mousedown);
   }
 }
+
+customElements.define('api-viewer-tab', ApiViewerTab);
 
 declare global {
   interface HTMLElementTagNameMap {

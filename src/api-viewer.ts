@@ -1,9 +1,7 @@
-import { customElement } from 'lit/decorators/custom-element.js';
 import { ApiViewerBase } from './api-viewer-base.js';
 import { setTemplates } from './lib/utils.js';
 import styles from './api-viewer-styles.js';
 
-@customElement('api-viewer')
 export class ApiViewer extends ApiViewerBase {
   static get styles() {
     return styles;
@@ -20,6 +18,8 @@ export class ApiViewer extends ApiViewerBase {
     );
   }
 }
+
+customElements.define('api-viewer', ApiViewer);
 
 declare global {
   interface HTMLElementTagNameMap {

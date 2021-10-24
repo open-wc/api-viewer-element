@@ -1,5 +1,4 @@
 import { LitElement, html, nothing, PropertyValues, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import {
   PropertyInfo,
@@ -81,7 +80,6 @@ const renderTab = (
   `;
 };
 
-@customElement('api-viewer-docs')
 export class ApiViewerDocs extends LitElement {
   @property() name = '';
 
@@ -215,6 +213,8 @@ export class ApiViewerDocs extends LitElement {
     }
   }
 }
+
+customElements.define('api-viewer-docs', ApiViewerDocs);
 
 declare global {
   interface HTMLElementTagNameMap {

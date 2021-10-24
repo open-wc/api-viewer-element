@@ -1,5 +1,4 @@
 import { LitElement, html, css, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
 import { ApiViewerTab } from './api-viewer-tab.js';
 import { ApiViewerPanel } from './api-viewer-panel.js';
 
@@ -12,7 +11,6 @@ const KEYCODE = {
   END: 35
 };
 
-@customElement('api-viewer-tabs')
 export class ApiViewerTabs extends LitElement {
   private _boundSlotChange = this._onSlotChange.bind(this);
 
@@ -231,6 +229,8 @@ export class ApiViewerTabs extends LitElement {
     }
   }
 }
+
+customElements.define('api-viewer-tabs', ApiViewerTabs);
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -1,5 +1,4 @@
 import { LitElement, html, nothing, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { cache } from 'lit/directives/cache.js';
 
@@ -29,7 +28,6 @@ const renderEvents = (log: CustomEvent[]): TemplateResult => {
   `;
 };
 
-@customElement('api-viewer-demo-events')
 export class ApiViewerDemoEvents extends LitElement {
   @property({ attribute: false })
   log: CustomEvent[] = [];
@@ -64,6 +62,8 @@ export class ApiViewerDemoEvents extends LitElement {
     this.dispatchEvent(new CustomEvent('clear'));
   }
 }
+
+customElements.define('api-viewer-demo-events', ApiViewerDemoEvents);
 
 declare global {
   interface HTMLElementTagNameMap {

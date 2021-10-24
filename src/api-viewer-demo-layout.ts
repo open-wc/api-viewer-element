@@ -1,5 +1,4 @@
 import { LitElement, html, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { renderer } from './lib/renderer.js';
 import {
@@ -16,7 +15,6 @@ import './api-viewer-panel.js';
 import './api-viewer-tab.js';
 import './api-viewer-tabs.js';
 
-@customElement('api-viewer-demo-layout')
 export class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
   @property() copyBtnText = 'copy';
 
@@ -170,6 +168,8 @@ export class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
     this.setSlots(e.composedPath()[0] as HTMLInputElement);
   }
 }
+
+customElements.define('api-viewer-demo-layout', ApiViewerDemoLayout);
 
 declare global {
   interface HTMLElementTagNameMap {

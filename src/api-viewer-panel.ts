@@ -1,9 +1,7 @@
 import { LitElement, html, css, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
 
 let panelIdCounter = 0;
 
-@customElement('api-viewer-panel')
 export class ApiViewerPanel extends LitElement {
   static get styles() {
     return css`
@@ -32,6 +30,8 @@ export class ApiViewerPanel extends LitElement {
     }
   }
 }
+
+customElements.define('api-viewer-panel', ApiViewerPanel);
 
 declare global {
   interface HTMLElementTagNameMap {

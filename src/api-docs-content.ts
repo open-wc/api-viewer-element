@@ -1,12 +1,10 @@
 import { LitElement, html, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ElementInfo } from './lib/types.js';
 import { EMPTY_ELEMENT } from './lib/constants.js';
 import { parse } from './lib/markdown.js';
 import './api-viewer-docs.js';
 
-@customElement('api-docs-content')
 export class ApiDocsContent extends LitElement {
   @property({ attribute: false }) elements: ElementInfo[] = [];
 
@@ -72,6 +70,8 @@ export class ApiDocsContent extends LitElement {
     this.selected = Number((e.target as HTMLSelectElement).value);
   }
 }
+
+customElements.define('api-docs-content', ApiDocsContent);
 
 declare global {
   interface HTMLElementTagNameMap {

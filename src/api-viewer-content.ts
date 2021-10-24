@@ -1,5 +1,4 @@
 import { LitElement, html, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { cache } from 'lit/directives/cache.js';
 import { ElementInfo } from './lib/types.js';
@@ -8,7 +7,6 @@ import { parse } from './lib/markdown.js';
 import './api-viewer-docs.js';
 import './api-viewer-demo.js';
 
-@customElement('api-viewer-content')
 export class ApiViewerContent extends LitElement {
   @property({ attribute: false }) elements: ElementInfo[] = [];
 
@@ -120,6 +118,8 @@ export class ApiViewerContent extends LitElement {
     this.section = (e.target as HTMLInputElement).value;
   }
 }
+
+customElements.define('api-viewer-content', ApiViewerContent);
 
 declare global {
   interface HTMLElementTagNameMap {

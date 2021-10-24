@@ -1,5 +1,4 @@
 import { LitElement, html, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { until } from 'lit/directives/until.js';
 import {
@@ -11,7 +10,6 @@ import {
 
 import './api-viewer-demo-layout.js';
 
-@customElement('api-viewer-demo')
 export class ApiViewerDemo extends LitElement {
   @property() name = '';
 
@@ -77,6 +75,8 @@ export class ApiViewerDemo extends LitElement {
     `;
   }
 }
+
+customElements.define('api-viewer-demo', ApiViewerDemo);
 
 declare global {
   interface HTMLElementTagNameMap {
