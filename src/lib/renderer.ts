@@ -51,9 +51,7 @@ const updateComponent = (
 
   // Apply slots content by re-creating nodes
   if (!hasTemplate(id, tag, SLOT) && slots.length) {
-    while (component.firstChild) {
-      component.removeChild(component.firstChild);
-    }
+    component.innerHTML = '';
     slots.forEach((slot) => {
       let node: Element | Text;
       const { name, content } = slot;
