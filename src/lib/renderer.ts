@@ -159,13 +159,10 @@ class Renderer extends Directive {
       WRAPPER
     ].map((type) => getTemplate(options.id, tag, type));
 
+    const closing = `</${tag}>`;
+
+    // Host template
     const node = getTemplateNode(host);
-    let stub: Element;
-    if (node) {
-      stub = node.cloneNode(true) as Element;
-    } else {
-      stub = document.createElement(tag);
-    }
 
     // Prefix template
     if (isTemplate(prefix)) {
@@ -173,9 +170,9 @@ class Renderer extends Directive {
     }
 
     // Slot template
-    let raw = stub.outerHTML;
+    let raw = node ? node.outerHTML : `<${tag}>${closing}`;
     if (isTemplate(slot)) {
-      raw = raw.replace(`</${tag}>`, `${slot.innerHTML}</${tag}>`);
+      raw = raw.replace(closing, `${slot.innerHTML}${closing}`);
     }
 
     // Wrapper template
