@@ -15,18 +15,19 @@ const renderDetail = (detail: EventDetail): string => {
   return ` detail: ${JSON.stringify(detail).replace(`"${undef}"`, undef)}`;
 };
 
-const renderEvents = (log: CustomEvent[]): TemplateResult => {
-  return html`
-    ${log.map((e) => {
-      const { type, detail } = e;
+const renderEvents = (log: CustomEvent[]): TemplateResult =>
+  html`
+    ${log.map((event) => {
       return html`
         <p part="event-record">
-          event: "${type}".${detail == null ? nothing : renderDetail(detail)}
+          event:
+          "${event.type}".${event.detail == null
+            ? nothing
+            : renderDetail(event.detail)}
         </p>
       `;
     })}
   `;
-};
 
 class ApiViewerDemoEvents extends LitElement {
   @property({ attribute: false })

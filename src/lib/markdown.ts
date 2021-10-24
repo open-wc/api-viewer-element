@@ -5,8 +5,8 @@ import DOMPurify from 'dompurify';
 
 marked.setOptions({ headerIds: false });
 
-export const parse = (markdown?: string): TemplateResult => {
-  return html`
+export const parse = (markdown?: string): TemplateResult =>
+  html`
     ${!markdown
       ? nothing
       : unsafeHTML(
@@ -16,4 +16,3 @@ export const parse = (markdown?: string): TemplateResult => {
           )
         )}
   `;
-};
