@@ -26,7 +26,7 @@ async function renderDocs(
         <label part="select-label">
           <select
             @change=${onSelect}
-            .value=${String(selected)}
+            .value=${selected || ''}
             ?hidden=${elements.length === 1}
             part="select"
           >
