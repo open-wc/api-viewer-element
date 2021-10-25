@@ -1,13 +1,12 @@
-import { html } from 'lit-element';
-import { nothing, TemplateResult } from 'lit-html';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import { html, nothing, TemplateResult } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import marked from 'marked/lib/marked.esm.js';
 import DOMPurify from 'dompurify';
 
 marked.setOptions({ headerIds: false });
 
-export const parse = (markdown?: string): TemplateResult => {
-  return html`
+export const parse = (markdown?: string): TemplateResult =>
+  html`
     ${!markdown
       ? nothing
       : unsafeHTML(
@@ -17,4 +16,3 @@ export const parse = (markdown?: string): TemplateResult => {
           )
         )}
   `;
-};

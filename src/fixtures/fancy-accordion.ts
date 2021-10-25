@@ -1,12 +1,6 @@
-import {
-  LitElement,
-  html,
-  css,
-  customElement,
-  property,
-  PropertyValues,
-  TemplateResult
-} from 'lit-element';
+import { LitElement, html, css, PropertyValues, TemplateResult } from 'lit';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
 import { ExpansionPanel } from './expansion-panel.js';
 
 /**
@@ -91,7 +85,7 @@ export class FancyAccordion extends LitElement {
     });
   }
 
-  protected update(props: PropertyValues): void {
+  willUpdate(props: PropertyValues): void {
     if (props.has('openedIndex') && this._items) {
       const item =
         this.openedIndex == null ? null : this._items[this.openedIndex];
@@ -99,8 +93,6 @@ export class FancyAccordion extends LitElement {
         el.opened = el === item;
       });
     }
-
-    super.update(props);
   }
 
   get focused(): Element | null {

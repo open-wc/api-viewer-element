@@ -1,12 +1,6 @@
-import {
-  LitElement,
-  html,
-  css,
-  customElement,
-  property,
-  PropertyValues,
-  TemplateResult
-} from 'lit-element';
+import { LitElement, html, css, PropertyValues, TemplateResult } from 'lit';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
 
 const normalizeValue = (value: number, min: number, max: number) => {
   let nV;

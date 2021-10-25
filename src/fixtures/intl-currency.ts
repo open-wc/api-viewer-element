@@ -1,11 +1,6 @@
-import {
-  LitElement,
-  html,
-  css,
-  customElement,
-  property,
-  TemplateResult
-} from 'lit-element';
+import { LitElement, html, css, TemplateResult } from 'lit';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
 
 const format = (
   value: number,

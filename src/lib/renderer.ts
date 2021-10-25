@@ -1,4 +1,7 @@
-import { directive, Part, NodePart } from 'lit-html';
+import { ChildPart, html, noChange, nothing, TemplateResult } from 'lit';
+import { directive, Directive, PartInfo, PartType } from 'lit/directive.js';
+import { templateContent } from 'lit/directives/template-content.js';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
   ComponentWithProps,
   CSSPropertyInfo,
@@ -14,11 +17,23 @@ import {
   TemplateTypes
 } from './utils.js';
 
+export type ComponentRendererOptions = {
+  id: number;
+  tag: string;
+  knobs: KnobValues;
+  slots: SlotValue[];
+  cssProps: CSSPropertyInfo[];
+};
+
 const { HOST, PREFIX, SLOT, SUFFIX, WRAPPER } = TemplateTypes;
 
-const caches = new WeakMap();
+const updateComponent = (
+  component: HTMLElement,
+  options: ComponentRendererOptions
+): void => {
+  const { id, tag, knobs, slots, cssProps } = options;
 
-const applyKnobs = (component: Element, knobs: KnobValues): void => {
+  // Apply knobs using properties or attributes
   Object.keys(knobs).forEach((key: string) => {
     const { type, attribute, value, custom } = knobs[key];
     if (custom && attribute) {
@@ -33,40 +48,37 @@ const applyKnobs = (component: Element, knobs: KnobValues): void => {
       (component as unknown as ComponentWithProps)[key] = value;
     }
   });
-};
 
-const applySlots = (component: Element, slots: SlotValue[]): void => {
-  while (component.firstChild) {
-    component.removeChild(component.firstChild);
-  }
-  slots.forEach((slot) => {
-    let node: Element | Text;
-    const { name, content } = slot;
-    if (name) {
-      node = document.createElement('div');
-      node.setAttribute('slot', name);
-      node.textContent = content;
-    } else {
-      node = document.createTextNode(content);
-    }
-    component.appendChild(node);
-  });
-};
-
-const applyCssProps = (
-  component: HTMLElement,
-  cssProps: CSSPropertyInfo[]
-): void => {
-  cssProps.forEach((prop) => {
-    const { name, value } = prop;
-    if (value) {
-      if (value === prop.default) {
-        component.style.removeProperty(name);
+  // Apply slots content by re-creating nodes
+  if (!hasTemplate(id, tag, SLOT) && slots.length) {
+    component.innerHTML = '';
+    slots.forEach((slot) => {
+      let node: Element | Text;
+      const { name, content } = slot;
+      if (name) {
+        node = document.createElement('div');
+        node.setAttribute('slot', name);
+        node.textContent = content;
       } else {
-        component.style.setProperty(name, value);
+        node = document.createTextNode(content);
       }
-    }
-  });
+      component.appendChild(node);
+    });
+  }
+
+  // Apply CSS props
+  if (cssProps.length) {
+    cssProps.forEach((prop) => {
+      const { name, value } = prop;
+      if (value) {
+        if (value === prop.default) {
+          component.style.removeProperty(name);
+        } else {
+          component.style.setProperty(name, value);
+        }
+      }
+    });
+  }
 };
 
 const isDefinedPromise = (action: unknown): action is Promise<unknown> =>
@@ -109,107 +121,98 @@ async function elementUpdated(
   return el;
 }
 
-const makePart = (part: NodePart): NodePart => {
-  const newPart = new NodePart(part.options);
-  newPart.appendIntoPart(part);
-  return newPart;
-};
-
-const importTemplate = (tpl: HTMLTemplateElement): DocumentFragment =>
-  document.importNode(tpl.content, true);
-
-export const renderer = directive(
-  (
-      id: number,
-      tag: string,
-      knobs: KnobValues,
-      slots: SlotValue[],
-      cssProps: CSSPropertyInfo[]
-    ) =>
-    (part: Part) => {
-      if (!(part instanceof NodePart)) {
-        throw new Error('renderer can only be used in text bindings');
-      }
-
-      let component = caches.get(part);
-      if (component === undefined || component.tagName.toLowerCase() !== tag) {
-        const [host, prefix, suffix, slot, wrapper] = [
-          HOST,
-          PREFIX,
-          SUFFIX,
-          SLOT,
-          WRAPPER
-        ].map((type) => getTemplate(id, tag, type));
-
-        const node = getTemplateNode(host);
-        if (node) {
-          component = node.cloneNode(true);
-        } else {
-          component = document.createElement(tag);
-        }
-
-        let targetPart = part;
-
-        if (isTemplate(prefix)) {
-          const prefixPart = makePart(part);
-          prefixPart.setValue(importTemplate(prefix));
-          prefixPart.commit();
-        }
-
-        const wrapNode = getTemplateNode(wrapper);
-        if (wrapNode) {
-          const wrapperPart = makePart(part);
-          const clone = wrapNode.cloneNode(true) as HTMLElement;
-          clone.innerHTML = '';
-          wrapperPart.setValue(clone);
-          wrapperPart.commit();
-          const innerPart = new NodePart(part.options);
-          innerPart.appendInto(clone);
-          targetPart = innerPart;
-        } else if (isTemplate(prefix) || isTemplate(suffix)) {
-          const contentPart = makePart(part);
-          targetPart = contentPart;
-        }
-
-        targetPart.setValue(component);
-        targetPart.commit();
-
-        if (isTemplate(suffix)) {
-          const suffixPart = makePart(part);
-          suffixPart.setValue(importTemplate(suffix));
-          suffixPart.commit();
-        }
-
-        if (isTemplate(slot)) {
-          component.appendChild(importTemplate(slot));
-        }
-
-        caches.set(part, component);
-
-        const instance = targetPart.value as HTMLElement;
-
-        // wait for rendering
-        elementUpdated(instance).then(() => {
-          instance.dispatchEvent(
-            new CustomEvent('rendered', {
-              detail: {
-                component
-              },
-              bubbles: true,
-              composed: true
-            })
-          );
-        });
-      }
-
-      applyKnobs(component, knobs);
-
-      if (!hasTemplate(id, tag, SLOT) && slots.length) {
-        applySlots(component, slots);
-      }
-
-      if (cssProps.length) {
-        applyCssProps(component, cssProps);
-      }
+class Renderer extends Directive {
+  constructor(part: PartInfo) {
+    super(part);
+    if (part.type !== PartType.CHILD) {
+      throw new Error('renderer only supports binding to element');
     }
-);
+  }
+
+  render(_options: ComponentRendererOptions): typeof nothing {
+    return nothing;
+  }
+
+  update(
+    part: ChildPart,
+    [options, _value]: [ComponentRendererOptions, unknown]
+  ): TemplateResult | typeof noChange {
+    const parent = part.options?.host as Element;
+    const { tag } = options;
+
+    // Update existing component, if any
+    let component = parent.querySelector(tag) as HTMLElement;
+    if (component) {
+      updateComponent(component, options);
+      return noChange;
+    }
+
+    const result = [];
+
+    const [host, prefix, suffix, slot, wrapper] = [
+      HOST,
+      PREFIX,
+      SUFFIX,
+      SLOT,
+      WRAPPER
+    ].map((type) => getTemplate(options.id, tag, type));
+
+    const closing = `</${tag}>`;
+
+    // Host template
+    const node = getTemplateNode(host);
+
+    // Prefix template
+    if (isTemplate(prefix)) {
+      result.push(templateContent(prefix));
+    }
+
+    // Slot template
+    let raw = node ? node.outerHTML : `<${tag}>${closing}`;
+    if (isTemplate(slot)) {
+      raw = raw.replace(closing, `${slot.innerHTML}${closing}`);
+    }
+
+    // Wrapper template
+    const wrapNode = getTemplateNode(wrapper);
+    if (wrapNode) {
+      const wrapTagName = wrapNode.localName;
+
+      const wrapped = unsafeHTML(`
+        <${wrapTagName}>
+          ${raw}
+        </${wrapTagName}>
+      `);
+
+      result.push(wrapped);
+    } else {
+      result.push(unsafeHTML(raw));
+    }
+
+    // Prefix template
+    if (isTemplate(suffix)) {
+      result.push(templateContent(suffix));
+    }
+
+    // Wait for rendering
+    Promise.resolve().then(() => {
+      component = parent.querySelector(tag) as HTMLElement;
+
+      elementUpdated(component).then(() => {
+        component.dispatchEvent(
+          new CustomEvent('rendered', {
+            detail: {
+              component
+            },
+            bubbles: true,
+            composed: true
+          })
+        );
+      });
+    });
+
+    return html`${result}`;
+  }
+}
+
+export const renderer = directive(Renderer);

@@ -1,10 +1,6 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  property,
-  TemplateResult
-} from 'lit-element';
+import { LitElement, html, TemplateResult } from 'lit';
+import { property } from 'lit/decorators/property.js';
+import { renderSnippet } from './lib/demo-snippet.js';
 import { renderer } from './lib/renderer.js';
 import {
   cssPropRenderer,
@@ -14,14 +10,12 @@ import {
 } from './lib/knobs.js';
 import { hasTemplate, TemplateTypes } from './lib/utils.js';
 import { ApiDemoLayoutMixin } from './api-demo-layout-mixin.js';
-import './api-viewer-demo-snippet.js';
 import './api-viewer-demo-events.js';
 import './api-viewer-panel.js';
 import './api-viewer-tab.js';
 import './api-viewer-tabs.js';
 
-@customElement('api-viewer-demo-layout')
-export class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
+class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
   @property() copyBtnText = 'copy';
 
   protected createRenderRoot(): this {
@@ -43,7 +37,13 @@ export class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
 
     return html`
       <div part="demo-output" @rendered="${this.onRendered}">
-        ${renderer(id, this.tag, this.knobs, slots, this.processedCss)}
+        ${renderer({
+          id,
+          tag: this.tag,
+          knobs: this.knobs,
+          slots,
+          cssProps: this.processedCss
+        })}
       </div>
       <api-viewer-tabs part="demo-tabs">
         <api-viewer-tab heading="Source" slot="tab" part="tab"></api-viewer-tab>
@@ -51,13 +51,15 @@ export class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
           <button @click="${this._onCopyClick}" part="button">
             ${this.copyBtnText}
           </button>
-          <api-viewer-demo-snippet
-            .tag="${this.tag}"
-            .knobs="${this.knobs}"
-            .slots="${slots}"
-            .cssProps="${this.processedCss}"
-            .vid="${this.vid}"
-          ></api-viewer-demo-snippet>
+          <div part="demo-snippet">
+            ${renderSnippet(
+              this.vid as number,
+              this.tag,
+              this.knobs,
+              slots,
+              this.processedCss
+            )}
+          </div>
         </api-viewer-panel>
         <api-viewer-tab
           heading="Knobs"
@@ -131,10 +133,10 @@ export class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
   }
 
   private _onCopyClick(): void {
-    const snippet = this.renderRoot.querySelector('api-viewer-demo-snippet');
-    if (snippet && snippet.source) {
+    const source = this.renderRoot.querySelector('[part="demo-snippet"] code');
+    if (source) {
       const range = document.createRange();
-      range.selectNodeContents(snippet.source);
+      range.selectNodeContents(source);
       const selection = window.getSelection() as Selection;
       selection.removeAllRanges();
       selection.addRange(range);
@@ -168,6 +170,8 @@ export class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
     this.setSlots(e.composedPath()[0] as HTMLInputElement);
   }
 }
+
+customElements.define('api-viewer-demo-layout', ApiViewerDemoLayout);
 
 declare global {
   interface HTMLElementTagNameMap {

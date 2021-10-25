@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit-html';
+import { html, TemplateResult } from 'lit';
 import { CSSPropertyInfo, PropertyInfo, SlotValue } from './types.js';
 import { normalizeType } from './utils.js';
 

@@ -1,9 +1,8 @@
-import { customElement, css } from 'lit-element';
+import { css } from 'lit';
 import { ApiDocsBase } from './api-docs-base.js';
 import docsStyles from './api-docs-styles.js';
 import sharedStyles from './shared-styles.js';
 
-@customElement('api-docs')
 export class ApiDocs extends ApiDocsBase {
   static get styles() {
     return [
@@ -17,6 +16,8 @@ export class ApiDocs extends ApiDocsBase {
     ];
   }
 }
+
+customElements.define('api-docs', ApiDocs);
 
 declare global {
   interface HTMLElementTagNameMap {

@@ -1,11 +1,5 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  property,
-  PropertyValues
-} from 'lit-element';
-import { nothing, TemplateResult } from 'lit-html';
+import { LitElement, html, nothing, PropertyValues, TemplateResult } from 'lit';
+import { property } from 'lit/decorators/property.js';
 import {
   PropertyInfo,
   SlotInfo,
@@ -86,8 +80,7 @@ const renderTab = (
   `;
 };
 
-@customElement('api-viewer-docs')
-export class ApiViewerDocs extends LitElement {
+class ApiViewerDocs extends LitElement {
   @property() name = '';
 
   @property({ attribute: false })
@@ -220,6 +213,8 @@ export class ApiViewerDocs extends LitElement {
     }
   }
 }
+
+customElements.define('api-viewer-docs', ApiViewerDocs);
 
 declare global {
   interface HTMLElementTagNameMap {

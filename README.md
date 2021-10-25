@@ -321,6 +321,7 @@ The following CSS shadow parts are available:
 | Part                     | Description                                             |
 | -------------------------| ------------------------------------------------------- |
 | `demo-output`            | Wrapper of the rendered component in the live demo      |
+| `demo-snippet`           | Wrapper of the code snippet in the live demo            |
 | `demo-tabs`              | Tabs component used to switch panels in the live demo   |
 | `event-log`              | Wrapper of the event log tab content                    |
 | `event-record`           | `<p>` used as a record in the event log                 |

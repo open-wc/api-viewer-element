@@ -1,6 +1,7 @@
-import { css } from 'lit-element';
+import { css } from 'lit';
+import highlightTheme from './lib/highlight-theme.js';
 
-export default css`
+const demoStyles = css`
   button {
     position: absolute;
     top: 0.5rem;
@@ -39,6 +40,10 @@ export default css`
     text-align: initial;
     transform: translateZ(0);
     overflow: hidden;
+  }
+
+  [part='demo-snippet'] {
+    padding: 0.75rem 1rem;
   }
 
   .source {
@@ -105,4 +110,9 @@ export default css`
       max-width: 8rem;
     }
   }
+`;
+
+export default css`
+  ${demoStyles}
+  ${highlightTheme}
 `;

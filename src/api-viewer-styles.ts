@@ -1,4 +1,4 @@
-import { css } from 'lit-element';
+import { css } from 'lit';
 import sharedStyles from './shared-styles.js';
 import docsStyles from './api-docs-styles.js';
 import demoStyles from './api-demo-styles.js';

@@ -1,12 +1,6 @@
-import {
-  LitElement,
-  html,
-  customElement,
-  property,
-  TemplateResult
-} from 'lit-element';
-import { nothing } from 'lit-html';
-import { cache } from 'lit-html/directives/cache.js';
+import { LitElement, html, nothing, TemplateResult } from 'lit';
+import { property } from 'lit/decorators/property.js';
+import { cache } from 'lit/directives/cache.js';
 
 interface EventDetail {
   value: string | number | boolean | null | undefined;
@@ -21,21 +15,21 @@ const renderDetail = (detail: EventDetail): string => {
   return ` detail: ${JSON.stringify(detail).replace(`"${undef}"`, undef)}`;
 };
 
-const renderEvents = (log: CustomEvent[]): TemplateResult => {
-  return html`
-    ${log.map((e) => {
-      const { type, detail } = e;
+const renderEvents = (log: CustomEvent[]): TemplateResult =>
+  html`
+    ${log.map((event) => {
       return html`
         <p part="event-record">
-          event: "${type}".${detail == null ? nothing : renderDetail(detail)}
+          event:
+          "${event.type}".${event.detail == null
+            ? nothing
+            : renderDetail(event.detail)}
         </p>
       `;
     })}
   `;
-};
 
-@customElement('api-viewer-demo-events')
-export class ApiViewerDemoEvents extends LitElement {
+class ApiViewerDemoEvents extends LitElement {
   @property({ attribute: false })
   log: CustomEvent[] = [];
 
@@ -69,6 +63,8 @@ export class ApiViewerDemoEvents extends LitElement {
     this.dispatchEvent(new CustomEvent('clear'));
   }
 }
+
+customElements.define('api-viewer-demo-events', ApiViewerDemoEvents);
 
 declare global {
   interface HTMLElementTagNameMap {

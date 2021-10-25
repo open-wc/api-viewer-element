@@ -1,10 +1,9 @@
-import { customElement, css } from 'lit-element';
+import { css } from 'lit';
 import { ApiDemoBase } from './api-demo-base.js';
 import { setTemplates } from './lib/utils.js';
 import demoStyles from './api-demo-styles.js';
 import sharedStyles from './shared-styles.js';
 
-@customElement('api-demo')
 export class ApiDemo extends ApiDemoBase {
   static get styles() {
     return [
@@ -29,6 +28,8 @@ export class ApiDemo extends ApiDemoBase {
     );
   }
 }
+
+customElements.define('api-demo', ApiDemo);
 
 declare global {
   interface HTMLElementTagNameMap {
