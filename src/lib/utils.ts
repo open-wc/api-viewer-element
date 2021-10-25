@@ -1,4 +1,4 @@
-import { PropertyInfo } from './types';
+import { CSSPropertyInfo, PropertyInfo } from './types';
 
 const templates: Array<HTMLTemplateElement[]> = [];
 
@@ -55,3 +55,6 @@ export const unquote = (value?: string): string | undefined =>
   typeof value === 'string' && value.startsWith('"') && value.endsWith('"')
     ? value.slice(1, value.length - 1)
     : value;
+
+export const sortCss = (cssProperties: CSSPropertyInfo[] = []) =>
+  cssProperties.sort((a, b) => (a.name > b.name ? 1 : -1));

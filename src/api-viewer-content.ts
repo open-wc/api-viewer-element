@@ -4,6 +4,7 @@ import { cache } from 'lit/directives/cache.js';
 import { ElementInfo } from './lib/types.js';
 import { EMPTY_ELEMENT } from './lib/constants.js';
 import { parse } from './lib/markdown.js';
+import { sortCss } from './lib/utils.js';
 import './api-viewer-docs.js';
 import './api-viewer-demo.js';
 
@@ -37,9 +38,7 @@ class ApiViewerContent extends LitElement {
     } = { ...EMPTY_ELEMENT, ...(elements[selected] || {}) };
 
     // TODO: analyzer should sort CSS custom properties
-    const cssProps = (cssProperties || []).sort((a, b) =>
-      a.name > b.name ? 1 : -1
-    );
+    const cssProps = sortCss(cssProperties);
 
     return html`
       <header part="header">

@@ -3,6 +3,7 @@ import { until } from 'lit/directives/until.js';
 import { EMPTY_ELEMENT } from './lib/constants.js';
 import { parse } from './lib/markdown.js';
 import { ElementPromise } from './lib/types.js';
+import { sortCss } from './lib/utils.js';
 import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';
 import './api-viewer-docs.js';
 
@@ -31,9 +32,7 @@ async function renderDocs(
   } = { ...EMPTY_ELEMENT, ...(elements[index] || {}) };
 
   // TODO: analyzer should sort CSS custom properties
-  const cssProps = (cssProperties || []).sort((a, b) =>
-    a.name > b.name ? 1 : -1
-  );
+  const cssProps = sortCss(cssProperties);
 
   return html`
     <header part="header">
