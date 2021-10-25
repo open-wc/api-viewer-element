@@ -48,7 +48,7 @@
     "dompurify": "^2.0.15",
     "highlight-ts": "9.12.1-2",
     "lit": "^2.0.0",
-    "marked": "^2.0.0",
+    "marked": "^3.0.0",
     "tslib": "^2.3.1"
   },
   "devDependencies": {
@@ -100,7 +100,7 @@
   "size-limit": [
     {
       "path": "lib/api-docs.js",
-      "limit": "29 KB"
+      "limit": "30 KB"
     },
     {
       "path": "lib/api-demo.js",
@@ -108,7 +108,7 @@
     },
     {
       "path": "lib/api-viewer.js",
-      "limit": "37 KB"
+      "limit": "38 KB"
     }
   ]
 }
