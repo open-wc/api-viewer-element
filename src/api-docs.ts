@@ -1,7 +1,7 @@
 import { css } from 'lit';
 import { ApiDocsBase } from './api-docs-base.js';
-import docsStyles from './api-docs-styles.js';
-import sharedStyles from './shared-styles.js';
+import docsStyles from './styles/docs-styles.js';
+import sharedStyles from './styles/shared-styles.js';
 
 export class ApiDocs extends ApiDocsBase {
   static get styles() {
