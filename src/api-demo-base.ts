@@ -89,7 +89,7 @@ export class ApiDemoBase extends ApiViewerMixin(LitElement) {
     `;
   }
 
-  private _onSelect(e: CustomEvent): void {
-    this.selected = String((e.target as HTMLSelectElement).value);
+  private _onSelect(e: Event): void {
+    this.selected = (e.target as HTMLSelectElement).value;
   }
 }
