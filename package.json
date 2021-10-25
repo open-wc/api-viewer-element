@@ -99,8 +99,16 @@
   },
   "size-limit": [
     {
+      "path": "lib/api-docs.js",
+      "limit": "29 KB"
+    },
+    {
+      "path": "lib/api-demo.js",
+      "limit": "19 KB"
+    },
+    {
       "path": "lib/api-viewer.js",
-      "limit": "38 KB"
+      "limit": "37 KB"
     }
   ]
 }
