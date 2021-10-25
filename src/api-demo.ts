@@ -1,8 +1,8 @@
 import { css } from 'lit';
 import { ApiDemoBase } from './api-demo-base.js';
 import { setTemplates } from './lib/utils.js';
-import demoStyles from './api-demo-styles.js';
-import sharedStyles from './shared-styles.js';
+import demoStyles from './styles/demo-styles.js';
+import sharedStyles from './styles/shared-styles.js';
 
 export class ApiDemo extends ApiDemoBase {
   static get styles() {

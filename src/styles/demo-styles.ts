@@ -1,5 +1,5 @@
 import { css } from 'lit';
-import highlightTheme from './lib/highlight-theme.js';
+import highlightTheme from './highlight-styles.js';
 
 const demoStyles = css`
   button {
