@@ -19,7 +19,7 @@ export const renderEvents = (log: CustomEvent[]): TemplateResult =>
       return html`
         <p part="event-record">
           event:
-          "${event.type}".${event.detail == null
+          ${event.type}.${event.detail == null
             ? nothing
             : renderDetail(event.detail)}
         </p>

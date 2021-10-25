@@ -27,26 +27,26 @@ async function renderDemo(
       <nav>
         <label part="select-label">
           <select
-            @change="${onSelect}"
-            .value="${String(selected)}"
-            ?hidden="${elements.length === 1}"
+            @change=${onSelect}
+            .value=${selected || ''}
+            ?hidden=${elements.length === 1}
             part="select"
           >
             ${elements.map(
-              (tag) => html`<option value="${tag.name}">${tag.name}</option>`
+              (tag) => html`<option value=${tag.name}>${tag.name}</option>`
             )}
           </select>
         </label>
       </nav>
     </header>
     <api-viewer-demo
-      .name="${data.name}"
-      .props="${data.properties}"
-      .slots="${data.slots}"
-      .events="${data.events}"
-      .cssProps="${data.cssProperties}"
-      .exclude="${exclude}"
-      .vid="${id}"
+      .name=${data.name}
+      .props=${data.properties}
+      .slots=${data.slots}
+      .events=${data.events}
+      .cssProps=${data.cssProperties}
+      .exclude=${exclude}
+      .vid=${id}
     ></api-viewer-demo>
   `;
 }
