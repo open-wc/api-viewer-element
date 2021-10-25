@@ -1,4 +1,4 @@
-import { CSSPropertyInfo, PropertyInfo } from './types';
+import { ElementInfo, PropertyInfo } from './types';
 
 const templates: Array<HTMLTemplateElement[]> = [];
 
@@ -56,5 +56,26 @@ export const unquote = (value?: string): string | undefined =>
     ? value.slice(1, value.length - 1)
     : value;
 
-export const sortCss = (cssProperties: CSSPropertyInfo[] = []) =>
-  cssProperties.sort((a, b) => (a.name > b.name ? 1 : -1));
+const EMPTY_ELEMENT: ElementInfo = {
+  name: '',
+  description: '',
+  slots: [],
+  attributes: [],
+  properties: [],
+  events: [],
+  cssParts: [],
+  cssProperties: []
+};
+
+export const getElementData = (elements: ElementInfo[], selected?: string) => {
+  const index = selected ? elements.findIndex((el) => el.name === selected) : 0;
+
+  const result = { ...EMPTY_ELEMENT, ...elements[index] };
+
+  // TODO: analyzer should sort CSS custom properties
+  result.cssProperties = result.cssProperties.sort((a, b) =>
+    a.name > b.name ? 1 : -1
+  );
+
+  return result;
+};

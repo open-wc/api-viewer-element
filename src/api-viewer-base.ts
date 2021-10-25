@@ -2,10 +2,9 @@ import { LitElement, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { cache } from 'lit/directives/cache.js';
 import { until } from 'lit/directives/until.js';
-import { EMPTY_ELEMENT } from './lib/constants.js';
 import { parse } from './lib/markdown.js';
 import { ElementPromise } from './lib/types.js';
-import { setTemplates, sortCss } from './lib/utils.js';
+import { getElementData, setTemplates } from './lib/utils.js';
 import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';
 import './api-viewer-docs.js';
 import './api-viewer-demo.js';
@@ -25,25 +24,11 @@ async function renderDocs(
     return emptyDataWarning;
   }
 
-  const index = selected ? elements.findIndex((el) => el.name === selected) : 0;
-
-  const {
-    name,
-    description,
-    properties,
-    attributes,
-    slots,
-    events,
-    cssParts,
-    cssProperties
-  } = { ...EMPTY_ELEMENT, ...(elements[index] || {}) };
-
-  // TODO: analyzer should sort CSS custom properties
-  const cssProps = sortCss(cssProperties);
+  const data = getElementData(elements, selected);
 
   return html`
     <header part="header">
-      <div part="header-title">&lt;${name}&gt;</div>
+      <div part="header-title">&lt;${data.name}&gt;</div>
       <nav>
         <input
           id="docs"
@@ -82,26 +67,26 @@ async function renderDocs(
     ${cache(
       section === 'docs'
         ? html`
-            <div ?hidden="${description === ''}" part="docs-description">
-              ${parse(description)}
+            <div ?hidden="${data.description === ''}" part="docs-description">
+              ${parse(data.description)}
             </div>
             <api-viewer-docs
-              .name="${name}"
-              .props="${properties}"
-              .attrs="${attributes}"
-              .events="${events}"
-              .slots="${slots}"
-              .cssParts="${cssParts}"
-              .cssProps="${cssProps}"
+              .name="${data.name}"
+              .props="${data.properties}"
+              .attrs="${data.attributes}"
+              .events="${data.events}"
+              .slots="${data.slots}"
+              .cssParts="${data.cssParts}"
+              .cssProps="${data.cssProperties}"
             ></api-viewer-docs>
           `
         : html`
             <api-viewer-demo
-              .name="${name}"
-              .props="${properties}"
-              .slots="${slots}"
-              .events="${events}"
-              .cssProps="${cssProps}"
+              .name="${data.name}"
+              .props="${data.properties}"
+              .slots="${data.slots}"
+              .events="${data.events}"
+              .cssProps="${data.cssProperties}"
               .exclude="${exclude}"
               .vid="${id}"
             ></api-viewer-demo>

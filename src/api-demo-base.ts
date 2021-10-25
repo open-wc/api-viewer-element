@@ -1,9 +1,8 @@
 import { LitElement, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { until } from 'lit/directives/until.js';
-import { EMPTY_ELEMENT } from './lib/constants.js';
 import { ElementPromise } from './lib/types.js';
-import { sortCss } from './lib/utils.js';
+import { getElementData } from './lib/utils.js';
 import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';
 import './api-viewer-demo.js';
 
@@ -20,19 +19,11 @@ async function renderDemo(
     return emptyDataWarning;
   }
 
-  const index = selected ? elements.findIndex((el) => el.name === selected) : 0;
-
-  const { name, properties, slots, events, cssProperties } = {
-    ...EMPTY_ELEMENT,
-    ...(elements[index] || {})
-  };
-
-  // TODO: analyzer should sort CSS custom properties
-  const cssProps = sortCss(cssProperties);
+  const data = getElementData(elements, selected);
 
   return html`
     <header part="header">
-      <div part="header-title">&lt;${name}&gt;</div>
+      <div part="header-title">&lt;${data.name}&gt;</div>
       <nav>
         <label part="select-label">
           <select
@@ -49,11 +40,11 @@ async function renderDemo(
       </nav>
     </header>
     <api-viewer-demo
-      .name="${name}"
-      .props="${properties}"
-      .slots="${slots}"
-      .events="${events}"
-      .cssProps="${cssProps}"
+      .name="${data.name}"
+      .props="${data.properties}"
+      .slots="${data.slots}"
+      .events="${data.events}"
+      .cssProps="${data.cssProperties}"
       .exclude="${exclude}"
       .vid="${id}"
     ></api-viewer-demo>
