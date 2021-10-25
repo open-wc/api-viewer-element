@@ -8,10 +8,6 @@ export default css`
   ${docsStyles}
   ${demoStyles}
 
-  api-viewer-content {
-    display: block;
-  }
-
   [part='radio-label'] {
     margin: 0 0.75rem 0 0.25rem;
     color: var(--ave-header-color);
