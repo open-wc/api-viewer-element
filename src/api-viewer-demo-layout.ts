@@ -38,7 +38,7 @@ class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
     const hideSlots = noSlots || hasTemplate(id, this.tag, TemplateTypes.SLOT);
 
     return html`
-      <div part="demo-output" @rendered="${this.onRendered}">
+      <div part="demo-output" @rendered=${this.onRendered}>
         ${renderer({
           id,
           tag: this.tag,
@@ -50,7 +50,7 @@ class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
       <api-viewer-tabs part="demo-tabs">
         <api-viewer-tab heading="Source" slot="tab" part="tab"></api-viewer-tab>
         <api-viewer-panel slot="panel" part="tab-panel">
-          <button @click="${this._onCopyClick}" part="button">
+          <button @click=${this._onCopyClick} part="button">
             ${this.copyBtnText}
           </button>
           <div part="demo-snippet">
@@ -67,11 +67,11 @@ class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
           heading="Knobs"
           slot="tab"
           part="tab"
-          ?hidden="${noProps && noCustomKnobs && hideSlots}"
+          ?hidden=${noProps && noCustomKnobs && hideSlots}
         ></api-viewer-tab>
         <api-viewer-panel slot="panel" part="tab-panel">
           <div part="knobs">
-            <section part="knobs-column" @change="${this._onPropChanged}">
+            <section part="knobs-column" @change=${this._onPropChanged}>
               ${renderKnobs(this.props, 'Properties', 'prop', propRenderer)}
               ${renderKnobs(
                 this.customKnobs,
@@ -81,9 +81,9 @@ class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
               )}
             </section>
             <section
-              ?hidden="${hideSlots}"
+              ?hidden=${hideSlots}
               part="knobs-column"
-              @change="${this._onSlotChanged}"
+              @change=${this._onSlotChanged}
             >
               ${renderKnobs(slots, 'Slots', 'slot', slotRenderer)}
             </section>
@@ -93,11 +93,11 @@ class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
           heading="Styles"
           slot="tab"
           part="tab"
-          ?hidden="${noCss}"
+          ?hidden=${noCss}
         ></api-viewer-tab>
         <api-viewer-panel slot="panel" part="tab-panel">
-          <div part="knobs" ?hidden="${noCss}">
-            <section part="knobs-column" @change="${this._onCssChanged}">
+          <div part="knobs" ?hidden=${noCss}>
+            <section part="knobs-column" @change=${this._onCssChanged}>
               ${renderKnobs(
                 this.cssProps,
                 'Custom CSS Properties',
@@ -112,13 +112,13 @@ class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
           heading="Events"
           slot="tab"
           part="tab"
-          ?hidden="${noEvents}"
+          ?hidden=${noEvents}
         ></api-viewer-tab>
         <api-viewer-panel slot="panel" part="tab-panel">
-          <div part="event-log" ?hidden="${noEvents}">
+          <div part="event-log" ?hidden=${noEvents}>
             <button
-              @click="${this._onLogClear}"
-              ?hidden="${!log.length}"
+              @click=${this._onLogClear}
+              ?hidden=${!log.length}
               part="button"
             >
               Clear

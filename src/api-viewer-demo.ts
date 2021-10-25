@@ -40,13 +40,13 @@ class ApiViewerDemo extends LitElement {
 
     return html`
       <api-viewer-demo-layout
-        .tag="${this.name}"
-        .props="${this.props}"
-        .slots="${this.slots}"
-        .events="${this.events}"
-        .cssProps="${this.cssProps}"
-        .exclude="${this.exclude}"
-        .vid="${this.vid}"
+        .tag=${this.name}
+        .props=${this.props}
+        .slots=${this.slots}
+        .events=${this.events}
+        .cssProps=${this.cssProps}
+        .exclude=${this.exclude}
+        .vid=${this.vid}
       ></api-viewer-demo-layout>
     `;
   }
@@ -68,7 +68,7 @@ class ApiViewerDemo extends LitElement {
         this.renderDemoLayout(this.whenDefined),
         html`
           <div part="warning">
-            Element "${this.name}" is not defined. Have you imported it?
+            Element ${this.name} is not defined. Have you imported it?
           </div>
         `
       )}

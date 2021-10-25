@@ -23,7 +23,6 @@
     "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
     "lit/no-template-map": "off",
-    "lit/quoted-expressions": "off",
     "class-methods-use-this": [
       "error",
       {

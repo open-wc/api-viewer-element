@@ -25,29 +25,29 @@ async function renderDocs(
       <nav>
         <label part="select-label">
           <select
-            @change="${onSelect}"
-            .value="${String(selected)}"
-            ?hidden="${elements.length === 1}"
+            @change=${onSelect}
+            .value=${String(selected)}
+            ?hidden=${elements.length === 1}
             part="select"
           >
             ${elements.map(
-              (tag) => html`<option value="${tag.name}">${tag.name}</option>`
+              (tag) => html`<option value=${tag.name}>${tag.name}</option>`
             )}
           </select>
         </label>
       </nav>
     </header>
-    <div ?hidden="${data.description === ''}" part="docs-description">
+    <div ?hidden=${data.description === ''} part="docs-description">
       ${parse(data.description)}
     </div>
     <api-viewer-docs
-      .name="${data.name}"
-      .props="${data.properties}"
-      .attrs="${data.attributes}"
-      .events="${data.events}"
-      .slots="${data.slots}"
-      .cssParts="${data.cssParts}"
-      .cssProps="${data.cssProperties}"
+      .name=${data.name}
+      .props=${data.properties}
+      .attrs=${data.attributes}
+      .events=${data.events}
+      .slots=${data.slots}
+      .cssParts=${data.cssParts}
+      .cssProps=${data.cssProperties}
     ></api-viewer-docs>
   `;
 }

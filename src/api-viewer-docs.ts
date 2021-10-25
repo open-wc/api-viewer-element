@@ -53,7 +53,7 @@ const renderItem = (
               </div>
             `}
       </div>
-      <div ?hidden="${description === undefined}">
+      <div ?hidden=${description === undefined}>
         <div part="docs-label">Description</div>
         <div part="docs-markdown">${parse(description)}</div>
       </div>
@@ -69,12 +69,12 @@ const renderTab = (
   const hidden = array.length === 0;
   return html`
     <api-viewer-tab
-      heading="${heading}"
+      heading=${heading}
       slot="tab"
       part="tab"
-      ?hidden="${hidden}"
+      ?hidden=${hidden}
     ></api-viewer-tab>
-    <api-viewer-panel slot="panel" part="tab-panel" ?hidden="${hidden}">
+    <api-viewer-panel slot="panel" part="tab-panel" ?hidden=${hidden}>
       ${content}
     </api-viewer-panel>
   `;

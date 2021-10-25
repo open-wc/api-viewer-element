@@ -129,13 +129,14 @@ class Renderer extends Directive {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   render(_options: ComponentRendererOptions): typeof nothing {
     return nothing;
   }
 
   update(
     part: ChildPart,
-    [options, _value]: [ComponentRendererOptions, unknown]
+    [options]: [ComponentRendererOptions]
   ): TemplateResult | typeof noChange {
     const parent = part.options?.host as Element;
     const { tag } = options;

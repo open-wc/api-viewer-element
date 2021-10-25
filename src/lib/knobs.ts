@@ -35,10 +35,10 @@ export const cssPropRenderer: InputRenderer = (
 
   return html`
     <input
-      id="${id}"
+      id=${id}
       type="text"
-      .value="${String(value)}"
-      data-name="${name}"
+      .value=${String(value)}
+      data-name=${name}
       part="input"
     />
   `;
@@ -52,31 +52,31 @@ export const propRenderer: InputRenderer = (
   let input;
   if (type === 'select' && Array.isArray(options)) {
     input = html`
-      <select id="${id}" data-name="${name}" data-type="${type}" part="select">
+      <select id=${id} data-name=${name} data-type=${type} part="select">
         ${options.map(
-          (option) => html`<option value="${option}">${option}</option>`
+          (option) => html`<option value=${option}>${option}</option>`
         )}
       </select>
     `;
   } else if (normalizeType(type) === 'boolean') {
     input = html`
       <input
-        id="${id}"
+        id=${id}
         type="checkbox"
-        .checked="${Boolean(value)}"
-        data-name="${name}"
-        data-type="${type}"
+        .checked=${Boolean(value)}
+        data-name=${name}
+        data-type=${type}
         part="checkbox"
       />
     `;
   } else {
     input = html`
       <input
-        id="${id}"
-        type="${getInputType(type)}"
-        .value="${value == null ? '' : String(value)}"
-        data-name="${name}"
-        data-type="${type}"
+        id=${id}
+        type=${getInputType(type)}
+        .value=${value == null ? '' : String(value)}
+        data-name=${name}
+        data-type=${type}
         part="input"
       />
     `;
@@ -92,11 +92,11 @@ export const slotRenderer: InputRenderer = (
 
   return html`
     <input
-      id="${id}"
+      id=${id}
       type="text"
-      .value="${content}"
+      .value=${content}
       data-type="slot"
-      data-slot="${name}"
+      data-slot=${name}
       part="input"
     />
   `;
@@ -115,7 +115,7 @@ export const renderKnobs = (
     return html`
       <tr>
         <td>
-          <label for="${id}" part="knob-label">${label}</label>
+          <label for=${id} part="knob-label">${label}</label>
         </td>
         <td>${renderer(item, id)}</td>
       </tr>
@@ -123,7 +123,7 @@ export const renderKnobs = (
   });
 
   return html`
-    <h3 part="knobs-header" ?hidden="${items.length === 0}">${header}</h3>
+    <h3 part="knobs-header" ?hidden=${items.length === 0}>${header}</h3>
     <table>
       ${rows}
     </table>

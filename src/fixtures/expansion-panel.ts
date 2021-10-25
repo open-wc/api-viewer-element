@@ -174,9 +174,9 @@ export class ExpansionPanel extends LitElement {
         <div
           role="button"
           part="header"
-          @click="${this._onToggleClick}"
-          @keydown="${this._onToggleKeyDown}"
-          aria-expanded="${this.opened ? 'true' : 'false'}"
+          @click=${this._onToggleClick}
+          @keydown=${this._onToggleKeyDown}
+          aria-expanded=${this.opened ? 'true' : 'false'}
           tabindex="0"
         >
           <span part="toggle"></span>
@@ -185,8 +185,8 @@ export class ExpansionPanel extends LitElement {
       </div>
       <div
         part="content"
-        style="${styleMap({ maxHeight: this.opened ? '' : '0px' })}"
-        aria-hidden="${this.opened ? 'false' : 'true'}"
+        style=${styleMap({ maxHeight: this.opened ? '' : '0px' })}
+        aria-hidden=${this.opened ? 'false' : 'true'}
       >
         <slot></slot>
       </div>
