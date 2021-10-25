@@ -76,7 +76,6 @@ const demoStyles = css`
   }
 
   [part='event-log'] {
-    display: block;
     padding: 0 1rem;
     min-height: 50px;
     max-height: 200px;

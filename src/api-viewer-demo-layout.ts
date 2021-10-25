@@ -1,5 +1,7 @@
 import { LitElement, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
+import { cache } from 'lit/directives/cache.js';
+import { renderEvents } from './lib/demo-events.js';
 import { renderSnippet } from './lib/demo-snippet.js';
 import { renderer } from './lib/renderer.js';
 import {
@@ -10,7 +12,6 @@ import {
 } from './lib/knobs.js';
 import { hasTemplate, TemplateTypes } from './lib/utils.js';
 import { ApiDemoLayoutMixin } from './api-demo-layout-mixin.js';
-import './api-viewer-demo-events.js';
 import './api-viewer-panel.js';
 import './api-viewer-tab.js';
 import './api-viewer-tabs.js';
@@ -32,6 +33,7 @@ class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
     ].map((arr) => arr.length === 0);
 
     const id = this.vid as number;
+    const log = this.eventLog;
     const slots = this.processedSlots;
     const hideSlots = noSlots || hasTemplate(id, this.tag, TemplateTypes.SLOT);
 
@@ -113,12 +115,24 @@ class ApiViewerDemoLayout extends ApiDemoLayoutMixin(LitElement) {
           ?hidden="${noEvents}"
         ></api-viewer-tab>
         <api-viewer-panel slot="panel" part="tab-panel">
-          <api-viewer-demo-events
-            ?hidden="${noEvents}"
-            .log="${this.eventLog}"
-            @clear="${this._onLogClear}"
-            part="event-log"
-          ></api-viewer-demo-events>
+          <div part="event-log" ?hidden="${noEvents}">
+            <button
+              @click="${this._onLogClear}"
+              ?hidden="${!log.length}"
+              part="button"
+            >
+              Clear
+            </button>
+            ${cache(
+              log.length
+                ? renderEvents(log)
+                : html`
+                    <p part="event-record">
+                      Interact with component to see the event log.
+                    </p>
+                  `
+            )}
+          </div>
         </api-viewer-panel>
       </api-viewer-tabs>
     `;
