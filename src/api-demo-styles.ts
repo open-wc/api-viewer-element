@@ -43,7 +43,6 @@ const demoStyles = css`
   }
 
   [part='demo-snippet'] {
-    display: block;
     padding: 0.75rem 1rem;
   }
 
