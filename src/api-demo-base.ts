@@ -56,8 +56,6 @@ let id = 0;
 export class ApiDemoBase extends ApiViewerMixin(LitElement) {
   @property({ type: String, attribute: 'exclude-knobs' }) excludeKnobs?: string;
 
-  @property({ type: Number }) idx = 0;
-
   protected _id?: number;
 
   constructor() {
