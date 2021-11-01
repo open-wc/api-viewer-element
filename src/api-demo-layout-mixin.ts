@@ -124,7 +124,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
       // the whole api-viewer-demo component is re-rendered,
       // so this callback is invoked again for new element.
       if (props.has('props')) {
-        const element = document.createElement(this.tag);
+        const element = this.renderRoot.querySelector(this.tag) as HTMLElement;
         // Store properties without getters
         this._savedProps = this.props.filter(
           ({ name }) => !isGetter(element, name)
