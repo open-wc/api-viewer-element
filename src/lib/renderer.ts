@@ -141,13 +141,6 @@ class Renderer extends Directive {
     const parent = part.options?.host as Element;
     const { tag } = options;
 
-    // Update existing component, if any
-    let component = parent.querySelector(tag) as HTMLElement;
-    if (component) {
-      updateComponent(component, options);
-      return noChange;
-    }
-
     const result = [];
 
     const [host, prefix, suffix, slot, wrapper] = [
@@ -157,6 +150,23 @@ class Renderer extends Directive {
       SLOT,
       WRAPPER
     ].map((type) => getTemplate(options.id, tag, type));
+
+    // Wrapper template
+    const wrapNode = getTemplateNode(wrapper);
+    const wrapTagName = wrapNode ? wrapNode.localName : '';
+
+    // Update existing component, if any
+    let component = parent.querySelector(tag) as HTMLElement;
+    if (component) {
+      const output = parent.querySelector('[part="demo-output"]') as Element;
+      const outer = component.parentElement as Element;
+      // Ensure the component isn't part of the other demo,
+      // e.g. expansion-panel used in fancy-accordion etc.
+      if ((outer && outer === output) || outer.localName === wrapTagName) {
+        updateComponent(component, options);
+        return noChange;
+      }
+    }
 
     const closing = `</${tag}>`;
 
@@ -175,10 +185,7 @@ class Renderer extends Directive {
     }
 
     // Wrapper template
-    const wrapNode = getTemplateNode(wrapper);
-    if (wrapNode) {
-      const wrapTagName = wrapNode.localName;
-
+    if (wrapTagName) {
       const wrapped = unsafeHTML(`
         <${wrapTagName}>
           ${raw}

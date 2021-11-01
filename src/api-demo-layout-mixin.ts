@@ -37,11 +37,14 @@ const getDefault = (
   }
 };
 
-type CustomElement = new () => HTMLElement;
-
 // TODO: remove when analyzer outputs "readOnly" to JSON
-const isGetter = (element: Element, prop: string): boolean => {
-  function getDescriptor(obj: CustomElement): PropertyDescriptor | undefined {
+const isGetter = (
+  ctor: CustomElementConstructor | undefined,
+  prop: string
+): boolean => {
+  function getDescriptor(
+    obj: CustomElementConstructor
+  ): PropertyDescriptor | undefined {
     return obj === HTMLElement
       ? undefined
       : Object.getOwnPropertyDescriptor(obj.prototype, prop) ||
@@ -49,8 +52,8 @@ const isGetter = (element: Element, prop: string): boolean => {
   }
 
   let result = false;
-  if (element) {
-    const descriptor = getDescriptor(element.constructor as CustomElement);
+  if (ctor) {
+    const descriptor = getDescriptor(ctor);
     result = Boolean(
       descriptor && descriptor.get && descriptor.set === undefined
     );
@@ -64,6 +67,7 @@ export type Constructor<T = unknown> = new (...args: any[]) => T;
 export interface ApiDemoLayoutInterface {
   tag: string;
   props: PropertyInfo[];
+  finalProps: PropertyInfo[];
   slots: SlotInfo[];
   events: EventInfo[];
   cssProps: CSSPropertyInfo[];
@@ -103,13 +107,13 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
     @property({ type: Number }) vid?: number;
 
     @property({ attribute: false })
-    processedSlots: SlotValue[] = [];
+    processedSlots!: SlotValue[];
 
     @property({ attribute: false })
-    processedCss: CSSPropertyInfo[] = [];
+    processedCss!: CSSPropertyInfo[];
 
     @property({ attribute: false })
-    eventLog: CustomEvent[] = [];
+    eventLog!: CustomEvent[];
 
     @property({ attribute: false })
     customKnobs: PropertyInfo[] = [];
@@ -117,27 +121,40 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
     @property({ attribute: false })
     knobs: KnobValues = {};
 
-    private _savedProps: PropertyInfo[] = [];
+    @property({ attribute: false })
+    finalProps!: PropertyInfo[];
 
-    protected firstUpdated(props: PropertyValues): void {
-      // When a selected tag name is changed by the user,
-      // the whole api-viewer-demo component is re-rendered,
-      // so this callback is invoked again for new element.
-      if (props.has('props')) {
-        const element = this.renderRoot.querySelector(this.tag) as HTMLElement;
+    willUpdate(props: PropertyValues) {
+      // Reset state if tag changed
+      if (props.has('tag')) {
+        this.knobs = {};
+        this.eventLog = [];
+        this.processedCss = [];
+        this.processedSlots = [];
+
         // Store properties without getters
-        this._savedProps = this.props.filter(
-          ({ name }) => !isGetter(element, name)
+        this.finalProps = this.props.filter(
+          ({ name }) => !isGetter(customElements.get(this.tag), name)
         );
+
+        this.customKnobs = this._getCustomKnobs();
       }
-      this.customKnobs = this._getCustomKnobs();
+
+      if (props.has('exclude')) {
+        this.finalProps = this.finalProps
+          .filter(({ name }) => !this.exclude.includes(name))
+          .map((prop: PropertyInfo) => {
+            return typeof prop.default === 'string'
+              ? {
+                  ...prop,
+                  value: getDefault(prop)
+                }
+              : prop;
+          });
+      }
     }
 
     protected updated(props: PropertyValues): void {
-      if (props.has('exclude')) {
-        this.props = this._filterProps();
-      }
-
       if (props.has('slots') && this.slots) {
         this.processedSlots = this.slots
           .sort((a: SlotInfo, b: SlotInfo) => {
@@ -196,23 +213,9 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
         .filter(Boolean) as PropertyInfo[];
     }
 
-    private _filterProps(): PropertyInfo[] {
-      const exclude = this.exclude.split(',');
-      return this._savedProps
-        .filter(({ name }) => !exclude.includes(name))
-        .map((prop: PropertyInfo) => {
-          return typeof prop.default === 'string'
-            ? {
-                ...prop,
-                value: getDefault(prop)
-              }
-            : prop;
-        });
-    }
-
     private _getProp(name: string): { prop?: PropertyInfo; custom?: boolean } {
       const isMatch = isPropMatch(name);
-      const prop = this.props.find(isMatch);
+      const prop = this.finalProps.find(isMatch);
       return prop
         ? { prop }
         : {
@@ -277,7 +280,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
 
       if (hasTemplate(this.vid as number, this.tag, HOST)) {
         // Apply property values from template
-        this.props
+        this.finalProps
           .filter((prop) => {
             const { name, type } = prop;
             const defaultValue = getDefault(prop);
@@ -333,7 +336,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
         [name]: { type, value, attribute }
       };
 
-      this.props = this.props.map((prop) => {
+      this.finalProps = this.finalProps.map((prop) => {
         return prop.name === name
           ? {
               ...prop,

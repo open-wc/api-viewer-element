@@ -40,7 +40,7 @@ async function renderDemo(
       </nav>
     </header>
     <api-viewer-demo
-      .name=${data.name}
+      .tag=${data.name}
       .props=${data.properties}
       .slots=${data.slots}
       .events=${data.events}

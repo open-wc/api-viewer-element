@@ -19,8 +19,7 @@ const demoStyles = css`
     background: var(--ave-button-active-background, rgba(0, 0, 0, 0.6));
   }
 
-  api-viewer-demo,
-  api-viewer-demo-layout {
+  api-viewer-demo {
     display: block;
   }
 
