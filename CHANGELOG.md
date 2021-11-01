@@ -16,6 +16,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.5.0] - 2021-11-01
+
+### Breaking Changes
+
+- Upgraded the component to use Lit 2.0.0
+- Updated `marked` dependency to 3.0.0
+
+### Added
+
+- Added `demo-snippet` CSS shadow part for styling
+
 ## [0.4.4] - 2020-03-27
 
 ### Fixed
