@@ -1,10 +1,21 @@
+import type {
+  CssCustomProperty,
+  ClassField
+} from 'custom-elements-manifest/schema';
+
 import { html, TemplateResult } from 'lit';
-import { CSSPropertyInfo, PropertyInfo, SlotValue } from './types.js';
+import { SlotValue } from './types.js';
 import { normalizeType } from './utils.js';
 
 const DEFAULT = 'default';
 
-type Knob = CSSPropertyInfo | PropertyInfo | SlotValue;
+type Knobable = unknown | (CssCustomProperty | ClassField | SlotValue);
+
+export type Knob<T extends Knobable = unknown> = T & {
+  value?: string;
+  options?: string[];
+  knobType?: 'select' | 'boolean' | 'checkbox' | 'number' | 'text';
+};
 
 type InputRenderer = (item: Knob, id: string) => TemplateResult;
 
@@ -16,7 +27,7 @@ export const getSlotDefault = (name: string, initial: string): string =>
 
 export const getSlotContent = (name: string) => getSlotDefault(name, 'content');
 
-const getInputType = (type: string): 'checkbox' | 'number' | 'text' => {
+const getInputType = (type?: string): 'checkbox' | 'number' | 'text' => {
   switch (normalizeType(type)) {
     case 'boolean':
       return 'checkbox';
@@ -31,7 +42,7 @@ export const cssPropRenderer: InputRenderer = (
   knob: Knob,
   id: string
 ): TemplateResult => {
-  const { name, value } = knob as CSSPropertyInfo;
+  const { name, value } = knob as CssCustomProperty & { value?: string };
 
   return html`
     <input
@@ -48,24 +59,24 @@ export const propRenderer: InputRenderer = (
   knob: Knob,
   id: string
 ): TemplateResult => {
-  const { name, type, value, options } = knob as PropertyInfo;
+  const { name, knobType, value, options } = knob as Knob<ClassField>;
   let input;
-  if (type === 'select' && Array.isArray(options)) {
+  if (knobType === 'select' && Array.isArray(options)) {
     input = html`
-      <select id=${id} data-name=${name} data-type=${type} part="select">
+      <select id=${id} data-name=${name} data-type=${knobType} part="select">
         ${options.map(
           (option) => html`<option value=${option}>${option}</option>`
         )}
       </select>
     `;
-  } else if (normalizeType(type) === 'boolean') {
+  } else if (normalizeType(knobType) === 'boolean') {
     input = html`
       <input
         id=${id}
         type="checkbox"
         .checked=${Boolean(value)}
         data-name=${name}
-        data-type=${type}
+        data-type=${knobType}
         part="checkbox"
       />
     `;
@@ -73,10 +84,10 @@ export const propRenderer: InputRenderer = (
     input = html`
       <input
         id=${id}
-        type=${getInputType(type)}
+        type=${getInputType(knobType)}
         .value=${value == null ? '' : String(value)}
         data-name=${name}
-        data-type=${type}
+        data-type=${knobType}
         part="input"
       />
     `;
@@ -109,7 +120,7 @@ export const renderKnobs = (
   renderer: InputRenderer
 ): TemplateResult => {
   const rows = items.map((item: Knob) => {
-    const { name } = item;
+    const { name } = item as Knob<ClassField>; // any type will do as we default it on next line
     const id = `${type}-${name || DEFAULT}`;
     const label = type === 'slot' ? getSlotDefault(name, DEFAULT) : name;
     return html`

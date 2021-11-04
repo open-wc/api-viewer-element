@@ -1,14 +1,15 @@
+import type {
+  Attribute,
+  ClassMember,
+  Slot,
+  Event,
+  CssPart,
+  CssCustomProperty
+} from 'custom-elements-manifest/schema';
+
 import { LitElement, html, nothing, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
-import {
-  PropertyInfo,
-  SlotInfo,
-  AttributeInfo,
-  EventInfo,
-  CSSPartInfo,
-  CSSPropertyInfo
-} from './lib/types.js';
-import { isPropMatch, unquote } from './lib/utils.js';
+import { isClassField, unquote } from './lib/utils.js';
 import { parse } from './lib/markdown.js';
 
 import './api-viewer-panel.js';
@@ -83,34 +84,28 @@ const renderTab = (
 class ApiViewerDocs extends LitElement {
   @property() name = '';
 
-  @property({ attribute: false })
-  props: PropertyInfo[] = [];
+  @property({ attribute: false }) members: ClassMember[] = [];
 
-  @property({ attribute: false })
-  attrs: AttributeInfo[] = [];
+  @property({ attribute: false }) attrs: Attribute[] = [];
 
-  @property({ attribute: false })
-  slots: SlotInfo[] = [];
+  @property({ attribute: false }) slots: Slot[] = [];
 
-  @property({ attribute: false })
-  events: EventInfo[] = [];
+  @property({ attribute: false }) events: Event[] = [];
 
-  @property({ attribute: false })
-  cssParts: CSSPartInfo[] = [];
+  @property({ attribute: false }) cssParts: CssPart[] = [];
 
-  @property({ attribute: false })
-  cssProps: CSSPropertyInfo[] = [];
+  @property({ attribute: false }) cssProps: CssCustomProperty[] = [];
 
   protected createRenderRoot(): this {
     return this;
   }
 
   protected render(): TemplateResult {
-    const { slots, props, attrs, events, cssParts, cssProps } = this;
+    const { slots, members, attrs, events, cssParts, cssProps } = this;
 
-    const properties = props || [];
+    const properties = members.filter(isClassField) || [];
     const attributes = (attrs || []).filter(
-      ({ name }) => !properties.some(isPropMatch(name))
+      (x) => !properties.some((y) => y.name === x.fieldName)
     );
 
     const emptyDocs = [
@@ -136,14 +131,17 @@ class ApiViewerDocs extends LitElement {
               properties,
               html`
                 ${properties.map((prop) => {
-                  const { name, description, type, attribute } = prop;
+                  const { name, description, type } = prop;
+                  const attribute = attributes.find(
+                    (x) => x.fieldName === name
+                  );
                   return renderItem(
                     'prop',
                     name,
-                    description,
-                    type,
+                    description ?? '',
+                    type?.text,
                     prop.default,
-                    attribute
+                    attribute?.name
                   );
                 })}
               `
@@ -153,7 +151,7 @@ class ApiViewerDocs extends LitElement {
               attributes,
               html`
                 ${attributes.map(({ name, description, type }) =>
-                  renderItem('attr', name, description, type)
+                  renderItem('attr', name, description ?? '', type?.text)
                 )}
               `
             )}
@@ -162,7 +160,7 @@ class ApiViewerDocs extends LitElement {
               slots,
               html`
                 ${slots.map(({ name, description }) =>
-                  renderItem('slot', name, description)
+                  renderItem('slot', name, description ?? '')
                 )}
               `
             )}
@@ -171,7 +169,7 @@ class ApiViewerDocs extends LitElement {
               events,
               html`
                 ${events.map(({ name, description }) =>
-                  renderItem('event', name, description)
+                  renderItem('event', name, description ?? '')
                 )}
               `
             )}
@@ -180,12 +178,12 @@ class ApiViewerDocs extends LitElement {
               cssProps,
               html`
                 ${cssProps.map((prop) => {
-                  const { name, description, type } = prop;
+                  const { name, description } = prop;
                   return renderItem(
                     'css',
                     name,
-                    description,
-                    type,
+                    description ?? '',
+                    '', // NOTE: manifest does not include type for css custom properties
                     unquote(prop.default)
                   );
                 })}
@@ -196,7 +194,7 @@ class ApiViewerDocs extends LitElement {
               cssParts,
               html`
                 ${cssParts.map(({ name, description }) =>
-                  renderItem('part', name, description)
+                  renderItem('part', name, description ?? '')
                 )}
               `
             )}

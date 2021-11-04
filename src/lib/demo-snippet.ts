@@ -1,10 +1,12 @@
+import type { CssCustomProperty } from 'custom-elements-manifest/schema';
+
 import { html, TemplateResult } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { htmlRender } from 'highlight-ts/es/render/html';
 import { registerLanguages } from 'highlight-ts/es/languages';
 import { XML } from 'highlight-ts/es/languages/xml';
 import { init, process } from 'highlight-ts/es/process';
-import { CSSPropertyInfo, KnobValues, SlotValue } from './types.js';
+import { KnobValues, SlotValue } from './types.js';
 import { CSS } from './highlight-css.js';
 import {
   getTemplate,
@@ -54,7 +56,7 @@ export const renderSnippet = (
   tag: string,
   values: KnobValues,
   slots: SlotValue[],
-  cssProps: CSSPropertyInfo[]
+  cssProps: (CssCustomProperty & { value?: string })[]
 ): TemplateResult => {
   let markup = '';
   const prefix = getTemplate(id, tag, PREFIX);

@@ -1,265 +1,366 @@
 {
-  "version": "experimental",
-  "tags": [
+  "schemaVersion": "1.0.0",
+  "modules": [
     {
-      "name": "expansion-panel",
+      "kind": "javascript-module",
       "path": "./src/fixtures/expansion-panel.ts",
-      "description": "A custom element similar to the HTML5 `<details>` element.",
-      "attributes": [
+      "declarations": [
         {
-          "name": "opened",
-          "description": "When true, the panel content is expanded and visible",
-          "type": "boolean | null | undefined",
-          "default": "false"
-        },
-        {
-          "name": "disabled",
-          "description": "Disabled panel can not be expanded or collapsed",
-          "type": "boolean",
-          "default": "false"
-        },
-        {
-          "name": "focused",
-          "description": "State attribute set when element has focus.",
-          "type": "boolean"
-        },
-        {
-          "name": "focus-ring",
-          "description": "State attribute set when focused from keyboard.",
-          "type": "boolean"
+          "kind": "class",
+          "customElement": true,
+          "name": "ExpansionPanel",
+          "description": "A custom element similar to the HTML5 `<details>` element.",
+          "attributes": [
+            {
+              "name": "opened",
+              "fieldName": "opened",
+              "description": "When true, the panel content is expanded and visible",
+              "type":{ "text": "boolean | null | undefined" },
+              "default": "false"
+            },
+            {
+              "name": "disabled",
+              "fieldName": "disabled",
+              "description": "Disabled panel can not be expanded or collapsed",
+              "type":{ "text": "boolean" },
+              "default": "false"
+            },
+            {
+              "name": "focused",
+              "fieldName": "focused",
+              "description": "State attribute set when element has focus.",
+              "type":{ "text": "boolean "}
+            },
+            {
+              "name": "focus-ring",
+              "fieldName": "focusRing",
+              "description": "State attribute set when focused from keyboard.",
+              "type":{ "text": "boolean "}
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "opened",
+              "description": "When true, the panel content is expanded and visible",
+              "type": { "text": "boolean | null | undefined" },
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "description": "Disabled panel can not be expanded or collapsed",
+              "type": { "text": "boolean" },
+              "default": "false"
+            }
+          ],
+          "events": [
+            {
+              "name": "opened-changed",
+              "description": "Event fired when expanding / collapsing"
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Slot fot panel content"
+            },
+            {
+              "name": "header",
+              "description": "Slot for panel header"
+            }
+          ],
+          "cssProperties": [
+            {
+              "name": "--panel-header-background",
+              "description": "Default panel header background color.",
+              "default": "\"#fff\""
+            },
+            {
+              "name": "--panel-header-min-height",
+              "description": "Panel header minimum height.",
+              "default": "\"48px\""
+            },
+            {
+              "name": "--panel-ripple-background",
+              "description": "Active toggle button ripple background.",
+              "default": "\"rgba(0, 0, 0, 0.38)\""
+            }
+          ],
+          "cssParts": [
+            {
+              "name": "header",
+              "description": "An element wrapping the `header` slot."
+            },
+            {
+              "name": "toggle",
+              "description": "A toggle button, child of the header part."
+            },
+            {
+              "name": "content",
+              "description": "An element wrapping the `content` slot."
+            }
+          ]
         }
       ],
-      "properties": [
+      "exports": [
         {
-          "name": "opened",
-          "attribute": "opened",
-          "description": "When true, the panel content is expanded and visible",
-          "type": "boolean | null | undefined",
-          "default": "false"
+          "kind": "custom-element-definition",
+          "name": "expansion-panel",
+          "declaration": {
+            "name": "ExpansionPanel"
+          }
         },
         {
-          "name": "disabled",
-          "attribute": "disabled",
-          "description": "Disabled panel can not be expanded or collapsed",
-          "type": "boolean",
-          "default": "false"
-        }
-      ],
-      "events": [
-        {
-          "name": "opened-changed",
-          "description": "Event fired when expanding / collapsing"
-        }
-      ],
-      "slots": [
-        {
-          "name": "",
-          "description": "Slot fot panel content"
-        },
-        {
-          "name": "header",
-          "description": "Slot for panel header"
-        }
-      ],
-      "cssProperties": [
-        {
-          "name": "--panel-header-background",
-          "description": "Default panel header background color.",
-          "type": "Background",
-          "default": "\"#fff\""
-        },
-        {
-          "name": "--panel-header-min-height",
-          "description": "Panel header minimum height.",
-          "default": "\"48px\""
-        },
-        {
-          "name": "--panel-ripple-background",
-          "description": "Active toggle button ripple background.",
-          "type": "Background",
-          "default": "\"rgba(0, 0, 0, 0.38)\""
-        }
-      ],
-      "cssParts": [
-        {
-          "name": "header",
-          "description": "An element wrapping the `header` slot."
-        },
-        {
-          "name": "toggle",
-          "description": "A toggle button, child of the header part."
-        },
-        {
-          "name": "content",
-          "description": "An element wrapping the `content` slot."
+          "kind": "js",
+          "name": "ExpansionPanel",
+          "declaration": {
+            "name": "ExpansionPanel"
+          }
         }
       ]
     },
     {
-      "name": "fancy-accordion",
+      "kind": "javascript-module",
       "path": "./src/fixtures/fancy-accordion.ts",
-      "description": "A custom element implementing the accordion widget: a vertically stacked set of expandable panels\nthat wraps several instances of the `<expansion-panel>` element. Only one panel can be opened\n(expanded) at a time.\n\nPanel headings function as controls that enable users to open (expand) or hide (collapse) their\nassociated sections of content. The user can toggle panels by mouse click, Enter and Space keys.\n\nThe component supports keyboard navigation and is aligned with the\n[WAI-ARIA Authoring Practices](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion).",
-      "attributes": [
+      "declarations": [
         {
-          "name": "opened-index",
-          "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels.",
-          "type": "number | null | undefined"
+          "kind": "class",
+          "customElement":true,
+          "name": "FancyAccordion",
+          "description": "A custom element implementing the accordion widget: a vertically stacked set of expandable panels\nthat wraps several instances of the `<expansion-panel>` element. Only one panel can be opened\n(expanded) at a time.\n\nPanel headings function as controls that enable users to open (expand) or hide (collapse) their\nassociated sections of content. The user can toggle panels by mouse click, Enter and Space keys.\n\nThe component supports keyboard navigation and is aligned with the\n[WAI-ARIA Authoring Practices](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion).",
+          "attributes": [
+            {
+              "fieldName": "openedIndex",
+              "name": "opened-index",
+              "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels.",
+              "type": { "text": "number | null | undefined" }
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "openedIndex",
+              "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels.",
+              "type": { "text": "number | null | undefined" }
+            },
+            {
+              "kind": "field",
+              "name": "focused",
+              "type": { "text": "Element | null" }
+            }
+          ],
+          "events": [
+            {
+              "name": "opened-index-changed",
+              "description": "Event fired when changing currently opened panel."
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Slot fot panel elements."
+            }
+          ]
         }
       ],
-      "properties": [
+      "exports": [
         {
-          "name": "openedIndex",
-          "attribute": "opened-index",
-          "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels.",
-          "type": "number | null | undefined"
+          "kind": "custom-element-definition",
+          "name": "fancy-accordion",
+          "declaration": {
+            "name": "FancyAccordion"
+          }
         },
         {
-          "name": "focused",
-          "type": "Element | null"
-        }
-      ],
-      "events": [
-        {
-          "name": "opened-index-changed",
-          "description": "Event fired when changing currently opened panel."
-        }
-      ],
-      "slots": [
-        {
-          "name": "",
-          "description": "Slot fot panel elements."
+          "kind": "js",
+          "name": "FancyAccordion",
+          "declaration": {
+            "name": "FancyAccordion"
+          }
         }
       ]
     },
     {
       "name": "intl-currency",
       "path": "./src/fixtures/intl-currency.ts",
-      "description": "A custom element that formats currency using Intl.",
-      "attributes": [
+      "declarations": [
         {
-          "name": "value",
-          "description": "Amount to be formatted.",
-          "type": "number",
-          "default": "0"
-        },
-        {
-          "name": "currency",
-          "description": "Currency code used for formatting.",
-          "type": "string | null | undefined",
-          "default": "\"EUR\""
-        },
-        {
-          "name": "locale",
-          "description": "Locale code used for formatting.",
-          "type": "string | null | undefined",
-          "default": "\"en-GB\""
+          "kind": "class",
+          "customElement": true,
+          "name": "IntlCurrency",
+          "description": "A custom element that formats currency using Intl.",
+          "attributes": [
+            {
+              "name": "value",
+              "description": "Amount to be formatted.",
+              "fieldName": "value",
+              "type": { "text": "number" },
+              "default": "0"
+            },
+            {
+              "name": "currency",
+              "fieldName": "currency",
+              "description": "Currency code used for formatting.",
+              "type": { "text": "string | null | undefined" },
+              "default": "\"EUR\""
+            },
+            {
+              "name": "locale",
+              "fieldName": "locale",
+              "description": "Locale code used for formatting.",
+              "type": { "text": "string | null | undefined" },
+              "default": "\"en-GB\""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "description": "Amount to be formatted.",
+              "type": { "text": "number" },
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "currency",
+              "description": "Currency code used for formatting.",
+              "type": { "text": "string | null | undefined" },
+              "default": "\"EUR\""
+            },
+            {
+              "name": "locale",
+              "kind": "field",
+              "description": "Locale code used for formatting.",
+              "type": { "text": "string | null | undefined" },
+              "default": "\"en-GB\""
+            }
+          ]
         }
       ],
-      "properties": [
+      "exports": [
         {
-          "name": "value",
-          "attribute": "value",
-          "description": "Amount to be formatted.",
-          "type": "number",
-          "default": "0"
+          "kind": "custom-element-definition",
+          "name": "intl-currency",
+          "declaration": {
+            "name": "IntlCurrency"
+          }
         },
         {
-          "name": "currency",
-          "attribute": "currency",
-          "description": "Currency code used for formatting.",
-          "type": "string | null | undefined",
-          "default": "\"EUR\""
-        },
-        {
-          "name": "locale",
-          "attribute": "locale",
-          "description": "Locale code used for formatting.",
-          "type": "string | null | undefined",
-          "default": "\"en-GB\""
+          "kind": "js",
+          "name": "IntlCurrency",
+          "declaration": {
+            "name": "IntlCurrency"
+          }
         }
       ]
     },
     {
-      "name": "progress-bar",
       "path": "./src/fixtures/progress-bar.ts",
-      "description": "A custom element similar to the HTML5 `<progress>` element.",
-      "attributes": [
+      "declarations": [
         {
-          "name": "value",
-          "description": "Current progress value.",
-          "type": "number",
-          "default": "0.5"
-        },
-        {
-          "name": "min",
-          "description": "Minimum bound of the progress bar.",
-          "type": "number",
-          "default": "0"
-        },
-        {
-          "name": "max",
-          "description": "Maximum bound of the progress bar.",
-          "type": "number",
-          "default": "1"
-        },
-        {
-          "name": "indeterminate",
-          "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value).",
-          "type": "boolean",
-          "default": "false"
+          "kind": "class",
+          "name": "ProgressBar",
+          "customElement": true,
+          "description": "A custom element similar to the HTML5 `<progress>` element.",
+          "attributes": [
+            {
+              "name": "value",
+              "description": "Current progress value.",
+              "type": { "text": "number" },
+              "fieldName": "value",
+              "default": "0.5"
+            },
+            {
+              "name": "min",
+              "description": "Minimum bound of the progress bar.",
+              "type": { "text": "number" },
+              "fieldName": "min",
+              "default": "0"
+            },
+            {
+              "name": "max",
+              "fieldName": "max",
+              "description": "Maximum bound of the progress bar.",
+              "type": { "text": "number" },
+              "default": "1"
+            },
+            {
+              "name": "indeterminate",
+              "fieldName": "indeterminate",
+              "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value).",
+              "type": { "text": "boolean" },
+              "default": "false"
+            }
+          ],
+          "members": [
+            {
+              "kind":"field",
+              "name": "value",
+              "description": "Current progress value.",
+              "type": { "text": "number" },
+              "default": "0.5"
+            },
+            {
+              "kind":"field",
+              "name": "min",
+              "description": "Minimum bound of the progress bar.",
+              "type": { "text": "number" },
+              "default": "0"
+            },
+            {
+              "kind":"field",
+              "name": "max",
+              "description": "Maximum bound of the progress bar.",
+              "type": { "text": "number" },
+              "default": "1"
+            },
+            {
+              "kind":"field",
+              "name": "indeterminate",
+              "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value).",
+              "type": { "text": "boolean" },
+              "default": "false"
+            }
+          ],
+          "cssProperties": [
+            {
+              "name": "--progress-bar-fill-color",
+              "description": "Color of the filled progress bar part.",
+              "default": "\"#6200ee\""
+            },
+            {
+              "name": "--progress-bar-opacity",
+              "description": "Opacity set on the underlying track.",
+              "default": "0.16"
+            }
+          ],
+          "cssParts": [
+            {
+              "name": "bar",
+              "description": "A progress bar background."
+            },
+            {
+              "name": "value",
+              "description": "A progress bar foreground."
+            }
+          ]
         }
       ],
-      "properties": [
+      "exports": [
         {
-          "name": "value",
-          "attribute": "value",
-          "description": "Current progress value.",
-          "type": "number",
-          "default": "0.5"
+          "kind": "custom-element-definition",
+          "name": "progress-bar",
+          "declaration": {
+            "name": "ProgressBar"
+          }
         },
         {
-          "name": "min",
-          "attribute": "min",
-          "description": "Minimum bound of the progress bar.",
-          "type": "number",
-          "default": "0"
-        },
-        {
-          "name": "max",
-          "attribute": "max",
-          "description": "Maximum bound of the progress bar.",
-          "type": "number",
-          "default": "1"
-        },
-        {
-          "name": "indeterminate",
-          "attribute": "indeterminate",
-          "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value).",
-          "type": "boolean",
-          "default": "false"
-        }
-      ],
-      "cssProperties": [
-        {
-          "name": "--progress-bar-fill-color",
-          "description": "Color of the filled progress bar part.",
-          "type": "Color",
-          "default": "\"#6200ee\""
-        },
-        {
-          "name": "--progress-bar-opacity",
-          "description": "Opacity set on the underlying track.",
-          "default": "0.16"
-        }
-      ],
-      "cssParts": [
-        {
-          "name": "bar",
-          "description": "A progress bar background."
-        },
-        {
-          "name": "value",
-          "description": "A progress bar foreground."
+          "kind": "js",
+          "name": "ProgressBar",
+          "declaration": {
+            "name": "ProgressBar"
+          }
         }
       ]
     }

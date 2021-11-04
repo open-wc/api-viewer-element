@@ -1,13 +1,18 @@
+import type {
+  Attribute,
+  ClassField,
+  ClassMember,
+  CssCustomProperty,
+  Event,
+  Slot
+} from 'custom-elements-manifest/schema';
+
 import { LitElement, PropertyValues } from 'lit';
 import { property } from 'lit/decorators/property.js';
-import { getSlotDefault } from './lib/knobs.js';
+import { getSlotDefault, Knob } from './lib/knobs.js';
 import {
   ComponentWithProps,
-  CSSPropertyInfo,
-  PropertyInfo,
-  SlotInfo,
   SlotValue,
-  EventInfo,
   KnobValues,
   KnobValue
 } from './lib/types.js';
@@ -18,16 +23,17 @@ import {
   normalizeType,
   TemplateTypes,
   unquote,
-  getTemplateNode
+  getTemplateNode,
+  isClassField
 } from './lib/utils.js';
 
 const { HOST, KNOB } = TemplateTypes;
 
 const getDefault = (
-  prop: PropertyInfo
+  prop: ClassField
 ): string | number | boolean | null | undefined => {
   const { type, default: value } = prop;
-  switch (normalizeType(type)) {
+  switch (normalizeType(type?.text)) {
     case 'boolean':
       return value !== 'false';
     case 'number':
@@ -66,17 +72,17 @@ export type Constructor<T = unknown> = new (...args: any[]) => T;
 
 export interface ApiDemoLayoutInterface {
   tag: string;
-  props: PropertyInfo[];
-  finalProps: PropertyInfo[];
-  slots: SlotInfo[];
-  events: EventInfo[];
-  cssProps: CSSPropertyInfo[];
+  members: ClassMember[];
+  finalProps: Knob<ClassField>[];
+  slots: Slot[];
+  events: Event[];
+  cssProps: Knob<CssCustomProperty>[];
   exclude: string;
   vid?: number;
-  processedSlots: SlotValue[];
-  processedCss: CSSPropertyInfo[];
+  processedSlots: Knob<SlotValue>[];
+  processedCss: CssCustomProperty[];
   eventLog: CustomEvent[];
-  customKnobs: PropertyInfo[];
+  customKnobs: Knob<ClassField>[];
   knobs: KnobValues;
   setKnobs(target: HTMLInputElement): void;
   setSlots(target: HTMLInputElement): void;
@@ -90,39 +96,33 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
   class DemoLayout extends base {
     @property() tag = '';
 
-    @property({ attribute: false })
-    props: PropertyInfo[] = [];
+    @property({ attribute: false }) members: ClassMember[] = [];
 
-    @property({ attribute: false })
-    slots: SlotInfo[] = [];
+    @property({ attribute: false }) attrs: Attribute[] = [];
 
-    @property({ attribute: false })
-    events: EventInfo[] = [];
+    @property({ attribute: false }) slots: Slot[] = [];
 
-    @property({ attribute: false })
-    cssProps: CSSPropertyInfo[] = [];
+    @property({ attribute: false }) events: Event[] = [];
+
+    @property({ attribute: false }) cssProps: CssCustomProperty[] = [];
 
     @property() exclude = '';
 
     @property({ type: Number }) vid?: number;
 
-    @property({ attribute: false })
-    processedSlots!: SlotValue[];
+    @property({ attribute: false }) processedSlots!: SlotValue[];
 
-    @property({ attribute: false })
-    processedCss!: CSSPropertyInfo[];
+    @property({ attribute: false }) processedCss!: CssCustomProperty[];
 
-    @property({ attribute: false })
-    eventLog!: CustomEvent[];
+    @property({ attribute: false }) eventLog!: CustomEvent[];
 
-    @property({ attribute: false })
-    customKnobs: PropertyInfo[] = [];
+    @property({ attribute: false }) customKnobs: (ClassField & {
+      options?: string[];
+    })[] = [];
 
-    @property({ attribute: false })
-    knobs: KnobValues = {};
+    @property({ attribute: false }) knobs: KnobValues = {};
 
-    @property({ attribute: false })
-    finalProps!: PropertyInfo[];
+    @property({ attribute: false }) finalProps!: ClassField[];
 
     willUpdate(props: PropertyValues) {
       // Reset state if tag changed
@@ -133,8 +133,9 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
         this.processedSlots = [];
 
         // Store properties without getters
-        this.finalProps = this.props.filter(
-          ({ name }) => !isGetter(customElements.get(this.tag), name)
+        this.finalProps = this.members.filter(
+          (x): x is ClassField =>
+            isClassField(x) && !isGetter(customElements.get(this.tag), x.name)
         );
 
         this.customKnobs = this._getCustomKnobs();
@@ -143,7 +144,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
       if (props.has('exclude')) {
         this.finalProps = this.finalProps
           .filter(({ name }) => !this.exclude.includes(name))
-          .map((prop: PropertyInfo) => {
+          .map((prop) => {
             return typeof prop.default === 'string'
               ? {
                   ...prop,
@@ -157,7 +158,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
     protected updated(props: PropertyValues): void {
       if (props.has('slots') && this.slots) {
         this.processedSlots = this.slots
-          .sort((a: SlotInfo, b: SlotInfo) => {
+          .sort((a, b) => {
             if (a.name === '') {
               return 1;
             }
@@ -166,20 +167,20 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
             }
             return a.name.localeCompare(b.name);
           })
-          .map((slot: SlotInfo) => {
-            return {
-              ...slot,
-              content: getSlotDefault(slot.name, 'content')
-            };
-          });
+          .map((slot) => ({
+            ...slot,
+            content: getSlotDefault(slot.name, 'content')
+          }));
       }
     }
 
-    private _getCustomKnobs(): PropertyInfo[] {
+    private _getCustomKnobs(): (ClassField & { options?: string[] })[] {
       return getTemplates(this.vid as number, this.tag, KNOB)
         .map((template) => {
           const { attr, type } = template.dataset;
-          let result = null;
+          let result:
+            | (Omit<ClassField, 'kind'> & { options?: string[] })
+            | null = null;
           if (attr) {
             if (type === 'select') {
               const node = getTemplateNode(template);
@@ -194,8 +195,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
               if (node instanceof HTMLSelectElement && options.length > 1) {
                 result = {
                   name: attr,
-                  attribute: attr,
-                  type,
+                  type: { text: type },
                   options
                 };
               }
@@ -203,17 +203,19 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
             if (type === 'string' || type === 'boolean') {
               result = {
                 name: attr,
-                attribute: attr,
-                type
+                type: { text: type }
               };
             }
           }
-          return result;
+          return {
+            ...(result as ClassField & { options?: string[] }),
+            kind: 'field' as const
+          };
         })
-        .filter(Boolean) as PropertyInfo[];
+        .filter(Boolean);
     }
 
-    private _getProp(name: string): { prop?: PropertyInfo; custom?: boolean } {
+    private _getProp(name: string): { prop?: ClassField; custom?: boolean } {
       const isMatch = isPropMatch(name);
       const prop = this.finalProps.find(isMatch);
       return prop
@@ -253,7 +255,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
 
       const { prop, custom } = this._getProp(name as string);
       if (prop) {
-        const { attribute } = prop;
+        const attribute = this.attrs.find((x) => x.fieldName === name);
         this.knobs = {
           ...this.knobs,
           [name as string]: { type, value, attribute, custom } as KnobValue
@@ -286,7 +288,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
             const defaultValue = getDefault(prop);
             return (
               component[name] !== defaultValue ||
-              (normalizeType(type) === 'boolean' && defaultValue)
+              (normalizeType(type?.text) === 'boolean' && defaultValue)
             );
           })
           .forEach((prop) => {
@@ -315,7 +317,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
           let value = cssProp.default
             ? unquote(cssProp.default)
             : style.getPropertyValue(cssProp.name);
-          const result = cssProp;
+          const result: CssCustomProperty & { value?: string } = cssProp;
           if (value) {
             value = value.trim();
             result.default = value;
@@ -326,14 +328,15 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
       }
     }
 
-    private _syncKnob(component: Element, changed: PropertyInfo): void {
-      const { name, type, attribute } = changed;
+    private _syncKnob(component: Element, changed: ClassField): void {
+      const { name, type } = changed;
+      const attribute = this.attrs.find((x) => x.fieldName === name)?.name;
       const value = (component as unknown as ComponentWithProps)[name];
 
       // update knobs to avoid duplicate event
       this.knobs = {
         ...this.knobs,
-        [name]: { type, value, attribute }
+        [name]: { type: type?.text ?? '', value, attribute }
       };
 
       this.finalProps = this.finalProps.map((prop) => {

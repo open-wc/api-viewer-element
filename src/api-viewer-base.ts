@@ -1,16 +1,22 @@
+import type { Package } from 'custom-elements-manifest/schema';
+
 import { LitElement, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { cache } from 'lit/directives/cache.js';
 import { until } from 'lit/directives/until.js';
 import { parse } from './lib/markdown.js';
-import { ElementPromise } from './lib/types.js';
-import { getElementData, setTemplates } from './lib/utils.js';
+import {
+  getCustomElements,
+  getElementData,
+  hasCustomElements,
+  setTemplates
+} from './lib/utils.js';
 import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';
 import './api-viewer-docs.js';
 import './api-viewer-demo.js';
 
 async function renderDocs(
-  jsonFetched: ElementPromise,
+  jsonFetched: Promise<Package | null>,
   section: string,
   onSelect: (e: CustomEvent) => void,
   onToggle: (e: CustomEvent) => void,
@@ -18,17 +24,19 @@ async function renderDocs(
   id?: number,
   exclude = ''
 ): Promise<TemplateResult> {
-  const elements = await jsonFetched;
+  const manifest = await jsonFetched;
 
-  if (!elements.length) {
+  if (!hasCustomElements(manifest)) {
     return emptyDataWarning;
   }
 
-  const data = getElementData(elements, selected);
+  const elements = getCustomElements(manifest);
+
+  const data = getElementData(manifest, selected);
 
   return html`
     <header part="header">
-      <div part="header-title">&lt;${data.name}&gt;</div>
+      <div part="header-title">&lt;${data?.name ?? ''}&gt;</div>
       <nav>
         <input
           id="docs"
@@ -67,26 +75,27 @@ async function renderDocs(
     ${cache(
       section === 'docs'
         ? html`
-            <div ?hidden=${data.description === ''} part="docs-description">
-              ${parse(data.description)}
+            <div ?hidden=${data?.description === ''} part="docs-description">
+              ${parse(data?.description)}
             </div>
             <api-viewer-docs
-              .name=${data.name}
-              .props=${data.properties}
-              .attrs=${data.attributes}
-              .events=${data.events}
-              .slots=${data.slots}
-              .cssParts=${data.cssParts}
-              .cssProps=${data.cssProperties}
+              .name=${data?.name}
+              .attrs=${data?.attributes ?? []}
+              .cssParts=${data?.cssParts ?? []}
+              .cssProps=${data?.cssProperties ?? []}
+              .events=${data?.events ?? []}
+              .members=${data?.members ?? []}
+              .slots=${data?.slots ?? []}
             ></api-viewer-docs>
           `
         : html`
             <api-viewer-demo
-              .tag=${data.name}
-              .props=${data.properties}
-              .slots=${data.slots}
-              .events=${data.events}
-              .cssProps=${data.cssProperties}
+              .tag=${data?.name}
+              .attrs=${data?.attributes ?? []}
+              .cssProps=${data?.cssProperties ?? []}
+              .events=${data?.events ?? []}
+              .members=${data?.members ?? []}
+              .slots=${data?.slots ?? []}
               .exclude=${exclude}
               .vid=${id}
             ></api-viewer-demo>

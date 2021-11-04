@@ -1,29 +1,35 @@
+import type { Package } from 'custom-elements-manifest/schema';
 import { LitElement, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { until } from 'lit/directives/until.js';
-import { ElementPromise } from './lib/types.js';
-import { getElementData } from './lib/utils.js';
+import {
+  getCustomElements,
+  getElementData,
+  hasCustomElements
+} from './lib/utils.js';
 import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';
 import './api-viewer-demo.js';
 
 async function renderDemo(
-  jsonFetched: ElementPromise,
+  jsonFetched: Promise<Package | null>,
   onSelect: (e: CustomEvent) => void,
   selected?: string,
   id?: number,
   exclude = ''
 ): Promise<TemplateResult> {
-  const elements = await jsonFetched;
+  const manifest = await jsonFetched;
 
-  if (!elements.length) {
+  if (!hasCustomElements(manifest)) {
     return emptyDataWarning;
   }
 
-  const data = getElementData(elements, selected);
+  const elements = getCustomElements(manifest);
+
+  const data = getElementData(manifest, selected);
 
   return html`
     <header part="header">
-      <div part="header-title">&lt;${data.name}&gt;</div>
+      <div part="header-title">&lt;${data?.name}&gt;</div>
       <nav>
         <label part="select-label">
           <select
@@ -40,11 +46,12 @@ async function renderDemo(
       </nav>
     </header>
     <api-viewer-demo
-      .tag=${data.name}
-      .props=${data.properties}
-      .slots=${data.slots}
-      .events=${data.events}
-      .cssProps=${data.cssProperties}
+      .tag=${data?.name}
+      .members=${data?.members ?? []}
+      .attrs=${data?.attributes ?? []}
+      .slots=${data?.slots ?? []}
+      .events=${data?.events ?? []}
+      .cssProps=${data?.cssProperties ?? []}
       .exclude=${exclude}
       .vid=${id}
     ></api-viewer-demo>

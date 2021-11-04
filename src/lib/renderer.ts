@@ -1,13 +1,10 @@
+import type { CssCustomProperty } from 'custom-elements-manifest/schema';
+
 import { ChildPart, html, noChange, nothing, TemplateResult } from 'lit';
 import { directive, Directive, PartInfo, PartType } from 'lit/directive.js';
 import { templateContent } from 'lit/directives/template-content.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import {
-  ComponentWithProps,
-  CSSPropertyInfo,
-  KnobValues,
-  SlotValue
-} from './types.js';
+import { ComponentWithProps, KnobValues, SlotValue } from './types.js';
 import {
   getTemplate,
   getTemplateNode,
@@ -22,7 +19,7 @@ export type ComponentRendererOptions = {
   tag: string;
   knobs: KnobValues;
   slots: SlotValue[];
-  cssProps: CSSPropertyInfo[];
+  cssProps: (CssCustomProperty & { value?: string })[];
 };
 
 const { HOST, PREFIX, SLOT, SUFFIX, WRAPPER } = TemplateTypes;
