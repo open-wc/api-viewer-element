@@ -1,4 +1,7 @@
-import type { CssCustomProperty } from 'custom-elements-manifest/schema';
+import type {
+  ClassField,
+  CssCustomProperty
+} from 'custom-elements-manifest/schema';
 
 import { html, TemplateResult } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
@@ -6,7 +9,7 @@ import { htmlRender } from 'highlight-ts/es/render/html';
 import { registerLanguages } from 'highlight-ts/es/languages';
 import { XML } from 'highlight-ts/es/languages/xml';
 import { init, process } from 'highlight-ts/es/process';
-import { KnobValues, SlotValue } from './types.js';
+import { SlotValue } from './types.js';
 import { CSS } from './highlight-css.js';
 import {
   getTemplate,
@@ -15,6 +18,7 @@ import {
   normalizeType,
   TemplateTypes
 } from './utils.js';
+import { Knob } from './knobs.js';
 
 // register languages
 registerLanguages(CSS, XML);
@@ -54,7 +58,7 @@ const getTplContent = (
 export const renderSnippet = (
   id: number,
   tag: string,
-  values: KnobValues,
+  values: Record<string, Knob>,
   slots: SlotValue[],
   cssProps: (CssCustomProperty & { value?: string })[]
 ): TemplateResult => {
@@ -82,9 +86,9 @@ export const renderSnippet = (
   Object.keys(values)
     .sort((a, b) => (a > b ? 1 : -1))
     .forEach((key: string) => {
-      const { value, type, attribute } = values[key];
+      const { value, knobType, attribute } = values[key] as Knob<ClassField>;
       const attr = attribute || key;
-      switch (normalizeType(type)) {
+      switch (normalizeType(knobType)) {
         case 'boolean':
           markup += value ? ` ${attr}` : '';
           break;

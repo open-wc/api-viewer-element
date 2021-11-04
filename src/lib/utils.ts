@@ -8,6 +8,7 @@ import type {
   Export,
   Package
 } from 'custom-elements-manifest/schema';
+import { KnobType } from './knobs';
 
 const templates: Array<HTMLTemplateElement[]> = [];
 
@@ -66,8 +67,9 @@ export const isPropMatch =
     // prop.attribute === name ||
     prop.name === name;
 
-export const normalizeType = (type: string | undefined = ''): string =>
-  type.replace(' | undefined', '').replace(' | null', '');
+export const normalizeType = (type: string | undefined = ''): KnobType =>
+  // TODO: do better
+  type.replace(' | undefined', '').replace(' | null', '') as KnobType;
 
 export const unquote = (value?: string): string | undefined =>
   typeof value === 'string' && value.startsWith('"') && value.endsWith('"')

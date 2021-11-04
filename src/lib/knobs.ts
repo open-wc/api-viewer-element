@@ -11,10 +11,21 @@ const DEFAULT = 'default';
 
 type Knobable = unknown | (CssCustomProperty | ClassField | SlotValue);
 
+export type KnobType =
+  | 'select'
+  | 'boolean'
+  | 'checkbox'
+  | 'number'
+  | 'text'
+  | 'string';
 export type Knob<T extends Knobable = unknown> = T & {
   value?: string;
   options?: string[];
-  knobType?: 'select' | 'boolean' | 'checkbox' | 'number' | 'text';
+  custom?: string;
+  knobType?: KnobType;
+} & {
+  // only for member?
+  attribute?: string;
 };
 
 type InputRenderer = (item: Knob, id: string) => TemplateResult;
@@ -59,7 +70,7 @@ export const propRenderer: InputRenderer = (
   knob: Knob,
   id: string
 ): TemplateResult => {
-  const { name, knobType, value, options } = knob as Knob<ClassField>;
+  const { name, knobType, type, value, options } = knob as Knob<ClassField>;
   let input;
   if (knobType === 'select' && Array.isArray(options)) {
     input = html`
@@ -69,7 +80,7 @@ export const propRenderer: InputRenderer = (
         )}
       </select>
     `;
-  } else if (normalizeType(knobType) === 'boolean') {
+  } else if (normalizeType(knobType ?? type?.text) === 'boolean') {
     input = html`
       <input
         id=${id}

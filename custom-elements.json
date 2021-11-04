@@ -261,6 +261,20 @@
               },
               "description": "State attribute set when focused from keyboard.",
               "name": "focus-ring"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "name": "opened",
+              "fieldName": "opened"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "name": "disabled",
+              "fieldName": "disabled"
             }
           ],
           "superclass": {

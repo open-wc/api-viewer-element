@@ -10,12 +10,7 @@ import type {
 import { LitElement, PropertyValues } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { getSlotDefault, Knob } from './lib/knobs.js';
-import {
-  ComponentWithProps,
-  SlotValue,
-  KnobValues,
-  KnobValue
-} from './lib/types.js';
+import { ComponentWithProps, SlotValue } from './lib/types.js';
 import {
   getTemplates,
   hasTemplate,
@@ -83,7 +78,7 @@ export interface ApiDemoLayoutInterface {
   processedCss: CssCustomProperty[];
   eventLog: CustomEvent[];
   customKnobs: Knob<ClassField>[];
-  knobs: KnobValues;
+  knobs: Record<string, Knob>;
   setKnobs(target: HTMLInputElement): void;
   setSlots(target: HTMLInputElement): void;
   setCss(target: HTMLInputElement): void;
@@ -120,7 +115,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
       options?: string[];
     })[] = [];
 
-    @property({ attribute: false }) knobs: KnobValues = {};
+    @property({ attribute: false }) knobs: Record<string, Knob> = {};
 
     @property({ attribute: false }) finalProps!: ClassField[];
 
@@ -174,13 +169,11 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
       }
     }
 
-    private _getCustomKnobs(): (ClassField & { options?: string[] })[] {
+    private _getCustomKnobs(): Knob<ClassField>[] {
       return getTemplates(this.vid as number, this.tag, KNOB)
         .map((template) => {
           const { attr, type } = template.dataset;
-          let result:
-            | (Omit<ClassField, 'kind'> & { options?: string[] })
-            | null = null;
+          let result: Omit<Knob<ClassField>, 'kind'> | null = null;
           if (attr) {
             if (type === 'select') {
               const node = getTemplateNode(template);
@@ -195,7 +188,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
               if (node instanceof HTMLSelectElement && options.length > 1) {
                 result = {
                   name: attr,
-                  type: { text: type },
+                  knobType: type,
                   options
                 };
               }
@@ -203,12 +196,12 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
             if (type === 'string' || type === 'boolean') {
               result = {
                 name: attr,
-                type: { text: type }
+                knobType: type
               };
             }
           }
           return {
-            ...(result as ClassField & { options?: string[] }),
+            ...(result as Knob<ClassField>),
             kind: 'field' as const
           };
         })
@@ -258,7 +251,14 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
         const attribute = this.attrs.find((x) => x.fieldName === name);
         this.knobs = {
           ...this.knobs,
-          [name as string]: { type, value, attribute, custom } as KnobValue
+          [name as string]: {
+            knobType: normalizeType(type),
+            value,
+            attribute,
+            custom,
+            kind: 'field',
+            name: attribute ?? ''
+          } as Knob<ClassField>
         };
       }
     }
@@ -336,7 +336,13 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
       // update knobs to avoid duplicate event
       this.knobs = {
         ...this.knobs,
-        [name]: { type: type?.text ?? '', value, attribute }
+        [name]: {
+          knobType: normalizeType(type?.text ?? ''),
+          value,
+          attribute,
+          kind: 'field',
+          name: attribute ?? ''
+        } as Knob<ClassField>
       };
 
       this.finalProps = this.finalProps.map((prop) => {
