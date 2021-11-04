@@ -65,7 +65,9 @@
                 "text": "boolean | null | undefined"
               },
               "default": "false",
-              "description": "When true, the panel content is expanded and visible"
+              "description": "When true, the panel content is expanded and visible",
+              "attribute": "opened",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -74,7 +76,9 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Disabled panel can not be expanded or collapsed"
+              "description": "Disabled panel can not be expanded or collapsed",
+              "attribute": "disabled",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -113,20 +117,6 @@
               "privacy": "private"
             },
             {
-              "kind": "field",
-              "name": "styles",
-              "static": true
-            },
-            {
-              "kind": "method",
-              "name": "render",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              }
-            },
-            {
               "kind": "method",
               "name": "focus",
               "return": {
@@ -134,34 +124,6 @@
                   "text": "void"
                 }
               }
-            },
-            {
-              "kind": "method",
-              "name": "firstUpdated",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "updated",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "props",
-                  "type": {
-                    "text": "PropertyValues"
-                  }
-                }
-              ]
             },
             {
               "kind": "method",
@@ -263,17 +225,21 @@
               "name": "focus-ring"
             },
             {
-              "type": {
-                "text": "boolean"
-              },
               "name": "opened",
+              "type": {
+                "text": "boolean | null | undefined"
+              },
+              "default": "false",
+              "description": "When true, the panel content is expanded and visible",
               "fieldName": "opened"
             },
             {
+              "name": "disabled",
               "type": {
                 "text": "boolean"
               },
-              "name": "disabled",
+              "default": "false",
+              "description": "Disabled panel can not be expanded or collapsed",
               "fieldName": "disabled"
             }
           ],
@@ -326,7 +292,8 @@
                 "text": "number | null | undefined"
               },
               "default": "null",
-              "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels."
+              "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels.",
+              "attribute": "opened-index"
             },
             {
               "kind": "field",
@@ -342,48 +309,6 @@
               "name": "_boundOnOpened",
               "privacy": "private",
               "default": "this._onOpened.bind(this)"
-            },
-            {
-              "kind": "field",
-              "name": "styles",
-              "static": true
-            },
-            {
-              "kind": "method",
-              "name": "render",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "firstUpdated",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "willUpdate",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "props",
-                  "type": {
-                    "text": "PropertyValues"
-                  }
-                }
-              ]
             },
             {
               "kind": "field",
@@ -474,6 +399,17 @@
               "description": "Event fired when changing currently opened panel."
             }
           ],
+          "attributes": [
+            {
+              "name": "opened-index",
+              "type": {
+                "text": "number | null | undefined"
+              },
+              "default": "null",
+              "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels.",
+              "fieldName": "openedIndex"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -517,7 +453,8 @@
                 "text": "number"
               },
               "default": "0",
-              "description": "Amount to be formatted."
+              "description": "Amount to be formatted.",
+              "attribute": "value"
             },
             {
               "kind": "field",
@@ -526,7 +463,8 @@
                 "text": "string | null | undefined"
               },
               "default": "'EUR'",
-              "description": "Currency code used for formatting."
+              "description": "Currency code used for formatting.",
+              "attribute": "currency"
             },
             {
               "kind": "field",
@@ -535,22 +473,37 @@
                 "text": "string | null | undefined"
               },
               "default": "'en-GB'",
-              "description": "Locale code used for formatting."
+              "description": "Locale code used for formatting.",
+              "attribute": "locale"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "value",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "Amount to be formatted.",
+              "fieldName": "value"
             },
             {
-              "kind": "field",
-              "name": "styles",
-              "static": true
+              "name": "currency",
+              "type": {
+                "text": "string | null | undefined"
+              },
+              "default": "'EUR'",
+              "description": "Currency code used for formatting.",
+              "fieldName": "currency"
             },
             {
-              "kind": "method",
-              "name": "render",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              }
+              "name": "locale",
+              "type": {
+                "text": "string | null | undefined"
+              },
+              "default": "'en-GB'",
+              "description": "Locale code used for formatting.",
+              "fieldName": "locale"
             }
           ],
           "superclass": {
@@ -621,7 +574,8 @@
                 "text": "number"
               },
               "default": "0.5",
-              "description": "Current progress value."
+              "description": "Current progress value.",
+              "attribute": "value"
             },
             {
               "kind": "field",
@@ -630,7 +584,8 @@
                 "text": "number"
               },
               "default": "0",
-              "description": "Minimum bound of the progress bar."
+              "description": "Minimum bound of the progress bar.",
+              "attribute": "min"
             },
             {
               "kind": "field",
@@ -639,7 +594,8 @@
                 "text": "number"
               },
               "default": "1",
-              "description": "Maximum bound of the progress bar."
+              "description": "Maximum bound of the progress bar.",
+              "attribute": "max"
             },
             {
               "kind": "field",
@@ -648,50 +604,9 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value)."
-            },
-            {
-              "kind": "field",
-              "name": "styles",
-              "static": true
-            },
-            {
-              "kind": "method",
-              "name": "render",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "firstUpdated",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "updated",
-              "privacy": "protected",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "props",
-                  "type": {
-                    "text": "PropertyValues"
-                  }
-                }
-              ]
+              "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value).",
+              "attribute": "indeterminate",
+              "reflects": true
             },
             {
               "kind": "method",
@@ -776,6 +691,44 @@
                   }
                 }
               ]
+            }
+          ],
+          "attributes": [
+            {
+              "name": "value",
+              "type": {
+                "text": "number"
+              },
+              "default": "0.5",
+              "description": "Current progress value.",
+              "fieldName": "value"
+            },
+            {
+              "name": "min",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "Minimum bound of the progress bar.",
+              "fieldName": "min"
+            },
+            {
+              "name": "max",
+              "type": {
+                "text": "number"
+              },
+              "default": "1",
+              "description": "Maximum bound of the progress bar.",
+              "fieldName": "max"
+            },
+            {
+              "name": "indeterminate",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value).",
+              "fieldName": "indeterminate"
             }
           ],
           "superclass": {
