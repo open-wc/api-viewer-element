@@ -49,12 +49,12 @@ async function renderDocs(
     </div>
     <api-viewer-docs
       .name=${data?.name}
-      .members=${data?.members}
-      .attrs=${data?.attributes}
-      .events=${data?.events}
-      .slots=${data?.slots}
-      .cssParts=${data?.cssParts}
-      .cssProps=${data?.cssProperties}
+      .attrs=${data?.attributes ?? []}
+      .cssParts=${data?.cssParts ?? []}
+      .cssProps=${data?.cssProperties ?? []}
+      .events=${data?.events ?? []}
+      .members=${data?.members ?? []}
+      .slots=${data?.slots ?? []}
     ></api-viewer-docs>
   `;
 }

@@ -27,7 +27,7 @@
     "build": "tsc",
     "dev": "npm run watch & npm run serve",
     "dist": "rimraf dist && rollup -c rollup.config.js && npm run fixtures && cp custom-elements.json dist",
-    "fixtures": "wca analyze src/fixtures/*.ts --format json --outFile custom-elements.json",
+    "fixtures": "cem analyze --globs 'src/fixtures/*.ts'",
     "lint:css": "stylelint src/**/*.ts",
     "lint:eslint": "eslint src --ext .ts",
     "lint:lit": "lit-analyzer src --strict",
@@ -53,6 +53,7 @@
     "tslib": "^2.3.1"
   },
   "devDependencies": {
+    "@custom-elements-manifest/analyzer": "^0.5.7",
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@size-limit/preset-small-lib": "^6.0.4",
     "@typescript-eslint/eslint-plugin": "^5.3.0",
@@ -81,8 +82,7 @@
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-processor-styled-components": "1.10.0",
     "tsc-watch": "^4.5.0",
-    "typescript": "^4.4.4",
-    "web-component-analyzer": "^1.1.6"
+    "typescript": "^4.4.4"
   },
   "resolutions": {
     "glob-parent": "5.1.2",
@@ -110,5 +110,6 @@
       "path": "lib/api-viewer.js",
       "limit": "38.5 KB"
     }
-  ]
+  ],
+  "customElements": "custom-elements.json"
 }

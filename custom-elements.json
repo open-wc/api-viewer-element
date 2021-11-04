@@ -1,365 +1,792 @@
 {
   "schemaVersion": "1.0.0",
+  "readme": "",
   "modules": [
     {
       "kind": "javascript-module",
-      "path": "./src/fixtures/expansion-panel.ts",
+      "path": "src/fixtures/expansion-panel.ts",
       "declarations": [
         {
           "kind": "class",
-          "customElement": true,
-          "name": "ExpansionPanel",
           "description": "A custom element similar to the HTML5 `<details>` element.",
-          "attributes": [
+          "name": "ExpansionPanel",
+          "cssProperties": [
             {
-              "name": "opened",
-              "fieldName": "opened",
-              "description": "When true, the panel content is expanded and visible",
-              "type":{ "text": "boolean | null | undefined" },
-              "default": "false"
+              "type": {
+                "text": "Background"
+              },
+              "description": "Default panel header background color.",
+              "name": "--panel-header-background",
+              "default": "#fff"
             },
             {
-              "name": "disabled",
-              "fieldName": "disabled",
-              "description": "Disabled panel can not be expanded or collapsed",
-              "type":{ "text": "boolean" },
-              "default": "false"
+              "description": "Panel header minimum height.",
+              "name": "--panel-header-min-height",
+              "default": "48px"
             },
             {
-              "name": "focused",
-              "fieldName": "focused",
-              "description": "State attribute set when element has focus.",
-              "type":{ "text": "boolean "}
+              "type": {
+                "text": "Background"
+              },
+              "description": "Active toggle button ripple background.",
+              "name": "--panel-ripple-background",
+              "default": "rgba(0, 0, 0, 0.38)"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "An element wrapping the `header` slot.",
+              "name": "header"
             },
             {
-              "name": "focus-ring",
-              "fieldName": "focusRing",
-              "description": "State attribute set when focused from keyboard.",
-              "type":{ "text": "boolean "}
+              "description": "A toggle button, child of the header part.",
+              "name": "toggle"
+            },
+            {
+              "description": "An element wrapping the `content` slot.",
+              "name": "content"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Slot fot panel content",
+              "name": ""
+            },
+            {
+              "description": "Slot for panel header",
+              "name": "header"
             }
           ],
           "members": [
             {
               "kind": "field",
               "name": "opened",
-              "description": "When true, the panel content is expanded and visible",
-              "type": { "text": "boolean | null | undefined" },
-              "default": "false"
+              "type": {
+                "text": "boolean | null | undefined"
+              },
+              "default": "false",
+              "description": "When true, the panel content is expanded and visible"
             },
             {
               "kind": "field",
               "name": "disabled",
-              "description": "Disabled panel can not be expanded or collapsed",
-              "type": { "text": "boolean" },
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Disabled panel can not be expanded or collapsed"
+            },
+            {
+              "kind": "field",
+              "name": "header",
+              "type": {
+                "text": "HTMLDivElement | undefined"
+              },
+              "privacy": "protected"
+            },
+            {
+              "kind": "field",
+              "name": "_isShiftTabbing",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected",
               "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "_tabPressed",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected",
+              "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "_boundBodyKeydown",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_boundBodyKeyup",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true
+            },
+            {
+              "kind": "method",
+              "name": "render",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "firstUpdated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "updated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "props",
+                  "type": {
+                    "text": "PropertyValues"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_setFocused",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "focused",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_onToggleClick",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_onToggleKeyDown",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_onBodyKeydown",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_onBodyKeyup",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             }
           ],
           "events": [
             {
               "name": "opened-changed",
+              "type": {
+                "text": "CustomEvent"
+              },
               "description": "Event fired when expanding / collapsing"
             }
           ],
-          "slots": [
+          "attributes": [
             {
-              "name": "",
-              "description": "Slot fot panel content"
+              "type": {
+                "text": "boolean"
+              },
+              "description": "State attribute set when element has focus.",
+              "name": "focused"
             },
             {
-              "name": "header",
-              "description": "Slot for panel header"
+              "type": {
+                "text": "boolean"
+              },
+              "description": "State attribute set when focused from keyboard.",
+              "name": "focus-ring"
             }
           ],
-          "cssProperties": [
-            {
-              "name": "--panel-header-background",
-              "description": "Default panel header background color.",
-              "default": "\"#fff\""
-            },
-            {
-              "name": "--panel-header-min-height",
-              "description": "Panel header minimum height.",
-              "default": "\"48px\""
-            },
-            {
-              "name": "--panel-ripple-background",
-              "description": "Active toggle button ripple background.",
-              "default": "\"rgba(0, 0, 0, 0.38)\""
-            }
-          ],
-          "cssParts": [
-            {
-              "name": "header",
-              "description": "An element wrapping the `header` slot."
-            },
-            {
-              "name": "toggle",
-              "description": "A toggle button, child of the header part."
-            },
-            {
-              "name": "content",
-              "description": "An element wrapping the `content` slot."
-            }
-          ]
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "expansion-panel",
+          "customElement": true
         }
       ],
       "exports": [
         {
-          "kind": "custom-element-definition",
-          "name": "expansion-panel",
-          "declaration": {
-            "name": "ExpansionPanel"
-          }
-        },
-        {
           "kind": "js",
           "name": "ExpansionPanel",
           "declaration": {
-            "name": "ExpansionPanel"
+            "name": "ExpansionPanel",
+            "module": "src/fixtures/expansion-panel.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "expansion-panel",
+          "declaration": {
+            "name": "ExpansionPanel",
+            "module": "src/fixtures/expansion-panel.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "./src/fixtures/fancy-accordion.ts",
+      "path": "src/fixtures/fancy-accordion.ts",
       "declarations": [
         {
           "kind": "class",
-          "customElement":true,
-          "name": "FancyAccordion",
           "description": "A custom element implementing the accordion widget: a vertically stacked set of expandable panels\nthat wraps several instances of the `<expansion-panel>` element. Only one panel can be opened\n(expanded) at a time.\n\nPanel headings function as controls that enable users to open (expand) or hide (collapse) their\nassociated sections of content. The user can toggle panels by mouse click, Enter and Space keys.\n\nThe component supports keyboard navigation and is aligned with the\n[WAI-ARIA Authoring Practices](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion).",
-          "attributes": [
+          "name": "FancyAccordion",
+          "slots": [
             {
-              "fieldName": "openedIndex",
-              "name": "opened-index",
-              "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels.",
-              "type": { "text": "number | null | undefined" }
+              "description": "Slot fot panel elements.",
+              "name": ""
             }
           ],
           "members": [
             {
               "kind": "field",
               "name": "openedIndex",
-              "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels.",
-              "type": { "text": "number | null | undefined" }
+              "type": {
+                "text": "number | null | undefined"
+              },
+              "default": "null",
+              "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels."
+            },
+            {
+              "kind": "field",
+              "name": "_items",
+              "type": {
+                "text": "ExpansionPanel[]"
+              },
+              "privacy": "protected",
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "_boundOnOpened",
+              "privacy": "private",
+              "default": "this._onOpened.bind(this)"
+            },
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true
+            },
+            {
+              "kind": "method",
+              "name": "render",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "firstUpdated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "willUpdate",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "props",
+                  "type": {
+                    "text": "PropertyValues"
+                  }
+                }
+              ]
             },
             {
               "kind": "field",
               "name": "focused",
-              "type": { "text": "Element | null" }
+              "type": {
+                "text": "Element | null"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_onKeydown",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_getAvailableIndex",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "number"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "index",
+                  "optional": true,
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "increment",
+                  "optional": true,
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_onOpened",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "CustomEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_notifyOpen",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             }
           ],
           "events": [
             {
               "name": "opened-index-changed",
+              "type": {
+                "text": "CustomEvent"
+              },
               "description": "Event fired when changing currently opened panel."
             }
           ],
-          "slots": [
-            {
-              "name": "",
-              "description": "Slot fot panel elements."
-            }
-          ]
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "fancy-accordion",
+          "customElement": true
         }
       ],
       "exports": [
-        {
-          "kind": "custom-element-definition",
-          "name": "fancy-accordion",
-          "declaration": {
-            "name": "FancyAccordion"
-          }
-        },
         {
           "kind": "js",
           "name": "FancyAccordion",
           "declaration": {
-            "name": "FancyAccordion"
+            "name": "FancyAccordion",
+            "module": "src/fixtures/fancy-accordion.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "fancy-accordion",
+          "declaration": {
+            "name": "FancyAccordion",
+            "module": "src/fixtures/fancy-accordion.ts"
           }
         }
       ]
     },
     {
-      "name": "intl-currency",
-      "path": "./src/fixtures/intl-currency.ts",
+      "kind": "javascript-module",
+      "path": "src/fixtures/intl-currency.ts",
       "declarations": [
         {
           "kind": "class",
-          "customElement": true,
-          "name": "IntlCurrency",
           "description": "A custom element that formats currency using Intl.",
-          "attributes": [
-            {
-              "name": "value",
-              "description": "Amount to be formatted.",
-              "fieldName": "value",
-              "type": { "text": "number" },
-              "default": "0"
-            },
-            {
-              "name": "currency",
-              "fieldName": "currency",
-              "description": "Currency code used for formatting.",
-              "type": { "text": "string | null | undefined" },
-              "default": "\"EUR\""
-            },
-            {
-              "name": "locale",
-              "fieldName": "locale",
-              "description": "Locale code used for formatting.",
-              "type": { "text": "string | null | undefined" },
-              "default": "\"en-GB\""
-            }
-          ],
+          "name": "IntlCurrency",
           "members": [
             {
               "kind": "field",
               "name": "value",
-              "description": "Amount to be formatted.",
-              "type": { "text": "number" },
-              "default": "0"
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "Amount to be formatted."
             },
             {
               "kind": "field",
               "name": "currency",
-              "description": "Currency code used for formatting.",
-              "type": { "text": "string | null | undefined" },
-              "default": "\"EUR\""
+              "type": {
+                "text": "string | null | undefined"
+              },
+              "default": "'EUR'",
+              "description": "Currency code used for formatting."
             },
             {
-              "name": "locale",
               "kind": "field",
-              "description": "Locale code used for formatting.",
-              "type": { "text": "string | null | undefined" },
-              "default": "\"en-GB\""
+              "name": "locale",
+              "type": {
+                "text": "string | null | undefined"
+              },
+              "default": "'en-GB'",
+              "description": "Locale code used for formatting."
+            },
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true
+            },
+            {
+              "kind": "method",
+              "name": "render",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              }
             }
-          ]
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "intl-currency",
+          "customElement": true
         }
       ],
       "exports": [
         {
-          "kind": "custom-element-definition",
-          "name": "intl-currency",
-          "declaration": {
-            "name": "IntlCurrency"
-          }
-        },
-        {
           "kind": "js",
           "name": "IntlCurrency",
           "declaration": {
-            "name": "IntlCurrency"
+            "name": "IntlCurrency",
+            "module": "src/fixtures/intl-currency.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "intl-currency",
+          "declaration": {
+            "name": "IntlCurrency",
+            "module": "src/fixtures/intl-currency.ts"
           }
         }
       ]
     },
     {
-      "path": "./src/fixtures/progress-bar.ts",
+      "kind": "javascript-module",
+      "path": "src/fixtures/progress-bar.ts",
       "declarations": [
         {
           "kind": "class",
-          "name": "ProgressBar",
-          "customElement": true,
           "description": "A custom element similar to the HTML5 `<progress>` element.",
-          "attributes": [
-            {
-              "name": "value",
-              "description": "Current progress value.",
-              "type": { "text": "number" },
-              "fieldName": "value",
-              "default": "0.5"
-            },
-            {
-              "name": "min",
-              "description": "Minimum bound of the progress bar.",
-              "type": { "text": "number" },
-              "fieldName": "min",
-              "default": "0"
-            },
-            {
-              "name": "max",
-              "fieldName": "max",
-              "description": "Maximum bound of the progress bar.",
-              "type": { "text": "number" },
-              "default": "1"
-            },
-            {
-              "name": "indeterminate",
-              "fieldName": "indeterminate",
-              "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value).",
-              "type": { "text": "boolean" },
-              "default": "false"
-            }
-          ],
-          "members": [
-            {
-              "kind":"field",
-              "name": "value",
-              "description": "Current progress value.",
-              "type": { "text": "number" },
-              "default": "0.5"
-            },
-            {
-              "kind":"field",
-              "name": "min",
-              "description": "Minimum bound of the progress bar.",
-              "type": { "text": "number" },
-              "default": "0"
-            },
-            {
-              "kind":"field",
-              "name": "max",
-              "description": "Maximum bound of the progress bar.",
-              "type": { "text": "number" },
-              "default": "1"
-            },
-            {
-              "kind":"field",
-              "name": "indeterminate",
-              "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value).",
-              "type": { "text": "boolean" },
-              "default": "false"
-            }
-          ],
+          "name": "ProgressBar",
           "cssProperties": [
             {
-              "name": "--progress-bar-fill-color",
+              "type": {
+                "text": "Color"
+              },
               "description": "Color of the filled progress bar part.",
-              "default": "\"#6200ee\""
+              "name": "--progress-bar-fill-color",
+              "default": "#6200ee"
             },
             {
-              "name": "--progress-bar-opacity",
               "description": "Opacity set on the underlying track.",
+              "name": "--progress-bar-opacity",
               "default": "0.16"
             }
           ],
           "cssParts": [
             {
-              "name": "bar",
-              "description": "A progress bar background."
+              "description": "A progress bar background.",
+              "name": "bar"
             },
             {
-              "name": "value",
-              "description": "A progress bar foreground."
+              "description": "A progress bar foreground.",
+              "name": "value"
             }
-          ]
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "number"
+              },
+              "default": "0.5",
+              "description": "Current progress value."
+            },
+            {
+              "kind": "field",
+              "name": "min",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "Minimum bound of the progress bar."
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "type": {
+                "text": "number"
+              },
+              "default": "1",
+              "description": "Maximum bound of the progress bar."
+            },
+            {
+              "kind": "field",
+              "name": "indeterminate",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value)."
+            },
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true
+            },
+            {
+              "kind": "method",
+              "name": "render",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "firstUpdated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "updated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "props",
+                  "type": {
+                    "text": "PropertyValues"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_normalizedValueChanged",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "min",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "max",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_valueChanged",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_minChanged",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "min",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_maxChanged",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "max",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "progress-bar",
+          "customElement": true
         }
       ],
       "exports": [
         {
-          "kind": "custom-element-definition",
-          "name": "progress-bar",
-          "declaration": {
-            "name": "ProgressBar"
-          }
-        },
-        {
           "kind": "js",
           "name": "ProgressBar",
           "declaration": {
-            "name": "ProgressBar"
+            "name": "ProgressBar",
+            "module": "src/fixtures/progress-bar.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "progress-bar",
+          "declaration": {
+            "name": "ProgressBar",
+            "module": "src/fixtures/progress-bar.ts"
           }
         }
       ]

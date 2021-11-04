@@ -30,7 +30,7 @@ class ApiViewerDemo extends ApiDemoLayoutMixin(LitElement) {
 
     // Invoke `requestUpdate` to render demo once the component is imported lazily
     // and becomes defined, but only it if matches the currently selected tag name.
-    if (!customElements.get(tag)) {
+    if (tag && !customElements.get(tag)) {
       this._whenDefined[tag] = customElements.whenDefined(tag);
       this._whenDefined[tag].then(() => {
         if (this.tag === tag) {
