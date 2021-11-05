@@ -4,126 +4,2109 @@
   "modules": [
     {
       "kind": "javascript-module",
-      "path": "src/fixtures/expansion-panel.ts",
+      "path": "src/api-demo-base.ts",
       "declarations": [
         {
           "kind": "class",
-          "description": "A custom element similar to the HTML5 `<details>` element.",
-          "name": "ExpansionPanel",
-          "cssProperties": [
-            {
-              "type": {
-                "text": "Background"
-              },
-              "description": "Default panel header background color.",
-              "name": "--panel-header-background",
-              "default": "#fff"
-            },
-            {
-              "description": "Panel header minimum height.",
-              "name": "--panel-header-min-height",
-              "default": "48px"
-            },
-            {
-              "type": {
-                "text": "Background"
-              },
-              "description": "Active toggle button ripple background.",
-              "name": "--panel-ripple-background",
-              "default": "rgba(0, 0, 0, 0.38)"
-            }
-          ],
-          "cssParts": [
-            {
-              "description": "An element wrapping the `header` slot.",
-              "name": "header"
-            },
-            {
-              "description": "A toggle button, child of the header part.",
-              "name": "toggle"
-            },
-            {
-              "description": "An element wrapping the `content` slot.",
-              "name": "content"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Slot fot panel content",
-              "name": ""
-            },
-            {
-              "description": "Slot for panel header",
-              "name": "header"
-            }
-          ],
+          "description": "",
+          "name": "ApiDemoBase",
           "members": [
             {
               "kind": "field",
-              "name": "opened",
+              "name": "excludeKnobs",
               "type": {
-                "text": "boolean | null | undefined"
+                "text": "string | undefined"
               },
-              "default": "false",
-              "description": "When true, the panel content is expanded and visible",
-              "attribute": "opened",
-              "reflects": true
+              "attribute": "exclude-knobs"
             },
             {
               "kind": "field",
-              "name": "disabled",
+              "name": "_id",
               "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Disabled panel can not be expanded or collapsed",
-              "attribute": "disabled",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "header",
-              "type": {
-                "text": "HTMLDivElement | undefined"
-              },
-              "privacy": "protected"
-            },
-            {
-              "kind": "field",
-              "name": "_isShiftTabbing",
-              "type": {
-                "text": "boolean"
+                "text": "number | undefined"
               },
               "privacy": "protected",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "_tabPressed",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "protected",
-              "default": "false"
-            },
-            {
-              "kind": "field",
-              "name": "_boundBodyKeydown",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_boundBodyKeyup",
-              "privacy": "private"
+              "default": "id++"
             },
             {
               "kind": "method",
-              "name": "focus",
+              "name": "_onSelect",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "src",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "src",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "manifest",
+              "type": {
+                "text": "Package | undefined"
+              },
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selected",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "selected",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "jsonFetched",
+              "type": {
+                "text": "Promise<Package | null>"
+              },
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "lastSrc",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "willUpdate",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "exclude-knobs",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "excludeKnobs"
+            },
+            {
+              "name": "src",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "src",
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            },
+            {
+              "name": "selected",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "selected",
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ApiViewerMixin",
+              "module": "/src/api-viewer-mixin.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ApiDemoBase",
+          "declaration": {
+            "name": "ApiDemoBase",
+            "module": "src/api-demo-base.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/api-demo-layout-mixin.ts",
+      "declarations": [
+        {
+          "kind": "mixin",
+          "description": "",
+          "name": "ApiDemoLayoutMixin",
+          "members": [
+            {
+              "kind": "field",
+              "name": "tag",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "tag"
+            },
+            {
+              "kind": "field",
+              "name": "members",
+              "type": {
+                "text": "ClassMember[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "attrs",
+              "type": {
+                "text": "Attribute[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "slots",
+              "type": {
+                "text": "Slot[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "events",
+              "type": {
+                "text": "Event[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "cssProps",
+              "type": {
+                "text": "CssCustomProperty[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "exclude",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "exclude"
+            },
+            {
+              "kind": "field",
+              "name": "vid",
+              "type": {
+                "text": "number | undefined"
+              },
+              "attribute": "vid"
+            },
+            {
+              "kind": "field",
+              "name": "processedSlots",
+              "type": {
+                "text": "SlotValue[]"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "processedCss",
+              "type": {
+                "text": "CssCustomProperty[]"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "eventLog",
+              "type": {
+                "text": "CustomEvent[]"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "customKnobs",
+              "type": {
+                "text": "(ClassField & {\n      options?: string[];\n    })[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "knobs",
+              "type": {
+                "text": "Record<string, Knob>"
+              },
+              "default": "{}"
+            },
+            {
+              "kind": "field",
+              "name": "finalProps",
+              "type": {
+                "text": "ClassField[]"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "willUpdate",
+              "parameters": [
+                {
+                  "name": "props",
+                  "type": {
+                    "text": "PropertyValues"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "updated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "props",
+                  "type": {
+                    "text": "PropertyValues"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_getCustomKnobs",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Knob<ClassField>[]"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_getProp",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "{ prop?: ClassField; custom?: boolean }"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "setCss",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "target",
+                  "type": {
+                    "text": "HTMLInputElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "setKnobs",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "target",
+                  "type": {
+                    "text": "HTMLInputElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "setSlots",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "target",
+                  "type": {
+                    "text": "HTMLInputElement"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onRendered",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "CustomEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_syncKnob",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "component",
+                  "type": {
+                    "text": "Element"
+                  }
+                },
+                {
+                  "name": "changed",
+                  "type": {
+                    "text": "ClassField"
+                  }
+                }
+              ]
+            }
+          ],
+          "attributes": [
+            {
+              "name": "tag",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "tag"
+            },
+            {
+              "name": "exclude",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "exclude"
+            },
+            {
+              "name": "vid",
+              "type": {
+                "text": "number | undefined"
+              },
+              "fieldName": "vid"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "base",
+              "type": {
+                "text": "T"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ApiDemoLayoutMixin",
+          "declaration": {
+            "name": "ApiDemoLayoutMixin",
+            "module": "src/api-demo-layout-mixin.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/api-demo.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ApiDemo",
+          "members": [
+            {
+              "kind": "method",
+              "name": "setTemplates",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "templates",
+                  "optional": true,
+                  "type": {
+                    "text": "HTMLTemplateElement[]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "excludeKnobs",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "exclude-knobs",
+              "inheritedFrom": {
+                "name": "ApiDemoBase",
+                "module": "src/api-demo-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_id",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "protected",
+              "default": "id++",
+              "inheritedFrom": {
+                "name": "ApiDemoBase",
+                "module": "src/api-demo-base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_onSelect",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "ApiDemoBase",
+                "module": "src/api-demo-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "src",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "src",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "ApiDemoBase",
+                "module": "src/api-demo-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "manifest",
+              "type": {
+                "text": "Package | undefined"
+              },
+              "inheritedFrom": {
+                "name": "ApiDemoBase",
+                "module": "src/api-demo-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selected",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "selected",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "ApiDemoBase",
+                "module": "src/api-demo-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "jsonFetched",
+              "type": {
+                "text": "Promise<Package | null>"
+              },
+              "inheritedFrom": {
+                "name": "ApiDemoBase",
+                "module": "src/api-demo-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "lastSrc",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "ApiDemoBase",
+                "module": "src/api-demo-base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "willUpdate",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "ApiDemoBase",
+                "module": "src/api-demo-base.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "ApiDemoBase",
+            "module": "/src/api-demo-base.js"
+          },
+          "tagName": "api-demo",
+          "customElement": true,
+          "attributes": [
+            {
+              "name": "exclude-knobs",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "excludeKnobs",
+              "inheritedFrom": {
+                "name": "ApiDemoBase",
+                "module": "src/api-demo-base.ts"
+              }
+            },
+            {
+              "name": "src",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "src",
+              "inheritedFrom": {
+                "name": "ApiDemoBase",
+                "module": "src/api-demo-base.ts"
+              }
+            },
+            {
+              "name": "selected",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "selected",
+              "inheritedFrom": {
+                "name": "ApiDemoBase",
+                "module": "src/api-demo-base.ts"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ApiDemo",
+          "declaration": {
+            "name": "ApiDemo",
+            "module": "src/api-demo.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "api-demo",
+          "declaration": {
+            "name": "ApiDemo",
+            "module": "src/api-demo.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/api-docs-base.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ApiDocsBase",
+          "members": [
+            {
+              "kind": "method",
+              "name": "_onSelect",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "src",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "src",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "manifest",
+              "type": {
+                "text": "Package | undefined"
+              },
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selected",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "selected",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "jsonFetched",
+              "type": {
+                "text": "Promise<Package | null>"
+              },
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "lastSrc",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "willUpdate",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ApiViewerMixin",
+              "module": "/src/api-viewer-mixin.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "customElement": true,
+          "attributes": [
+            {
+              "name": "src",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "src",
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            },
+            {
+              "name": "selected",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "selected",
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ApiDocsBase",
+          "declaration": {
+            "name": "ApiDocsBase",
+            "module": "src/api-docs-base.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/api-docs.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ApiDocs",
+          "members": [
+            {
+              "kind": "method",
+              "name": "_onSelect",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "ApiDocsBase",
+                "module": "src/api-docs-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "src",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "src",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "ApiDocsBase",
+                "module": "src/api-docs-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "manifest",
+              "type": {
+                "text": "Package | undefined"
+              },
+              "inheritedFrom": {
+                "name": "ApiDocsBase",
+                "module": "src/api-docs-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selected",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "selected",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "ApiDocsBase",
+                "module": "src/api-docs-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "jsonFetched",
+              "type": {
+                "text": "Promise<Package | null>"
+              },
+              "inheritedFrom": {
+                "name": "ApiDocsBase",
+                "module": "src/api-docs-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "lastSrc",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "ApiDocsBase",
+                "module": "src/api-docs-base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "willUpdate",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "ApiDocsBase",
+                "module": "src/api-docs-base.ts"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "ApiDocsBase",
+            "module": "/src/api-docs-base.js"
+          },
+          "tagName": "api-docs",
+          "customElement": true,
+          "attributes": [
+            {
+              "name": "src",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "src",
+              "inheritedFrom": {
+                "name": "ApiDocsBase",
+                "module": "src/api-docs-base.ts"
+              }
+            },
+            {
+              "name": "selected",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "selected",
+              "inheritedFrom": {
+                "name": "ApiDocsBase",
+                "module": "src/api-docs-base.ts"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ApiDocs",
+          "declaration": {
+            "name": "ApiDocs",
+            "module": "src/api-docs.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "api-docs",
+          "declaration": {
+            "name": "ApiDocs",
+            "module": "src/api-docs.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/api-viewer-base.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ApiViewerBase",
+          "members": [
+            {
+              "kind": "field",
+              "name": "section",
+              "type": {
+                "text": "string"
+              },
+              "default": "'docs'",
+              "attribute": "section"
+            },
+            {
+              "kind": "field",
+              "name": "excludeKnobs",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "exclude-knobs"
+            },
+            {
+              "kind": "field",
+              "name": "_id",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "protected",
+              "default": "id++"
+            },
+            {
+              "kind": "method",
+              "name": "setTemplates",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "templates",
+                  "optional": true,
+                  "type": {
+                    "text": "HTMLTemplateElement[]"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_onSelect",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_onToggle",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "CustomEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "src",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "src",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "manifest",
+              "type": {
+                "text": "Package | undefined"
+              },
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selected",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "selected",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "jsonFetched",
+              "type": {
+                "text": "Promise<Package | null>"
+              },
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "lastSrc",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "willUpdate",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "section",
+              "type": {
+                "text": "string"
+              },
+              "default": "'docs'",
+              "fieldName": "section"
+            },
+            {
+              "name": "exclude-knobs",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "excludeKnobs"
+            },
+            {
+              "name": "src",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "src",
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            },
+            {
+              "name": "selected",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "selected",
+              "inheritedFrom": {
+                "name": "ApiViewerMixin",
+                "module": "src/api-viewer-mixin.ts"
+              }
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ApiViewerMixin",
+              "module": "/src/api-viewer-mixin.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ApiViewerBase",
+          "declaration": {
+            "name": "ApiViewerBase",
+            "module": "src/api-viewer-base.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/api-viewer-demo.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ApiViewerDemo",
+          "members": [
+            {
+              "kind": "field",
+              "name": "copyBtnText",
+              "type": {
+                "text": "string"
+              },
+              "default": "'copy'",
+              "attribute": "copyBtnText"
+            },
+            {
+              "kind": "field",
+              "name": "_whenDefined",
+              "type": {
+                "text": "Record<string, Promise<unknown>>"
+              },
+              "privacy": "private",
+              "default": "{}"
+            },
+            {
+              "kind": "method",
+              "name": "createRenderRoot",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "this"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_onLogClear",
+              "privacy": "private",
               "return": {
                 "type": {
                   "text": "void"
                 }
               }
+            },
+            {
+              "kind": "method",
+              "name": "_onCopyClick",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_onCssChanged",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "CustomEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_onPropChanged",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_onSlotChanged",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "tag",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "tag",
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "members",
+              "type": {
+                "text": "ClassMember[]"
+              },
+              "default": "[]",
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "attrs",
+              "type": {
+                "text": "Attribute[]"
+              },
+              "default": "[]",
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "slots",
+              "type": {
+                "text": "Slot[]"
+              },
+              "default": "[]",
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "events",
+              "type": {
+                "text": "Event[]"
+              },
+              "default": "[]",
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "cssProps",
+              "type": {
+                "text": "CssCustomProperty[]"
+              },
+              "default": "[]",
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "exclude",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "exclude",
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "vid",
+              "type": {
+                "text": "number | undefined"
+              },
+              "attribute": "vid",
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "processedSlots",
+              "type": {
+                "text": "SlotValue[]"
+              },
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "processedCss",
+              "type": {
+                "text": "CssCustomProperty[]"
+              },
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "eventLog",
+              "type": {
+                "text": "CustomEvent[]"
+              },
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "customKnobs",
+              "type": {
+                "text": "(ClassField & {\n      options?: string[];\n    })[]"
+              },
+              "default": "[]",
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "knobs",
+              "type": {
+                "text": "Record<string, Knob>"
+              },
+              "default": "{}",
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "finalProps",
+              "type": {
+                "text": "ClassField[]"
+              },
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "willUpdate",
+              "parameters": [
+                {
+                  "name": "props",
+                  "type": {
+                    "text": "PropertyValues"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "updated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "props",
+                  "type": {
+                    "text": "PropertyValues"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_getCustomKnobs",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Knob<ClassField>[]"
+                }
+              },
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_getProp",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "{ prop?: ClassField; custom?: boolean }"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "setCss",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "target",
+                  "type": {
+                    "text": "HTMLInputElement"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "setKnobs",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "target",
+                  "type": {
+                    "text": "HTMLInputElement"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "setSlots",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "target",
+                  "type": {
+                    "text": "HTMLInputElement"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "onRendered",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "CustomEvent"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_syncKnob",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "component",
+                  "type": {
+                    "text": "Element"
+                  }
+                },
+                {
+                  "name": "changed",
+                  "type": {
+                    "text": "ClassField"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "copyBtnText",
+              "type": {
+                "text": "string"
+              },
+              "default": "'copy'",
+              "fieldName": "copyBtnText"
+            },
+            {
+              "name": "tag",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "tag",
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "name": "exclude",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "exclude",
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            },
+            {
+              "name": "vid",
+              "type": {
+                "text": "number | undefined"
+              },
+              "fieldName": "vid",
+              "inheritedFrom": {
+                "name": "ApiDemoLayoutMixin",
+                "module": "src/api-demo-layout-mixin.ts"
+              }
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ApiDemoLayoutMixin",
+              "module": "/src/api-demo-layout-mixin.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "api-viewer-demo",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "api-viewer-demo",
+          "declaration": {
+            "name": "ApiViewerDemo",
+            "module": "src/api-viewer-demo.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/api-viewer-docs.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ApiViewerDocs",
+          "members": [
+            {
+              "kind": "field",
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "name"
+            },
+            {
+              "kind": "field",
+              "name": "members",
+              "type": {
+                "text": "ClassMember[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "attrs",
+              "type": {
+                "text": "Attribute[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "slots",
+              "type": {
+                "text": "Slot[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "events",
+              "type": {
+                "text": "Event[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "cssParts",
+              "type": {
+                "text": "CssPart[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "cssProps",
+              "type": {
+                "text": "CssCustomProperty[]"
+              },
+              "default": "[]"
+            },
+            {
+              "kind": "method",
+              "name": "createRenderRoot",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "this"
+                }
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "name"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "api-viewer-docs",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "api-viewer-docs",
+          "declaration": {
+            "name": "ApiViewerDocs",
+            "module": "src/api-viewer-docs.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/api-viewer-mixin.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "fetchJson",
+          "return": {
+            "type": {
+              "text": "Promise<Package | null>"
+            }
+          },
+          "parameters": [
+            {
+              "name": "src",
+              "type": {
+                "text": "string"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "variable",
+          "name": "emptyDataWarning",
+          "default": "html`\n  <div part=\"warning\">No custom elements found in the JSON file.</div>\n`"
+        },
+        {
+          "kind": "mixin",
+          "description": "",
+          "name": "ApiViewerMixin",
+          "members": [
+            {
+              "kind": "field",
+              "name": "src",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "src",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "manifest",
+              "type": {
+                "text": "Package | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selected",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "selected",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "jsonFetched",
+              "type": {
+                "text": "Promise<Package | null>"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "lastSrc",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "willUpdate",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "src",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "src"
+            },
+            {
+              "name": "selected",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "selected"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "base",
+              "type": {
+                "text": "T"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "fetchJson",
+          "declaration": {
+            "name": "fetchJson",
+            "module": "src/api-viewer-mixin.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "emptyDataWarning",
+          "declaration": {
+            "name": "emptyDataWarning",
+            "module": "src/api-viewer-mixin.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ApiViewerMixin",
+          "declaration": {
+            "name": "ApiViewerMixin",
+            "module": "src/api-viewer-mixin.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/api-viewer-panel.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ApiViewerPanel",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "api-viewer-panel",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ApiViewerPanel",
+          "declaration": {
+            "name": "ApiViewerPanel",
+            "module": "src/api-viewer-panel.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "api-viewer-panel",
+          "declaration": {
+            "name": "ApiViewerPanel",
+            "module": "src/api-viewer-panel.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/api-viewer-tab.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ApiViewerTab",
+          "members": [
+            {
+              "kind": "field",
+              "name": "selected",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "selected",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "heading",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "attribute": "heading"
+            },
+            {
+              "kind": "field",
+              "name": "active",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "attribute": "active"
+            },
+            {
+              "kind": "field",
+              "name": "_mousedown",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
+            },
+            {
+              "kind": "method",
+              "name": "_setActive",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "active",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ]
             },
             {
               "kind": "method",
@@ -142,184 +2125,240 @@
                   }
                 }
               ]
-            },
-            {
-              "kind": "method",
-              "name": "_onToggleClick",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "_onToggleKeyDown",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "e",
-                  "type": {
-                    "text": "KeyboardEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "_onBodyKeydown",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "e",
-                  "type": {
-                    "text": "KeyboardEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "_onBodyKeyup",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            }
-          ],
-          "events": [
-            {
-              "name": "opened-changed",
-              "type": {
-                "text": "CustomEvent"
-              },
-              "description": "Event fired when expanding / collapsing"
             }
           ],
           "attributes": [
             {
-              "type": {
-                "text": "boolean"
-              },
-              "description": "State attribute set when element has focus.",
-              "name": "focused"
-            },
-            {
-              "type": {
-                "text": "boolean"
-              },
-              "description": "State attribute set when focused from keyboard.",
-              "name": "focus-ring"
-            },
-            {
-              "name": "opened",
-              "type": {
-                "text": "boolean | null | undefined"
-              },
-              "default": "false",
-              "description": "When true, the panel content is expanded and visible",
-              "fieldName": "opened"
-            },
-            {
-              "name": "disabled",
+              "name": "selected",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Disabled panel can not be expanded or collapsed",
-              "fieldName": "disabled"
+              "fieldName": "selected"
+            },
+            {
+              "name": "heading",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "fieldName": "heading"
+            },
+            {
+              "name": "active",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "active"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "expansion-panel",
+          "tagName": "api-viewer-tab",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "ExpansionPanel",
+          "name": "ApiViewerTab",
           "declaration": {
-            "name": "ExpansionPanel",
-            "module": "src/fixtures/expansion-panel.ts"
+            "name": "ApiViewerTab",
+            "module": "src/api-viewer-tab.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "expansion-panel",
+          "name": "api-viewer-tab",
           "declaration": {
-            "name": "ExpansionPanel",
-            "module": "src/fixtures/expansion-panel.ts"
+            "name": "ApiViewerTab",
+            "module": "src/api-viewer-tab.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/fixtures/fancy-accordion.ts",
+      "path": "src/api-viewer-tabs.ts",
       "declarations": [
         {
           "kind": "class",
-          "description": "A custom element implementing the accordion widget: a vertically stacked set of expandable panels\nthat wraps several instances of the `<expansion-panel>` element. Only one panel can be opened\n(expanded) at a time.\n\nPanel headings function as controls that enable users to open (expand) or hide (collapse) their\nassociated sections of content. The user can toggle panels by mouse click, Enter and Space keys.\n\nThe component supports keyboard navigation and is aligned with the\n[WAI-ARIA Authoring Practices](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion).",
-          "name": "FancyAccordion",
-          "slots": [
-            {
-              "description": "Slot fot panel elements.",
-              "name": ""
-            }
-          ],
+          "description": "",
+          "name": "ApiViewerTabs",
           "members": [
             {
               "kind": "field",
-              "name": "openedIndex",
-              "type": {
-                "text": "number | null | undefined"
-              },
-              "default": "null",
-              "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels.",
-              "attribute": "opened-index"
+              "name": "_boundSlotChange",
+              "privacy": "private"
             },
             {
-              "kind": "field",
-              "name": "_items",
-              "type": {
-                "text": "ExpansionPanel[]"
-              },
-              "privacy": "protected",
-              "default": "[]"
-            },
-            {
-              "kind": "field",
-              "name": "_boundOnOpened",
+              "kind": "method",
+              "name": "_onSlotChange",
               "privacy": "private",
-              "default": "this._onOpened.bind(this)"
-            },
-            {
-              "kind": "field",
-              "name": "focused",
-              "type": {
-                "text": "Element | null"
+              "return": {
+                "type": {
+                  "text": "void"
+                }
               }
             },
             {
               "kind": "method",
-              "name": "_onKeydown",
+              "name": "_linkPanels",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_allPanels",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "ApiViewerPanel[]"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_allTabs",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "ApiViewerTab[]"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_getAvailableIndex",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "number"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "idx",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "increment",
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_panelForTab",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "ApiViewerPanel | null"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "tab",
+                  "type": {
+                    "text": "ApiViewerTab"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_prevTab",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "ApiViewerTab"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_firstTab",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "ApiViewerTab"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_lastTab",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "ApiViewerTab"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_nextTab",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "ApiViewerTab"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "reset",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "`reset()` marks all tabs as deselected and hides all the panels."
+            },
+            {
+              "kind": "method",
+              "name": "selectFirst",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "`selectFirst()` automatically selects first non-hidden tab."
+            },
+            {
+              "kind": "method",
+              "name": "_selectTab",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "newTab",
+                  "type": {
+                    "text": "ApiViewerTab"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_onKeyDown",
               "privacy": "private",
               "return": {
                 "type": {
@@ -337,33 +2376,145 @@
             },
             {
               "kind": "method",
-              "name": "_getAvailableIndex",
+              "name": "_onClick",
               "privacy": "private",
               "return": {
                 "type": {
-                  "text": "number"
+                  "text": "void"
                 }
               },
               "parameters": [
                 {
-                  "name": "index",
-                  "optional": true,
+                  "name": "event",
                   "type": {
-                    "text": "number"
-                  }
-                },
-                {
-                  "name": "increment",
-                  "optional": true,
-                  "type": {
-                    "text": "number"
+                    "text": "MouseEvent"
                   }
                 }
               ]
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "api-viewer-tabs",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ApiViewerTabs",
+          "declaration": {
+            "name": "ApiViewerTabs",
+            "module": "src/api-viewer-tabs.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "api-viewer-tabs",
+          "declaration": {
+            "name": "ApiViewerTabs",
+            "module": "src/api-viewer-tabs.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/api-viewer.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ApiViewer",
+          "members": [
+            {
+              "kind": "method",
+              "name": "setTemplates",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "templates",
+                  "optional": true,
+                  "type": {
+                    "text": "HTMLTemplateElement[]"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "ApiViewerBase",
+                "module": "src/api-viewer-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "section",
+              "type": {
+                "text": "string"
+              },
+              "default": "'docs'",
+              "attribute": "section",
+              "inheritedFrom": {
+                "name": "ApiViewerBase",
+                "module": "src/api-viewer-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "excludeKnobs",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "exclude-knobs",
+              "inheritedFrom": {
+                "name": "ApiViewerBase",
+                "module": "src/api-viewer-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_id",
+              "type": {
+                "text": "number | undefined"
+              },
+              "privacy": "protected",
+              "default": "id++",
+              "inheritedFrom": {
+                "name": "ApiViewerBase",
+                "module": "src/api-viewer-base.ts"
+              }
             },
             {
               "kind": "method",
-              "name": "_onOpened",
+              "name": "_onSelect",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ],
+              "inheritedFrom": {
+                "name": "ApiViewerBase",
+                "module": "src/api-viewer-base.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_onToggle",
               "privacy": "private",
               "return": {
                 "type": {
@@ -377,383 +2528,156 @@
                     "text": "CustomEvent"
                   }
                 }
-              ]
+              ],
+              "inheritedFrom": {
+                "name": "ApiViewerBase",
+                "module": "src/api-viewer-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "src",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "src",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "ApiViewerBase",
+                "module": "src/api-viewer-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "manifest",
+              "type": {
+                "text": "Package | undefined"
+              },
+              "inheritedFrom": {
+                "name": "ApiViewerBase",
+                "module": "src/api-viewer-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "selected",
+              "type": {
+                "text": "string | undefined"
+              },
+              "attribute": "selected",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "ApiViewerBase",
+                "module": "src/api-viewer-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "jsonFetched",
+              "type": {
+                "text": "Promise<Package | null>"
+              },
+              "inheritedFrom": {
+                "name": "ApiViewerBase",
+                "module": "src/api-viewer-base.ts"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "lastSrc",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "private",
+              "inheritedFrom": {
+                "name": "ApiViewerBase",
+                "module": "src/api-viewer-base.ts"
+              }
             },
             {
               "kind": "method",
-              "name": "_notifyOpen",
-              "privacy": "private",
+              "name": "willUpdate",
               "return": {
                 "type": {
                   "text": "void"
                 }
+              },
+              "inheritedFrom": {
+                "name": "ApiViewerBase",
+                "module": "src/api-viewer-base.ts"
               }
             }
           ],
-          "events": [
-            {
-              "name": "opened-index-changed",
-              "type": {
-                "text": "CustomEvent"
-              },
-              "description": "Event fired when changing currently opened panel."
-            }
-          ],
+          "superclass": {
+            "name": "ApiViewerBase",
+            "module": "/src/api-viewer-base.js"
+          },
+          "tagName": "api-viewer",
+          "customElement": true,
           "attributes": [
             {
-              "name": "opened-index",
+              "name": "section",
               "type": {
-                "text": "number | null | undefined"
+                "text": "string"
               },
-              "default": "null",
-              "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels.",
-              "fieldName": "openedIndex"
+              "default": "'docs'",
+              "fieldName": "section",
+              "inheritedFrom": {
+                "name": "ApiViewerBase",
+                "module": "src/api-viewer-base.ts"
+              }
+            },
+            {
+              "name": "exclude-knobs",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "excludeKnobs",
+              "inheritedFrom": {
+                "name": "ApiViewerBase",
+                "module": "src/api-viewer-base.ts"
+              }
+            },
+            {
+              "name": "src",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "src",
+              "inheritedFrom": {
+                "name": "ApiViewerBase",
+                "module": "src/api-viewer-base.ts"
+              }
+            },
+            {
+              "name": "selected",
+              "type": {
+                "text": "string | undefined"
+              },
+              "fieldName": "selected",
+              "inheritedFrom": {
+                "name": "ApiViewerBase",
+                "module": "src/api-viewer-base.ts"
+              }
             }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "fancy-accordion",
-          "customElement": true
+          ]
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "FancyAccordion",
+          "name": "ApiViewer",
           "declaration": {
-            "name": "FancyAccordion",
-            "module": "src/fixtures/fancy-accordion.ts"
+            "name": "ApiViewer",
+            "module": "src/api-viewer.ts"
           }
         },
         {
           "kind": "custom-element-definition",
-          "name": "fancy-accordion",
+          "name": "api-viewer",
           "declaration": {
-            "name": "FancyAccordion",
-            "module": "src/fixtures/fancy-accordion.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/fixtures/intl-currency.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "A custom element that formats currency using Intl.",
-          "name": "IntlCurrency",
-          "members": [
-            {
-              "kind": "field",
-              "name": "value",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "Amount to be formatted.",
-              "attribute": "value"
-            },
-            {
-              "kind": "field",
-              "name": "currency",
-              "type": {
-                "text": "string | null | undefined"
-              },
-              "default": "'EUR'",
-              "description": "Currency code used for formatting.",
-              "attribute": "currency"
-            },
-            {
-              "kind": "field",
-              "name": "locale",
-              "type": {
-                "text": "string | null | undefined"
-              },
-              "default": "'en-GB'",
-              "description": "Locale code used for formatting.",
-              "attribute": "locale"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "value",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "Amount to be formatted.",
-              "fieldName": "value"
-            },
-            {
-              "name": "currency",
-              "type": {
-                "text": "string | null | undefined"
-              },
-              "default": "'EUR'",
-              "description": "Currency code used for formatting.",
-              "fieldName": "currency"
-            },
-            {
-              "name": "locale",
-              "type": {
-                "text": "string | null | undefined"
-              },
-              "default": "'en-GB'",
-              "description": "Locale code used for formatting.",
-              "fieldName": "locale"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "intl-currency",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "IntlCurrency",
-          "declaration": {
-            "name": "IntlCurrency",
-            "module": "src/fixtures/intl-currency.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "intl-currency",
-          "declaration": {
-            "name": "IntlCurrency",
-            "module": "src/fixtures/intl-currency.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/fixtures/progress-bar.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "A custom element similar to the HTML5 `<progress>` element.",
-          "name": "ProgressBar",
-          "cssProperties": [
-            {
-              "type": {
-                "text": "Color"
-              },
-              "description": "Color of the filled progress bar part.",
-              "name": "--progress-bar-fill-color",
-              "default": "#6200ee"
-            },
-            {
-              "description": "Opacity set on the underlying track.",
-              "name": "--progress-bar-opacity",
-              "default": "0.16"
-            }
-          ],
-          "cssParts": [
-            {
-              "description": "A progress bar background.",
-              "name": "bar"
-            },
-            {
-              "description": "A progress bar foreground.",
-              "name": "value"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "value",
-              "type": {
-                "text": "number"
-              },
-              "default": "0.5",
-              "description": "Current progress value.",
-              "attribute": "value"
-            },
-            {
-              "kind": "field",
-              "name": "min",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "Minimum bound of the progress bar.",
-              "attribute": "min"
-            },
-            {
-              "kind": "field",
-              "name": "max",
-              "type": {
-                "text": "number"
-              },
-              "default": "1",
-              "description": "Maximum bound of the progress bar.",
-              "attribute": "max"
-            },
-            {
-              "kind": "field",
-              "name": "indeterminate",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value).",
-              "attribute": "indeterminate",
-              "reflects": true
-            },
-            {
-              "kind": "method",
-              "name": "_normalizedValueChanged",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "number"
-                  }
-                },
-                {
-                  "name": "min",
-                  "type": {
-                    "text": "number"
-                  }
-                },
-                {
-                  "name": "max",
-                  "type": {
-                    "text": "number"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "_valueChanged",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "number"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "_minChanged",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "min",
-                  "type": {
-                    "text": "number"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "_maxChanged",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "max",
-                  "type": {
-                    "text": "number"
-                  }
-                }
-              ]
-            }
-          ],
-          "attributes": [
-            {
-              "name": "value",
-              "type": {
-                "text": "number"
-              },
-              "default": "0.5",
-              "description": "Current progress value.",
-              "fieldName": "value"
-            },
-            {
-              "name": "min",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "Minimum bound of the progress bar.",
-              "fieldName": "min"
-            },
-            {
-              "name": "max",
-              "type": {
-                "text": "number"
-              },
-              "default": "1",
-              "description": "Maximum bound of the progress bar.",
-              "fieldName": "max"
-            },
-            {
-              "name": "indeterminate",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value).",
-              "fieldName": "indeterminate"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "progress-bar",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ProgressBar",
-          "declaration": {
-            "name": "ProgressBar",
-            "module": "src/fixtures/progress-bar.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "progress-bar",
-          "declaration": {
-            "name": "ProgressBar",
-            "module": "src/fixtures/progress-bar.ts"
+            "name": "ApiViewer",
+            "module": "src/api-viewer.ts"
           }
         }
       ]
