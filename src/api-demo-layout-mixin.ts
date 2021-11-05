@@ -62,6 +62,10 @@ const isGetter = (
   return result;
 };
 
+function isPrivateOrProtected(x: ClassField): boolean {
+  return x.privacy === 'private' || x.privacy === 'protected';
+}
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type Constructor<T = unknown> = new (...args: any[]) => T;
 
@@ -130,7 +134,9 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
         // Store properties without getters
         this.finalProps = this.members.filter(
           (x): x is ClassField =>
-            isClassField(x) && !isGetter(customElements.get(this.tag), x.name)
+            isClassField(x) &&
+            !isPrivateOrProtected(x) &&
+            !isGetter(customElements.get(this.tag), x.name)
         );
 
         this.customKnobs = this._getCustomKnobs();
@@ -138,6 +144,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
 
       if (props.has('exclude')) {
         this.finalProps = this.finalProps
+          // QUESTION: do we need to exclude attr names here as well?
           .filter(({ name }) => !this.exclude.includes(name))
           .map((prop) => {
             return typeof prop.default === 'string'
