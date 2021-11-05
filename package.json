@@ -3,6 +3,9 @@
   "version": "0.5.0",
   "description": "Web Components API viewer element",
   "author": "Serhii Kulykov <iamkulykov@gmail.com>",
+  "contributors": [
+    "Benny Powers <web@bennypowers.com>"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
