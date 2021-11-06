@@ -22,10 +22,10 @@ import {
 const { HOST, KNOB } = TemplateTypes;
 
 const getDefault = (
-  prop: PropertyInfo
+  prop: Knob<PropertyInfo>
 ): string | number | boolean | null | undefined => {
-  const { type, default: value } = prop;
-  switch (normalizeType(type)) {
+  const { knobType, default: value } = prop;
+  switch (knobType) {
     case 'boolean':
       return value !== 'false';
     case 'number':
