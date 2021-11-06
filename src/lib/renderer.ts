@@ -2,12 +2,8 @@ import { ChildPart, html, noChange, nothing, TemplateResult } from 'lit';
 import { directive, Directive, PartInfo, PartType } from 'lit/directive.js';
 import { templateContent } from 'lit/directives/template-content.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import {
-  ComponentWithProps,
-  CSSPropertyInfo,
-  KnobValue,
-  SlotValue
-} from './types.js';
+import { Knob } from './knobs.js';
+import { ComponentWithProps, CSSPropertyInfo, SlotValue } from './types.js';
 import {
   getTemplate,
   getTemplateNode,
@@ -20,7 +16,7 @@ import {
 export type ComponentRendererOptions = {
   id: number;
   tag: string;
-  knobs: Record<string, KnobValue>;
+  knobs: Record<string, Knob>;
   slots: SlotValue[];
   cssProps: CSSPropertyInfo[];
 };

@@ -1,14 +1,13 @@
 import { LitElement, PropertyValues } from 'lit';
 import { property } from 'lit/decorators/property.js';
-import { getSlotDefault } from './lib/knobs.js';
+import { getSlotDefault, Knob } from './lib/knobs.js';
 import {
   ComponentWithProps,
   CSSPropertyInfo,
   PropertyInfo,
   SlotInfo,
   SlotValue,
-  EventInfo,
-  KnobValue
+  EventInfo
 } from './lib/types.js';
 import {
   getTemplates,
@@ -76,7 +75,7 @@ export interface ApiDemoLayoutInterface {
   processedCss: CSSPropertyInfo[];
   eventLog: CustomEvent[];
   customKnobs: PropertyInfo[];
-  knobs: Record<string, KnobValue>;
+  knobs: Record<string, Knob>;
   setKnobs(target: HTMLInputElement): void;
   setSlots(target: HTMLInputElement): void;
   setCss(target: HTMLInputElement): void;
@@ -118,7 +117,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
     customKnobs: PropertyInfo[] = [];
 
     @property({ attribute: false })
-    knobs: Record<string, KnobValue> = {};
+    knobs: Record<string, Knob> = {};
 
     @property({ attribute: false })
     finalProps!: PropertyInfo[];
@@ -255,7 +254,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
         const { attribute } = prop;
         this.knobs = {
           ...this.knobs,
-          [name as string]: { type, value, attribute, custom } as KnobValue
+          [name as string]: { type, value, attribute, custom } as Knob
         };
       }
     }

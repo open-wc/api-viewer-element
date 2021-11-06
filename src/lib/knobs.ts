@@ -4,9 +4,16 @@ import { normalizeType } from './utils.js';
 
 const DEFAULT = 'default';
 
-type Knob = CSSPropertyInfo | PropertyInfo | SlotValue;
+type Knobable = CSSPropertyInfo | PropertyInfo | SlotValue;
 
-type InputRenderer = (item: Knob, id: string) => TemplateResult;
+export interface Knob {
+  type: string;
+  attribute: string | undefined;
+  value: string | number | boolean | null;
+  custom?: boolean;
+}
+
+type InputRenderer = (item: Knobable, id: string) => TemplateResult;
 
 const capitalize = (name: string): string =>
   name[0].toUpperCase() + name.slice(1);
@@ -28,7 +35,7 @@ const getInputType = (type: string): 'checkbox' | 'number' | 'text' => {
 };
 
 export const cssPropRenderer: InputRenderer = (
-  knob: Knob,
+  knob: Knobable,
   id: string
 ): TemplateResult => {
   const { name, value } = knob as CSSPropertyInfo;
@@ -45,7 +52,7 @@ export const cssPropRenderer: InputRenderer = (
 };
 
 export const propRenderer: InputRenderer = (
-  knob: Knob,
+  knob: Knobable,
   id: string
 ): TemplateResult => {
   const { name, type, value, options } = knob as PropertyInfo;
@@ -85,7 +92,7 @@ export const propRenderer: InputRenderer = (
 };
 
 export const slotRenderer: InputRenderer = (
-  knob: Knob,
+  knob: Knobable,
   id: string
 ): TemplateResult => {
   const { name, content } = knob as SlotValue;
@@ -103,12 +110,12 @@ export const slotRenderer: InputRenderer = (
 };
 
 export const renderKnobs = (
-  items: Knob[],
+  items: Knobable[],
   header: string,
   type: string,
   renderer: InputRenderer
 ): TemplateResult => {
-  const rows = items.map((item: Knob) => {
+  const rows = items.map((item: Knobable) => {
     const { name } = item;
     const id = `${type}-${name || DEFAULT}`;
     const label = type === 'slot' ? getSlotDefault(name, DEFAULT) : name;
