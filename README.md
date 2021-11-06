@@ -349,27 +349,27 @@ Read more about using `::part()` at [MDN Web Docs](https://developer.mozilla.org
 ### Install dependencies
 
 ```sh
-$ yarn
+npm install
 ```
 
 ### Run demo in browser
 
 ```sh
-$ yarn dev
+npm run dev
 ```
 
-Open http://127.0.0.1:8080
+Open http://127.0.0.1:8000
 
 ### Create dist folder
 
 ```sh
-$ yarn dist
+npm run dist
 ```
 
 ### Serve dist folder
 
 ```sh
-$ yarn serve:dist
+npm run serve:dist
 ```
 
 ## Acknowledgements
