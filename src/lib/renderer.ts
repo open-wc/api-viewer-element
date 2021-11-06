@@ -5,7 +5,7 @@ import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
   ComponentWithProps,
   CSSPropertyInfo,
-  KnobValues,
+  KnobValue,
   SlotValue
 } from './types.js';
 import {
@@ -20,7 +20,7 @@ import {
 export type ComponentRendererOptions = {
   id: number;
   tag: string;
-  knobs: KnobValues;
+  knobs: Record<string, KnobValue>;
   slots: SlotValue[];
   cssProps: CSSPropertyInfo[];
 };

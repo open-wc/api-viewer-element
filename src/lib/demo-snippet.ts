@@ -4,7 +4,7 @@ import { htmlRender } from 'highlight-ts/es/render/html';
 import { registerLanguages } from 'highlight-ts/es/languages';
 import { XML } from 'highlight-ts/es/languages/xml';
 import { init, process } from 'highlight-ts/es/process';
-import { CSSPropertyInfo, KnobValues, SlotValue } from './types.js';
+import { CSSPropertyInfo, KnobValue, SlotValue } from './types.js';
 import { CSS } from './highlight-css.js';
 import {
   getTemplate,
@@ -52,7 +52,7 @@ const getTplContent = (
 export const renderSnippet = (
   id: number,
   tag: string,
-  values: KnobValues,
+  values: Record<string, KnobValue>,
   slots: SlotValue[],
   cssProps: CSSPropertyInfo[]
 ): TemplateResult => {

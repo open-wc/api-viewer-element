@@ -52,8 +52,6 @@ export interface KnobValue {
   custom?: boolean;
 }
 
-export type KnobValues = { [name: string]: KnobValue };
-
 export interface SlotValue {
   name: string;
   content: string;

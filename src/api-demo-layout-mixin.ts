@@ -8,7 +8,6 @@ import {
   SlotInfo,
   SlotValue,
   EventInfo,
-  KnobValues,
   KnobValue
 } from './lib/types.js';
 import {
@@ -77,7 +76,7 @@ export interface ApiDemoLayoutInterface {
   processedCss: CSSPropertyInfo[];
   eventLog: CustomEvent[];
   customKnobs: PropertyInfo[];
-  knobs: KnobValues;
+  knobs: Record<string, KnobValue>;
   setKnobs(target: HTMLInputElement): void;
   setSlots(target: HTMLInputElement): void;
   setCss(target: HTMLInputElement): void;
@@ -119,7 +118,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
     customKnobs: PropertyInfo[] = [];
 
     @property({ attribute: false })
-    knobs: KnobValues = {};
+    knobs: Record<string, KnobValue> = {};
 
     @property({ attribute: false })
     finalProps!: PropertyInfo[];
