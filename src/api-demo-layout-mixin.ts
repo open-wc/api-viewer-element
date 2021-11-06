@@ -62,34 +62,26 @@ const isGetter = (
 const getKnobs = (
   tag: string,
   props: PropertyInfo[],
-  exclude: string
+  exclude = ''
 ): Knob<PropertyInfo>[] => {
-  // Filter out getters
+  // Exclude getters and specific properties
   let propKnobs = props.filter(
-    ({ name }) => !isGetter(customElements.get(tag), name)
+    ({ name }) =>
+      !exclude.includes(name) && !isGetter(customElements.get(tag), name)
   ) as Knob<PropertyInfo>[];
 
-  // Set knob type
+  // Set knob types and default knobs values
   propKnobs = propKnobs.map((prop) => {
-    return {
+    const knob = {
       ...prop,
       knobType: normalizeType(prop.type)
     };
-  });
 
-  // Exclude properties based on config
-  if (exclude) {
-    propKnobs = propKnobs.filter(({ name }) => !exclude.includes(name));
-  }
+    if (typeof knob.default === 'string') {
+      knob.value = getDefault(knob);
+    }
 
-  // Add default values for properties
-  propKnobs = propKnobs.map((prop: Knob<PropertyInfo>) => {
-    return typeof prop.default === 'string'
-      ? {
-          ...prop,
-          value: getDefault(prop)
-        }
-      : prop;
+    return knob;
   });
 
   return propKnobs;
@@ -205,9 +197,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
         this.propKnobs = getKnobs(this.tag, this.props, this.exclude);
         this.customKnobs = getCustomKnobs(this.tag, this.vid);
       }
-    }
 
-    protected updated(props: PropertyValues): void {
       if (props.has('slots') && this.slots) {
         this.processedSlots = this.slots
           .sort((a: SlotInfo, b: SlotInfo) => {
