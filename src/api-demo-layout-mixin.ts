@@ -258,7 +258,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
     setKnobs(target: HTMLInputElement): void {
       const { name, type } = target.dataset;
       let value;
-      switch (normalizeType(type)) {
+      switch (type) {
         case 'boolean':
           value = target.checked;
           break;
@@ -275,7 +275,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
         this.knobs = {
           ...this.knobs,
           [name as string]: {
-            knobType: normalizeType(type),
+            knobType: type,
             value,
             attribute,
             custom
