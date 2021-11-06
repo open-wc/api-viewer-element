@@ -4,14 +4,14 @@ import { normalizeType } from './utils.js';
 
 const DEFAULT = 'default';
 
-type Knobable = CSSPropertyInfo | PropertyInfo | SlotValue;
+type Knobable = unknown | CSSPropertyInfo | PropertyInfo | SlotValue;
 
-export interface Knob {
-  type: string;
+export type Knob<T extends Knobable = unknown> = T & {
   attribute: string | undefined;
-  value: string | number | boolean | null;
+  value: string | number | boolean | null | undefined;
   custom?: boolean;
-}
+  knobType: string;
+};
 
 type InputRenderer = (item: Knobable, id: string) => TemplateResult;
 
@@ -55,24 +55,24 @@ export const propRenderer: InputRenderer = (
   knob: Knobable,
   id: string
 ): TemplateResult => {
-  const { name, type, value, options } = knob as PropertyInfo;
+  const { name, knobType, value, options } = knob as Knob<PropertyInfo>;
   let input;
-  if (type === 'select' && Array.isArray(options)) {
+  if (knobType === 'select' && Array.isArray(options)) {
     input = html`
-      <select id=${id} data-name=${name} data-type=${type} part="select">
+      <select id=${id} data-name=${name} data-type=${knobType} part="select">
         ${options.map(
           (option) => html`<option value=${option}>${option}</option>`
         )}
       </select>
     `;
-  } else if (normalizeType(type) === 'boolean') {
+  } else if (normalizeType(knobType) === 'boolean') {
     input = html`
       <input
         id=${id}
         type="checkbox"
         .checked=${Boolean(value)}
         data-name=${name}
-        data-type=${type}
+        data-type=${knobType}
         part="checkbox"
       />
     `;
@@ -80,10 +80,10 @@ export const propRenderer: InputRenderer = (
     input = html`
       <input
         id=${id}
-        type=${getInputType(type)}
+        type=${getInputType(knobType)}
         .value=${value == null ? '' : String(value)}
         data-name=${name}
-        data-type=${type}
+        data-type=${knobType}
         part="input"
       />
     `;
@@ -116,7 +116,7 @@ export const renderKnobs = (
   renderer: InputRenderer
 ): TemplateResult => {
   const rows = items.map((item: Knobable) => {
-    const { name } = item;
+    const { name } = item as Knob<PropertyInfo>;
     const id = `${type}-${name || DEFAULT}`;
     const label = type === 'slot' ? getSlotDefault(name, DEFAULT) : name;
     return html`

@@ -81,9 +81,9 @@ export const renderSnippet = (
   Object.keys(values)
     .sort((a, b) => (a > b ? 1 : -1))
     .forEach((key: string) => {
-      const { value, type, attribute } = values[key];
+      const { value, knobType, attribute } = values[key];
       const attr = attribute || key;
-      switch (normalizeType(type)) {
+      switch (normalizeType(knobType)) {
         case 'boolean':
           markup += value ? ` ${attr}` : '';
           break;

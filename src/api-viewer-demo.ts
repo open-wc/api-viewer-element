@@ -49,7 +49,7 @@ class ApiViewerDemo extends ApiDemoLayoutMixin(LitElement) {
       this.events,
       this.slots,
       this.customKnobs,
-      this.finalProps
+      this.propKnobs
     ].map((arr) => arr.length === 0);
 
     const id = this.vid as number;
@@ -92,12 +92,7 @@ class ApiViewerDemo extends ApiDemoLayoutMixin(LitElement) {
         <api-viewer-panel slot="panel" part="tab-panel">
           <div part="knobs">
             <section part="knobs-column" @change=${this._onPropChanged}>
-              ${renderKnobs(
-                this.finalProps,
-                'Properties',
-                'prop',
-                propRenderer
-              )}
+              ${renderKnobs(this.propKnobs, 'Properties', 'prop', propRenderer)}
               ${renderKnobs(
                 this.customKnobs,
                 'Attributes',
