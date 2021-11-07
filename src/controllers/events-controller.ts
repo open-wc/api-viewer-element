@@ -7,7 +7,19 @@ type EventsHost = HTMLElement & ReactiveControllerHost & HasKnobs;
 export class EventsController implements ReactiveController {
   host: EventsHost;
 
-  log: CustomEvent[] = [];
+  private _log: CustomEvent[] = [];
+
+  get log(): CustomEvent[] {
+    return this._log;
+  }
+
+  set log(log: CustomEvent[]) {
+    this._log = log;
+
+    if (this.host.isConnected) {
+      this.host.requestUpdate();
+    }
+  }
 
   constructor(
     host: ReactiveControllerHost,
@@ -27,18 +39,12 @@ export class EventsController implements ReactiveController {
         }
 
         this.log = [...this.log, evt];
-
-        this.host.requestUpdate();
       }) as EventListener);
     });
   }
 
   clear() {
     this.log = [];
-
-    if (this.host.isConnected) {
-      this.host.requestUpdate();
-    }
   }
 
   hostDisconnected() {
