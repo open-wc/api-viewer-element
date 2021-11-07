@@ -127,7 +127,7 @@ const getCustomKnobs = (tag: string, vid?: number): Knob<PropertyInfo>[] => {
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type Constructor<T = unknown> = new (...args: any[]) => T;
 
-export interface ApiDemoLayoutInterface {
+export interface ApiDemoKnobsInterface {
   tag: string;
   props: PropertyInfo[];
   propKnobs: Knob<PropertyInfo>[];
@@ -147,9 +147,9 @@ export interface ApiDemoLayoutInterface {
   onRendered(event: CustomEvent): void;
 }
 
-export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
+export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
   base: T
-): T & Constructor<ApiDemoLayoutInterface> => {
+): T & Constructor<ApiDemoKnobsInterface> => {
   class DemoLayout extends base {
     @property() tag = '';
 

@@ -11,12 +11,12 @@ import {
   slotRenderer
 } from './lib/knobs.js';
 import { hasTemplate, TemplateTypes } from './lib/utils.js';
-import { ApiDemoLayoutMixin } from './api-demo-layout-mixin.js';
+import { ApiDemoKnobsMixin } from './api-demo-knobs-mixin.js';
 import './api-viewer-panel.js';
 import './api-viewer-tab.js';
 import './api-viewer-tabs.js';
 
-class ApiViewerDemo extends ApiDemoLayoutMixin(LitElement) {
+class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
   @property() copyBtnText = 'copy';
 
   private _whenDefined: Record<string, Promise<unknown>> = {};
