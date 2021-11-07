@@ -1,3 +1,4 @@
+import { Knob } from './knobs.js';
 import { ElementInfo, PropertyInfo } from './types';
 
 const templates: Array<HTMLTemplateElement[]> = [];
@@ -45,7 +46,7 @@ export const hasTemplate = (id: number, name: string, type: string): boolean =>
 
 export const isPropMatch =
   (name: string) =>
-  (prop: PropertyInfo): boolean =>
+  (prop: PropertyInfo | Knob<PropertyInfo>): boolean =>
     prop.attribute === name || prop.name === name;
 
 export const normalizeType = (type: string | undefined = ''): string =>

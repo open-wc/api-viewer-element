@@ -45,15 +45,6 @@ export interface ElementSetInfo {
 
 export type ElementPromise = Promise<ElementInfo[]>;
 
-export interface KnobValue {
-  type: string;
-  attribute: string | undefined;
-  value: string | number | boolean | null;
-  custom?: boolean;
-}
-
-export type KnobValues = { [name: string]: KnobValue };
-
 export interface SlotValue {
   name: string;
   content: string;

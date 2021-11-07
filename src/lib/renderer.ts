@@ -2,12 +2,8 @@ import { ChildPart, html, noChange, nothing, TemplateResult } from 'lit';
 import { directive, Directive, PartInfo, PartType } from 'lit/directive.js';
 import { templateContent } from 'lit/directives/template-content.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import {
-  ComponentWithProps,
-  CSSPropertyInfo,
-  KnobValues,
-  SlotValue
-} from './types.js';
+import { Knob } from './knobs.js';
+import { CSSPropertyInfo, SlotValue } from './types.js';
 import {
   getTemplate,
   getTemplateNode,
@@ -20,7 +16,7 @@ import {
 export type ComponentRendererOptions = {
   id: number;
   tag: string;
-  knobs: KnobValues;
+  knobs: Record<string, Knob>;
   slots: SlotValue[];
   cssProps: CSSPropertyInfo[];
 };
@@ -35,17 +31,17 @@ const updateComponent = (
 
   // Apply knobs using properties or attributes
   Object.keys(knobs).forEach((key: string) => {
-    const { type, attribute, value, custom } = knobs[key];
+    const { knobType, attribute, value, custom } = knobs[key];
     if (custom && attribute) {
       if (typeof value === 'string' && value) {
         component.setAttribute(attribute, value);
       } else {
         component.removeAttribute(attribute);
       }
-    } else if (normalizeType(type) === 'boolean') {
+    } else if (normalizeType(knobType) === 'boolean') {
       component.toggleAttribute(attribute || key, Boolean(value));
     } else {
-      (component as unknown as ComponentWithProps)[key] = value;
+      (component as any)[key] = value;
     }
   });
 

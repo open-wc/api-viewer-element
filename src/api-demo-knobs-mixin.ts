@@ -1,15 +1,13 @@
 import { LitElement, PropertyValues } from 'lit';
 import { property } from 'lit/decorators/property.js';
-import { getSlotDefault } from './lib/knobs.js';
+import { getSlotDefault, Knob } from './lib/knobs.js';
 import {
   ComponentWithProps,
   CSSPropertyInfo,
   PropertyInfo,
   SlotInfo,
   SlotValue,
-  EventInfo,
-  KnobValues,
-  KnobValue
+  EventInfo
 } from './lib/types.js';
 import {
   getTemplates,
@@ -24,10 +22,10 @@ import {
 const { HOST, KNOB } = TemplateTypes;
 
 const getDefault = (
-  prop: PropertyInfo
+  prop: Knob<PropertyInfo>
 ): string | number | boolean | null | undefined => {
-  const { type, default: value } = prop;
-  switch (normalizeType(type)) {
+  const { knobType, default: value } = prop;
+  switch (knobType) {
     case 'boolean':
       return value !== 'false';
     case 'number':
@@ -61,13 +59,78 @@ const isGetter = (
   return result;
 };
 
+const getKnobs = (
+  tag: string,
+  props: PropertyInfo[],
+  exclude = ''
+): Knob<PropertyInfo>[] => {
+  // Exclude getters and specific properties
+  let propKnobs = props.filter(
+    ({ name }) =>
+      !exclude.includes(name) && !isGetter(customElements.get(tag), name)
+  ) as Knob<PropertyInfo>[];
+
+  // Set knob types and default knobs values
+  propKnobs = propKnobs.map((prop) => {
+    const knob = {
+      ...prop,
+      knobType: normalizeType(prop.type)
+    };
+
+    if (typeof knob.default === 'string') {
+      knob.value = getDefault(knob);
+    }
+
+    return knob;
+  });
+
+  return propKnobs;
+};
+
+const getCustomKnobs = (tag: string, vid?: number): Knob<PropertyInfo>[] => {
+  return getTemplates(vid as number, tag, KNOB)
+    .map((template) => {
+      const { attr, type } = template.dataset;
+      let result = null;
+      if (attr) {
+        if (type === 'select') {
+          const node = getTemplateNode(template);
+          const options = node
+            ? Array.from(node.children)
+                .filter(
+                  (c): c is HTMLOptionElement => c instanceof HTMLOptionElement
+                )
+                .map((option) => option.value)
+            : [];
+          if (node instanceof HTMLSelectElement && options.length > 1) {
+            result = {
+              name: attr,
+              attribute: attr,
+              knobType: type,
+              options
+            };
+          }
+        }
+        if (type === 'string' || type === 'boolean') {
+          result = {
+            name: attr,
+            attribute: attr,
+            knobType: type
+          };
+        }
+      }
+      return result as Knob<PropertyInfo>;
+    })
+    .filter(Boolean);
+};
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type Constructor<T = unknown> = new (...args: any[]) => T;
 
-export interface ApiDemoLayoutInterface {
+export interface ApiDemoKnobsInterface {
   tag: string;
   props: PropertyInfo[];
-  finalProps: PropertyInfo[];
+  propKnobs: Knob<PropertyInfo>[];
   slots: SlotInfo[];
   events: EventInfo[];
   cssProps: CSSPropertyInfo[];
@@ -76,17 +139,17 @@ export interface ApiDemoLayoutInterface {
   processedSlots: SlotValue[];
   processedCss: CSSPropertyInfo[];
   eventLog: CustomEvent[];
-  customKnobs: PropertyInfo[];
-  knobs: KnobValues;
+  customKnobs: Knob<PropertyInfo>[];
+  knobs: Record<string, Knob>;
   setKnobs(target: HTMLInputElement): void;
   setSlots(target: HTMLInputElement): void;
   setCss(target: HTMLInputElement): void;
   onRendered(event: CustomEvent): void;
 }
 
-export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
+export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
   base: T
-): T & Constructor<ApiDemoLayoutInterface> => {
+): T & Constructor<ApiDemoKnobsInterface> => {
   class DemoLayout extends base {
     @property() tag = '';
 
@@ -116,13 +179,13 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
     eventLog!: CustomEvent[];
 
     @property({ attribute: false })
-    customKnobs: PropertyInfo[] = [];
+    customKnobs: Knob<PropertyInfo>[] = [];
 
     @property({ attribute: false })
-    knobs: KnobValues = {};
+    knobs: Record<string, Knob> = {};
 
     @property({ attribute: false })
-    finalProps!: PropertyInfo[];
+    propKnobs!: Knob<PropertyInfo>[];
 
     willUpdate(props: PropertyValues) {
       // Reset state if tag changed
@@ -131,30 +194,10 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
         this.eventLog = [];
         this.processedCss = [];
         this.processedSlots = [];
-
-        // Store properties without getters
-        this.finalProps = this.props.filter(
-          ({ name }) => !isGetter(customElements.get(this.tag), name)
-        );
-
-        this.customKnobs = this._getCustomKnobs();
+        this.propKnobs = getKnobs(this.tag, this.props, this.exclude);
+        this.customKnobs = getCustomKnobs(this.tag, this.vid);
       }
 
-      if (props.has('exclude')) {
-        this.finalProps = this.finalProps
-          .filter(({ name }) => !this.exclude.includes(name))
-          .map((prop: PropertyInfo) => {
-            return typeof prop.default === 'string'
-              ? {
-                  ...prop,
-                  value: getDefault(prop)
-                }
-              : prop;
-          });
-      }
-    }
-
-    protected updated(props: PropertyValues): void {
       if (props.has('slots') && this.slots) {
         this.processedSlots = this.slots
           .sort((a: SlotInfo, b: SlotInfo) => {
@@ -175,53 +218,18 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
       }
     }
 
-    private _getCustomKnobs(): PropertyInfo[] {
-      return getTemplates(this.vid as number, this.tag, KNOB)
-        .map((template) => {
-          const { attr, type } = template.dataset;
-          let result = null;
-          if (attr) {
-            if (type === 'select') {
-              const node = getTemplateNode(template);
-              const options = node
-                ? Array.from(node.children)
-                    .filter(
-                      (c): c is HTMLOptionElement =>
-                        c instanceof HTMLOptionElement
-                    )
-                    .map((option) => option.value)
-                : [];
-              if (node instanceof HTMLSelectElement && options.length > 1) {
-                result = {
-                  name: attr,
-                  attribute: attr,
-                  type,
-                  options
-                };
-              }
-            }
-            if (type === 'string' || type === 'boolean') {
-              result = {
-                name: attr,
-                attribute: attr,
-                type
-              };
-            }
-          }
-          return result;
-        })
-        .filter(Boolean) as PropertyInfo[];
-    }
-
-    private _getProp(name: string): { prop?: PropertyInfo; custom?: boolean } {
+    private _getProp(name: string): {
+      prop: Knob<PropertyInfo>;
+      custom?: boolean;
+    } {
       const isMatch = isPropMatch(name);
-      const prop = this.finalProps.find(isMatch);
-      return prop
-        ? { prop }
-        : {
-            prop: this.customKnobs.find(isMatch),
-            custom: true
-          };
+      let prop = this.propKnobs.find(isMatch);
+      let custom = false;
+      if (!prop) {
+        prop = this.customKnobs.find(isMatch) as Knob<PropertyInfo>;
+        custom = true;
+      }
+      return { prop, custom };
     }
 
     setCss(target: HTMLInputElement): void {
@@ -240,7 +248,7 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
     setKnobs(target: HTMLInputElement): void {
       const { name, type } = target.dataset;
       let value;
-      switch (normalizeType(type)) {
+      switch (type) {
         case 'boolean':
           value = target.checked;
           break;
@@ -256,7 +264,12 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
         const { attribute } = prop;
         this.knobs = {
           ...this.knobs,
-          [name as string]: { type, value, attribute, custom } as KnobValue
+          [name as string]: {
+            knobType: type,
+            value,
+            attribute,
+            custom
+          } as Knob<PropertyInfo>
         };
       }
     }
@@ -280,13 +293,13 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
 
       if (hasTemplate(this.vid as number, this.tag, HOST)) {
         // Apply property values from template
-        this.finalProps
+        this.propKnobs
           .filter((prop) => {
-            const { name, type } = prop;
+            const { name, knobType } = prop;
             const defaultValue = getDefault(prop);
             return (
               component[name] !== defaultValue ||
-              (normalizeType(type) === 'boolean' && defaultValue)
+              (knobType === 'boolean' && defaultValue)
             );
           })
           .forEach((prop) => {
@@ -326,17 +339,17 @@ export const ApiDemoLayoutMixin = <T extends Constructor<LitElement>>(
       }
     }
 
-    private _syncKnob(component: Element, changed: PropertyInfo): void {
-      const { name, type, attribute } = changed;
+    private _syncKnob(component: Element, changed: Knob<PropertyInfo>): void {
+      const { name, knobType, attribute } = changed;
       const value = (component as unknown as ComponentWithProps)[name];
 
       // update knobs to avoid duplicate event
       this.knobs = {
         ...this.knobs,
-        [name]: { type, value, attribute }
+        [name]: { knobType, value, attribute }
       };
 
-      this.finalProps = this.finalProps.map((prop) => {
+      this.propKnobs = this.propKnobs.map((prop) => {
         return prop.name === name
           ? {
               ...prop,

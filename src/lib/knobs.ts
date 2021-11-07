@@ -4,9 +4,16 @@ import { normalizeType } from './utils.js';
 
 const DEFAULT = 'default';
 
-type Knob = CSSPropertyInfo | PropertyInfo | SlotValue;
+type Knobable = unknown | CSSPropertyInfo | PropertyInfo | SlotValue;
 
-type InputRenderer = (item: Knob, id: string) => TemplateResult;
+export type Knob<T extends Knobable = unknown> = T & {
+  attribute: string | undefined;
+  value: string | number | boolean | null | undefined;
+  custom?: boolean;
+  knobType: string;
+};
+
+type InputRenderer = (item: Knobable, id: string) => TemplateResult;
 
 const capitalize = (name: string): string =>
   name[0].toUpperCase() + name.slice(1);
@@ -28,7 +35,7 @@ const getInputType = (type: string): 'checkbox' | 'number' | 'text' => {
 };
 
 export const cssPropRenderer: InputRenderer = (
-  knob: Knob,
+  knob: Knobable,
   id: string
 ): TemplateResult => {
   const { name, value } = knob as CSSPropertyInfo;
@@ -45,27 +52,27 @@ export const cssPropRenderer: InputRenderer = (
 };
 
 export const propRenderer: InputRenderer = (
-  knob: Knob,
+  knob: Knobable,
   id: string
 ): TemplateResult => {
-  const { name, type, value, options } = knob as PropertyInfo;
+  const { name, knobType, value, options } = knob as Knob<PropertyInfo>;
   let input;
-  if (type === 'select' && Array.isArray(options)) {
+  if (knobType === 'select' && Array.isArray(options)) {
     input = html`
-      <select id=${id} data-name=${name} data-type=${type} part="select">
+      <select id=${id} data-name=${name} data-type=${knobType} part="select">
         ${options.map(
           (option) => html`<option value=${option}>${option}</option>`
         )}
       </select>
     `;
-  } else if (normalizeType(type) === 'boolean') {
+  } else if (normalizeType(knobType) === 'boolean') {
     input = html`
       <input
         id=${id}
         type="checkbox"
         .checked=${Boolean(value)}
         data-name=${name}
-        data-type=${type}
+        data-type=${knobType}
         part="checkbox"
       />
     `;
@@ -73,10 +80,10 @@ export const propRenderer: InputRenderer = (
     input = html`
       <input
         id=${id}
-        type=${getInputType(type)}
+        type=${getInputType(knobType)}
         .value=${value == null ? '' : String(value)}
         data-name=${name}
-        data-type=${type}
+        data-type=${knobType}
         part="input"
       />
     `;
@@ -85,7 +92,7 @@ export const propRenderer: InputRenderer = (
 };
 
 export const slotRenderer: InputRenderer = (
-  knob: Knob,
+  knob: Knobable,
   id: string
 ): TemplateResult => {
   const { name, content } = knob as SlotValue;
@@ -103,13 +110,13 @@ export const slotRenderer: InputRenderer = (
 };
 
 export const renderKnobs = (
-  items: Knob[],
+  items: Knobable[],
   header: string,
   type: string,
   renderer: InputRenderer
 ): TemplateResult => {
-  const rows = items.map((item: Knob) => {
-    const { name } = item;
+  const rows = items.map((item: Knobable) => {
+    const { name } = item as Knob<PropertyInfo>;
     const id = `${type}-${name || DEFAULT}`;
     const label = type === 'slot' ? getSlotDefault(name, DEFAULT) : name;
     return html`
