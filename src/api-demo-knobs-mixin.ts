@@ -6,8 +6,7 @@ import {
   CSSPropertyInfo,
   PropertyInfo,
   SlotInfo,
-  SlotValue,
-  EventInfo
+  SlotValue
 } from './lib/types.js';
 import {
   getTemplates,
@@ -132,19 +131,19 @@ export interface ApiDemoKnobsInterface {
   props: PropertyInfo[];
   propKnobs: Knob<PropertyInfo>[];
   slots: SlotInfo[];
-  events: EventInfo[];
   cssProps: CSSPropertyInfo[];
   exclude: string;
   vid?: number;
   processedSlots: SlotValue[];
   processedCss: CSSPropertyInfo[];
-  eventLog: CustomEvent[];
   customKnobs: Knob<PropertyInfo>[];
   knobs: Record<string, Knob>;
   setKnobs(target: HTMLInputElement): void;
   setSlots(target: HTMLInputElement): void;
   setCss(target: HTMLInputElement): void;
-  onRendered(event: CustomEvent): void;
+  initKnobs(component: HTMLElement): void;
+  getKnob(name: string): { knob: Knob<PropertyInfo>; custom?: boolean };
+  syncKnob(component: Element, changed: Knob<PropertyInfo>): void;
 }
 
 export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
@@ -160,9 +159,6 @@ export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
     slots: SlotInfo[] = [];
 
     @property({ attribute: false })
-    events: EventInfo[] = [];
-
-    @property({ attribute: false })
     cssProps: CSSPropertyInfo[] = [];
 
     @property() exclude = '';
@@ -174,9 +170,6 @@ export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
 
     @property({ attribute: false })
     processedCss!: CSSPropertyInfo[];
-
-    @property({ attribute: false })
-    eventLog!: CustomEvent[];
 
     @property({ attribute: false })
     customKnobs: Knob<PropertyInfo>[] = [];
@@ -191,7 +184,6 @@ export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
       // Reset state if tag changed
       if (props.has('tag')) {
         this.knobs = {};
-        this.eventLog = [];
         this.processedCss = [];
         this.processedSlots = [];
         this.propKnobs = getKnobs(this.tag, this.props, this.exclude);
@@ -218,18 +210,18 @@ export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
       }
     }
 
-    private _getProp(name: string): {
-      prop: Knob<PropertyInfo>;
+    getKnob(name: string): {
+      knob: Knob<PropertyInfo>;
       custom?: boolean;
     } {
       const isMatch = isPropMatch(name);
-      let prop = this.propKnobs.find(isMatch);
+      let knob = this.propKnobs.find(isMatch);
       let custom = false;
-      if (!prop) {
-        prop = this.customKnobs.find(isMatch) as Knob<PropertyInfo>;
+      if (!knob) {
+        knob = this.customKnobs.find(isMatch) as Knob<PropertyInfo>;
         custom = true;
       }
-      return { prop, custom };
+      return { knob, custom };
     }
 
     setCss(target: HTMLInputElement): void {
@@ -259,9 +251,9 @@ export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
           value = target.value;
       }
 
-      const { prop, custom } = this._getProp(name as string);
-      if (prop) {
-        const { attribute } = prop;
+      const { knob, custom } = this.getKnob(name as string);
+      if (knob) {
+        const { attribute } = knob;
         this.knobs = {
           ...this.knobs,
           [name as string]: {
@@ -288,9 +280,7 @@ export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
       });
     }
 
-    onRendered(e: CustomEvent): void {
-      const { component } = e.detail;
-
+    initKnobs(component: HTMLElement) {
       if (hasTemplate(this.vid as number, this.tag, HOST)) {
         // Apply property values from template
         this.propKnobs
@@ -298,28 +288,14 @@ export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
             const { name, knobType } = prop;
             const defaultValue = getDefault(prop);
             return (
-              component[name] !== defaultValue ||
+              (component as any)[name] !== defaultValue ||
               (knobType === 'boolean' && defaultValue)
             );
           })
           .forEach((prop) => {
-            this._syncKnob(component, prop);
+            this.syncKnob(component, prop);
           });
       }
-
-      this.events.forEach((event) => {
-        component.addEventListener(event.name, ((evt: CustomEvent) => {
-          const s = '-changed';
-          if (event.name.endsWith(s)) {
-            const { prop } = this._getProp(event.name.replace(s, ''));
-            if (prop) {
-              this._syncKnob(component, prop);
-            }
-          }
-
-          this.eventLog = [...this.eventLog, evt];
-        }) as EventListener);
-      });
 
       if (this.cssProps.length) {
         const style = getComputedStyle(component);
@@ -339,7 +315,7 @@ export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
       }
     }
 
-    private _syncKnob(component: Element, changed: Knob<PropertyInfo>): void {
+    syncKnob(component: Element, changed: Knob<PropertyInfo>): void {
       const { name, knobType, attribute } = changed;
       const value = (component as unknown as ComponentWithProps)[name];
 
