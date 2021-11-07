@@ -1,4 +1,4 @@
-import { LitElement, html, TemplateResult } from 'lit';
+import { LitElement, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { cache } from 'lit/directives/cache.js';
 import { renderEvents } from './lib/demo-events.js';
@@ -10,6 +10,7 @@ import {
   renderKnobs,
   slotRenderer
 } from './lib/knobs.js';
+import { EventInfo } from './lib/types.js';
 import { hasTemplate, TemplateTypes } from './lib/utils.js';
 import { ApiDemoKnobsMixin } from './api-demo-knobs-mixin.js';
 import './api-viewer-panel.js';
@@ -18,6 +19,12 @@ import './api-viewer-tabs.js';
 
 class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
   @property() copyBtnText = 'copy';
+
+  @property({ attribute: false })
+  events: EventInfo[] = [];
+
+  @property({ attribute: false })
+  eventLog!: CustomEvent[];
 
   private _whenDefined: Record<string, Promise<unknown>> = {};
 
@@ -158,6 +165,15 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
     `;
   }
 
+  willUpdate(props: PropertyValues) {
+    super.willUpdate(props);
+
+    // Reset state if tag changed
+    if (props.has('tag')) {
+      this.eventLog = [];
+    }
+  }
+
   private _onLogClear(): void {
     this.eventLog = [];
     const tab = this.renderRoot.querySelector('#events') as HTMLElement;
@@ -190,6 +206,26 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
 
       selection.removeAllRanges();
     }
+  }
+
+  private onRendered(e: CustomEvent): void {
+    const { component } = e.detail;
+
+    this.initKnobs(e.detail.component);
+
+    this.events.forEach((event) => {
+      component.addEventListener(event.name, ((evt: CustomEvent) => {
+        const s = '-changed';
+        if (event.name.endsWith(s)) {
+          const { knob } = this.getKnob(event.name.replace(s, ''));
+          if (knob) {
+            this.syncKnob(component, knob);
+          }
+        }
+
+        this.eventLog = [...this.eventLog, evt];
+      }) as EventListener);
+    });
   }
 
   private _onCssChanged(e: CustomEvent): void {
