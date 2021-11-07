@@ -28,11 +28,11 @@ export class EventsController implements ReactiveController {
   ) {
     (this.host = host as EventsHost).addController(this);
 
-    events.forEach((event) => {
-      component.addEventListener(event.name, ((evt: CustomEvent) => {
+    events.forEach(({ name }) => {
+      component.addEventListener(name, ((evt: CustomEvent) => {
         const s = '-changed';
-        if (event.name.endsWith(s)) {
-          const { knob } = this.host.getKnob(event.name.replace(s, ''));
+        if (name.endsWith(s)) {
+          const { knob } = this.host.getKnob(name.replace(s, ''));
           if (knob) {
             this.host.syncKnob(component, knob);
           }
