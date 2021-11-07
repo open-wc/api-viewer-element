@@ -1,6 +1,7 @@
-import { LitElement, html, PropertyValues, TemplateResult } from 'lit';
+import { LitElement, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { cache } from 'lit/directives/cache.js';
+import { EventsController } from './controllers/events-controller.js';
 import { renderEvents } from './lib/demo-events.js';
 import { renderSnippet } from './lib/demo-snippet.js';
 import { renderer } from './lib/renderer.js';
@@ -23,10 +24,9 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
   @property({ attribute: false })
   events: EventInfo[] = [];
 
-  @property({ attribute: false })
-  eventLog!: CustomEvent[];
-
   private _whenDefined: Record<string, Promise<unknown>> = {};
+
+  private eventsController!: EventsController;
 
   protected createRenderRoot(): this {
     return this;
@@ -51,6 +51,7 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
         </div>
       `;
     }
+
     const [noCss, noEvents, noSlots, noCustomKnobs, noProps] = [
       this.cssProps,
       this.events,
@@ -60,7 +61,7 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
     ].map((arr) => arr.length === 0);
 
     const id = this.vid as number;
-    const log = this.eventLog;
+    const log = this.eventsController?.log || [];
     const slots = this.processedSlots;
     const hideSlots = noSlots || hasTemplate(id, this.tag, TemplateTypes.SLOT);
 
@@ -165,18 +166,9 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
     `;
   }
 
-  willUpdate(props: PropertyValues) {
-    super.willUpdate(props);
-
-    // Reset state if tag changed
-    if (props.has('tag')) {
-      this.eventLog = [];
-    }
-  }
-
   private _onLogClear(): void {
-    this.eventLog = [];
-    const tab = this.renderRoot.querySelector('#events') as HTMLElement;
+    this.eventsController.clear();
+    const tab = this.querySelector('#events') as HTMLElement;
     if (tab) {
       tab.focus();
     }
@@ -211,21 +203,19 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
   private onRendered(e: CustomEvent): void {
     const { component } = e.detail;
 
-    this.initKnobs(e.detail.component);
+    this.initKnobs(component);
 
-    this.events.forEach((event) => {
-      component.addEventListener(event.name, ((evt: CustomEvent) => {
-        const s = '-changed';
-        if (event.name.endsWith(s)) {
-          const { knob } = this.getKnob(event.name.replace(s, ''));
-          if (knob) {
-            this.syncKnob(component, knob);
-          }
-        }
+    this.initEvents(component);
+  }
 
-        this.eventLog = [...this.eventLog, evt];
-      }) as EventListener);
-    });
+  private initEvents(component: HTMLElement) {
+    const controller = this.eventsController;
+    if (controller) {
+      controller.clear();
+      this.removeController(controller);
+    }
+
+    this.eventsController = new EventsController(this, component, this.events);
   }
 
   private _onCssChanged(e: CustomEvent): void {

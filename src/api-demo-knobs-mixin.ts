@@ -126,7 +126,12 @@ const getCustomKnobs = (tag: string, vid?: number): Knob<PropertyInfo>[] => {
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type Constructor<T = unknown> = new (...args: any[]) => T;
 
-export interface ApiDemoKnobsInterface {
+export interface HasKnobs {
+  getKnob(name: string): { knob: Knob<PropertyInfo>; custom?: boolean };
+  syncKnob(component: Element, changed: Knob<PropertyInfo>): void;
+}
+
+export interface ApiDemoKnobsInterface extends HasKnobs {
   tag: string;
   props: PropertyInfo[];
   propKnobs: Knob<PropertyInfo>[];
@@ -142,8 +147,6 @@ export interface ApiDemoKnobsInterface {
   setSlots(target: HTMLInputElement): void;
   setCss(target: HTMLInputElement): void;
   initKnobs(component: HTMLElement): void;
-  getKnob(name: string): { knob: Knob<PropertyInfo>; custom?: boolean };
-  syncKnob(component: Element, changed: Knob<PropertyInfo>): void;
 }
 
 export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
