@@ -45,6 +45,7 @@
   ],
   "dependencies": {
     "@types/dompurify": "^2.3.1",
+    "@types/marked": "^4.0.0",
     "dompurify": "^2.3.3",
     "highlight-ts": "9.12.1-2",
     "lit": "^2.0.0",
