@@ -3,7 +3,7 @@ import { getSlotDefault } from '../lib/knobs.js';
 import { SlotInfo, SlotValue } from '../lib/types.js';
 import { hasTemplate, TemplateTypes } from '../lib/utils.js';
 
-export class SlotsController {
+export class SlotsController implements ReactiveController {
   host: ReactiveControllerHost;
 
   enabled: boolean;
