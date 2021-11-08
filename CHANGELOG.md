@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [unreleased]
+
+### Breaking Changes
+
+- Updated `marked` dependency to 4.0.0
+
 ## [0.5.0] - 2021-11-01
 
 ### Breaking Changes

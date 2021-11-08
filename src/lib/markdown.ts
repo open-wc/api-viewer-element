@@ -1,6 +1,6 @@
 import { html, nothing, TemplateResult } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import marked from 'marked/lib/marked.esm.js';
+import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 
 marked.setOptions({ headerIds: false });
