@@ -3,6 +3,7 @@ import { property } from 'lit/decorators/property.js';
 import { cache } from 'lit/directives/cache.js';
 import { EventsController } from './controllers/events-controller.js';
 import { SlotsController } from './controllers/slots-controller.js';
+import { StylesController } from './controllers/styles-controller.js';
 import { renderEvents } from './lib/demo-events.js';
 import { renderSnippet } from './lib/demo-snippet.js';
 import { renderer } from './lib/renderer.js';
@@ -12,7 +13,7 @@ import {
   renderKnobs,
   slotRenderer
 } from './lib/knobs.js';
-import { EventInfo, SlotInfo } from './lib/types.js';
+import { CSSPropertyInfo, EventInfo, SlotInfo } from './lib/types.js';
 import { hasTemplate, TemplateTypes } from './lib/utils.js';
 import { ApiDemoKnobsMixin } from './api-demo-knobs-mixin.js';
 import './api-viewer-panel.js';
@@ -21,6 +22,9 @@ import './api-viewer-tabs.js';
 
 class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
   @property() copyBtnText = 'copy';
+
+  @property({ attribute: false })
+  cssProps: CSSPropertyInfo[] = [];
 
   @property({ attribute: false })
   events: EventInfo[] = [];
@@ -33,6 +37,8 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
   private eventsController!: EventsController;
 
   private slotsController!: SlotsController;
+
+  private stylesController!: StylesController;
 
   protected createRenderRoot(): this {
     return this;
@@ -69,16 +75,12 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
     const id = this.vid as number;
     const log = this.eventsController?.log || [];
     const slots = this.slotsController?.slots || [];
+    const cssProps = this.stylesController?.css || [];
     const hideSlots = noSlots || hasTemplate(id, tag, TemplateTypes.SLOT);
 
     return html`
       <div part="demo-output" @rendered=${this.onRendered}>
-        ${renderer({
-          id,
-          tag,
-          knobs: this.knobs,
-          cssProps: this.processedCss
-        })}
+        ${renderer({ id, tag, knobs: this.knobs })}
       </div>
       <api-viewer-tabs part="demo-tabs">
         <api-viewer-tab heading="Source" slot="tab" part="tab"></api-viewer-tab>
@@ -87,7 +89,7 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
             ${this.copyBtnText}
           </button>
           <div part="demo-snippet">
-            ${renderSnippet(id, tag, this.knobs, slots, this.processedCss)}
+            ${renderSnippet(id, tag, this.knobs, slots, cssProps)}
           </div>
         </api-viewer-panel>
         <api-viewer-tab
@@ -126,7 +128,7 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
           <div part="knobs" ?hidden=${noCss}>
             <section part="knobs-column" @change=${this._onCssChanged}>
               ${renderKnobs(
-                this.cssProps,
+                cssProps,
                 'Custom CSS Properties',
                 'css-prop',
                 cssPropRenderer
@@ -207,6 +209,8 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
     this.initEvents(component);
 
     this.initSlots(component);
+
+    this.initStyles(component);
   }
 
   private initEvents(component: HTMLElement) {
@@ -233,8 +237,22 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
     );
   }
 
+  private initStyles(component: HTMLElement) {
+    const controller = this.stylesController;
+    if (controller) {
+      this.removeController(controller);
+    }
+
+    this.stylesController = new StylesController(
+      this,
+      component,
+      this.cssProps
+    );
+  }
+
   private _onCssChanged(e: CustomEvent): void {
-    this.setCss(e.composedPath()[0] as HTMLInputElement);
+    const target = e.composedPath()[0] as HTMLInputElement;
+    this.stylesController.setValue(target.dataset.name as string, target.value);
   }
 
   private _onPropChanged(e: Event): void {
