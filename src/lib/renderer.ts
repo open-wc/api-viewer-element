@@ -3,11 +3,10 @@ import { directive, Directive, PartInfo, PartType } from 'lit/directive.js';
 import { templateContent } from 'lit/directives/template-content.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { Knob } from './knobs.js';
-import { CSSPropertyInfo, SlotValue } from './types.js';
+import { CSSPropertyInfo } from './types.js';
 import {
   getTemplate,
   getTemplateNode,
-  hasTemplate,
   isTemplate,
   normalizeType,
   TemplateTypes
@@ -17,7 +16,6 @@ export type ComponentRendererOptions = {
   id: number;
   tag: string;
   knobs: Record<string, Knob>;
-  slots: SlotValue[];
   cssProps: CSSPropertyInfo[];
 };
 
@@ -27,7 +25,7 @@ const updateComponent = (
   component: HTMLElement,
   options: ComponentRendererOptions
 ): void => {
-  const { id, tag, knobs, slots, cssProps } = options;
+  const { knobs, cssProps } = options;
 
   // Apply knobs using properties or attributes
   Object.keys(knobs).forEach((key: string) => {
@@ -44,23 +42,6 @@ const updateComponent = (
       (component as any)[key] = value;
     }
   });
-
-  // Apply slots content by re-creating nodes
-  if (!hasTemplate(id, tag, SLOT) && slots.length) {
-    component.innerHTML = '';
-    slots.forEach((slot) => {
-      let node: Element | Text;
-      const { name, content } = slot;
-      if (name) {
-        node = document.createElement('div');
-        node.setAttribute('slot', name);
-        node.textContent = content;
-      } else {
-        node = document.createTextNode(content);
-      }
-      component.appendChild(node);
-    });
-  }
 
   // Apply CSS props
   if (cssProps.length) {

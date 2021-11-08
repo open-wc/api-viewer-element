@@ -1,12 +1,10 @@
 import { LitElement, PropertyValues } from 'lit';
 import { property } from 'lit/decorators/property.js';
-import { getSlotDefault, Knob } from './lib/knobs.js';
+import { Knob } from './lib/knobs.js';
 import {
   ComponentWithProps,
   CSSPropertyInfo,
-  PropertyInfo,
-  SlotInfo,
-  SlotValue
+  PropertyInfo
 } from './lib/types.js';
 import {
   getTemplates,
@@ -135,16 +133,13 @@ export interface ApiDemoKnobsInterface extends HasKnobs {
   tag: string;
   props: PropertyInfo[];
   propKnobs: Knob<PropertyInfo>[];
-  slots: SlotInfo[];
   cssProps: CSSPropertyInfo[];
   exclude: string;
   vid?: number;
-  processedSlots: SlotValue[];
   processedCss: CSSPropertyInfo[];
   customKnobs: Knob<PropertyInfo>[];
   knobs: Record<string, Knob>;
   setKnobs(target: HTMLInputElement): void;
-  setSlots(target: HTMLInputElement): void;
   setCss(target: HTMLInputElement): void;
   initKnobs(component: HTMLElement): void;
 }
@@ -159,17 +154,11 @@ export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
     props: PropertyInfo[] = [];
 
     @property({ attribute: false })
-    slots: SlotInfo[] = [];
-
-    @property({ attribute: false })
     cssProps: CSSPropertyInfo[] = [];
 
     @property() exclude = '';
 
     @property({ type: Number }) vid?: number;
-
-    @property({ attribute: false })
-    processedSlots!: SlotValue[];
 
     @property({ attribute: false })
     processedCss!: CSSPropertyInfo[];
@@ -188,28 +177,8 @@ export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
       if (props.has('tag')) {
         this.knobs = {};
         this.processedCss = [];
-        this.processedSlots = [];
         this.propKnobs = getKnobs(this.tag, this.props, this.exclude);
         this.customKnobs = getCustomKnobs(this.tag, this.vid);
-      }
-
-      if (props.has('slots') && this.slots) {
-        this.processedSlots = this.slots
-          .sort((a: SlotInfo, b: SlotInfo) => {
-            if (a.name === '') {
-              return 1;
-            }
-            if (b.name === '') {
-              return -1;
-            }
-            return a.name.localeCompare(b.name);
-          })
-          .map((slot: SlotInfo) => {
-            return {
-              ...slot,
-              content: getSlotDefault(slot.name, 'content')
-            };
-          });
       }
     }
 
@@ -267,20 +236,6 @@ export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
           } as Knob<PropertyInfo>
         };
       }
-    }
-
-    setSlots(target: HTMLInputElement): void {
-      const name = target.dataset.slot;
-      const content = target.value;
-
-      this.processedSlots = this.processedSlots.map((slot) => {
-        return slot.name === name
-          ? {
-              ...slot,
-              content
-            }
-          : slot;
-      });
     }
 
     initKnobs(component: HTMLElement) {
