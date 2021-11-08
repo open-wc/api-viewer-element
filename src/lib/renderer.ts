@@ -3,7 +3,6 @@ import { directive, Directive, PartInfo, PartType } from 'lit/directive.js';
 import { templateContent } from 'lit/directives/template-content.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { Knob } from './knobs.js';
-import { CSSPropertyInfo } from './types.js';
 import {
   getTemplate,
   getTemplateNode,
@@ -16,7 +15,6 @@ export type ComponentRendererOptions = {
   id: number;
   tag: string;
   knobs: Record<string, Knob>;
-  cssProps: CSSPropertyInfo[];
 };
 
 const { HOST, PREFIX, SLOT, SUFFIX, WRAPPER } = TemplateTypes;
@@ -25,7 +23,7 @@ const updateComponent = (
   component: HTMLElement,
   options: ComponentRendererOptions
 ): void => {
-  const { knobs, cssProps } = options;
+  const { knobs } = options;
 
   // Apply knobs using properties or attributes
   Object.keys(knobs).forEach((key: string) => {
@@ -42,20 +40,6 @@ const updateComponent = (
       (component as any)[key] = value;
     }
   });
-
-  // Apply CSS props
-  if (cssProps.length) {
-    cssProps.forEach((prop) => {
-      const { name, value } = prop;
-      if (value) {
-        if (value === prop.default) {
-          component.style.removeProperty(name);
-        } else {
-          component.style.setProperty(name, value);
-        }
-      }
-    });
-  }
 };
 
 const isDefinedPromise = (action: unknown): action is Promise<unknown> =>

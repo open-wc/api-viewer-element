@@ -1,11 +1,7 @@
 import { LitElement, PropertyValues } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { Knob } from './lib/knobs.js';
-import {
-  ComponentWithProps,
-  CSSPropertyInfo,
-  PropertyInfo
-} from './lib/types.js';
+import { ComponentWithProps, PropertyInfo } from './lib/types.js';
 import {
   getTemplates,
   hasTemplate,
@@ -133,14 +129,11 @@ export interface ApiDemoKnobsInterface extends HasKnobs {
   tag: string;
   props: PropertyInfo[];
   propKnobs: Knob<PropertyInfo>[];
-  cssProps: CSSPropertyInfo[];
   exclude: string;
   vid?: number;
-  processedCss: CSSPropertyInfo[];
   customKnobs: Knob<PropertyInfo>[];
   knobs: Record<string, Knob>;
   setKnobs(target: HTMLInputElement): void;
-  setCss(target: HTMLInputElement): void;
   initKnobs(component: HTMLElement): void;
 }
 
@@ -153,15 +146,9 @@ export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
     @property({ attribute: false })
     props: PropertyInfo[] = [];
 
-    @property({ attribute: false })
-    cssProps: CSSPropertyInfo[] = [];
-
     @property() exclude = '';
 
     @property({ type: Number }) vid?: number;
-
-    @property({ attribute: false })
-    processedCss!: CSSPropertyInfo[];
 
     @property({ attribute: false })
     customKnobs: Knob<PropertyInfo>[] = [];
@@ -176,7 +163,6 @@ export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
       // Reset state if tag changed
       if (props.has('tag')) {
         this.knobs = {};
-        this.processedCss = [];
         this.propKnobs = getKnobs(this.tag, this.props, this.exclude);
         this.customKnobs = getCustomKnobs(this.tag, this.vid);
       }
@@ -194,19 +180,6 @@ export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
         custom = true;
       }
       return { knob, custom };
-    }
-
-    setCss(target: HTMLInputElement): void {
-      const { value, dataset } = target;
-
-      this.processedCss = this.processedCss.map((prop) => {
-        return prop.name === dataset.name
-          ? {
-              ...prop,
-              value
-            }
-          : prop;
-      });
     }
 
     setKnobs(target: HTMLInputElement): void {
@@ -253,23 +226,6 @@ export const ApiDemoKnobsMixin = <T extends Constructor<LitElement>>(
           .forEach((prop) => {
             this.syncKnob(component, prop);
           });
-      }
-
-      if (this.cssProps.length) {
-        const style = getComputedStyle(component);
-
-        this.processedCss = this.cssProps.map((cssProp) => {
-          let value = cssProp.default
-            ? unquote(cssProp.default)
-            : style.getPropertyValue(cssProp.name);
-          const result = cssProp;
-          if (value) {
-            value = value.trim();
-            result.default = value;
-            result.value = value;
-          }
-          return result;
-        });
       }
     }
 
