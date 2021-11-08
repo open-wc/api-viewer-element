@@ -2,6 +2,7 @@ import { LitElement, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { cache } from 'lit/directives/cache.js';
 import { EventsController } from './controllers/events-controller.js';
+import { SlotsController } from './controllers/slots-controller.js';
 import { renderEvents } from './lib/demo-events.js';
 import { renderSnippet } from './lib/demo-snippet.js';
 import { renderer } from './lib/renderer.js';
@@ -11,7 +12,7 @@ import {
   renderKnobs,
   slotRenderer
 } from './lib/knobs.js';
-import { EventInfo } from './lib/types.js';
+import { EventInfo, SlotInfo } from './lib/types.js';
 import { hasTemplate, TemplateTypes } from './lib/utils.js';
 import { ApiDemoKnobsMixin } from './api-demo-knobs-mixin.js';
 import './api-viewer-panel.js';
@@ -24,9 +25,14 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
   @property({ attribute: false })
   events: EventInfo[] = [];
 
+  @property({ attribute: false })
+  slots: SlotInfo[] = [];
+
   private _whenDefined: Record<string, Promise<unknown>> = {};
 
   private eventsController!: EventsController;
+
+  private slotsController!: SlotsController;
 
   protected createRenderRoot(): this {
     return this;
@@ -62,16 +68,15 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
 
     const id = this.vid as number;
     const log = this.eventsController?.log || [];
-    const slots = this.processedSlots;
+    const slots = this.slotsController?.slots || [];
     const hideSlots = noSlots || hasTemplate(id, this.tag, TemplateTypes.SLOT);
 
     return html`
       <div part="demo-output" @rendered=${this.onRendered}>
         ${renderer({
           id,
-          tag: this.tag,
+          tag,
           knobs: this.knobs,
-          slots,
           cssProps: this.processedCss
         })}
       </div>
@@ -82,13 +87,7 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
             ${this.copyBtnText}
           </button>
           <div part="demo-snippet">
-            ${renderSnippet(
-              this.vid as number,
-              this.tag,
-              this.knobs,
-              slots,
-              this.processedCss
-            )}
+            ${renderSnippet(id, this.tag, this.knobs, slots, this.processedCss)}
           </div>
         </api-viewer-panel>
         <api-viewer-tab
@@ -206,6 +205,8 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
     this.initKnobs(component);
 
     this.initEvents(component);
+
+    this.initSlots(component);
   }
 
   private initEvents(component: HTMLElement) {
@@ -218,6 +219,20 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
     this.eventsController = new EventsController(this, component, this.events);
   }
 
+  private initSlots(component: HTMLElement) {
+    const controller = this.slotsController;
+    if (controller) {
+      this.removeController(controller);
+    }
+
+    this.slotsController = new SlotsController(
+      this,
+      this.vid as number,
+      component,
+      this.slots
+    );
+  }
+
   private _onCssChanged(e: CustomEvent): void {
     this.setCss(e.composedPath()[0] as HTMLInputElement);
   }
@@ -227,7 +242,8 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
   }
 
   private _onSlotChanged(e: Event): void {
-    this.setSlots(e.composedPath()[0] as HTMLInputElement);
+    const target = e.composedPath()[0] as HTMLInputElement;
+    this.slotsController.setValue(target.dataset.slot as string, target.value);
   }
 }
 
