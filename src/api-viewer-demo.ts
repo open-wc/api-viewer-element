@@ -53,7 +53,7 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
 
       return html`
         <div part="warning">
-          Element ${this.tag} is not defined. Have you imported it?
+          Element ${tag} is not defined. Have you imported it?
         </div>
       `;
     }
@@ -69,7 +69,7 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
     const id = this.vid as number;
     const log = this.eventsController?.log || [];
     const slots = this.slotsController?.slots || [];
-    const hideSlots = noSlots || hasTemplate(id, this.tag, TemplateTypes.SLOT);
+    const hideSlots = noSlots || hasTemplate(id, tag, TemplateTypes.SLOT);
 
     return html`
       <div part="demo-output" @rendered=${this.onRendered}>
@@ -87,7 +87,7 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
             ${this.copyBtnText}
           </button>
           <div part="demo-snippet">
-            ${renderSnippet(id, this.tag, this.knobs, slots, this.processedCss)}
+            ${renderSnippet(id, tag, this.knobs, slots, this.processedCss)}
           </div>
         </api-viewer-panel>
         <api-viewer-tab
