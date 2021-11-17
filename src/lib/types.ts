@@ -7,11 +7,13 @@ export interface AttributeInfo extends Info {
   type: string | undefined;
 }
 
+export type PropertyValue = string | number | boolean | null | undefined;
+
 export interface PropertyInfo extends Info {
   type: string;
   attribute: string | undefined;
-  value: string | number | boolean | null | undefined;
-  default: string | number | boolean | null | undefined;
+  value: PropertyValue;
+  default: PropertyValue;
   options?: string[];
 }
 
@@ -51,5 +53,5 @@ export interface SlotValue {
 }
 
 export type ComponentWithProps = {
-  [s: string]: string | number | boolean | null;
+  [key: string]: PropertyValue;
 };

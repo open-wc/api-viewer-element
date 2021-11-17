@@ -1,4 +1,4 @@
-import { LitElement, html, TemplateResult } from 'lit';
+import { LitElement, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { cache } from 'lit/directives/cache.js';
 import { EventsController } from './controllers/events-controller.js';
@@ -6,21 +6,33 @@ import { SlotsController } from './controllers/slots-controller.js';
 import { StylesController } from './controllers/styles-controller.js';
 import { renderEvents } from './lib/demo-events.js';
 import { renderSnippet } from './lib/demo-snippet.js';
+import {
+  getCustomKnobs,
+  getInitialKnobs,
+  getKnobs,
+  Knob
+} from './lib/knobs.js';
 import { renderer } from './lib/renderer.js';
 import {
   cssPropRenderer,
   propRenderer,
   renderKnobs,
   slotRenderer
-} from './lib/knobs.js';
-import { CSSPropertyInfo, EventInfo, SlotInfo } from './lib/types.js';
-import { hasTemplate, TemplateTypes } from './lib/utils.js';
-import { ApiDemoKnobsMixin } from './api-demo-knobs-mixin.js';
+} from './lib/demo-controls.js';
+import {
+  ComponentWithProps,
+  CSSPropertyInfo,
+  EventInfo,
+  PropertyInfo,
+  PropertyValue,
+  SlotInfo
+} from './lib/types.js';
+import { hasTemplate, isPropMatch, TemplateTypes } from './lib/utils.js';
 import './api-viewer-panel.js';
 import './api-viewer-tab.js';
 import './api-viewer-tabs.js';
 
-class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
+class ApiViewerDemo extends LitElement {
   @property() copyBtnText = 'copy';
 
   @property({ attribute: false })
@@ -31,6 +43,24 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
 
   @property({ attribute: false })
   slots: SlotInfo[] = [];
+
+  @property() tag = '';
+
+  @property({ attribute: false })
+  props: PropertyInfo[] = [];
+
+  @property() exclude = '';
+
+  @property({ type: Number }) vid?: number;
+
+  @property({ attribute: false })
+  customKnobs!: Knob<PropertyInfo>[];
+
+  @property({ attribute: false })
+  knobs!: Record<string, Knob>;
+
+  @property({ attribute: false })
+  propKnobs!: Knob<PropertyInfo>[];
 
   private _whenDefined: Record<string, Promise<unknown>> = {};
 
@@ -167,6 +197,15 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
     `;
   }
 
+  willUpdate(props: PropertyValues) {
+    // Reset state if tag changed
+    if (props.has('tag')) {
+      this.knobs = {};
+      this.propKnobs = getKnobs(this.tag, this.props, this.exclude);
+      this.customKnobs = getCustomKnobs(this.tag, this.vid);
+    }
+  }
+
   private _onLogClear(): void {
     this.eventsController.clear();
     const tab = this.querySelector('#events') as HTMLElement;
@@ -223,6 +262,16 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
     this.eventsController = new EventsController(this, component, this.events);
   }
 
+  private initKnobs(component: HTMLElement) {
+    if (hasTemplate(this.vid as number, this.tag, TemplateTypes.HOST)) {
+      // Apply property values from template
+      const propKnobs = getInitialKnobs(this.propKnobs, component);
+      propKnobs.forEach((prop) => {
+        this.syncKnob(component, prop);
+      });
+    }
+  }
+
   private initSlots(component: HTMLElement) {
     const controller = this.slotsController;
     if (controller) {
@@ -250,13 +299,86 @@ class ApiViewerDemo extends ApiDemoKnobsMixin(LitElement) {
     );
   }
 
+  getKnob(name: string): {
+    knob: Knob<PropertyInfo>;
+    custom?: boolean;
+  } {
+    const isMatch = isPropMatch(name);
+    let knob = this.propKnobs.find(isMatch);
+    let custom = false;
+    if (!knob) {
+      knob = this.customKnobs.find(isMatch) as Knob<PropertyInfo>;
+      custom = true;
+    }
+    return { knob, custom };
+  }
+
+  private setKnobs(
+    name: string,
+    knobType: string,
+    value: PropertyValue,
+    attribute: string | undefined,
+    custom = false
+  ): void {
+    this.knobs = {
+      ...this.knobs,
+      [name]: {
+        knobType,
+        value,
+        attribute,
+        custom
+      }
+    };
+  }
+
+  syncKnob(component: Element, changed: Knob<PropertyInfo>): void {
+    const { name, knobType, attribute } = changed;
+    const value = (component as unknown as ComponentWithProps)[name];
+
+    // update knobs to avoid duplicate event
+    this.setKnobs(name, knobType, value, attribute);
+
+    this.propKnobs = this.propKnobs.map((prop) => {
+      return prop.name === name
+        ? {
+            ...prop,
+            value
+          }
+        : prop;
+    });
+  }
+
   private _onCssChanged(e: CustomEvent): void {
     const target = e.composedPath()[0] as HTMLInputElement;
     this.stylesController.setValue(target.dataset.name as string, target.value);
   }
 
   private _onPropChanged(e: Event): void {
-    this.setKnobs(e.composedPath()[0] as HTMLInputElement);
+    const target = e.composedPath()[0] as HTMLInputElement;
+
+    const { name, type } = target.dataset;
+    let value;
+    switch (type) {
+      case 'boolean':
+        value = target.checked;
+        break;
+      case 'number':
+        value = target.value === '' ? null : Number(target.value);
+        break;
+      default:
+        value = target.value;
+    }
+
+    const { knob, custom } = this.getKnob(name as string);
+    if (knob) {
+      this.setKnobs(
+        name as string,
+        type as string,
+        value,
+        knob.attribute,
+        custom
+      );
+    }
   }
 
   private _onSlotChanged(e: Event): void {

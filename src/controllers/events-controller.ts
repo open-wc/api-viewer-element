@@ -1,6 +1,6 @@
 import { ReactiveController, ReactiveControllerHost } from 'lit';
 import { EventInfo } from '../lib/types.js';
-import { HasKnobs } from '../api-demo-knobs-mixin.js';
+import { HasKnobs } from '../lib/knobs.js';
 
 type EventsHost = HTMLElement & ReactiveControllerHost & HasKnobs;
 

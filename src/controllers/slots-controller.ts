@@ -1,7 +1,6 @@
 import { ReactiveController, ReactiveControllerHost } from 'lit';
-import { getSlotDefault } from '../lib/knobs.js';
 import { SlotInfo, SlotValue } from '../lib/types.js';
-import { hasTemplate, TemplateTypes } from '../lib/utils.js';
+import { getSlotContent, hasTemplate, TemplateTypes } from '../lib/utils.js';
 
 export class SlotsController implements ReactiveController {
   host: ReactiveControllerHost;
@@ -62,7 +61,7 @@ export class SlotsController implements ReactiveController {
       .map((slot: SlotInfo) => {
         return {
           ...slot,
-          content: getSlotDefault(slot.name, 'content')
+          content: getSlotContent(slot.name)
         };
       }) as SlotValue[];
   }

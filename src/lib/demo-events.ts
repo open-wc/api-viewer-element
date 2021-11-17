@@ -1,7 +1,8 @@
 import { html, nothing, TemplateResult } from 'lit';
+import { PropertyValue } from './types.js';
 
 interface EventDetail {
-  value: string | number | boolean | null | undefined;
+  value: PropertyValue;
 }
 
 const renderDetail = (detail: EventDetail): string => {
