@@ -24,6 +24,7 @@ import {
   CSSPropertyInfo,
   EventInfo,
   PropertyInfo,
+  PropertyValue,
   SlotInfo
 } from './lib/types.js';
 import { hasTemplate, isPropMatch, TemplateTypes } from './lib/utils.js';
@@ -312,33 +313,22 @@ class ApiViewerDemo extends LitElement {
     return { knob, custom };
   }
 
-  setKnobs(target: HTMLInputElement): void {
-    const { name, type } = target.dataset;
-    let value;
-    switch (type) {
-      case 'boolean':
-        value = target.checked;
-        break;
-      case 'number':
-        value = target.value === '' ? null : Number(target.value);
-        break;
-      default:
-        value = target.value;
-    }
-
-    const { knob, custom } = this.getKnob(name as string);
-    if (knob) {
-      const { attribute } = knob;
-      this.knobs = {
-        ...this.knobs,
-        [name as string]: {
-          knobType: type,
-          value,
-          attribute,
-          custom
-        } as Knob<PropertyInfo>
-      };
-    }
+  private setKnobs(
+    name: string,
+    knobType: string,
+    value: PropertyValue,
+    attribute: string | undefined,
+    custom = false
+  ): void {
+    this.knobs = {
+      ...this.knobs,
+      [name]: {
+        knobType,
+        value,
+        attribute,
+        custom
+      }
+    };
   }
 
   private syncKnob(component: Element, changed: Knob<PropertyInfo>): void {
@@ -346,10 +336,7 @@ class ApiViewerDemo extends LitElement {
     const value = (component as unknown as ComponentWithProps)[name];
 
     // update knobs to avoid duplicate event
-    this.knobs = {
-      ...this.knobs,
-      [name]: { knobType, value, attribute }
-    };
+    this.setKnobs(name, knobType, value, attribute);
 
     this.propKnobs = this.propKnobs.map((prop) => {
       return prop.name === name
@@ -367,7 +354,31 @@ class ApiViewerDemo extends LitElement {
   }
 
   private _onPropChanged(e: Event): void {
-    this.setKnobs(e.composedPath()[0] as HTMLInputElement);
+    const target = e.composedPath()[0] as HTMLInputElement;
+
+    const { name, type } = target.dataset;
+    let value;
+    switch (type) {
+      case 'boolean':
+        value = target.checked;
+        break;
+      case 'number':
+        value = target.value === '' ? null : Number(target.value);
+        break;
+      default:
+        value = target.value;
+    }
+
+    const { knob, custom } = this.getKnob(name as string);
+    if (knob) {
+      this.setKnobs(
+        name as string,
+        type as string,
+        value,
+        knob.attribute,
+        custom
+      );
+    }
   }
 
   private _onSlotChanged(e: Event): void {

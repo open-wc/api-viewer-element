@@ -2,6 +2,7 @@ import {
   ComponentWithProps,
   CSSPropertyInfo,
   PropertyInfo,
+  PropertyValue,
   SlotValue
 } from './types.js';
 import {
@@ -16,7 +17,7 @@ export type Knobable = unknown | CSSPropertyInfo | PropertyInfo | SlotValue;
 
 export type Knob<T extends Knobable = unknown> = T & {
   attribute: string | undefined;
-  value: string | number | boolean | null | undefined;
+  value: PropertyValue;
   custom?: boolean;
   knobType: string;
 };
@@ -26,9 +27,7 @@ export interface HasKnobs {
   syncKnob(component: Element, changed: Knob<PropertyInfo>): void;
 }
 
-const getDefault = (
-  prop: Knob<PropertyInfo>
-): string | number | boolean | null | undefined => {
+const getDefault = (prop: Knob<PropertyInfo>): PropertyValue => {
   const { knobType, default: value } = prop;
   switch (knobType) {
     case 'boolean':
