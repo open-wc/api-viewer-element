@@ -331,7 +331,7 @@ class ApiViewerDemo extends LitElement {
     };
   }
 
-  private syncKnob(component: Element, changed: Knob<PropertyInfo>): void {
+  syncKnob(component: Element, changed: Knob<PropertyInfo>): void {
     const { name, knobType, attribute } = changed;
     const value = (component as unknown as ComponentWithProps)[name];
 
