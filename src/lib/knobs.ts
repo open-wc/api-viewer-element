@@ -132,7 +132,7 @@ export const getCustomKnobs = (
     .filter(Boolean);
 };
 
-export const getDefaultKnobs = (
+export const getInitialKnobs = (
   propKnobs: Knob<PropertyInfo>[],
   component: HTMLElement
 ): Knob<PropertyInfo>[] => {

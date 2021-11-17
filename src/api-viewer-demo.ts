@@ -8,7 +8,7 @@ import { renderEvents } from './lib/demo-events.js';
 import { renderSnippet } from './lib/demo-snippet.js';
 import {
   getCustomKnobs,
-  getDefaultKnobs,
+  getInitialKnobs,
   getKnobs,
   Knob
 } from './lib/knobs.js';
@@ -264,7 +264,7 @@ class ApiViewerDemo extends LitElement {
   private initKnobs(component: HTMLElement) {
     if (hasTemplate(this.vid as number, this.tag, TemplateTypes.HOST)) {
       // Apply property values from template
-      const propKnobs = getDefaultKnobs(this.propKnobs, component);
+      const propKnobs = getInitialKnobs(this.propKnobs, component);
       propKnobs.forEach((prop) => {
         this.syncKnob(component, prop);
       });
