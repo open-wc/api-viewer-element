@@ -3,6 +3,7 @@ import { directive, Directive, PartInfo, PartType } from 'lit/directive.js';
 import { templateContent } from 'lit/directives/template-content.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { Knob } from './knobs.js';
+import { ComponentWithProps } from './types.js';
 import {
   getTemplate,
   getTemplateNode,
@@ -37,7 +38,7 @@ const updateComponent = (
     } else if (normalizeType(knobType) === 'boolean') {
       component.toggleAttribute(attribute || key, Boolean(value));
     } else {
-      (component as any)[key] = value;
+      (component as unknown as ComponentWithProps)[key] = value;
     }
   });
 };

@@ -1,4 +1,9 @@
-import { CSSPropertyInfo, PropertyInfo, SlotValue } from './types.js';
+import {
+  ComponentWithProps,
+  CSSPropertyInfo,
+  PropertyInfo,
+  SlotValue
+} from './types.js';
 import {
   getTemplates,
   normalizeType,
@@ -135,7 +140,7 @@ export const getDefaultKnobs = (
     const { name, knobType } = prop;
     const defaultValue = getDefault(prop);
     return (
-      (component as any)[name] !== defaultValue ||
+      (component as unknown as ComponentWithProps)[name] !== defaultValue ||
       (knobType === 'boolean' && defaultValue)
     );
   });

@@ -51,5 +51,5 @@ export interface SlotValue {
 }
 
 export type ComponentWithProps = {
-  [s: string]: string | number | boolean | null;
+  [key: string]: string | number | boolean | null | undefined;
 };
