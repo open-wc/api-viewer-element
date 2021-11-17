@@ -53,10 +53,10 @@ class ApiViewerDemo extends LitElement {
   @property({ type: Number }) vid?: number;
 
   @property({ attribute: false })
-  customKnobs: Knob<PropertyInfo>[] = [];
+  customKnobs!: Knob<PropertyInfo>[];
 
   @property({ attribute: false })
-  knobs: Record<string, Knob> = {};
+  knobs!: Record<string, Knob>;
 
   @property({ attribute: false })
   propKnobs!: Knob<PropertyInfo>[];
