@@ -1,10 +1,13 @@
-import { html, TemplateResult } from 'lit';
 import { CSSPropertyInfo, PropertyInfo, SlotValue } from './types.js';
-import { normalizeType } from './utils.js';
+import {
+  getTemplates,
+  normalizeType,
+  TemplateTypes,
+  unquote,
+  getTemplateNode
+} from './utils.js';
 
-const DEFAULT = 'default';
-
-type Knobable = unknown | CSSPropertyInfo | PropertyInfo | SlotValue;
+export type Knobable = unknown | CSSPropertyInfo | PropertyInfo | SlotValue;
 
 export type Knob<T extends Knobable = unknown> = T & {
   attribute: string | undefined;
@@ -13,126 +16,127 @@ export type Knob<T extends Knobable = unknown> = T & {
   knobType: string;
 };
 
-type InputRenderer = (item: Knobable, id: string) => TemplateResult;
+export interface HasKnobs {
+  getKnob(name: string): { knob: Knob<PropertyInfo>; custom?: boolean };
+  syncKnob(component: Element, changed: Knob<PropertyInfo>): void;
+}
 
-const capitalize = (name: string): string =>
-  name[0].toUpperCase() + name.slice(1);
-
-export const getSlotDefault = (name: string, initial: string): string =>
-  capitalize(name === '' ? initial : name);
-
-export const getSlotContent = (name: string) => getSlotDefault(name, 'content');
-
-const getInputType = (type: string): 'checkbox' | 'number' | 'text' => {
-  switch (normalizeType(type)) {
+const getDefault = (
+  prop: Knob<PropertyInfo>
+): string | number | boolean | null | undefined => {
+  const { knobType, default: value } = prop;
+  switch (knobType) {
     case 'boolean':
-      return 'checkbox';
+      return value !== 'false';
     case 'number':
-      return 'number';
+      return Number(value);
     default:
-      return 'text';
+      return unquote(value as string);
   }
 };
 
-export const cssPropRenderer: InputRenderer = (
-  knob: Knobable,
-  id: string
-): TemplateResult => {
-  const { name, value } = knob as CSSPropertyInfo;
-
-  return html`
-    <input
-      id=${id}
-      type="text"
-      .value=${String(value)}
-      data-name=${name}
-      part="input"
-    />
-  `;
-};
-
-export const propRenderer: InputRenderer = (
-  knob: Knobable,
-  id: string
-): TemplateResult => {
-  const { name, knobType, value, options } = knob as Knob<PropertyInfo>;
-  let input;
-  if (knobType === 'select' && Array.isArray(options)) {
-    input = html`
-      <select id=${id} data-name=${name} data-type=${knobType} part="select">
-        ${options.map(
-          (option) => html`<option value=${option}>${option}</option>`
-        )}
-      </select>
-    `;
-  } else if (normalizeType(knobType) === 'boolean') {
-    input = html`
-      <input
-        id=${id}
-        type="checkbox"
-        .checked=${Boolean(value)}
-        data-name=${name}
-        data-type=${knobType}
-        part="checkbox"
-      />
-    `;
-  } else {
-    input = html`
-      <input
-        id=${id}
-        type=${getInputType(knobType)}
-        .value=${value == null ? '' : String(value)}
-        data-name=${name}
-        data-type=${knobType}
-        part="input"
-      />
-    `;
+// TODO: remove when analyzer outputs "readOnly" to JSON
+const isGetter = (
+  ctor: CustomElementConstructor | undefined,
+  prop: string
+): boolean => {
+  function getDescriptor(
+    obj: CustomElementConstructor
+  ): PropertyDescriptor | undefined {
+    return obj === HTMLElement
+      ? undefined
+      : Object.getOwnPropertyDescriptor(obj.prototype, prop) ||
+          getDescriptor(Object.getPrototypeOf(obj));
   }
-  return input;
+
+  let result = false;
+  if (ctor) {
+    const descriptor = getDescriptor(ctor);
+    result = Boolean(
+      descriptor && descriptor.get && descriptor.set === undefined
+    );
+  }
+  return result;
 };
 
-export const slotRenderer: InputRenderer = (
-  knob: Knobable,
-  id: string
-): TemplateResult => {
-  const { name, content } = knob as SlotValue;
+export const getKnobs = (
+  tag: string,
+  props: PropertyInfo[],
+  exclude = ''
+): Knob<PropertyInfo>[] => {
+  // Exclude getters and specific properties
+  let propKnobs = props.filter(
+    ({ name }) =>
+      !exclude.includes(name) && !isGetter(customElements.get(tag), name)
+  ) as Knob<PropertyInfo>[];
 
-  return html`
-    <input
-      id=${id}
-      type="text"
-      .value=${content}
-      data-type="slot"
-      data-slot=${name}
-      part="input"
-    />
-  `;
-};
+  // Set knob types and default knobs values
+  propKnobs = propKnobs.map((prop) => {
+    const knob = {
+      ...prop,
+      knobType: normalizeType(prop.type)
+    };
 
-export const renderKnobs = (
-  items: Knobable[],
-  header: string,
-  type: string,
-  renderer: InputRenderer
-): TemplateResult => {
-  const rows = items.map((item: Knobable) => {
-    const { name } = item as Knob<PropertyInfo>;
-    const id = `${type}-${name || DEFAULT}`;
-    const label = type === 'slot' ? getSlotDefault(name, DEFAULT) : name;
-    return html`
-      <tr>
-        <td>
-          <label for=${id} part="knob-label">${label}</label>
-        </td>
-        <td>${renderer(item, id)}</td>
-      </tr>
-    `;
+    if (typeof knob.default === 'string') {
+      knob.value = getDefault(knob);
+    }
+
+    return knob;
   });
 
-  return html`
-    <h3 part="knobs-header" ?hidden=${items.length === 0}>${header}</h3>
-    <table>
-      ${rows}
-    </table>
-  `;
+  return propKnobs;
+};
+
+export const getCustomKnobs = (
+  tag: string,
+  vid?: number
+): Knob<PropertyInfo>[] => {
+  return getTemplates(vid as number, tag, TemplateTypes.KNOB)
+    .map((template) => {
+      const { attr, type } = template.dataset;
+      let result = null;
+      if (attr) {
+        if (type === 'select') {
+          const node = getTemplateNode(template);
+          const options = node
+            ? Array.from(node.children)
+                .filter(
+                  (c): c is HTMLOptionElement => c instanceof HTMLOptionElement
+                )
+                .map((option) => option.value)
+            : [];
+          if (node instanceof HTMLSelectElement && options.length > 1) {
+            result = {
+              name: attr,
+              attribute: attr,
+              knobType: type,
+              options
+            };
+          }
+        }
+        if (type === 'string' || type === 'boolean') {
+          result = {
+            name: attr,
+            attribute: attr,
+            knobType: type
+          };
+        }
+      }
+      return result as Knob<PropertyInfo>;
+    })
+    .filter(Boolean);
+};
+
+export const getDefaultKnobs = (
+  propKnobs: Knob<PropertyInfo>[],
+  component: HTMLElement
+): Knob<PropertyInfo>[] => {
+  return propKnobs.filter((prop) => {
+    const { name, knobType } = prop;
+    const defaultValue = getDefault(prop);
+    return (
+      (component as any)[name] !== defaultValue ||
+      (knobType === 'boolean' && defaultValue)
+    );
+  });
 };

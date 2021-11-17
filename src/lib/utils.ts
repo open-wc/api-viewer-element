@@ -80,3 +80,9 @@ export const getElementData = (elements: ElementInfo[], selected?: string) => {
 
   return result;
 };
+
+const capitalize = (name: string): string =>
+  name[0].toUpperCase() + name.slice(1);
+
+export const getSlotContent = (name: string, initial = 'content'): string =>
+  capitalize(name === '' ? initial : name);
