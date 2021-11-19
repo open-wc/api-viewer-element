@@ -20,6 +20,7 @@
   "rules": {
     "@typescript-eslint/explicit-function-return-type": "off",
     "import/extensions": "off",
+    "import/no-import-module-exports": "off",
     "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
     "lit/no-template-map": "off",
