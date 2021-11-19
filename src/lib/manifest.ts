@@ -39,7 +39,6 @@ export function hasCustomElements(
   return (
     !!manifest &&
     Array.isArray(manifest.modules) &&
-    !!manifest.modules.length &&
     manifest.modules.some(
       (x) =>
         x.exports?.some((y) => y.kind === 'custom-element-definition') ||
@@ -48,24 +47,17 @@ export function hasCustomElements(
   );
 }
 
-const isClassField = (x: ClassMember): x is ClassField => x.kind === 'field';
-
 const isCustomElementExport = (y: Export): y is CustomElementExport =>
   y.kind === 'custom-element-definition';
 
 const isCustomElementDeclaration = (y: ClassLike): y is CustomElement =>
   (y as CustomElement).customElement;
 
-const isPrivateOrProtected = (x: ClassField): boolean =>
-  x.privacy === 'private' || x.privacy === 'protected';
-
 const isPublicProperty = (x: ClassMember): x is ClassField =>
-  isClassField(x) && !isPrivateOrProtected(x);
+  x.kind === 'field' && !(x.privacy === 'private' || x.privacy === 'protected');
 
-export function getCustomElements(
-  manifest?: Package | null
-): CustomElementExport[] {
-  return (manifest?.modules ?? []).flatMap(
+export function getCustomElements(manifest: Package): CustomElementExport[] {
+  return (manifest.modules ?? []).flatMap(
     (x) => x.exports?.filter(isCustomElementExport) ?? []
   );
 }
@@ -74,14 +66,14 @@ export const getElementData = (
   manifest: Package,
   selected?: string
 ): CustomElement | null => {
-  const exports = manifest.modules.flatMap((m) =>
-    m.exports?.filter(isCustomElementExport)
-  );
+  const exports = getCustomElements(manifest);
   const index = selected ? exports.findIndex((el) => el?.name === selected) : 0;
 
   const element = exports[index];
 
-  if (!element) return null;
+  if (!element) {
+    return null;
+  }
 
   const decl = !element.declaration.module
     ? manifest.modules
@@ -94,8 +86,9 @@ export const getElementData = (
         .find((m) => m.path === element.declaration.module)
         ?.declarations?.find((d) => d.name === element.declaration.name);
 
-  if (!decl || !isCustomElementDeclaration(decl))
+  if (!decl || !isCustomElementDeclaration(decl)) {
     throw new Error(`Could not find declaration for ${selected}`);
+  }
 
   return {
     customElement: true,
