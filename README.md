@@ -42,7 +42,7 @@ Or grab from [unpkg.com CDN](https://unpkg.com/api-viewer-element?module):
 
 ## Usage
 
-1. Install [custom elements manifest analyzer](https://github.com/open-wc/custom-elements-manifest):
+1. Install [custom elements manifest analyzer](https://custom-elements-manifest.open-wc.org/analyzer/getting-started/):
 
 ```sh
 $ npm install @custom-elements-manifest/analyzer
