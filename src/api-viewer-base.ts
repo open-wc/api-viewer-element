@@ -3,14 +3,23 @@ import { property } from 'lit/decorators/property.js';
 import { cache } from 'lit/directives/cache.js';
 import { until } from 'lit/directives/until.js';
 import { parse } from './lib/markdown.js';
-import { ElementPromise } from './lib/types.js';
-import { getElementData, setTemplates } from './lib/utils.js';
+import {
+  ClassField,
+  CustomElement,
+  getCustomElements,
+  getElementData,
+  hasCustomElements,
+  isClassField,
+  isPrivateOrProtected,
+  Package
+} from './lib/manifest.js';
+import { setTemplates } from './lib/utils.js';
 import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';
 import './api-viewer-docs.js';
 import './api-viewer-demo.js';
 
 async function renderDocs(
-  jsonFetched: ElementPromise,
+  jsonFetched: Promise<Package | null>,
   section: string,
   onSelect: (e: CustomEvent) => void,
   onToggle: (e: CustomEvent) => void,
@@ -18,13 +27,19 @@ async function renderDocs(
   id?: number,
   exclude = ''
 ): Promise<TemplateResult> {
-  const elements = await jsonFetched;
+  const manifest = await jsonFetched;
 
-  if (!elements.length) {
+  if (!hasCustomElements(manifest)) {
     return emptyDataWarning;
   }
 
-  const data = getElementData(elements, selected);
+  const elements = getCustomElements(manifest);
+
+  const data = getElementData(manifest, selected) as CustomElement;
+
+  const props = (data.members ?? []).filter(
+    (x): x is ClassField => isClassField(x) && !isPrivateOrProtected(x)
+  );
 
   return html`
     <header part="header">
@@ -72,21 +87,21 @@ async function renderDocs(
             </div>
             <api-viewer-docs
               .name=${data.name}
-              .props=${data.properties}
-              .attrs=${data.attributes}
-              .events=${data.events}
-              .slots=${data.slots}
-              .cssParts=${data.cssParts}
-              .cssProps=${data.cssProperties}
+              .members=${data.members ?? []}
+              .attrs=${data.attributes ?? []}
+              .events=${data.events ?? []}
+              .slots=${data.slots ?? []}
+              .cssParts=${data.cssParts ?? []}
+              .cssProps=${data.cssProperties ?? []}
             ></api-viewer-docs>
           `
         : html`
             <api-viewer-demo
               .tag=${data.name}
-              .props=${data.properties}
-              .slots=${data.slots}
-              .events=${data.events}
-              .cssProps=${data.cssProperties}
+              .props=${props}
+              .events=${data.events ?? []}
+              .slots=${data.slots ?? []}
+              .cssProps=${data.cssProperties ?? []}
               .exclude=${exclude}
               .vid=${id}
             ></api-viewer-demo>

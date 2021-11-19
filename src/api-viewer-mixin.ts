@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators/property.js';
-import { ElementInfo, ElementPromise, ElementSetInfo } from './lib/types.js';
+import { hasCustomElements, Package } from './lib/manifest.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type Constructor<T = unknown> = new (...args: any[]) => T;
@@ -8,27 +8,25 @@ export type Constructor<T = unknown> = new (...args: any[]) => T;
 export interface ApiViewerInterface {
   src?: string;
 
-  elements?: ElementInfo[];
+  manifest?: Package;
 
   selected?: string;
 
-  jsonFetched: ElementPromise;
+  jsonFetched: Promise<Package | null>;
 }
 
-export async function fetchJson(src: string): ElementPromise {
-  let result: ElementInfo[] = [];
+export async function fetchJson(src: string): Promise<Package | null> {
   try {
     const file = await fetch(src);
-    const json = (await file.json()) as ElementSetInfo;
-    if (Array.isArray(json.tags) && json.tags.length) {
-      result = json.tags;
-    } else {
-      console.error(`No element definitions found at ${src}`);
+    const manifest: Package = await file.json();
+    if (hasCustomElements(manifest)) {
+      return manifest;
     }
+    throw new Error(`No element definitions found at ${src}`);
   } catch (e) {
     console.error(e);
+    return null;
   }
-  return result;
 }
 
 export const emptyDataWarning = html`
@@ -42,20 +40,20 @@ export const ApiViewerMixin = <T extends Constructor<LitElement>>(
     @property() src?: string;
 
     @property({ attribute: false })
-    elements?: ElementInfo[];
+    manifest?: Package;
 
     @property() selected?: string;
 
-    jsonFetched: ElementPromise = Promise.resolve([]);
+    jsonFetched: Promise<Package | null> = Promise.resolve(null);
 
     private lastSrc?: string;
 
     willUpdate(): void {
       const { src } = this;
 
-      if (Array.isArray(this.elements)) {
+      if (Array.isArray(this.manifest)) {
         this.lastSrc = undefined;
-        this.jsonFetched = Promise.resolve(this.elements);
+        this.jsonFetched = Promise.resolve(this.manifest);
       } else if (src && this.lastSrc !== src) {
         this.lastSrc = src;
         this.jsonFetched = fetchJson(src);

@@ -1,14 +1,15 @@
 import { LitElement, html, nothing, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import {
-  PropertyInfo,
-  SlotInfo,
-  AttributeInfo,
-  EventInfo,
-  CSSPartInfo,
-  CSSPropertyInfo
-} from './lib/types.js';
-import { isPropMatch, unquote } from './lib/utils.js';
+  Attribute,
+  ClassMember,
+  CssCustomProperty,
+  CssPart,
+  Event,
+  isClassField,
+  Slot
+} from './lib/manifest.js';
+import { unquote } from './lib/utils.js';
 import { parse } from './lib/markdown.js';
 
 import './api-viewer-panel.js';
@@ -18,7 +19,7 @@ import './api-viewer-tabs.js';
 const renderItem = (
   prefix: string,
   name: string,
-  description: string,
+  description?: string,
   valueType?: string,
   value?: unknown,
   attribute?: string
@@ -84,43 +85,44 @@ class ApiViewerDocs extends LitElement {
   @property() name = '';
 
   @property({ attribute: false })
-  props: PropertyInfo[] = [];
+  members: ClassMember[] = [];
 
   @property({ attribute: false })
-  attrs: AttributeInfo[] = [];
+  attrs: Attribute[] = [];
 
   @property({ attribute: false })
-  slots: SlotInfo[] = [];
+  slots: Slot[] = [];
 
   @property({ attribute: false })
-  events: EventInfo[] = [];
+  events: Event[] = [];
 
   @property({ attribute: false })
-  cssParts: CSSPartInfo[] = [];
+  cssParts: CssPart[] = [];
 
   @property({ attribute: false })
-  cssProps: CSSPropertyInfo[] = [];
+  cssProps: CssCustomProperty[] = [];
 
   protected createRenderRoot(): this {
     return this;
   }
 
   protected render(): TemplateResult {
-    const { slots, props, attrs, events, cssParts, cssProps } = this;
+    const { slots, members, attrs, events, cssParts, cssProps } = this;
 
-    const properties = props || [];
-    const attributes = (attrs || []).filter(
-      ({ name }) => !properties.some(isPropMatch(name))
-    );
+    const properties = members.filter(isClassField);
 
     const emptyDocs = [
       properties,
-      attributes,
+      attrs,
       slots,
       events,
       cssProps,
       cssParts
     ].every((arr) => arr.length === 0);
+
+    const attributes = (attrs || []).filter(
+      (x) => !properties.some((y) => y.name === x.fieldName)
+    );
 
     return emptyDocs
       ? html`
@@ -136,14 +138,17 @@ class ApiViewerDocs extends LitElement {
               properties,
               html`
                 ${properties.map((prop) => {
-                  const { name, description, type, attribute } = prop;
+                  const { name, description, type } = prop;
+                  const attribute = attributes.find(
+                    (x) => x.fieldName === name
+                  );
                   return renderItem(
                     'prop',
                     name,
                     description,
-                    type,
+                    type?.text,
                     prop.default,
-                    attribute
+                    attribute?.name
                   );
                 })}
               `
@@ -153,7 +158,7 @@ class ApiViewerDocs extends LitElement {
               attributes,
               html`
                 ${attributes.map(({ name, description, type }) =>
-                  renderItem('attr', name, description, type)
+                  renderItem('attr', name, description, type?.text)
                 )}
               `
             )}
@@ -180,12 +185,12 @@ class ApiViewerDocs extends LitElement {
               cssProps,
               html`
                 ${cssProps.map((prop) => {
-                  const { name, description, type } = prop;
+                  const { name, description } = prop;
                   return renderItem(
                     'css',
                     name,
                     description,
-                    type,
+                    '', // TODO: manifest does not provide type for CSS custom properties
                     unquote(prop.default)
                   );
                 })}

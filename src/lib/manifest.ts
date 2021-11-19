@@ -1,15 +1,37 @@
 import type {
+  Attribute,
   ClassField,
   ClassLike,
   ClassMember,
+  CssCustomProperty,
+  CssPart,
   CustomElement,
   CustomElementDeclaration,
   CustomElementExport,
+  Event,
   Export,
-  Package
+  Package,
+  Slot
 } from 'custom-elements-manifest/schema';
 
-export type PackageManifest = Promise<Package | null>;
+export {
+  Attribute,
+  ClassField,
+  ClassMember,
+  CssCustomProperty,
+  CssPart,
+  CustomElement,
+  Event,
+  Package,
+  Slot
+};
+
+export type CssCustomPropertyValue = CssCustomProperty & { value?: string };
+
+export interface SlotValue {
+  name: string;
+  content: string;
+}
 
 export function hasCustomElements(
   manifest?: Package | null
@@ -34,6 +56,9 @@ export const isCustomElementExport = (y: Export): y is CustomElementExport =>
 
 export const isCustomElementDeclaration = (y: ClassLike): y is CustomElement =>
   (y as CustomElement).customElement;
+
+export const isPrivateOrProtected = (x: ClassField): boolean =>
+  x.privacy === 'private' || x.privacy === 'protected';
 
 export function getCustomElements(
   manifest?: Package | null

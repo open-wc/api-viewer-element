@@ -1,5 +1,5 @@
 import { ReactiveController, ReactiveControllerHost } from 'lit';
-import { EventInfo } from '../lib/types.js';
+import { Event } from '../lib/manifest.js';
 import { HasKnobs } from '../lib/knobs.js';
 
 type EventsHost = HTMLElement & ReactiveControllerHost & HasKnobs;
@@ -24,7 +24,7 @@ export class EventsController implements ReactiveController {
   constructor(
     host: ReactiveControllerHost,
     component: HTMLElement,
-    events: EventInfo[]
+    events: Event[]
   ) {
     (this.host = host as EventsHost).addController(this);
 

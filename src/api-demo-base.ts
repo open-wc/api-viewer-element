@@ -1,25 +1,39 @@
 import { LitElement, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { until } from 'lit/directives/until.js';
-import { ElementPromise } from './lib/types.js';
-import { getElementData } from './lib/utils.js';
+import {
+  ClassField,
+  CustomElement,
+  getCustomElements,
+  getElementData,
+  hasCustomElements,
+  isClassField,
+  isPrivateOrProtected,
+  Package
+} from './lib/manifest.js';
 import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';
 import './api-viewer-demo.js';
 
 async function renderDemo(
-  jsonFetched: ElementPromise,
+  jsonFetched: Promise<Package | null>,
   onSelect: (e: CustomEvent) => void,
   selected?: string,
   id?: number,
   exclude = ''
 ): Promise<TemplateResult> {
-  const elements = await jsonFetched;
+  const manifest = await jsonFetched;
 
-  if (!elements.length) {
+  if (!hasCustomElements(manifest)) {
     return emptyDataWarning;
   }
 
-  const data = getElementData(elements, selected);
+  const elements = getCustomElements(manifest);
+
+  const data = getElementData(manifest, selected) as CustomElement;
+
+  const props = (data.members ?? []).filter(
+    (x): x is ClassField => isClassField(x) && !isPrivateOrProtected(x)
+  );
 
   return html`
     <header part="header">
@@ -41,10 +55,10 @@ async function renderDemo(
     </header>
     <api-viewer-demo
       .tag=${data.name}
-      .props=${data.properties}
-      .slots=${data.slots}
-      .events=${data.events}
-      .cssProps=${data.cssProperties}
+      .props=${props}
+      .events=${data.events ?? []}
+      .slots=${data.slots ?? []}
+      .cssProps=${data.cssProperties ?? []}
       .exclude=${exclude}
       .vid=${id}
     ></api-viewer-demo>

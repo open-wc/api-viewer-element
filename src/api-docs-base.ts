@@ -1,23 +1,30 @@
 import { LitElement, html, TemplateResult } from 'lit';
 import { until } from 'lit/directives/until.js';
 import { parse } from './lib/markdown.js';
-import { ElementPromise } from './lib/types.js';
-import { getElementData } from './lib/utils.js';
+import {
+  CustomElement,
+  getCustomElements,
+  getElementData,
+  hasCustomElements,
+  Package
+} from './lib/manifest.js';
 import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';
 import './api-viewer-docs.js';
 
 async function renderDocs(
-  jsonFetched: ElementPromise,
+  jsonFetched: Promise<Package | null>,
   onSelect: (e: CustomEvent) => void,
   selected?: string
 ): Promise<TemplateResult> {
-  const elements = await jsonFetched;
+  const manifest = await jsonFetched;
 
-  if (!elements.length) {
+  if (!hasCustomElements(manifest)) {
     return emptyDataWarning;
   }
 
-  const data = getElementData(elements, selected);
+  const elements = getCustomElements(manifest);
+
+  const data = getElementData(manifest, selected) as CustomElement;
 
   return html`
     <header part="header">
@@ -42,12 +49,12 @@ async function renderDocs(
     </div>
     <api-viewer-docs
       .name=${data.name}
-      .props=${data.properties}
-      .attrs=${data.attributes}
-      .events=${data.events}
-      .slots=${data.slots}
-      .cssParts=${data.cssParts}
-      .cssProps=${data.cssProperties}
+      .members=${data.members ?? []}
+      .attrs=${data.attributes ?? []}
+      .events=${data.events ?? []}
+      .slots=${data.slots ?? []}
+      .cssParts=${data.cssParts ?? []}
+      .cssProps=${data.cssProperties ?? []}
     ></api-viewer-docs>
   `;
 }

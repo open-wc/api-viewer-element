@@ -1,8 +1,8 @@
 import { html, nothing, TemplateResult } from 'lit';
-import { PropertyValue } from './types.js';
+import { KnobValue } from './knobs.js';
 
 interface EventDetail {
-  value: PropertyValue;
+  value: KnobValue;
 }
 
 const renderDetail = (detail: EventDetail): string => {

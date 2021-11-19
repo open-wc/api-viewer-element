@@ -7,10 +7,12 @@ import { StylesController } from './controllers/styles-controller.js';
 import { renderEvents } from './lib/demo-events.js';
 import { renderSnippet } from './lib/demo-snippet.js';
 import {
+  ComponentWithProps,
   getCustomKnobs,
   getInitialKnobs,
   getKnobs,
-  Knob
+  Knob,
+  KnobValue
 } from './lib/knobs.js';
 import { renderer } from './lib/renderer.js';
 import {
@@ -19,15 +21,8 @@ import {
   renderKnobs,
   slotRenderer
 } from './lib/demo-controls.js';
-import {
-  ComponentWithProps,
-  CSSPropertyInfo,
-  EventInfo,
-  PropertyInfo,
-  PropertyValue,
-  SlotInfo
-} from './lib/types.js';
-import { hasTemplate, isPropMatch, TemplateTypes } from './lib/utils.js';
+import { ClassField, CssCustomProperty, Event, Slot } from './lib/manifest.js';
+import { hasTemplate, TemplateTypes } from './lib/utils.js';
 import './api-viewer-panel.js';
 import './api-viewer-tab.js';
 import './api-viewer-tabs.js';
@@ -36,31 +31,31 @@ class ApiViewerDemo extends LitElement {
   @property() copyBtnText = 'copy';
 
   @property({ attribute: false })
-  cssProps: CSSPropertyInfo[] = [];
+  cssProps: CssCustomProperty[] = [];
 
   @property({ attribute: false })
-  events: EventInfo[] = [];
+  events: Event[] = [];
 
   @property({ attribute: false })
-  slots: SlotInfo[] = [];
+  slots: Slot[] = [];
 
   @property() tag = '';
 
   @property({ attribute: false })
-  props: PropertyInfo[] = [];
+  props: ClassField[] = [];
 
   @property() exclude = '';
 
   @property({ type: Number }) vid?: number;
 
   @property({ attribute: false })
-  customKnobs!: Knob<PropertyInfo>[];
+  customKnobs!: Knob<ClassField>[];
 
   @property({ attribute: false })
   knobs!: Record<string, Knob>;
 
   @property({ attribute: false })
-  propKnobs!: Knob<PropertyInfo>[];
+  propKnobs!: Knob<ClassField>[];
 
   private _whenDefined: Record<string, Promise<unknown>> = {};
 
@@ -300,14 +295,14 @@ class ApiViewerDemo extends LitElement {
   }
 
   getKnob(name: string): {
-    knob: Knob<PropertyInfo>;
+    knob: Knob<ClassField>;
     custom?: boolean;
   } {
-    const isMatch = isPropMatch(name);
+    const isMatch = (prop: ClassField): boolean => prop.name === name;
     let knob = this.propKnobs.find(isMatch);
     let custom = false;
     if (!knob) {
-      knob = this.customKnobs.find(isMatch) as Knob<PropertyInfo>;
+      knob = this.customKnobs.find(isMatch) as Knob<ClassField>;
       custom = true;
     }
     return { knob, custom };
@@ -316,7 +311,7 @@ class ApiViewerDemo extends LitElement {
   private setKnobs(
     name: string,
     knobType: string,
-    value: PropertyValue,
+    value: KnobValue,
     attribute: string | undefined,
     custom = false
   ): void {
@@ -331,7 +326,7 @@ class ApiViewerDemo extends LitElement {
     };
   }
 
-  syncKnob(component: Element, changed: Knob<PropertyInfo>): void {
+  syncKnob(component: Element, changed: Knob<ClassField>): void {
     const { name, knobType, attribute } = changed;
     const value = (component as unknown as ComponentWithProps)[name];
 
@@ -353,7 +348,7 @@ class ApiViewerDemo extends LitElement {
     this.stylesController.setValue(target.dataset.name as string, target.value);
   }
 
-  private _onPropChanged(e: Event): void {
+  private _onPropChanged(e: CustomEvent): void {
     const target = e.composedPath()[0] as HTMLInputElement;
 
     const { name, type } = target.dataset;
@@ -381,7 +376,7 @@ class ApiViewerDemo extends LitElement {
     }
   }
 
-  private _onSlotChanged(e: Event): void {
+  private _onSlotChanged(e: CustomEvent): void {
     const target = e.composedPath()[0] as HTMLInputElement;
     this.slotsController.setValue(target.dataset.slot as string, target.value);
   }
