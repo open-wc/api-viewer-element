@@ -2,13 +2,11 @@ import { LitElement, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { until } from 'lit/directives/until.js';
 import {
-  ClassField,
   CustomElement,
   getCustomElements,
   getElementData,
   hasCustomElements,
-  isClassField,
-  isPrivateOrProtected,
+  isPublicProperty,
   Package
 } from './lib/manifest.js';
 import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';
@@ -31,9 +29,7 @@ async function renderDemo(
 
   const data = getElementData(manifest, selected) as CustomElement;
 
-  const props = (data.members ?? []).filter(
-    (x): x is ClassField => isClassField(x) && !isPrivateOrProtected(x)
-  );
+  const props = (data.members ?? []).filter(isPublicProperty);
 
   return html`
     <header part="header">

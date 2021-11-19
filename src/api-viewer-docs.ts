@@ -2,11 +2,10 @@ import { LitElement, html, nothing, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import {
   Attribute,
-  ClassMember,
+  ClassField,
   CssCustomProperty,
   CssPart,
   Event,
-  isClassField,
   Slot
 } from './lib/manifest.js';
 import { unquote } from './lib/utils.js';
@@ -85,7 +84,7 @@ class ApiViewerDocs extends LitElement {
   @property() name = '';
 
   @property({ attribute: false })
-  members: ClassMember[] = [];
+  props: ClassField[] = [];
 
   @property({ attribute: false })
   attrs: Attribute[] = [];
@@ -107,21 +106,14 @@ class ApiViewerDocs extends LitElement {
   }
 
   protected render(): TemplateResult {
-    const { slots, members, attrs, events, cssParts, cssProps } = this;
+    const { slots, props, attrs, events, cssParts, cssProps } = this;
 
-    const properties = members.filter(isClassField);
-
-    const emptyDocs = [
-      properties,
-      attrs,
-      slots,
-      events,
-      cssProps,
-      cssParts
-    ].every((arr) => arr.length === 0);
+    const emptyDocs = [props, attrs, slots, events, cssProps, cssParts].every(
+      (arr) => arr.length === 0
+    );
 
     const attributes = (attrs || []).filter(
-      (x) => !properties.some((y) => y.name === x.fieldName)
+      (x) => !props.some((y) => y.name === x.fieldName)
     );
 
     return emptyDocs
@@ -135,9 +127,9 @@ class ApiViewerDocs extends LitElement {
           <api-viewer-tabs>
             ${renderTab(
               'Properties',
-              properties,
+              props,
               html`
-                ${properties.map((prop) => {
+                ${props.map((prop) => {
                   const { name, description, type } = prop;
                   const attribute = attributes.find(
                     (x) => x.fieldName === name

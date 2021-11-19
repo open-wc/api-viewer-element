@@ -60,6 +60,9 @@ export const isCustomElementDeclaration = (y: ClassLike): y is CustomElement =>
 export const isPrivateOrProtected = (x: ClassField): boolean =>
   x.privacy === 'private' || x.privacy === 'protected';
 
+export const isPublicProperty = (x: ClassMember): x is ClassField =>
+  isClassField(x) && !isPrivateOrProtected(x);
+
 export function getCustomElements(
   manifest?: Package | null
 ): CustomElementExport[] {

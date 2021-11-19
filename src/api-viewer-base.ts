@@ -4,13 +4,11 @@ import { cache } from 'lit/directives/cache.js';
 import { until } from 'lit/directives/until.js';
 import { parse } from './lib/markdown.js';
 import {
-  ClassField,
   CustomElement,
   getCustomElements,
   getElementData,
   hasCustomElements,
-  isClassField,
-  isPrivateOrProtected,
+  isPublicProperty,
   Package
 } from './lib/manifest.js';
 import { setTemplates } from './lib/utils.js';
@@ -37,9 +35,7 @@ async function renderDocs(
 
   const data = getElementData(manifest, selected) as CustomElement;
 
-  const props = (data.members ?? []).filter(
-    (x): x is ClassField => isClassField(x) && !isPrivateOrProtected(x)
-  );
+  const props = (data.members ?? []).filter(isPublicProperty);
 
   return html`
     <header part="header">
@@ -87,7 +83,7 @@ async function renderDocs(
             </div>
             <api-viewer-docs
               .name=${data.name}
-              .members=${data.members ?? []}
+              .props=${props}
               .attrs=${data.attributes ?? []}
               .events=${data.events ?? []}
               .slots=${data.slots ?? []}
