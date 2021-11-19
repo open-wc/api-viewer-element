@@ -45,7 +45,7 @@ export const normalizeType = (type: string | undefined = ''): string =>
   type.replace(' | undefined', '').replace(' | null', '');
 
 export const unquote = (value?: string): string | undefined =>
-  typeof value === 'string' && value.startsWith('"') && value.endsWith('"')
+  typeof value === 'string' && value.startsWith("'") && value.endsWith("'")
     ? value.slice(1, value.length - 1)
     : value;
 
