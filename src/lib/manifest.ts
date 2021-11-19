@@ -48,19 +48,18 @@ export function hasCustomElements(
   );
 }
 
-export const isClassField = (x: ClassMember): x is ClassField =>
-  x.kind === 'field';
+const isClassField = (x: ClassMember): x is ClassField => x.kind === 'field';
 
-export const isCustomElementExport = (y: Export): y is CustomElementExport =>
+const isCustomElementExport = (y: Export): y is CustomElementExport =>
   y.kind === 'custom-element-definition';
 
-export const isCustomElementDeclaration = (y: ClassLike): y is CustomElement =>
+const isCustomElementDeclaration = (y: ClassLike): y is CustomElement =>
   (y as CustomElement).customElement;
 
-export const isPrivateOrProtected = (x: ClassField): boolean =>
+const isPrivateOrProtected = (x: ClassField): boolean =>
   x.privacy === 'private' || x.privacy === 'protected';
 
-export const isPublicProperty = (x: ClassMember): x is ClassField =>
+const isPublicProperty = (x: ClassMember): x is ClassField =>
   isClassField(x) && !isPrivateOrProtected(x);
 
 export function getCustomElements(
@@ -112,4 +111,8 @@ export const getElementData = (
       a.name > b.name ? 1 : -1
     )
   };
+};
+
+export const getPublicFields = (members: ClassMember[] = []): ClassField[] => {
+  return members.filter(isPublicProperty);
 };

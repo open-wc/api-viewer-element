@@ -5,8 +5,8 @@ import {
   CustomElement,
   getCustomElements,
   getElementData,
+  getPublicFields,
   hasCustomElements,
-  isPublicProperty,
   Package
 } from './lib/manifest.js';
 import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';
@@ -26,8 +26,7 @@ async function renderDocs(
   const elements = getCustomElements(manifest);
 
   const data = getElementData(manifest, selected) as CustomElement;
-
-  const props = (data.members ?? []).filter(isPublicProperty);
+  const props = getPublicFields(data.members);
 
   return html`
     <header part="header">
