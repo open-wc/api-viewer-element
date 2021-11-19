@@ -1,7 +1,6 @@
 import { ClassField, CssCustomProperty, SlotValue } from './manifest.js';
 import {
   getTemplates,
-  normalizeType,
   TemplateTypes,
   unquote,
   getTemplateNode
@@ -63,6 +62,9 @@ const isGetter = (
   }
   return result;
 };
+
+const normalizeType = (type: string | undefined = ''): string =>
+  type.replace(' | undefined', '').replace(' | null', '');
 
 export const getKnobs = (
   tag: string,

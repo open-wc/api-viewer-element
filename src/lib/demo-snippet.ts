@@ -11,7 +11,6 @@ import {
   getTemplate,
   getTemplateNode,
   isTemplate,
-  normalizeType,
   TemplateTypes
 } from './utils.js';
 
@@ -83,7 +82,7 @@ export const renderSnippet = (
     .forEach((key: string) => {
       const { value, knobType, attribute } = values[key];
       const attr = attribute || key;
-      switch (normalizeType(knobType)) {
+      switch (knobType) {
         case 'boolean':
           markup += value ? ` ${attr}` : '';
           break;

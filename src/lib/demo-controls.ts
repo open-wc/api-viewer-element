@@ -1,20 +1,9 @@
 import { html, TemplateResult } from 'lit';
 import { Knob, Knobable } from './knobs.js';
 import { ClassField, CssCustomPropertyValue, SlotValue } from './manifest.js';
-import { getSlotContent, normalizeType } from './utils.js';
+import { getSlotContent } from './utils.js';
 
 type InputRenderer = (item: Knobable, id: string) => TemplateResult;
-
-const getInputType = (type?: string): 'checkbox' | 'number' | 'text' => {
-  switch (normalizeType(type)) {
-    case 'boolean':
-      return 'checkbox';
-    case 'number':
-      return 'number';
-    default:
-      return 'text';
-  }
-};
 
 export const cssPropRenderer: InputRenderer = (
   knob: Knobable,
@@ -37,7 +26,7 @@ export const propRenderer: InputRenderer = (
   knob: Knobable,
   id: string
 ): TemplateResult => {
-  const { name, knobType, type, value, options } = knob as Knob<ClassField>;
+  const { name, knobType, value, options } = knob as Knob<ClassField>;
   let input;
   if (knobType === 'select' && Array.isArray(options)) {
     input = html`
@@ -47,7 +36,7 @@ export const propRenderer: InputRenderer = (
         )}
       </select>
     `;
-  } else if (normalizeType(knobType ?? type?.text) === 'boolean') {
+  } else if (knobType === 'boolean') {
     input = html`
       <input
         id=${id}
@@ -62,7 +51,7 @@ export const propRenderer: InputRenderer = (
     input = html`
       <input
         id=${id}
-        type=${getInputType(knobType)}
+        type=${knobType === 'number' ? 'number' : 'text'}
         .value=${value == null ? '' : String(value)}
         data-name=${name}
         data-type=${knobType}
