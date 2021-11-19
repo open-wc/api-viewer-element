@@ -46,6 +46,7 @@
   "dependencies": {
     "@types/dompurify": "^2.3.1",
     "@types/marked": "^4.0.0",
+    "custom-elements-manifest": "^1.0.0",
     "dompurify": "^2.3.3",
     "highlight-ts": "9.12.1-2",
     "lit": "^2.0.0",
@@ -53,6 +54,7 @@
     "tslib": "^2.3.1"
   },
   "devDependencies": {
+    "@custom-elements-manifest/analyzer": "^0.5.7",
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@size-limit/preset-small-lib": "^6.0.4",
     "@typescript-eslint/eslint-plugin": "^5.3.1",
