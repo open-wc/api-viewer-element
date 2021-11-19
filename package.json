@@ -27,7 +27,7 @@
     "build": "tsc",
     "dev": "npm run watch & npm run serve",
     "dist": "rimraf dist && rollup -c rollup.config.js && npm run fixtures && cp custom-elements.json dist",
-    "fixtures": "wca analyze src/fixtures/*.ts --format json --outFile custom-elements.json",
+    "fixtures": "cem analyze --litelement --outdir demo --globs 'src/fixtures/*.ts'",
     "lint:css": "stylelint src/**/*.ts",
     "lint:eslint": "eslint src --ext .ts",
     "lint:lit": "lit-analyzer src --strict",
@@ -112,5 +112,6 @@
       "path": "lib/api-viewer.js",
       "limit": "38.5 KB"
     }
-  ]
+  ],
+  "customElements": "demo/custom-elements.json"
 }
