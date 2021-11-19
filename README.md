@@ -181,17 +181,17 @@ Use `exclude-knobs` attribute to exclude properties from demo:
 <api-viewer src="./custom-elements.json" exclude-knobs="autofocus,items"></api-viewer>
 ```
 
-#### `elements`
+#### `manifest`
 
-Use `elements` property instead of `src` to pass data directly:
+Use `manifest` property instead of `src` to pass manifest data directly:
 
 ```html
 <api-viewer></api-viewer>
 <script>
   fetch('./custom-elements.json')
     .then(res => res.json())
-    .then(data => {
-      document.querySelector('api-viewer').elements = data.tags;
+    .then(manifest => {
+      document.querySelector('api-viewer').manifest = manifest;
     });
 </script>
 ```
