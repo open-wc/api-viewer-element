@@ -131,7 +131,7 @@ class ApiViewerDocs extends LitElement {
               html`
                 ${props.map((prop) => {
                   const { name, description, type } = prop;
-                  const attribute = attributes.find(
+                  const attribute = (attrs || []).find(
                     (x) => x.fieldName === name
                   );
                   return renderItem(
