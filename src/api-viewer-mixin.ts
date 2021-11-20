@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators/property.js';
-import { fetchManifest, Package } from './lib/manifest.js';
+import { fetchManifest, hasCustomElements, Package } from './lib/manifest.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type Constructor<T = unknown> = new (...args: any[]) => T;
@@ -37,9 +37,13 @@ export const ApiViewerMixin = <T extends Constructor<LitElement>>(
     willUpdate(): void {
       const { src } = this;
 
-      if (Array.isArray(this.manifest)) {
-        this.lastSrc = undefined;
-        this.jsonFetched = Promise.resolve(this.manifest);
+      if (this.manifest) {
+        if (hasCustomElements(this.manifest)) {
+          this.lastSrc = undefined;
+          this.jsonFetched = Promise.resolve(this.manifest);
+        } else {
+          console.error('No custom elements found in the `manifest` object.');
+        }
       } else if (src && this.lastSrc !== src) {
         this.lastSrc = src;
         this.jsonFetched = fetchManifest(src);
