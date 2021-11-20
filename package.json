@@ -3,6 +3,9 @@
   "version": "0.5.0",
   "description": "Web Components API viewer element",
   "author": "Serhii Kulykov <iamkulykov@gmail.com>",
+  "contributors": [
+    "Benny Powers <web@bennypowers.com>"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -23,16 +26,18 @@
   ],
   "main": "lib/api-viewer.js",
   "module": "lib/api-viewer.js",
+  "customElements": "custom-elements.json",
   "scripts": {
+    "analyze": "cem analyze --litelement --globs 'src/*.ts' --exclude 'src/fixtures/*'",
     "build": "tsc",
     "dev": "npm run watch & npm run serve",
-    "dist": "rimraf dist && rollup -c rollup.config.js && npm run fixtures && cp custom-elements.json dist",
-    "fixtures": "wca analyze src/fixtures/*.ts --format json --outFile custom-elements.json",
+    "dist": "rimraf dist && rollup -c rollup.config.js && npm run fixtures && cp assets/custom-elements.json dist/assets",
+    "fixtures": "cem analyze --litelement --outdir assets --globs 'src/fixtures/*.ts'",
     "lint:css": "stylelint src/**/*.ts",
     "lint:eslint": "eslint src --ext .ts",
     "lint:lit": "lit-analyzer src --strict",
     "lint": "npm-run-all --parallel lint:*",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "run-s build analyze",
     "serve": "web-dev-server --node-resolve",
     "serve:dist": "web-dev-server --app-index dist/index.html --open",
     "size": "size-limit",
@@ -40,12 +45,14 @@
     "watch": "tsc-watch"
   },
   "files": [
+    "custom-elements.json",
     "lib",
     "!lib/fixtures"
   ],
   "dependencies": {
     "@types/dompurify": "^2.3.1",
     "@types/marked": "^4.0.0",
+    "custom-elements-manifest": "^1.0.0",
     "dompurify": "^2.3.3",
     "highlight-ts": "9.12.1-2",
     "lit": "^2.0.0",
@@ -53,6 +60,7 @@
     "tslib": "^2.3.1"
   },
   "devDependencies": {
+    "@custom-elements-manifest/analyzer": "^0.5.7",
     "@rollup/plugin-node-resolve": "^11.0.0",
     "@size-limit/preset-small-lib": "^6.0.4",
     "@typescript-eslint/eslint-plugin": "^5.3.1",

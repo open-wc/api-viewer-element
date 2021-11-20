@@ -1,5 +1,5 @@
 import { ReactiveController, ReactiveControllerHost } from 'lit';
-import { CSSPropertyInfo } from '../lib/types.js';
+import { CssCustomProperty, CssCustomPropertyValue } from '../lib/manifest.js';
 import { unquote } from '../lib/utils.js';
 
 export class StylesController implements ReactiveController {
@@ -7,13 +7,13 @@ export class StylesController implements ReactiveController {
 
   el: HTMLElement;
 
-  private _css: CSSPropertyInfo[] = [];
+  private _css: CssCustomPropertyValue[] = [];
 
-  get css(): CSSPropertyInfo[] {
+  get css(): CssCustomPropertyValue[] {
     return this._css;
   }
 
-  set css(cssProps: CSSPropertyInfo[]) {
+  set css(cssProps: CssCustomPropertyValue[]) {
     this._css = cssProps;
 
     if (cssProps.length) {
@@ -38,7 +38,7 @@ export class StylesController implements ReactiveController {
   constructor(
     host: HTMLElement & ReactiveControllerHost,
     component: HTMLElement,
-    cssProps: CSSPropertyInfo[]
+    cssProps: CssCustomProperty[]
   ) {
     (this.host = host).addController(this);
     this.el = component;
@@ -51,7 +51,7 @@ export class StylesController implements ReactiveController {
           ? unquote(cssProp.default)
           : style.getPropertyValue(cssProp.name);
 
-        const result = cssProp;
+        const result: CssCustomPropertyValue = cssProp;
         if (value) {
           value = value.trim();
           result.default = value;

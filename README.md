@@ -1,6 +1,6 @@
 # &lt;api-viewer&gt;
 
-API documentation and live playground for Web Components. Based on [web-component-analyzer](https://github.com/runem/web-component-analyzer) JSON format.
+API documentation and live playground for Web Components. Based on [custom elements manifest](https://github.com/webcomponents/custom-elements-manifest) JSON format.
 
 ```html
 <api-viewer src="./custom-elements.json"></api-viewer>
@@ -42,17 +42,19 @@ Or grab from [unpkg.com CDN](https://unpkg.com/api-viewer-element?module):
 
 ## Usage
 
-1. Install [web-component-analyzer](https://github.com/runem/web-component-analyzer):
+1. Install [custom elements manifest analyzer](https://custom-elements-manifest.open-wc.org/analyzer/getting-started/):
 
 ```sh
-$ npm install -g web-component-analyzer
+$ npm install @custom-elements-manifest/analyzer
 ```
 
-2. Analyze your components using `--format json`:
+2. Analyze your components:
 
 ```sh
-$ wca analyze my-element.js --outFile custom-elements.json --format json
+$ cem analyze my-element.js
 ```
+
+Read the [docs](https://custom-elements-manifest.open-wc.org) for more information on how to use the analyzer.
 
 3. Create an HTML file and import the component:
 
@@ -179,17 +181,17 @@ Use `exclude-knobs` attribute to exclude properties from demo:
 <api-viewer src="./custom-elements.json" exclude-knobs="autofocus,items"></api-viewer>
 ```
 
-#### `elements`
+#### `manifest`
 
-Use `elements` property instead of `src` to pass data directly:
+Use `manifest` property instead of `src` to pass manifest data directly:
 
 ```html
 <api-viewer></api-viewer>
 <script>
   fetch('./custom-elements.json')
     .then(res => res.json())
-    .then(data => {
-      document.querySelector('api-viewer').elements = data.tags;
+    .then(manifest => {
+      document.querySelector('api-viewer').manifest = manifest;
     });
 </script>
 ```
@@ -374,7 +376,7 @@ npm run serve:dist
 
 ## Acknowledgements
 
-- Big thanks to [@runem](http://github.com/runem) for creating Web Component Analyzer.
+- Big thanks to [@runem](http://github.com/runem) for creating Web Component Analyzer, which previous versions of this package were based on.
 - Thanks to [@bahrus](https://github.com/bahrus) for [wc-info](https://github.com/bahrus/wc-info) component which inspired me.
 - The visual appearance is largely inspired by [Vuetify](https://vuetifyjs.com/en/getting-started/quick-start) API docs.
 - The tabs component is based on the [howto-tabs](https://developers.google.com/web/fundamentals/web-components/examples/howto-tabs) example.

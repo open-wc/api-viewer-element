@@ -1,6 +1,3 @@
-import { Knob } from './knobs.js';
-import { ElementInfo, PropertyInfo } from './types';
-
 const templates: Array<HTMLTemplateElement[]> = [];
 
 export const setTemplates = (id: number, tpl: HTMLTemplateElement[]) => {
@@ -44,42 +41,10 @@ export const getTemplates = (
 export const hasTemplate = (id: number, name: string, type: string): boolean =>
   templates[id].some(matchTemplate(name, type));
 
-export const isPropMatch =
-  (name: string) =>
-  (prop: PropertyInfo | Knob<PropertyInfo>): boolean =>
-    prop.attribute === name || prop.name === name;
-
-export const normalizeType = (type: string | undefined = ''): string =>
-  type.replace(' | undefined', '').replace(' | null', '');
-
 export const unquote = (value?: string): string | undefined =>
-  typeof value === 'string' && value.startsWith('"') && value.endsWith('"')
+  typeof value === 'string' && value.startsWith("'") && value.endsWith("'")
     ? value.slice(1, value.length - 1)
     : value;
-
-const EMPTY_ELEMENT: ElementInfo = {
-  name: '',
-  description: '',
-  slots: [],
-  attributes: [],
-  properties: [],
-  events: [],
-  cssParts: [],
-  cssProperties: []
-};
-
-export const getElementData = (elements: ElementInfo[], selected?: string) => {
-  const index = selected ? elements.findIndex((el) => el.name === selected) : 0;
-
-  const result = { ...EMPTY_ELEMENT, ...elements[index] };
-
-  // TODO: analyzer should sort CSS custom properties
-  result.cssProperties = result.cssProperties.sort((a, b) =>
-    a.name > b.name ? 1 : -1
-  );
-
-  return result;
-};
 
 const capitalize = (name: string): string =>
   name[0].toUpperCase() + name.slice(1);

@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators/property.js';
-import { ElementInfo, ElementPromise, ElementSetInfo } from './lib/types.js';
+import { fetchManifest, hasCustomElements, Package } from './lib/manifest.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type Constructor<T = unknown> = new (...args: any[]) => T;
@@ -8,27 +8,11 @@ export type Constructor<T = unknown> = new (...args: any[]) => T;
 export interface ApiViewerInterface {
   src?: string;
 
-  elements?: ElementInfo[];
+  manifest?: Package;
 
   selected?: string;
 
-  jsonFetched: ElementPromise;
-}
-
-export async function fetchJson(src: string): ElementPromise {
-  let result: ElementInfo[] = [];
-  try {
-    const file = await fetch(src);
-    const json = (await file.json()) as ElementSetInfo;
-    if (Array.isArray(json.tags) && json.tags.length) {
-      result = json.tags;
-    } else {
-      console.error(`No element definitions found at ${src}`);
-    }
-  } catch (e) {
-    console.error(e);
-  }
-  return result;
+  jsonFetched: Promise<Package | null>;
 }
 
 export const emptyDataWarning = html`
@@ -42,23 +26,27 @@ export const ApiViewerMixin = <T extends Constructor<LitElement>>(
     @property() src?: string;
 
     @property({ attribute: false })
-    elements?: ElementInfo[];
+    manifest?: Package;
 
     @property() selected?: string;
 
-    jsonFetched: ElementPromise = Promise.resolve([]);
+    jsonFetched: Promise<Package | null> = Promise.resolve(null);
 
     private lastSrc?: string;
 
     willUpdate(): void {
       const { src } = this;
 
-      if (Array.isArray(this.elements)) {
-        this.lastSrc = undefined;
-        this.jsonFetched = Promise.resolve(this.elements);
+      if (this.manifest) {
+        if (hasCustomElements(this.manifest)) {
+          this.lastSrc = undefined;
+          this.jsonFetched = Promise.resolve(this.manifest);
+        } else {
+          console.error('No custom elements found in the `manifest` object.');
+        }
       } else if (src && this.lastSrc !== src) {
         this.lastSrc = src;
-        this.jsonFetched = fetchJson(src);
+        this.jsonFetched = fetchManifest(src);
       }
     }
   }

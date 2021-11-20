@@ -2,13 +2,11 @@ import { ChildPart, html, noChange, nothing, TemplateResult } from 'lit';
 import { directive, Directive, PartInfo, PartType } from 'lit/directive.js';
 import { templateContent } from 'lit/directives/template-content.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { Knob } from './knobs.js';
-import { ComponentWithProps } from './types.js';
+import { ComponentWithProps, Knob } from './knobs.js';
 import {
   getTemplate,
   getTemplateNode,
   isTemplate,
-  normalizeType,
   TemplateTypes
 } from './utils.js';
 
@@ -35,7 +33,7 @@ const updateComponent = (
       } else {
         component.removeAttribute(attribute);
       }
-    } else if (normalizeType(knobType) === 'boolean') {
+    } else if (knobType === 'boolean') {
       component.toggleAttribute(attribute || key, Boolean(value));
     } else {
       (component as unknown as ComponentWithProps)[key] = value;

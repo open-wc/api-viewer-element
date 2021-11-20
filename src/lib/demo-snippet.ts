@@ -4,14 +4,13 @@ import { htmlRender } from 'highlight-ts/es/render/html';
 import { registerLanguages } from 'highlight-ts/es/languages';
 import { XML } from 'highlight-ts/es/languages/xml';
 import { init, process } from 'highlight-ts/es/process';
-import { CSSPropertyInfo, SlotValue } from './types.js';
+import { CssCustomPropertyValue, SlotValue } from './manifest.js';
 import { Knob } from './knobs.js';
 import { CSS } from './highlight-css.js';
 import {
   getTemplate,
   getTemplateNode,
   isTemplate,
-  normalizeType,
   TemplateTypes
 } from './utils.js';
 
@@ -55,7 +54,7 @@ export const renderSnippet = (
   tag: string,
   values: Record<string, Knob>,
   slots: SlotValue[],
-  cssProps: CSSPropertyInfo[]
+  cssProps: CssCustomPropertyValue[]
 ): TemplateResult => {
   let markup = '';
   const prefix = getTemplate(id, tag, PREFIX);
@@ -83,7 +82,7 @@ export const renderSnippet = (
     .forEach((key: string) => {
       const { value, knobType, attribute } = values[key];
       const attr = attribute || key;
-      switch (normalizeType(knobType)) {
+      switch (knobType) {
         case 'boolean':
           markup += value ? ` ${attr}` : '';
           break;

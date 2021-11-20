@@ -1,5 +1,5 @@
 import { ReactiveController, ReactiveControllerHost } from 'lit';
-import { SlotInfo, SlotValue } from '../lib/types.js';
+import { Slot, SlotValue } from '../lib/manifest.js';
 import { getSlotContent, hasTemplate, TemplateTypes } from '../lib/utils.js';
 
 export class SlotsController implements ReactiveController {
@@ -43,13 +43,13 @@ export class SlotsController implements ReactiveController {
     host: ReactiveControllerHost,
     id: number,
     component: HTMLElement,
-    slots: SlotInfo[]
+    slots: Slot[]
   ) {
     (this.host = host).addController(this as ReactiveController);
     this.el = component;
     this.enabled = !hasTemplate(id, component.localName, TemplateTypes.SLOT);
     this.slots = slots
-      .sort((a: SlotInfo, b: SlotInfo) => {
+      .sort((a, b) => {
         if (a.name === '') {
           return 1;
         }
@@ -58,7 +58,7 @@ export class SlotsController implements ReactiveController {
         }
         return a.name.localeCompare(b.name);
       })
-      .map((slot: SlotInfo) => {
+      .map((slot) => {
         return {
           ...slot,
           content: getSlotContent(slot.name)

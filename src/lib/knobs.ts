@@ -1,33 +1,33 @@
-import {
-  ComponentWithProps,
-  CSSPropertyInfo,
-  PropertyInfo,
-  PropertyValue,
-  SlotValue
-} from './types.js';
+import { ClassField, CssCustomProperty, SlotValue } from './manifest.js';
 import {
   getTemplates,
-  normalizeType,
   TemplateTypes,
   unquote,
   getTemplateNode
 } from './utils.js';
 
-export type Knobable = unknown | CSSPropertyInfo | PropertyInfo | SlotValue;
+export type KnobValue = string | number | boolean | null | undefined;
+
+export type ComponentWithProps = {
+  [key: string]: KnobValue;
+};
+
+export type Knobable = unknown | (CssCustomProperty | ClassField | SlotValue);
 
 export type Knob<T extends Knobable = unknown> = T & {
   attribute: string | undefined;
-  value: PropertyValue;
+  value: KnobValue;
   custom?: boolean;
+  options?: string[];
   knobType: string;
 };
 
 export interface HasKnobs {
-  getKnob(name: string): { knob: Knob<PropertyInfo>; custom?: boolean };
-  syncKnob(component: Element, changed: Knob<PropertyInfo>): void;
+  getKnob(name: string): { knob: Knob<ClassField>; custom?: boolean };
+  syncKnob(component: Element, changed: Knob<ClassField>): void;
 }
 
-const getDefault = (prop: Knob<PropertyInfo>): PropertyValue => {
+const getDefault = (prop: Knob<ClassField>): KnobValue => {
   const { knobType, default: value } = prop;
   switch (knobType) {
     case 'boolean':
@@ -63,22 +63,25 @@ const isGetter = (
   return result;
 };
 
+const normalizeType = (type: string | undefined = ''): string =>
+  type.replace(' | undefined', '').replace(' | null', '');
+
 export const getKnobs = (
   tag: string,
-  props: PropertyInfo[],
+  props: ClassField[],
   exclude = ''
-): Knob<PropertyInfo>[] => {
+): Knob<ClassField>[] => {
   // Exclude getters and specific properties
   let propKnobs = props.filter(
     ({ name }) =>
       !exclude.includes(name) && !isGetter(customElements.get(tag), name)
-  ) as Knob<PropertyInfo>[];
+  ) as Knob<ClassField>[];
 
   // Set knob types and default knobs values
   propKnobs = propKnobs.map((prop) => {
     const knob = {
       ...prop,
-      knobType: normalizeType(prop.type)
+      knobType: normalizeType(prop.type?.text)
     };
 
     if (typeof knob.default === 'string') {
@@ -94,7 +97,7 @@ export const getKnobs = (
 export const getCustomKnobs = (
   tag: string,
   vid?: number
-): Knob<PropertyInfo>[] => {
+): Knob<ClassField>[] => {
   return getTemplates(vid as number, tag, TemplateTypes.KNOB)
     .map((template) => {
       const { attr, type } = template.dataset;
@@ -126,15 +129,15 @@ export const getCustomKnobs = (
           };
         }
       }
-      return result as Knob<PropertyInfo>;
+      return result as Knob<ClassField>;
     })
     .filter(Boolean);
 };
 
 export const getInitialKnobs = (
-  propKnobs: Knob<PropertyInfo>[],
+  propKnobs: Knob<ClassField>[],
   component: HTMLElement
-): Knob<PropertyInfo>[] => {
+): Knob<ClassField>[] => {
   return propKnobs.filter((prop) => {
     const { name, knobType } = prop;
     const defaultValue = getDefault(prop);
