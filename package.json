@@ -26,7 +26,7 @@
   ],
   "main": "lib/api-viewer.js",
   "module": "lib/api-viewer.js",
-  "customElements": "assets/custom-elements.json",
+  "customElements": "custom-elements.json",
   "scripts": {
     "analyze": "cem analyze --litelement --globs 'src/*.ts' --exclude 'src/fixtures/*'",
     "build": "tsc",
