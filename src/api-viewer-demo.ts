@@ -298,7 +298,8 @@ class ApiViewerDemo extends LitElement {
     knob: Knob<ClassField>;
     custom?: boolean;
   } {
-    const isMatch = (prop: ClassField): boolean => prop.name === name;
+    const isMatch = (prop: Knob<ClassField>): boolean =>
+      prop.name === name || prop.attribute === name;
     let knob = this.propKnobs.find(isMatch);
     let custom = false;
     if (!knob) {
