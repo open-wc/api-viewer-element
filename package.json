@@ -26,6 +26,10 @@
   ],
   "main": "lib/api-viewer.js",
   "module": "lib/api-viewer.js",
+  "type": "module",
+  "engines": {
+    "node": "^14.13.1 || >=16.0.0"
+  },
   "customElements": "custom-elements.json",
   "scripts": {
     "analyze": "cem analyze --litelement --globs 'src/*.ts' --exclude 'src/fixtures/*'",
