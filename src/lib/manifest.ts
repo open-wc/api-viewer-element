@@ -56,6 +56,20 @@ const isCustomElementDeclaration = (y: ClassLike): y is CustomElement =>
 const isPublicProperty = (x: ClassMember): x is ClassField =>
   x.kind === 'field' && !(x.privacy === 'private' || x.privacy === 'protected');
 
+export async function fetchManifest(src: string): Promise<Package | null> {
+  try {
+    const file = await fetch(src);
+    const manifest: Package = await file.json();
+    if (hasCustomElements(manifest)) {
+      return manifest;
+    }
+    throw new Error(`No element definitions found at ${src}`);
+  } catch (e) {
+    console.error(e);
+    return null;
+  }
+}
+
 export function getCustomElements(manifest: Package): CustomElementExport[] {
   return (manifest.modules ?? []).flatMap(
     (x) => x.exports?.filter(isCustomElementExport) ?? []

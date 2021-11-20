@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators/property.js';
-import { hasCustomElements, Package } from './lib/manifest.js';
+import { fetchManifest, Package } from './lib/manifest.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type Constructor<T = unknown> = new (...args: any[]) => T;
@@ -13,20 +13,6 @@ export interface ApiViewerInterface {
   selected?: string;
 
   jsonFetched: Promise<Package | null>;
-}
-
-export async function fetchJson(src: string): Promise<Package | null> {
-  try {
-    const file = await fetch(src);
-    const manifest: Package = await file.json();
-    if (hasCustomElements(manifest)) {
-      return manifest;
-    }
-    throw new Error(`No element definitions found at ${src}`);
-  } catch (e) {
-    console.error(e);
-    return null;
-  }
 }
 
 export const emptyDataWarning = html`
@@ -56,7 +42,7 @@ export const ApiViewerMixin = <T extends Constructor<LitElement>>(
         this.jsonFetched = Promise.resolve(this.manifest);
       } else if (src && this.lastSrc !== src) {
         this.lastSrc = src;
-        this.jsonFetched = fetchJson(src);
+        this.jsonFetched = fetchManifest(src);
       }
     }
   }
