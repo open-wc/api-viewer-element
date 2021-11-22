@@ -36,6 +36,7 @@
     "build": "tsc",
     "dev": "npm run watch & npm run serve",
     "dist": "rimraf dist && rollup -c rollup.config.js && npm run fixtures && cp assets/custom-elements.json dist/assets",
+    "docs": "rocket build",
     "fixtures": "cem analyze --litelement --outdir assets --globs 'src/fixtures/*.ts'",
     "lint:css": "stylelint src/**/*.ts",
     "lint:eslint": "eslint src --ext .ts",
@@ -46,6 +47,7 @@
     "serve:dist": "web-dev-server --app-index dist/index.html --open",
     "size": "size-limit",
     "size:why": "size-limit --why",
+    "start": "rocket start",
     "watch": "tsc-watch"
   },
   "files": [
@@ -65,7 +67,9 @@
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.5.7",
-    "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rocket/cli": "^0.10.1",
+    "@rocket/core": "^0.1.2",
+    "@rocket/launch": "^0.6.0",
     "@size-limit/preset-small-lib": "^6.0.4",
     "@typescript-eslint/eslint-plugin": "^5.3.1",
     "@typescript-eslint/parser": "^5.3.1",
@@ -84,7 +88,6 @@
     "prettier": "^2.4.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.59.0",
-    "rollup-plugin-terser": "^7.0.2",
     "simple-git-hooks": "^2.7.0",
     "size-limit": "^6.0.4",
     "stylelint": "^13.13.1",
@@ -95,10 +98,6 @@
     "tsc-watch": "^4.5.0",
     "typescript": "^4.4.4",
     "web-component-analyzer": "^1.1.6"
-  },
-  "resolutions": {
-    "glob-parent": "5.1.2",
-    "set-value": "4.0.1"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
