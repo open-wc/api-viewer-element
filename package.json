@@ -30,21 +30,19 @@
   "engines": {
     "node": "^14.13.1 || >=16.0.0"
   },
-  "customElements": "custom-elements.json",
+  "customElements": "docs/_assets/custom-elements.json",
   "scripts": {
     "analyze": "cem analyze --litelement --globs 'src/*.ts' --exclude 'src/fixtures/*'",
     "build": "tsc",
     "dev": "npm run watch & npm run serve",
-    "dist": "rimraf dist && rollup -c rollup.config.js && npm run fixtures && cp assets/custom-elements.json dist/assets",
-    "docs": "rocket build",
-    "fixtures": "cem analyze --litelement --outdir assets --globs 'src/fixtures/*.ts'",
+    "docs": "npm run fixtures && rocket build",
+    "fixtures": "cem analyze --litelement --outdir docs/_assets --globs 'src/fixtures/*.ts'",
     "lint:css": "stylelint src/**/*.ts",
     "lint:eslint": "eslint src --ext .ts",
     "lint:lit": "lit-analyzer src --strict",
     "lint": "npm-run-all --parallel lint:*",
     "prepublishOnly": "run-s build analyze",
     "serve": "web-dev-server --node-resolve",
-    "serve:dist": "web-dev-server --app-index dist/index.html --open",
     "size": "size-limit",
     "size:why": "size-limit --why",
     "start": "rocket start",
@@ -74,7 +72,6 @@
     "@typescript-eslint/eslint-plugin": "^5.3.1",
     "@typescript-eslint/parser": "^5.3.1",
     "@web/dev-server": "^0.1.28",
-    "@web/rollup-plugin-html": "^1.10.1",
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.3.0",
@@ -87,7 +84,6 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.4.1",
     "rimraf": "^3.0.2",
-    "rollup": "^2.59.0",
     "simple-git-hooks": "^2.7.0",
     "size-limit": "^6.0.4",
     "stylelint": "^13.13.1",
@@ -96,8 +92,13 @@
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-processor-styled-components": "1.10.0",
     "tsc-watch": "^4.5.0",
-    "typescript": "^4.4.4",
+    "typescript": "~4.4.4",
     "web-component-analyzer": "^1.1.6"
+  },
+  "resolutions": {
+    "@mdjs/core": "^0.9.0",
+    "@mdjs/mdjs-preview": "^0.5.5",
+    "@rocket/drawer": "^0.1.4"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
