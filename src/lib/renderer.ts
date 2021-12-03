@@ -26,15 +26,13 @@ const updateComponent = (
 
   // Apply knobs using properties or attributes
   Object.keys(knobs).forEach((key: string) => {
-    const { knobType, attribute, value, custom } = knobs[key];
+    const { attribute, value, custom } = knobs[key];
     if (custom && attribute) {
       if (typeof value === 'string' && value) {
         component.setAttribute(attribute, value);
       } else {
         component.removeAttribute(attribute);
       }
-    } else if (knobType === 'boolean') {
-      component.toggleAttribute(attribute || key, Boolean(value));
     } else {
       (component as unknown as ComponentWithProps)[key] = value;
     }
