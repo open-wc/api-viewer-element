@@ -1,8 +1,8 @@
 html {
-  --button-one-hover: #436eff;
-  --button-one: #2758ff;
+  --button-one-hover: #39a2ff;
+  --button-one: #1e88e5;
   --button-two-hover: #444;
-  --button-two: black;
+  --button-two: #585f66;
   --code-button-focus-background: var(--markdown-syntax-background-color);
   --code-button-background: var(--markdown-table-row-odd-background-color);
   --code-tabs-tabs-background: var(--page-background);
@@ -10,14 +10,14 @@ html {
   --contrast-color-light: #fff;
   --footer-background: rgba(0, 0, 0, 0.02);
   --header-color: white;
-  --markdown-link-color: #2758ff;
+  --markdown-link-color: #1e88e5;
   --markdown-syntax-background-color: #f9f9f9;
   --markdown-table-row-odd-background-color: #efefef;
-  --owc-active-color: #2758ff;
-  --owc-hover-color: #436eff;
+  --owc-active-color: #1e88e5;
+  --owc-hover-color: #39a2ff;
   --page-background: white;
   --primary-color-accent: #cee5f6;
-  --primary-color-darker: #1a5285;
+  --primary-color-darker: #39a2ff;
   --primary-color-lighter: #449ad7;
   --primary-color: rgb(44, 62, 80);
   --primary-lines-color: #ccc;
@@ -33,7 +33,7 @@ html {
     --primary-text-color: #eee;
     --primary-color: white;
     --primary-color-lighter: #449ad7;
-    --primary-color-darker: #1a5285;
+    --primary-color-darker: #39a2ff;
     --primary-color-accent: #cee5f6;
     --contrast-color-light: #fff;
     --contrast-color-dark: #1d3557;
