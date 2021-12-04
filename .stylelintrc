@@ -1,25 +1,24 @@
 {
-  "processors": [
-    [
-      "stylelint-processor-styled-components",
-      {
-        "moduleName": "lit-element",
-        "importName": "css",
-        "strict": true
-      }
-    ]
-  ],
+  "customSyntax": "postcss-lit",
   "extends": [
     "stylelint-config-standard",
-    "stylelint-config-prettier",
-    "stylelint-config-styled-components"
+    "stylelint-config-prettier"
   ],
   "rules": {
+    "alpha-value-notation": ["number"],
+    "comment-empty-line-before": null,
+    "color-function-notation": ["legacy"],
+    "comment-whitespace-inside": null,
+    "font-family-name-quotes": "always-where-recommended",
+    "number-max-precision": [4, {
+      "ignoreProperties": ["animation-timing-function", "transform"]
+    }],
     "property-no-vendor-prefix": [true, {
       "ignoreProperties": ["user-select"]
     }],
+    "selector-class-pattern": null,
     "selector-type-no-unknown": [true, {
-      "ignoreTypes": ["/^[a-zA-Z]([a-zA-Z0-9]*-[a-zA-Z0-9]+)+/"],
+      "ignoreTypes": ["/^[a-zA-Z]([a-zA-Z0-9]*-[a-zA-Z0-9]+)+/"]
     }],
     "value-keyword-case": null
   }
