@@ -30,13 +30,14 @@
   "engines": {
     "node": "^14.13.1 || >=16.0.0"
   },
-  "customElements": "docs/_assets/custom-elements.json",
+  "customElements": "custom-elements.json",
   "scripts": {
     "analyze": "cem analyze --litelement --globs 'src/*.ts' --exclude 'src/fixtures/*'",
     "build": "tsc",
+    "copy": "cp docs/assets/* _site/assets",
     "dev": "npm run watch & npm run serve",
-    "dist": "npm run fixtures && rocket build",
-    "fixtures": "cem analyze --litelement --outdir docs/_assets --globs 'src/fixtures/*.ts'",
+    "dist": "npm run fixtures && npm run analyze && rocket build && npm run copy",
+    "fixtures": "cem analyze --litelement --outdir docs/assets --globs 'src/fixtures/*.ts'",
     "lint:css": "stylelint src/**/*.ts",
     "lint:eslint": "eslint src --ext .ts",
     "lint:lit": "lit-analyzer src --strict",
