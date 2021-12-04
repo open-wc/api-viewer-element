@@ -1,0 +1,20 @@
+.reasons article {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  text-align: center;
+}
+
+.reasons figure {
+  margin: 0;
+  display: contents;
+}
+
+/* Override Rocket styles */
+body[layout^='layout-home'] main {
+  padding-top: 0;
+}
+
+body[layout^='layout-home'] .reasons {
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+}

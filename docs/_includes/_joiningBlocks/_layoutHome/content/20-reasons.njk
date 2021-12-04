@@ -1,0 +1,12 @@
+<section class="reasons">
+  {% for reason in reasons %}
+    <article>
+      <h3>{{ reason.header }}</h3>
+      <figure>
+        <a href="{{ reason.link | url }}">
+          <img src="{{ reason.image | asset | url }}" alt="{{ reason.alt or '' }}"/>
+        </a>
+      </figure>
+    </article>
+  {% endfor %}
+</section>

@@ -1,0 +1,33 @@
+[
+  {
+    "name": "Discover",
+    "children": [
+      {
+        "text": "Help and Feedback",
+        "href": "https://github.com/web-padawan/api-viewer-element/issues"
+      }
+    ]
+  },
+  {
+    "name": "Follow",
+    "children": [
+      {
+        "text": "GitHub",
+        "href": "https://github.com/web-padawan/api-viewer-element"
+      },
+      {
+        "text": "Twitter",
+        "href": "https://twitter.com/serhiikulykov"
+      }
+    ]
+  },
+  {
+    "name": "Support",
+    "children": [
+      {
+        "text": "Contribute",
+        "href": "https://github.com/web-padawan/api-viewer-element/blob/master/CONTRIBUTING.md"
+      }
+    ]
+  }
+]
