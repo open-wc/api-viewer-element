@@ -15,6 +15,8 @@ body[layout^='layout-home'] main {
   padding-top: 0;
 }
 
-body[layout^='layout-home'] .reasons {
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+@media (min-width: 480px) {
+  body[layout^='layout-home'] .reasons {
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  }
 }
