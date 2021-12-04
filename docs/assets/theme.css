@@ -1,9 +1,9 @@
-.parts api-viewer {
+api-viewer[theme='custom'] {
   background-color: #fff;
   border: none;
   border-radius: 6px;
-  box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
-    0 0 0 1px rgba(10, 10, 10, 0.02);
+  box-shadow: 0 0 0 5px #fff, 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1),
+    0 0 0 1px rgba(10, 10, 10, 0.16);
   font-family: BlinkMacSystemFont, -apple-system, 'Segoe UI', Roboto, Oxygen,
     Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', Helvetica,
     Arial, sans-serif;
@@ -11,37 +11,36 @@
   --ave-accent-color: #f14668;
   --ave-header-color: #0a0a0a;
   --ave-border-color: #ededed;
-  --ave-tab-indicator-size: 1px;
 }
 
 /* Custom layout styles */
-.parts api-viewer::part(header) {
+api-viewer[theme='custom']::part(header) {
   padding: 0.75rem 1rem;
   background: #ededed;
 }
 
-.parts api-viewer::part(demo-output) {
+api-viewer[theme='custom']::part(demo-output) {
   border-top: none;
 }
 
 /* Custom input styles */
-.parts api-viewer::part(input),
-.parts api-viewer::part(select) {
+api-viewer[theme='custom']::part(input),
+api-viewer[theme='custom']::part(select) {
   padding: calc(0.5em - 1px) calc(0.75em - 1px);
   font-size: 1rem;
 }
 
-.parts api-viewer::part(input) {
+api-viewer[theme='custom']::part(input) {
   font-size: 0.75rem;
 }
 
 /* Custom checkbox styles */
-.parts api-viewer::part(checkbox) {
+api-viewer[theme='custom']::part(checkbox) {
   margin: 0.5rem 0.25rem;
 }
 
 /* Custom select styles */
-.parts api-viewer::part(select) {
+api-viewer[theme='custom']::part(select) {
   height: 2.5em;
   padding-right: 2.5em;
   font-size: 1em;
@@ -53,14 +52,14 @@
   appearance: none;
 }
 
-.parts api-viewer::part(select-label) {
+api-viewer[theme='custom']::part(select-label) {
   height: 2.5em;
   max-width: 100%;
   position: relative;
   font-size: 0.75rem;
 }
 
-.parts api-viewer::part(select-label)::after {
+api-viewer[theme='custom']::part(select-label)::after {
   display: block;
   content: '';
   box-sizing: border-box;
@@ -81,7 +80,7 @@
 }
 
 /* Custom tab styles */
-.parts api-viewer::part(tab) {
+api-viewer[theme='custom']::part(tab) {
   max-width: 155px;
   font-size: 0.875rem;
   text-transform: initial;
@@ -89,7 +88,7 @@
 }
 
 @media (max-width: 480px) {
-  .parts api-viewer::part(tab) {
+  api-viewer[theme='custom']::part(tab) {
     max-width: 120px;
   }
 }

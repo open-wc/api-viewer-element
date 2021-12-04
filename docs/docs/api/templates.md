@@ -1,4 +1,4 @@
-# API >> Templates || 20
+# API >> Templates || 30
 
 API Viewer uses the [`<template>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template) element to configure the live demo.
 Templates can be used to customize the default values for properties, to setup custom knobs, and to provide wrapper, prefix, or suffix elements.

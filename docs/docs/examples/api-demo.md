@@ -1,8 +1,8 @@
-# Examples >> api-viewer || 10
+# Examples >> api-demo || 30
 
 ```js script
 import { html } from '@mdjs/mdjs-preview';
-import '../../../lib/api-viewer.js';
+import '../../../lib/api-demo.js';
 import '../../../lib/fixtures/expansion-panel.js';
 import '../../../lib/fixtures/fancy-accordion.js';
 import '../../../lib/fixtures/intl-currency.js';
@@ -10,13 +10,8 @@ import '../../../lib/fixtures/progress-bar.js';
 ```
 
 ```html preview-story
-<api-viewer src="/assets/custom-elements.json">
-  <template
-    data-element="expansion-panel"
-    data-target="knob"
-    data-attr="dir"
-    data-type="select"
-  >
+<api-demo src="/assets/custom-elements.json">
+  <template data-element="expansion-panel" data-target="knob" data-attr="dir" data-type="select">
     <select>
       <option value=""></option>
       <option value="ltr"></option>
@@ -51,9 +46,9 @@ import '../../../lib/fixtures/progress-bar.js';
   <template data-element="progress-bar" data-target="host">
     <progress-bar max="100" min="1" value="50"></progress-bar>
   </template>
-</api-viewer>
+</api-demo>
 <style>
-  api-viewer {
+  api-demo {
     max-width: 100%;
     outline: solid 4px white;
   }

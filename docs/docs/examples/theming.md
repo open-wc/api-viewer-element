@@ -1,4 +1,4 @@
-# Examples >> api-viewer || 10
+# Examples >> Theming || 40
 
 ```js script
 import { html } from '@mdjs/mdjs-preview';
@@ -10,19 +10,10 @@ import '../../../lib/fixtures/progress-bar.js';
 ```
 
 ```html preview-story
-<api-viewer src="/assets/custom-elements.json">
-  <template
-    data-element="expansion-panel"
-    data-target="knob"
-    data-attr="dir"
-    data-type="select"
-  >
-    <select>
-      <option value=""></option>
-      <option value="ltr"></option>
-      <option value="rtl"></option>
-    </select>
-  </template>
+<!-- Custom theme styles -->
+<link rel="stylesheet" href="/assets/theme.css">
+
+<api-viewer src="/assets/custom-elements.json" theme="custom">
   <template data-element="fancy-accordion" data-target="slot">
     <expansion-panel>
       <div slot="header">Panel 1</div>
@@ -52,10 +43,11 @@ import '../../../lib/fixtures/progress-bar.js';
     <progress-bar max="100" min="1" value="50"></progress-bar>
   </template>
 </api-viewer>
+
 <style>
   api-viewer {
     max-width: 100%;
-    outline: solid 4px white;
+    box-shadow: 0 0 0 4px white;
   }
 </style>
 ```
