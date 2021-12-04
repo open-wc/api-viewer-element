@@ -9,30 +9,20 @@ callToActionItems:
     href: /docs/examples/api-viewer/
 
 reasons:
-  - header: CLI
-    text: Generate manifests from source code.
-    image: /_assets/cli.png
-    alt: |
-      npm i -D \
-        @custom-elements-manifest/analyzer
-
-      npx cem analyze --litelement
-  - header: Plugins
-    text: Plugin-based architecture to customize all the things.
-    image: /_assets/plugins.png
-    alt: |
-      export default {
-        plugins: [
-          readmePlugin({header: 'head.md'})
-        ]
-      }
-  - header: Ecosystem
-    text: Active community contributions.
-    image: /_assets/ecosystem.png
-    alt: |
-      npm i -D \
-        cem-plugin-readonly \
-        cem-plugin-atomico \
-        cem-plugin-jsdoc-example \
-        cem-plugin-reactify
+  - header: Docs
+    image: /_assets/docs.png
+    link: /docs/examples/api-docs/
+    alt: Example of properties documentation
+  - header: Demo
+    image: /_assets/demo.png
+    link: /docs/examples/api-demo/
+    alt: Component rendered in the demo UI
+  - header: Knobs
+    image: /_assets/knobs.png
+    link: /docs/guide/using-demo/#knobs
+    alt: Knobs for setting properties
+  - header: Code
+    image: /_assets/snippet.png
+    link: /docs/guide/using-demo/#source
+    alt: Expansion panel code snippet
 ---
