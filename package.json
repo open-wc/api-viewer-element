@@ -99,7 +99,10 @@
   "resolutions": {
     "@mdjs/core": "^0.9.0",
     "@mdjs/mdjs-preview": "^0.5.5",
-    "@rocket/drawer": "^0.1.4"
+    "@rocket/drawer": "^0.1.4",
+    "glob-parent": "^6.0.1",
+    "prismjs": "^1.25.0",
+    "pug": "^3.0.1"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
