@@ -9,7 +9,7 @@ export default css`
     min-width: 360px;
     font-size: 1rem;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-      'Oxygen-Sans', Ubuntu, Cantarell, sans-serif;
+      Oxygen-Sans, Ubuntu, Cantarell, sans-serif;
     border: 1px solid var(--ave-border-color);
     border-radius: var(--ave-border-radius);
 
