@@ -35,7 +35,7 @@
     "analyze": "cem analyze --litelement --globs 'src/*.ts' --exclude 'src/fixtures/*'",
     "build": "tsc",
     "dev": "npm run watch & npm run serve",
-    "docs": "npm run fixtures && rocket build",
+    "dist": "npm run fixtures && rocket build",
     "fixtures": "cem analyze --litelement --outdir docs/_assets --globs 'src/fixtures/*.ts'",
     "lint:css": "stylelint src/**/*.ts",
     "lint:eslint": "eslint src --ext .ts",
