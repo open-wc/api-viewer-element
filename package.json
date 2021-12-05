@@ -70,6 +70,7 @@
     "@rocket/cli": "^0.10.1",
     "@rocket/core": "^0.1.2",
     "@rocket/launch": "^0.6.0",
+    "@rocket/search": "^0.5.1",
     "@size-limit/preset-small-lib": "^6.0.4",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
