@@ -47,7 +47,6 @@ import '../../../lib/fixtures/progress-bar.js';
 <style>
   api-viewer {
     max-width: 100%;
-    box-shadow: 0 0 0 4px white;
   }
 </style>
 ```

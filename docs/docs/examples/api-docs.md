@@ -10,7 +10,6 @@ import '../../../lib/api-docs.js';
 <style>
   api-docs {
     max-width: 100%;
-    outline: solid 4px white;
   }
 </style>
 ```
