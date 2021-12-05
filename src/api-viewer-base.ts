@@ -88,6 +88,7 @@ async function renderDocs(
               .slots=${data.slots ?? []}
               .cssParts=${data.cssParts ?? []}
               .cssProps=${data.cssProperties ?? []}
+              part="docs-container"
             ></api-viewer-docs>
           `
         : html`
@@ -99,6 +100,7 @@ async function renderDocs(
               .cssProps=${data.cssProperties ?? []}
               .exclude=${exclude}
               .vid=${id}
+              part="demo-container"
             ></api-viewer-demo>
           `
     )}

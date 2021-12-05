@@ -57,6 +57,7 @@ async function renderDocs(
       .slots=${data.slots ?? []}
       .cssParts=${data.cssParts ?? []}
       .cssProps=${data.cssProperties ?? []}
+      part="docs-container"
     ></api-viewer-docs>
   `;
 }
