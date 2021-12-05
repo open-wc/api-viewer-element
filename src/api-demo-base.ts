@@ -56,6 +56,7 @@ async function renderDemo(
       .cssProps=${data.cssProperties ?? []}
       .exclude=${exclude}
       .vid=${id}
+      part="demo-container"
     ></api-viewer-demo>
   `;
 }

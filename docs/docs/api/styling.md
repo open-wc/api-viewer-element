@@ -40,9 +40,10 @@ The following CSS shadow parts are available:
 
 | Part                     | Description                                             |
 | -------------------------| --------------------------------------------------------|
-| `docs-description`       | Custom element description                              |
+| `docs-description`       | Custom element description placed under the header      |
+| `docs-container`         | The wrapper element placed under the description        |
 | `docs-column`            | Column, child of a `docs-row` part                      |
-| `docs-item`              | Item representing a single entry  (property, event etc) |
+| `docs-item`              | Item representing a single entry (property, event etc)  |
 | `docs-label`             | Label (name, attribute, type, description)              |
 | `docs-markdown`          | Iem description with parsed markdown content            |
 | `docs-row`               | Row containing columns. Child of a `docs-item` part     |
@@ -69,6 +70,7 @@ The following CSS shadow parts are available:
 
 | Part                     | Description                                             |
 | -------------------------| ------------------------------------------------------- |
+| `demo-container`         | The wrapper element placed under the header             |
 | `demo-output`            | Wrapper of the rendered component in the live demo      |
 | `demo-snippet`           | Wrapper of the code snippet in the live demo            |
 | `demo-tabs`              | Tabs component used to switch panels in the live demo   |
