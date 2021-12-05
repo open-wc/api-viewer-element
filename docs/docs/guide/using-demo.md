@@ -5,7 +5,7 @@ Several panels are available depending on the functionality the component suppor
 
 ## Importing
 
-In order to enable live demos, import the components documented in the manifest.
+In order to use live demo, import the components documented in the manifest.
 The demo component uses [`customElements.whenDefined()`](https://developer.mozilla.org/en-US/docs/Web/API/CustomElementRegistry/whenDefined), which returns a Promise, so importing the components lazily also works.
 
 ```html
@@ -15,12 +15,13 @@ The demo component uses [`customElements.whenDefined()`](https://developer.mozil
 <api-viewer src="./custom-elements.json"></api-viewer>
 ```
 
-If you want to render live demo separately from the API documentation, consider using `<api-demo>` element instead of the `<api-viewer>`.
+If you want to render live demo separately from the API documentation, consider using [`<api-demo>`](../../examples/api-demo/) element instead of the `<api-viewer>`.
 All of the features and use cases listed below apply to both components.
 
 ## Source
 
-The Source panel contains an HTML code snippet representing the component with its properties, HTML attributes and slots.
+The Source panel contains an HTML code snippet representing the component with its
+[properties](../writing-jsdoc/#properties), HTML attributes and [slots](../writing-jsdoc/#slots).
 When setting knobs or styles using corresponding panels, code snippet is updated.
 
 For example, changing a custom CSS property to the value other than the default one will add `<style>` tag to the snippet.
@@ -34,7 +35,8 @@ Play with the component to tweak its appearance, set `textContent` for its `<slo
 Knobs panel is of the live demo inspired by corresponding Storybook addon.
 It allows to toggle properties, attributes and set slots content on the element instance, and updates the code snippet accordingly.
 
-The playground listens to the events dispatched by the component and uses `[property]-changed` events to sync knobs controls with the component's state.
+The playground listens to the [events](../writing-jsdoc/#events) dispatched by the component
+and uses `[property]-changed` events to sync knobs controls with the component's state.
 This is useful if the component handles user input:
 
 ```js
@@ -50,7 +52,7 @@ This is useful if the component handles user input:
 
 ## Styles
 
-The live demo relies on the analyzer to get default values for documented custom CSS properties.
+The live demo relies on the analyzer to get default values for documented [CSS Custom Properties](../writing-jsdoc/#css-custom-properties).
 As a fallback, it collects the values on the rendered component using `getComputedStyle(element).getPropertyValue()`.
 
 We recommend using the following CSS structure to provide styling API for web components to make Styles panel work.

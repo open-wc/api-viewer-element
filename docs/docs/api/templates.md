@@ -1,12 +1,12 @@
 # API >> Templates || 30
 
-API Viewer uses the [`<template>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template) element to configure the live demo.
-Templates can be used to customize the default values for properties, to setup custom knobs, and to provide wrapper, prefix, or suffix elements.
+API Viewer uses the [`<template>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template) element for configuring the live demo.
+With templates, you can customize the default properties values, set up custom [knobs](../../guide/using-demo/#knobs), or provide additional HTML to be shown in the demo.
 
 ## Setting templates
 
-Both `<api-viewer>` and `<api-demo>` elements collect template passing to them declaratively at the time of initialization.
-Alternatively, you can call `setTemplates()` method to provide `<template>` elements lazily.
+Both `<api-viewer>` and `<api-demo>` elements collect `<template>` elements passed to them declaratively at the time of initialization.
+Alternatively, you can call `setTemplates()` method to provide a set of templates lazily.
 
 ```js
 // Father the template elements placed in the DOM

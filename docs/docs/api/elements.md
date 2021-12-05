@@ -1,7 +1,7 @@
 # API >> Elements || 10
 
 API Viewer consists of two major features: documentation and demo (interactive live playground).
-Both features reuse the same manifest data, by default you can switch between them using radio buttons.
+Both features reuse the same [manifest data](../../guide/writing-jsdoc/), by default you can switch between them using radio buttons.
 
 Alternatively, you can use separate elements for documentation and demo.
 This does not mean having to load manifest data twice: it can be fetched once and then passed to the elements using `manifest` property.
@@ -50,7 +50,7 @@ Do not pass any base class directly to `customElements.define()`: make sure to e
 ### `ApiViewerBase` class
 
 A class that you can use to create your own version of `<api-viewer>`.
-If you don't need `<template>` support in the live demo, feel free to remove corresponding code.
+If you don't need [`<template>` support](../templates/) in the live demo, feel free to remove corresponding code.
 API documentation does not use templates.
 
 ```js
