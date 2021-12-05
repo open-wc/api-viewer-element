@@ -1,0 +1,15 @@
+diff --git a/node_modules/@mdjs/mdjs-preview/src/MdJsPreview.js b/node_modules/@mdjs/mdjs-preview/src/MdJsPreview.js
+index 40eb0bd..7b74696 100644
+--- a/node_modules/@mdjs/mdjs-preview/src/MdJsPreview.js
++++ b/node_modules/@mdjs/mdjs-preview/src/MdJsPreview.js
+@@ -685,10 +685,6 @@ export class MdJsPreview extends ScopedElementsMixin(LitElement) {
+         display: none;
+       }
+
+-      :host(:not([device-mode])) #wrapper {
+-        border: 2px solid #4caf50;
+-      }
+-
+       iframe {
+         border: 2px solid #4caf50;
+         background: #fff;

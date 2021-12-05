@@ -50,7 +50,6 @@ import '../../../lib/fixtures/progress-bar.js';
 <style>
   api-demo {
     max-width: 100%;
-    outline: solid 4px white;
   }
 </style>
 ```
