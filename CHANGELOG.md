@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.6.1] - 2021-12-06
+
+### Fixed
+
+- Changed postinstall script to prepare
+
 ## [0.6.0] - 2021-12-06
 
 ### Breaking Changes
