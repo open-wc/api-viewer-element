@@ -42,7 +42,7 @@
     "lint:eslint": "eslint src --ext .ts",
     "lint:lit": "lit-analyzer src --strict",
     "lint": "npm-run-all --parallel lint:*",
-    "postinstall": "patch-package",
+    "prepare": "patch-package",
     "prepublishOnly": "run-s build analyze",
     "serve": "web-dev-server --node-resolve",
     "size": "size-limit",
