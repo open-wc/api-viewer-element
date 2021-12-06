@@ -16,11 +16,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
-## [unreleased]
+## [0.6.0] - 2021-12-06
 
 ### Breaking Changes
 
+- Updated to use Custom Element Manifest JSON format
 - Updated `marked` dependency to 4.0.0
+
+### Added
+
+- Added `docs-container` and `demo-container` shadow parts
+
+### Fixed
+
+- Docs: do now throw when panel does not exist
+- Demo: reset selected tab when element changes
+- Add missing `.js` extensions to imports
 
 ## [0.5.0] - 2021-11-01
 
