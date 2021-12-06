@@ -201,6 +201,16 @@ class ApiViewerDemo extends LitElement {
     }
   }
 
+  protected updated(props: PropertyValues): void {
+    // Reset the focused tab
+    if (props.has('tag') && props.get('tag')) {
+      const tabs = this.renderRoot.querySelector('api-viewer-tabs');
+      if (tabs) {
+        tabs.selectFirst();
+      }
+    }
+  }
+
   private _onLogClear(): void {
     this.eventsController.clear();
     const tab = this.querySelector('#events') as HTMLElement;
