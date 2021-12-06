@@ -1,9 +1,9 @@
 import { html, TemplateResult } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { htmlRender } from 'highlight-ts/es/render/html';
-import { registerLanguages } from 'highlight-ts/es/languages';
-import { XML } from 'highlight-ts/es/languages/xml';
-import { init, process } from 'highlight-ts/es/process';
+import { htmlRender } from 'highlight-ts/es/render/html.js';
+import { registerLanguages } from 'highlight-ts/es/languages.js';
+import { XML } from 'highlight-ts/es/languages/xml.js';
+import { init, process } from 'highlight-ts/es/process.js';
 import { CssCustomPropertyValue, SlotValue } from './manifest.js';
 import { Knob } from './knobs.js';
 import { CSS } from './highlight-css.js';
