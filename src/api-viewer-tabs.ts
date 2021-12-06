@@ -179,11 +179,10 @@ export class ApiViewerTabs extends LitElement {
     this.reset();
 
     const newPanel = this._panelForTab(newTab);
-    if (!newPanel) {
-      throw new Error('No panel with for tab');
+    if (newPanel) {
+      newTab.selected = true;
+      newPanel.hidden = false;
     }
-    newTab.selected = true;
-    newPanel.hidden = false;
   }
 
   private _onKeyDown(event: KeyboardEvent): void {
