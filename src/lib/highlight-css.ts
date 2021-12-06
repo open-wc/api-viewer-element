@@ -1,10 +1,10 @@
-import { LanguageDef } from 'highlight-ts/es/types';
+import { LanguageDef } from 'highlight-ts/es/types.js';
 import {
   APOS_STRING_MODE,
   QUOTE_STRING_MODE,
   CSS_NUMBER_MODE,
   C_BLOCK_COMMENT_MODE
-} from 'highlight-ts/es/common';
+} from 'highlight-ts/es/common.js';
 
 const FUNCTION_LIKE = {
   begin: /[\w-]+\(/,
