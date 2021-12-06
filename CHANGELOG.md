@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.6.2] - 2021-12-06
+
+### Fixed
+
+- Apply Rocket patch only locally
+
 ## [0.6.1] - 2021-12-06
 
 ### Fixed
