@@ -7,7 +7,7 @@ API documentation and live playground for Web Components. Based on [custom eleme
 ```
 
 [Documentation →](https://api-viewer-element.netlify.app/docs/guide/intro/)
-|
+
 [Live Demo →](https://api-viewer-element.netlify.app/docs/examples/api-viewer/)
 
 [<img src="https://raw.githubusercontent.com/web-padawan/api-viewer-element/master/screenshot-docs.png" alt="Screenshot of api-viewer docs" width="800">](https://api-viewer-element.netlify.com/)
