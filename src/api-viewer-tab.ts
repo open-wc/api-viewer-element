@@ -53,7 +53,7 @@ export class ApiViewerTab extends LitElement {
       }
 
       :host([selected]) {
-        color: var(--ave-primary-color);
+        color: var(--ave-tab-selected-color, var(--ave-primary-color));
       }
 
       :host([selected])::before {

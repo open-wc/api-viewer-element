@@ -12,6 +12,7 @@ The following custom CSS properties are available:
 | `--ave-button-active-background` | Color of the `:focus` and `:hover` button       |
 | `--ave-button-background`        | Background of the button (code snippet, events) |
 | `--ave-button-color`             | Color of the button (code snippet, events)      |
+| `--ave-header-background`        | Background of the header used for tag name      |
 | `--ave-header-color`             | Header text color used for tag name             |
 | `--ave-item-color`               | API items content color (main text)             |
 | `--ave-label-color`              | API items labels color                          |
@@ -20,6 +21,7 @@ The following custom CSS properties are available:
 | `--ave-monospace-font`           | Monospace font stack for the API items          |
 | `--ave-primary-color`            | Primary color, used for header and active tab   |
 | `--ave-tab-color`                | Inactive tabs color                             |
+| `--ave-tab-selected-color`       | Selected tab color                              |
 | `--ave-tab-indicator-size`       | Size of the selected tab indicator              |
 
 ## CSS shadow parts
