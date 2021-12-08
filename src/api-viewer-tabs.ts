@@ -18,6 +18,8 @@ export class ApiViewerTabs extends LitElement {
     return css`
       :host {
         display: flex;
+        border-bottom-left-radius: var(--ave-border-radius);
+        overflow: hidden;
       }
 
       .tabs {
