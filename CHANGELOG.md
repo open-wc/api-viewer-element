@@ -16,6 +16,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.6.4] - 2021-12-08
+
+### Added
+
+- Custom CSS properties for header and tab color
+
+### Fixed
+
+- Adjust selected tab border radius
+
 ## [0.6.3] - 2021-12-08
 
 ### Fixed
