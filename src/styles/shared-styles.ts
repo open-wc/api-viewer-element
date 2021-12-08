@@ -38,7 +38,7 @@ export default css`
     align-items: center;
     justify-content: space-between;
     padding: 0.75rem;
-    background: var(--ave-primary-color);
+    background: var(--ave-header-background, var(--ave-primary-color));
     border-top-left-radius: var(--ave-border-radius);
     border-top-right-radius: var(--ave-border-radius);
   }
