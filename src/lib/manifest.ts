@@ -97,7 +97,7 @@ export const getElementData = (
             y?.name === element.declaration.name
         )
     : manifest.modules
-        .find((m) => m.path === element.declaration.module)
+        .find((m) => m.path === element.declaration.module.replace(/^\//, ''))
         ?.declarations?.find((d) => d.name === element.declaration.name);
 
   if (!decl || !isCustomElementDeclaration(decl)) {
