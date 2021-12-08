@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 <!-- ### Fixed -->
 <!-- ### Changed -->
 
+## [0.6.3] - 2021-12-08
+
+### Fixed
+
+- Remove leading slash to fix root path lookup
+
 ## [0.6.2] - 2021-12-06
 
 ### Fixed
