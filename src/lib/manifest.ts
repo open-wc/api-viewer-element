@@ -89,16 +89,14 @@ export const getElementData = (
     return null;
   }
 
-  const decl = !element.declaration.module
+  const { name, module } = element.declaration;
+  const decl = !module
     ? manifest.modules
         .flatMap((x) => x.declarations)
-        .find(
-          (y): y is CustomElementDeclaration =>
-            y?.name === element.declaration.name
-        )
+        .find((y): y is CustomElementDeclaration => y?.name === name)
     : manifest.modules
-        .find((m) => m.path === element.declaration.module.replace(/^\//, ''))
-        ?.declarations?.find((d) => d.name === element.declaration.name);
+        .find((m) => m.path === module.replace(/^\//, ''))
+        ?.declarations?.find((d) => d.name === name);
 
   if (!decl || !isCustomElementDeclaration(decl)) {
     throw new Error(`Could not find declaration for ${selected}`);
