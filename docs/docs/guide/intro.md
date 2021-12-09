@@ -20,7 +20,7 @@ npm install @custom-elements-manifest/analyzer
 2. Analyze your components:
 
 ```bash
-cem analyze my-element.js
+cem analyze --globs "src/components/my-element.js"
 ```
 
 3. Create an HTML file and import the component:
