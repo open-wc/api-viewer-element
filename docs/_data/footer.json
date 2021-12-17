@@ -4,7 +4,7 @@
     "children": [
       {
         "text": "Help and Feedback",
-        "href": "https://github.com/web-padawan/api-viewer-element/issues"
+        "href": "https://github.com/open-wc/api-viewer-element/issues"
       }
     ]
   },
@@ -13,11 +13,11 @@
     "children": [
       {
         "text": "GitHub",
-        "href": "https://github.com/web-padawan/api-viewer-element"
+        "href": "https://github.com/open-wc/api-viewer-element"
       },
       {
         "text": "Twitter",
-        "href": "https://twitter.com/serhiikulykov"
+        "href": "https://twitter.com/OpenWc"
       }
     ]
   },
@@ -26,7 +26,7 @@
     "children": [
       {
         "text": "Contribute",
-        "href": "https://github.com/web-padawan/api-viewer-element/blob/master/CONTRIBUTING.md"
+        "href": "https://github.com/open-wc/api-viewer-element/blob/master/CONTRIBUTING.md"
       }
     ]
   }

@@ -4,7 +4,7 @@
 
 > This project adheres to the Contributor Covenant [code of conduct](./CODE_OF_CONDUCT.md). By participating in this project, you agree to abide by its terms.
 
-First, create a fork of the [web-padawan/api-viewer-element](https://github.com/web-padawan/api-viewer-element) repository by hitting the `fork` button on the GitHub page.
+First, create a fork of the [open-wc/api-viewer-element](https://github.com/open-wc/api-viewer-element) repository by hitting the `fork` button on the GitHub page.
 
 Next, clone your fork onto your computer (replacing YOUR_USERNAME with your actual GitHub username).
 
@@ -16,7 +16,7 @@ Once cloning is complete, change directory to the repository and add the upstrea
 
 ```sh
 cd web
-git remote add upstream git@github.com:web-padawan/api-viewer-element.git
+git remote add upstream git@github.com:open-wc/api-viewer-element.git
 ```
 
 ## Preparing Your Local Environment for Development

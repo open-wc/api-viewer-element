@@ -56,4 +56,4 @@ Elements that can be styled using `::part` need to be documented using `@cssPart
 This cover elements with `part` attribute in Shadow DOM, as well as those exposed using `exportparts` attribute.
 
 The parts are currently only used for the documentation, they are not available in the live demo.
-Please comment in [this issue](https://github.com/web-padawan/api-viewer-element/issues/42) about CSS Shadow Parts and slots inspector if you are interested.
+Please comment in [this issue](https://github.com/open-wc/api-viewer-element/issues/42) about CSS Shadow Parts and slots inspector if you are interested.

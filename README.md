@@ -6,29 +6,29 @@ API documentation and live playground for Web Components. Based on [custom eleme
 <api-viewer src="./custom-elements.json"></api-viewer>
 ```
 
-[Documentation →](https://api-viewer-element.netlify.app/docs/guide/intro/)
+[Documentation →](https://api-viewer.open-wc.org/docs/guide/intro/)
 
-[Live Demo →](https://api-viewer-element.netlify.app/docs/examples/api-viewer/)
+[Live Demo →](https://api-viewer.open-wc.org/docs/examples/api-viewer/)
 
-[<img src="https://raw.githubusercontent.com/web-padawan/api-viewer-element/master/screenshot-docs.png" alt="Screenshot of api-viewer docs" width="800">](https://api-viewer-element.netlify.com/)
+[<img src="https://raw.githubusercontent.com/open-wc/api-viewer-element/master/screenshot-docs.png" alt="Screenshot of api-viewer docs" width="800">](https://api-viewer.open-wc.org)
 
-[<img src="https://raw.githubusercontent.com/web-padawan/api-viewer-element/master/screenshot-demo.png" alt="Screenshot of api-viewer demo" width="800">](https://api-viewer-element.netlify.com/)
+[<img src="https://raw.githubusercontent.com/open-wc/api-viewer-element/master/screenshot-demo.png" alt="Screenshot of api-viewer demo" width="800">](https://api-viewer.open-wc.org)
 
 ## Features
 
-- [API docs viewer](https://api-viewer-element.netlify.app/docs/guide/writing-jsdoc/)
-  - [Properties](https://api-viewer-element.netlify.app/docs/guide/writing-jsdoc/#properties) - JS properties publicly exposed by the component.
-  - [Attributes](https://api-viewer-element.netlify.app/docs/guide/writing-jsdoc/#attributes) - HTML attributes (except those that match properties).
-  - [Events](https://api-viewer-element.netlify.app/docs/guide/writing-jsdoc/#events) - DOM events dispatched by the component.
-  - [Slots](https://api-viewer-element.netlify.app/docs/guide/writing-jsdoc/#slots) - Default `<slot>` and / or named slots, if any.
-  - [CSS Custom Properties](https://api-viewer-element.netlify.app/docs/guide/writing-jsdoc/#css-custom-properties) - Styling API of the component.
-  - [CSS Shadow Parts](https://api-viewer-element.netlify.app/docs/guide/writing-jsdoc/#css-shadow-parts) - Elements that can be styled using `::part()`.
-- [Live playground](https://api-viewer-element.netlify.app/docs/guide/using-demo/)
-  - [Source](https://api-viewer-element.netlify.app/docs/guide/using-demo/#source) - Code snippet matching the rendered component.
-  - [Knobs](https://api-viewer-element.netlify.app/docs/guide/using-demo/#knobs) - Change properties and slotted content dynamically.
-  - [Styles](https://api-viewer-element.netlify.app/docs/guide/using-demo/#styles) - Change values of the custom CSS properties.
-  - [Event log](https://api-viewer-element.netlify.app/docs/guide/using-demo/#events) - Output the events fired by the component.
-  - [Templates](https://api-viewer-element.netlify.app/docs/api/templates/) - Provide additional HTML to be shown.
+- [API docs viewer](https://api-viewer.open-wc.org/docs/guide/writing-jsdoc/)
+  - [Properties](https://api-viewer.open-wc.org/docs/guide/writing-jsdoc/#properties) - JS properties publicly exposed by the component.
+  - [Attributes](https://api-viewer.open-wc.org/docs/guide/writing-jsdoc/#attributes) - HTML attributes (except those that match properties).
+  - [Events](https://api-viewer.open-wc.org/docs/guide/writing-jsdoc/#events) - DOM events dispatched by the component.
+  - [Slots](https://api-viewer.open-wc.org/docs/guide/writing-jsdoc/#slots) - Default `<slot>` and / or named slots, if any.
+  - [CSS Custom Properties](https://api-viewer.open-wc.org/docs/guide/writing-jsdoc/#css-custom-properties) - Styling API of the component.
+  - [CSS Shadow Parts](https://api-viewer.open-wc.org/docs/guide/writing-jsdoc/#css-shadow-parts) - Elements that can be styled using `::part()`.
+- [Live playground](https://api-viewer.open-wc.org/docs/guide/using-demo/)
+  - [Source](https://api-viewer.open-wc.org/docs/guide/using-demo/#source) - Code snippet matching the rendered component.
+  - [Knobs](https://api-viewer.open-wc.org/docs/guide/using-demo/#knobs) - Change properties and slotted content dynamically.
+  - [Styles](https://api-viewer.open-wc.org/docs/guide/using-demo/#styles) - Change values of the custom CSS properties.
+  - [Event log](https://api-viewer.open-wc.org/docs/guide/using-demo/#events) - Output the events fired by the component.
+  - [Templates](https://api-viewer.open-wc.org/docs/api/templates/) - Provide additional HTML to be shown.
 
 ## Install
 
@@ -36,15 +36,15 @@ API documentation and live playground for Web Components. Based on [custom eleme
 npm install api-viewer-element
 ```
 
-Check out the [Getting Started](https://api-viewer-element.netlify.app/docs/guide/intro/#usage) guide.
+Check out the [Getting Started](https://api-viewer.open-wc.org/docs/guide/intro/#usage) guide.
 
 ## Usage
 
 The following web components are available:
 
-- [`<api-viewer>`](https://api-viewer-element.netlify.app/docs/api/elements/#api-viewer-element)
-- [`<api-docs>`](https://api-viewer-element.netlify.app/docs/api/elements/#api-docs-element)
-- [`<api-demo>`](https://api-viewer-element.netlify.app/docs/api/elements/#api-demo-element)
+- [`<api-viewer>`](https://api-viewer.open-wc.org/docs/api/elements/#api-viewer-element)
+- [`<api-docs>`](https://api-viewer.open-wc.org/docs/api/elements/#api-docs-element)
+- [`<api-demo>`](https://api-viewer.open-wc.org/docs/api/elements/#api-demo-element)
 
 ## Contributing
 
