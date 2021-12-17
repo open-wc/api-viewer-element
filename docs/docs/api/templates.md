@@ -79,7 +79,7 @@ This is useful to create complex UI samples for small components that are typica
 ### `<template data-target="suffix">`
 
 Use `"suffix"` template to provide HTML to be inserted **after** the web component in the demo.
-Note, same as `"prefix"`, this template type can be used to provide [`<style>`](https://github.com/web-padawan/api-viewer-element/issues/45#issuecomment-677458882) tag with CSS to customize the component.
+Note, same as `"prefix"`, this template type can be used to provide [`<style>`](https://github.com/open-wc/api-viewer-element/issues/45#issuecomment-677458882) tag with CSS to customize the component.
 
 ```html
 <api-viewer src="./custom-elements.json">
