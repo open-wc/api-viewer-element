@@ -4,7 +4,7 @@
   "modules": [
     {
       "kind": "javascript-module",
-      "path": "src/fixtures/expansion-panel.ts",
+      "path": "fixtures/expansion-panel/src/expansion-panel.ts",
       "declarations": [
         {
           "kind": "class",
@@ -257,7 +257,7 @@
           "name": "ExpansionPanel",
           "declaration": {
             "name": "ExpansionPanel",
-            "module": "src/fixtures/expansion-panel.ts"
+            "module": "fixtures/expansion-panel/src/expansion-panel.ts"
           }
         },
         {
@@ -265,181 +265,249 @@
           "name": "expansion-panel",
           "declaration": {
             "name": "ExpansionPanel",
-            "module": "src/fixtures/expansion-panel.ts"
+            "module": "fixtures/expansion-panel/src/expansion-panel.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/fixtures/fancy-accordion.ts",
+      "path": "fixtures/expansion-panel/lib/expansion-panel.d.ts",
       "declarations": [
         {
           "kind": "class",
-          "description": "A custom element implementing the accordion widget: a vertically stacked set of expandable panels\nthat wraps several instances of the `<expansion-panel>` element. Only one panel can be opened\n(expanded) at a time.\n\nPanel headings function as controls that enable users to open (expand) or hide (collapse) their\nassociated sections of content. The user can toggle panels by mouse click, Enter and Space keys.\n\nThe component supports keyboard navigation and is aligned with the\n[WAI-ARIA Authoring Practices](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion).",
-          "name": "FancyAccordion",
+          "description": "A custom element similar to the HTML5 `<details>` element.",
+          "name": "ExpansionPanel",
+          "cssProperties": [
+            {
+              "type": {
+                "text": "Background"
+              },
+              "description": "Default panel header background color.",
+              "name": "--panel-header-background",
+              "default": "#fff"
+            },
+            {
+              "description": "Panel header minimum height.",
+              "name": "--panel-header-min-height",
+              "default": "48px"
+            },
+            {
+              "type": {
+                "text": "Background"
+              },
+              "description": "Active toggle button ripple background.",
+              "name": "--panel-ripple-background",
+              "default": "rgba(0, 0, 0, 0.38)"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "An element wrapping the `header` slot.",
+              "name": "header"
+            },
+            {
+              "description": "A toggle button, child of the header part.",
+              "name": "toggle"
+            },
+            {
+              "description": "An element wrapping the `content` slot.",
+              "name": "content"
+            }
+          ],
           "slots": [
             {
-              "description": "Slot fot panel elements.",
+              "description": "Slot fot panel content",
               "name": ""
+            },
+            {
+              "description": "Slot for panel header",
+              "name": "header"
             }
           ],
           "members": [
             {
               "kind": "field",
-              "name": "openedIndex",
+              "name": "opened",
               "type": {
-                "text": "number | null | undefined"
+                "text": "boolean | null | undefined"
               },
-              "default": "null",
-              "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels.",
-              "attribute": "opened-index"
+              "description": "When true, the panel content is expanded and visible"
             },
             {
               "kind": "field",
-              "name": "_items",
+              "name": "disabled",
               "type": {
-                "text": "ExpansionPanel[]"
+                "text": "boolean"
               },
-              "privacy": "protected",
-              "default": "[]"
+              "description": "Disabled panel can not be expanded or collapsed"
             },
             {
               "kind": "field",
-              "name": "_boundOnOpened",
-              "privacy": "private",
-              "default": "this._onOpened.bind(this)"
+              "name": "header",
+              "type": {
+                "text": "HTMLDivElement | undefined"
+              },
+              "privacy": "protected"
             },
             {
               "kind": "field",
-              "name": "focused",
+              "name": "_isShiftTabbing",
               "type": {
-                "text": "Element | null"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "_onKeydown",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
+                "text": "boolean"
               },
-              "parameters": [
-                {
-                  "name": "event",
-                  "type": {
-                    "text": "KeyboardEvent"
-                  }
-                }
-              ]
+              "privacy": "protected"
             },
             {
-              "kind": "method",
-              "name": "_getAvailableIndex",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "number"
-                }
+              "kind": "field",
+              "name": "_tabPressed",
+              "type": {
+                "text": "boolean"
               },
-              "parameters": [
-                {
-                  "name": "index",
-                  "optional": true,
-                  "type": {
-                    "text": "number"
-                  }
-                },
-                {
-                  "name": "increment",
-                  "optional": true,
-                  "type": {
-                    "text": "number"
-                  }
-                }
-              ]
+              "privacy": "protected"
+            },
+            {
+              "kind": "field",
+              "name": "_boundBodyKeydown",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_boundBodyKeyup",
+              "privacy": "private"
             },
             {
               "kind": "method",
-              "name": "_onOpened",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "e",
-                  "type": {
-                    "text": "CustomEvent"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "_notifyOpen",
-              "privacy": "private",
+              "name": "focus",
               "return": {
                 "type": {
                   "text": "void"
                 }
               }
+            },
+            {
+              "kind": "field",
+              "name": "_setFocused",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_onToggleClick",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_onToggleKeyDown",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_onBodyKeydown",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_onBodyKeyup",
+              "privacy": "private"
             }
           ],
           "events": [
             {
-              "name": "opened-index-changed",
-              "type": {
-                "text": "CustomEvent"
-              },
-              "description": "Event fired when changing currently opened panel."
+              "description": "Event fired when expanding / collapsing",
+              "name": "opened-changed"
             }
           ],
           "attributes": [
             {
-              "name": "opened-index",
               "type": {
-                "text": "number | null | undefined"
+                "text": "boolean"
               },
-              "default": "null",
-              "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels.",
-              "fieldName": "openedIndex"
+              "description": "State attribute set when element has focus.",
+              "name": "focused"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "State attribute set when focused from keyboard.",
+              "name": "focus-ring"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "fancy-accordion",
+          "tagName": "expansion-panel",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "FancyAccordion",
+          "name": "ExpansionPanel",
           "declaration": {
-            "name": "FancyAccordion",
-            "module": "src/fixtures/fancy-accordion.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "fancy-accordion",
-          "declaration": {
-            "name": "FancyAccordion",
-            "module": "src/fixtures/fancy-accordion.ts"
+            "name": "ExpansionPanel",
+            "module": "fixtures/expansion-panel/lib/expansion-panel.d.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/fixtures/intl-currency.ts",
+      "path": "fixtures/intl-currency/lib/intl-currency.d.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A custom element that formats currency using Intl.",
+          "name": "IntlCurrency",
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "number"
+              },
+              "description": "Amount to be formatted."
+            },
+            {
+              "kind": "field",
+              "name": "currency",
+              "type": {
+                "text": "string | null | undefined"
+              },
+              "description": "Currency code used for formatting."
+            },
+            {
+              "kind": "field",
+              "name": "locale",
+              "type": {
+                "text": "string | null | undefined"
+              },
+              "description": "Locale code used for formatting."
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "intl-currency",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "IntlCurrency",
+          "declaration": {
+            "name": "IntlCurrency",
+            "module": "fixtures/intl-currency/lib/intl-currency.d.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "fixtures/intl-currency/src/intl-currency.ts",
       "declarations": [
         {
           "kind": "class",
@@ -520,7 +588,7 @@
           "name": "IntlCurrency",
           "declaration": {
             "name": "IntlCurrency",
-            "module": "src/fixtures/intl-currency.ts"
+            "module": "fixtures/intl-currency/src/intl-currency.ts"
           }
         },
         {
@@ -528,14 +596,120 @@
           "name": "intl-currency",
           "declaration": {
             "name": "IntlCurrency",
-            "module": "src/fixtures/intl-currency.ts"
+            "module": "fixtures/intl-currency/src/intl-currency.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/fixtures/progress-bar.ts",
+      "path": "fixtures/progress-bar/lib/progress-bar.d.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A custom element similar to the HTML5 `<progress>` element.",
+          "name": "ProgressBar",
+          "cssProperties": [
+            {
+              "type": {
+                "text": "Color"
+              },
+              "description": "Color of the filled progress bar part.",
+              "name": "--progress-bar-fill-color",
+              "default": "#6200ee"
+            },
+            {
+              "description": "Opacity set on the underlying track.",
+              "name": "--progress-bar-opacity",
+              "default": "0.16"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "A progress bar background.",
+              "name": "bar"
+            },
+            {
+              "description": "A progress bar foreground.",
+              "name": "value"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "number"
+              },
+              "description": "Current progress value."
+            },
+            {
+              "kind": "field",
+              "name": "min",
+              "type": {
+                "text": "number"
+              },
+              "description": "Minimum bound of the progress bar."
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "type": {
+                "text": "number"
+              },
+              "description": "Maximum bound of the progress bar."
+            },
+            {
+              "kind": "field",
+              "name": "indeterminate",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value)."
+            },
+            {
+              "kind": "field",
+              "name": "_normalizedValueChanged",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_valueChanged",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_minChanged",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_maxChanged",
+              "privacy": "private"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "progress-bar",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ProgressBar",
+          "declaration": {
+            "name": "ProgressBar",
+            "module": "fixtures/progress-bar/lib/progress-bar.d.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "fixtures/progress-bar/src/progress-bar.ts",
       "declarations": [
         {
           "kind": "class",
@@ -745,7 +919,7 @@
           "name": "ProgressBar",
           "declaration": {
             "name": "ProgressBar",
-            "module": "src/fixtures/progress-bar.ts"
+            "module": "fixtures/progress-bar/src/progress-bar.ts"
           }
         },
         {
@@ -753,7 +927,263 @@
           "name": "progress-bar",
           "declaration": {
             "name": "ProgressBar",
-            "module": "src/fixtures/progress-bar.ts"
+            "module": "fixtures/progress-bar/src/progress-bar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "fixtures/fancy-accordion/lib/fancy-accordion.d.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A custom element implementing the accordion widget: a vertically stacked set of expandable panels\nthat wraps several instances of the `<expansion-panel>` element. Only one panel can be opened\n(expanded) at a time.\n\nPanel headings function as controls that enable users to open (expand) or hide (collapse) their\nassociated sections of content. The user can toggle panels by mouse click, Enter and Space keys.\n\nThe component supports keyboard navigation and is aligned with the\n[WAI-ARIA Authoring Practices](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion).",
+          "name": "FancyAccordion",
+          "slots": [
+            {
+              "description": "Slot fot panel elements.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "openedIndex",
+              "type": {
+                "text": "number | null | undefined"
+              },
+              "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels."
+            },
+            {
+              "kind": "field",
+              "name": "_items",
+              "type": {
+                "text": "ExpansionPanel[]"
+              },
+              "privacy": "protected"
+            },
+            {
+              "kind": "field",
+              "name": "_boundOnOpened",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "focused",
+              "type": {
+                "text": "Element | null"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_onKeydown",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_getAvailableIndex",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_onOpened",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_notifyOpen",
+              "privacy": "private"
+            }
+          ],
+          "events": [
+            {
+              "description": "Event fired when changing currently opened panel.",
+              "name": "opened-index-changed"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "fancy-accordion",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FancyAccordion",
+          "declaration": {
+            "name": "FancyAccordion",
+            "module": "fixtures/fancy-accordion/lib/fancy-accordion.d.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "fixtures/fancy-accordion/src/fancy-accordion.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A custom element implementing the accordion widget: a vertically stacked set of expandable panels\nthat wraps several instances of the `<expansion-panel>` element. Only one panel can be opened\n(expanded) at a time.\n\nPanel headings function as controls that enable users to open (expand) or hide (collapse) their\nassociated sections of content. The user can toggle panels by mouse click, Enter and Space keys.\n\nThe component supports keyboard navigation and is aligned with the\n[WAI-ARIA Authoring Practices](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion).",
+          "name": "FancyAccordion",
+          "slots": [
+            {
+              "description": "Slot fot panel elements.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "openedIndex",
+              "type": {
+                "text": "number | null | undefined"
+              },
+              "default": "null",
+              "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels.",
+              "attribute": "opened-index"
+            },
+            {
+              "kind": "field",
+              "name": "_items",
+              "type": {
+                "text": "ExpansionPanel[]"
+              },
+              "privacy": "protected",
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "_boundOnOpened",
+              "privacy": "private",
+              "default": "this._onOpened.bind(this)"
+            },
+            {
+              "kind": "field",
+              "name": "focused",
+              "type": {
+                "text": "Element | null"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "_onKeydown",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_getAvailableIndex",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "number"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "index",
+                  "optional": true,
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "increment",
+                  "optional": true,
+                  "type": {
+                    "text": "number"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_onOpened",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "CustomEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_notifyOpen",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "opened-index-changed",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Event fired when changing currently opened panel."
+            }
+          ],
+          "attributes": [
+            {
+              "name": "opened-index",
+              "type": {
+                "text": "number | null | undefined"
+              },
+              "default": "null",
+              "description": "Index of the currently opened panel. By default all the panels are closed.\nOnly one panel can be opened at the same time. Setting `null` or `undefined`\ncloses all the accordion panels.",
+              "fieldName": "openedIndex"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "fancy-accordion",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FancyAccordion",
+          "declaration": {
+            "name": "FancyAccordion",
+            "module": "fixtures/fancy-accordion/src/fancy-accordion.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "fancy-accordion",
+          "declaration": {
+            "name": "FancyAccordion",
+            "module": "fixtures/fancy-accordion/src/fancy-accordion.ts"
           }
         }
       ]

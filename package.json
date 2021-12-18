@@ -6,19 +6,19 @@
   "author": "open-wc",
   "contributors": [
     {
-      "name" : "Serhii Kulykov",
-      "email" : "iamkulykov@gmail.com",
-      "url" : "https://twitter.com/serhiikulykov"
+      "name": "Serhii Kulykov",
+      "email": "iamkulykov@gmail.com",
+      "url": "https://twitter.com/serhiikulykov"
     },
     {
-      "name" : "Benny Powers",
-      "email" : "web@bennypowers.com",
-      "url" : "https://twitter.com/PowersBenny"
+      "name": "Benny Powers",
+      "email": "web@bennypowers.com",
+      "url": "https://twitter.com/PowersBenny"
     },
     {
-      "name" : "Mikhail Bashkirov",
-      "email" : "bashmish@gmail.com",
-      "url" : "https://twitter.com/bashmish"
+      "name": "Mikhail Bashkirov",
+      "email": "bashmish@gmail.com",
+      "url": "https://twitter.com/bashmish"
     }
   ],
   "license": "MIT",
@@ -45,14 +45,14 @@
   "engines": {
     "node": "^14.13.1 || >=16.0.0"
   },
-  "customElements": "custom-elements.json",
+  "customElements": "docs/assets/custom-elements.json",
   "scripts": {
     "analyze": "cem analyze --litelement --globs 'src/*.ts' --exclude 'src/fixtures/*'",
     "build": "tsc --build",
     "copy": "cp docs/assets/* _site/assets",
     "dev": "npm run watch & npm run serve",
     "dist": "npm run fixtures && npm run analyze && patch-package && rocket build && npm run copy",
-    "fixtures": "cem analyze --litelement --outdir docs/assets --globs 'src/fixtures/*.ts'",
+    "fixtures": "cem analyze --litelement --outdir docs/assets --globs 'fixtures/**/*.ts'",
     "lint:css": "stylelint src/**/*.ts",
     "lint:eslint": "eslint src scripts",
     "lint:lit": "lit-analyzer src --strict",
