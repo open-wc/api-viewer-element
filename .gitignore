@@ -1,5 +1,8 @@
 node_modules
 /lib
+/fixtures/**/lib
+/packages/**/lib
+/**/*.tsbuildinfo
 /dist
 /custom-elements.json
 docs/_merged_data/

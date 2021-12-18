@@ -1,0 +1,11 @@
+{
+  "name": "@api-viewer-fixtures/expansion-panel",
+  "version": "0.0.0",
+  "private": true,
+  "main": "lib/expansion-panel.js",
+  "module": "lib/expansion-panel.js",
+  "dependencies": {
+    "lit": "^2.0.0",
+    "tslib": "^2.3.1"
+  }
+}

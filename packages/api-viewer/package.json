@@ -1,0 +1,51 @@
+{
+  "name": "api-viewer-element",
+  "version": "0.6.4",
+  "description": "Web Components API viewer element",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "open-wc",
+  "contributors": [
+    {
+      "name" : "Serhii Kulykov",
+      "email" : "iamkulykov@gmail.com",
+      "url" : "https://twitter.com/serhiikulykov"
+    },
+    {
+      "name" : "Benny Powers",
+      "email" : "web@bennypowers.com",
+      "url" : "https://twitter.com/PowersBenny"
+    },
+    {
+      "name" : "Mikhail Bashkirov",
+      "email" : "bashmish@gmail.com",
+      "url" : "https://twitter.com/bashmish"
+    }
+  ],
+  "license": "MIT",
+  "main": "lib/api-viewer.js",
+  "module": "lib/api-viewer.js",
+  "type": "module",
+  "files": [
+    "lib",
+    "!lib/fixtures"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/open-wc/api-viewer-element.git"
+  },
+  "bugs": {
+    "url": "https://github.com/open-wc/api-viewer-element/issues"
+  },
+  "keywords": [
+    "API",
+    "documentation",
+    "web-components"
+  ],
+  "dependencies": {
+    "@api-viewer/docs": "^0.1.0",
+    "lit": "^2.0.0",
+    "tslib": "^2.3.1"
+  }
+}

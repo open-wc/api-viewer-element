@@ -1,0 +1,11 @@
+{
+  "name": "@api-viewer-fixtures/intl-currency",
+  "version": "0.0.0",
+  "private": true,
+  "main": "lib/intl-currency.js",
+  "module": "lib/intl-currency.js",
+  "dependencies": {
+    "lit": "^2.0.0",
+    "tslib": "^2.3.1"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "@api-viewer-fixtures/fancy-accordion",
+  "version": "0.0.0",
+  "private": true,
+  "main": "lib/fancy-accordion.js",
+  "module": "lib/fancy-accordion.js",
+  "dependencies": {
+    "@api-viewer-fixtures/expansion-panel": "^0.0.0",
+    "lit": "^2.0.0",
+    "tslib": "^2.3.1"
+  }
+}
