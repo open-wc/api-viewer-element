@@ -2,9 +2,23 @@
   "name": "api-viewer-element",
   "version": "0.6.4",
   "description": "Web Components API viewer element",
-  "author": "Serhii Kulykov <iamkulykov@gmail.com>",
+  "author": "open-wc",
   "contributors": [
-    "Benny Powers <web@bennypowers.com>"
+    {
+      "name" : "Serhii Kulykov",
+      "email" : "iamkulykov@gmail.com",
+      "url" : "https://twitter.com/serhiikulykov"
+    },
+    {
+      "name" : "Benny Powers",
+      "email" : "web@bennypowers.com",
+      "url" : "https://twitter.com/PowersBenny"
+    },
+    {
+      "name" : "Mikhail Bashkirov",
+      "email" : "bashmish@gmail.com",
+      "url" : "https://twitter.com/bashmish"
+    }
   ],
   "license": "MIT",
   "repository": {
