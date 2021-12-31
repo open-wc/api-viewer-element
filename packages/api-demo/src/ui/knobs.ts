@@ -1,12 +1,12 @@
 import {
   ClassField,
   CssCustomProperty,
-  SlotValue
+  SlotValue,
+  unquote
 } from '@api-viewer/common/lib/index.js';
 import {
   getTemplates,
   TemplateTypes,
-  unquote,
   getTemplateNode
 } from '@api-viewer/common/lib/templates.js';
 
