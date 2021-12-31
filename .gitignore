@@ -4,8 +4,8 @@ node_modules
 /packages/*/lib
 /**/*.tsbuildinfo
 /dist
-/custom-elements.json
-/packages/*/custom-elements.json
+custom-elements.json
+!/docs/assets/custom-elements.json
 docs/_merged_data/
 docs/_merged_assets/
 docs/_merged_includes/
