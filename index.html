@@ -199,13 +199,13 @@
   </template>
 
   <script type="module">
-    import './lib/fixtures/expansion-panel.js';
-    import './lib/fixtures/fancy-accordion.js';
-    import './lib/fixtures/intl-currency.js';
-    import './lib/fixtures/progress-bar.js';
-    import './lib/api-viewer.js';
-    import './lib/api-docs.js';
-    import './lib/api-demo.js';
+    import './fixtures/expansion-panel/lib/expansion-panel.js';
+    import './fixtures/fancy-accordion/lib/fancy-accordion.js';
+    import './fixtures/intl-currency/lib/intl-currency.js';
+    import './fixtures/progress-bar/lib/progress-bar.js';
+    import './packages/api-viewer/lib/api-viewer.js';
+    import './packages/api-docs/lib/api-docs.js';
+    import './packages/api-demo/lib/api-demo.js';
 
     if (window.location.hash === '') {
       history.pushState({}, '', '#api-viewer');

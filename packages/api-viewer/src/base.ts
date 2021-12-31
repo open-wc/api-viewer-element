@@ -11,10 +11,10 @@ import {
   hasCustomElements,
   ManifestMixin,
   Package
-} from '@api-viewer/common';
+} from '@api-viewer/common/lib/index.js';
+import { setTemplates } from '@api-viewer/common/lib/templates.js';
 import '@api-viewer/demo/lib/layout.js';
 import '@api-viewer/docs/lib/layout.js';
-import { setTemplates } from '@api-viewer/common/lib/templates.js';
 import { parse } from '@api-viewer/docs/lib/utils/markdown.js';
 
 async function renderDocs(

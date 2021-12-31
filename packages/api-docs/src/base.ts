@@ -9,9 +9,9 @@ import {
   hasCustomElements,
   ManifestMixin,
   Package
-} from '@api-viewer/common';
+} from '@api-viewer/common/lib/index.js';
 import { parse } from './utils/markdown.js';
-import './api-viewer-docs.js';
+import './layout.js';
 
 async function renderDocs(
   jsonFetched: Promise<Package | null>,
@@ -50,7 +50,7 @@ async function renderDocs(
     <div ?hidden=${data.description === ''} part="docs-description">
       ${parse(data.description)}
     </div>
-    <api-viewer-docs
+    <api-docs-layout
       .name=${data.name}
       .props=${props}
       .attrs=${data.attributes ?? []}
@@ -59,7 +59,7 @@ async function renderDocs(
       .cssParts=${data.cssParts ?? []}
       .cssProps=${data.cssProperties ?? []}
       part="docs-container"
-    ></api-viewer-docs>
+    ></api-docs-layout>
   `;
 }
 

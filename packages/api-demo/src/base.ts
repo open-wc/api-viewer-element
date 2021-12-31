@@ -10,8 +10,8 @@ import {
   hasCustomElements,
   ManifestMixin,
   Package
-} from '@api-viewer/common';
-import './api-viewer-demo.js';
+} from '@api-viewer/common/lib/index.js';
+import './layout.js';
 
 async function renderDemo(
   jsonFetched: Promise<Package | null>,
@@ -49,7 +49,7 @@ async function renderDemo(
         </label>
       </nav>
     </header>
-    <api-viewer-demo
+    <api-demo-layout
       .tag=${data.name}
       .props=${props}
       .events=${data.events ?? []}
@@ -58,7 +58,7 @@ async function renderDemo(
       .exclude=${exclude}
       .vid=${id}
       part="demo-container"
-    ></api-viewer-demo>
+    ></api-demo-layout>
   `;
 }
 

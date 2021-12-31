@@ -45,9 +45,9 @@
   "engines": {
     "node": "^14.13.1 || >=16.0.0"
   },
-  "customElements": "docs/assets/custom-elements.json",
+  "customElements": "custom-elements.json",
   "scripts": {
-    "analyze": "cem analyze --litelement --globs 'src/*.ts' --exclude 'src/fixtures/*'",
+    "analyze": "cem analyze --litelement --globs 'packages/**/*.ts'",
     "build": "tsc --build",
     "copy": "cp docs/assets/* _site/assets",
     "dev": "npm run watch & npm run serve",
