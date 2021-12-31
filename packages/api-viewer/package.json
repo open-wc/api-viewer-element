@@ -1,6 +1,6 @@
 {
   "name": "api-viewer-element",
-  "version": "0.6.4",
+  "version": "1.0.0-pre.0",
   "description": "Web Components API viewer element",
   "publishConfig": {
     "access": "public"
@@ -44,9 +44,9 @@
     "web-components"
   ],
   "dependencies": {
-    "@api-viewer/common": "^0.1.0",
-    "@api-viewer/demo": "^0.1.0",
-    "@api-viewer/docs": "^0.1.0",
+    "@api-viewer/common": "^1.0.0-pre.0",
+    "@api-viewer/demo": "^1.0.0-pre.0",
+    "@api-viewer/docs": "^1.0.0-pre.0",
     "lit": "^2.0.0",
     "tslib": "^2.3.1"
   }

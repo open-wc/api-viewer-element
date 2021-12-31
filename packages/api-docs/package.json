@@ -1,6 +1,6 @@
 {
   "name": "@api-viewer/docs",
-  "version": "0.1.0",
+  "version": "1.0.0-pre.0",
   "description": "Web Components API viewer element",
   "publishConfig": {
     "access": "public"
@@ -44,8 +44,8 @@
     "web-components"
   ],
   "dependencies": {
-    "@api-viewer/common": "^0.1.0",
-    "@api-viewer/tabs": "^0.1.0",
+    "@api-viewer/common": "^1.0.0-pre.0",
+    "@api-viewer/tabs": "^1.0.0-pre.0",
     "@types/dompurify": "^2.3.1",
     "@types/marked": "^4.0.0",
     "dompurify": "^2.3.3",

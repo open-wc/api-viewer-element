@@ -67,6 +67,7 @@
     "watch": "tsc-watch"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.19.0",
     "@custom-elements-manifest/analyzer": "^0.5.7",
     "@rocket/cli": "^0.10.1",
     "@rocket/core": "^0.1.2",
