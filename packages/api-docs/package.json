@@ -28,12 +28,12 @@
   "module": "lib/api-docs.js",
   "type": "module",
   "files": [
-    "lib",
-    "!lib/fixtures"
+    "lib"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-wc/api-viewer-element.git"
+    "url": "https://github.com/open-wc/api-viewer-element.git",
+    "directory": "packages/api-docs"
   },
   "bugs": {
     "url": "https://github.com/open-wc/api-viewer-element/issues"

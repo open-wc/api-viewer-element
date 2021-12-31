@@ -32,7 +32,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-wc/api-viewer-element.git"
+    "url": "https://github.com/open-wc/api-viewer-element.git",
+    "directory": "packages/api-common"
   },
   "bugs": {
     "url": "https://github.com/open-wc/api-viewer-element/issues"
