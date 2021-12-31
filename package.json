@@ -1,19 +1,8 @@
 {
   "name": "api-viewer-workspace",
-  "version": "0.6.4",
   "private": true,
-  "description": "Web Components API viewer element",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/open-wc/api-viewer-element.git"
-  },
   "author": "open-wc",
-  "bugs": {
-    "url": "https://github.com/open-wc/api-viewer-element/issues"
-  },
-  "main": "lib/api-viewer.js",
-  "module": "lib/api-viewer.js",
   "type": "module",
   "engines": {
     "node": "^14.13.1 || >=16.0.0"
@@ -39,16 +28,6 @@
     "update:tsconfigs": "node scripts/generate-ts-configs.js",
     "watch": "tsc-watch"
   },
-  "keywords": [
-    "API",
-    "documentation",
-    "playground",
-    "web-components",
-    "webcomponents",
-    "customelements",
-    "custom-elements",
-    "lit-element"
-  ],
   "devDependencies": {
     "@changesets/cli": "^2.19.0",
     "@custom-elements-manifest/analyzer": "^0.5.7",
