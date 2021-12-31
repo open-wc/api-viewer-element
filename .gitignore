@@ -5,6 +5,7 @@ node_modules
 /**/*.tsbuildinfo
 /dist
 /custom-elements.json
+/packages/*/custom-elements.json
 docs/_merged_data/
 docs/_merged_assets/
 docs/_merged_includes/

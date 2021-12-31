@@ -8,13 +8,16 @@
     "node": "^14.13.1 || >=16.0.0"
   },
   "scripts": {
-    "analyze": "cem analyze --litelement --globs 'packages/**/*.ts'",
+    "analyze": "node scripts/workspaces-scripts-bin.js analyze",
     "build": "tsc --build",
     "copy": "cp docs/assets/* _site/assets",
     "dev": "npm run watch & npm run serve",
     "dist": "npm run fixtures && npm run analyze && patch-package && rocket build && npm run copy",
     "fixtures": "cem analyze --litelement --outdir docs/assets --globs 'fixtures/**/*.ts'",
-    "format": "prettier \"**/*.{ts,md}\" \"**/package.json\" --write",
+    "format": "npm-run-all --parallel format:*",
+    "format:md": "prettier \"**/*.{md}\" --write",
+    "format:package": "prettier \"**/package.json\" --write",
+    "format:ts": "prettier \"**/*.{ts}\" --write",
     "lint": "npm-run-all --parallel lint:*",
     "lint:css": "stylelint src/**/*.ts",
     "lint:eslint": "eslint src scripts",

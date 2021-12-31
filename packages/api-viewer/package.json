@@ -19,9 +19,11 @@
   "module": "lib/api-viewer.js",
   "type": "module",
   "scripts": {
+    "analyze": "cem analyze --litelement --globs 'src/*.ts'",
     "size": "size-limit"
   },
   "files": [
+    "custom-elements.json",
     "lib"
   ],
   "keywords": [
@@ -53,6 +55,7 @@
       "url": "https://twitter.com/bashmish"
     }
   ],
+  "customElements": "custom-elements.json",
   "size-limit": [
     {
       "path": "lib/api-viewer.js",
