@@ -104,9 +104,9 @@ class ApiDemoLayout extends LitElement {
     ].map((arr) => arr.length === 0);
 
     const id = this.vid as number;
-    const log = this.eventsController?.log || [];
-    const slots = this.slotsController?.slots || [];
-    const cssProps = this.stylesController?.css || [];
+    const log = this.eventsController?.data || [];
+    const slots = this.slotsController?.data || [];
+    const cssProps = this.stylesController?.data || [];
     const hideSlots = noSlots || hasTemplate(id, tag, TemplateTypes.SLOT);
 
     return html`
@@ -266,8 +266,7 @@ class ApiDemoLayout extends LitElement {
   private initEvents(component: HTMLElement) {
     const controller = this.eventsController;
     if (controller) {
-      controller.clear();
-      this.removeController(controller);
+      controller.destroy();
     }
 
     this.eventsController = new EventsController(this, component, this.events);
@@ -286,13 +285,13 @@ class ApiDemoLayout extends LitElement {
   private initSlots(component: HTMLElement) {
     const controller = this.slotsController;
     if (controller) {
-      this.removeController(controller);
+      controller.destroy();
     }
 
     this.slotsController = new SlotsController(
       this,
-      this.vid as number,
       component,
+      this.vid as number,
       this.slots
     );
   }
@@ -300,7 +299,7 @@ class ApiDemoLayout extends LitElement {
   private initStyles(component: HTMLElement) {
     const controller = this.stylesController;
     if (controller) {
-      this.removeController(controller);
+      controller.destroy();
     }
 
     this.stylesController = new StylesController(
