@@ -1,7 +1,7 @@
 import { LitElement, html, css, PropertyValues, TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
-import { ExpansionPanel } from '@api-viewer-fixtures/expansion-panel/';
+import { ExpansionPanel } from './expansion-panel.js';
 
 /**
  * A custom element implementing the accordion widget: a vertically stacked set of expandable panels

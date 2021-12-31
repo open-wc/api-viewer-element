@@ -17,19 +17,10 @@
       "path": "./packages/api-docs/tsconfig.json"
     },
     {
-      "path": "./fixtures/expansion-panel/tsconfig.json"
-    },
-    {
       "path": "./packages/api-viewer/tsconfig.json"
     },
     {
-      "path": "./fixtures/fancy-accordion/tsconfig.json"
-    },
-    {
-      "path": "./fixtures/intl-currency/tsconfig.json"
-    },
-    {
-      "path": "./fixtures/progress-bar/tsconfig.json"
+      "path": "./fixtures/lit/tsconfig.json"
     }
   ]
 }

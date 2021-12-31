@@ -7,6 +7,7 @@ import pc from 'picocolors';
 export function runWorkspacesScripts({
   script,
   concurrency,
+  folder = 'packages',
   filteredPackages = []
 }) {
   const moduleDir = dirname(fileURLToPath(import.meta.url));
@@ -32,7 +33,7 @@ export function runWorkspacesScripts({
     return packages;
   }
 
-  const packagesDir = join(moduleDir, '..', 'packages');
+  const packagesDir = join(moduleDir, '..', folder);
   const packagesWithScript = findPackagesWithScript(packagesDir);
 
   const commands = packagesWithScript.map((pkgPath) => ({

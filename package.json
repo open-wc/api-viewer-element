@@ -13,7 +13,7 @@
     "copy": "cp docs/assets/* _site/assets",
     "dev": "npm run watch & npm run serve",
     "dist": "npm run fixtures && npm run analyze && patch-package && rocket build && npm run copy",
-    "fixtures": "cem analyze --litelement --outdir docs/assets --globs 'fixtures/**/*.ts'",
+    "fixtures": "node scripts/workspaces-scripts-bin.js analyze fixtures && cp fixtures/**/custom-elements.json docs/assets",
     "format": "npm-run-all --parallel format:*",
     "format:md": "prettier \"**/*.{md}\" --write",
     "format:package": "prettier \"**/package.json\" --write",
@@ -92,7 +92,6 @@
       "url": "https://twitter.com/bashmish"
     }
   ],
-  "customElements": "custom-elements.json",
   "lint-staged": {
     "*.ts": [
       "eslint --fix",

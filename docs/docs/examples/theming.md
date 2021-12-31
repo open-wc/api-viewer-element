@@ -3,10 +3,10 @@
 ```js script
 import { html } from '@mdjs/mdjs-preview';
 import '../../../packages/api-viewer/lib/api-viewer.js';
-import '../../../fixtures/expansion-panel/lib/expansion-panel.js';
-import '../../../fixtures/fancy-accordion/lib/fancy-accordion.js';
-import '../../../fixtures/intl-currency/lib/intl-currency.js';
-import '../../../fixtures/progress-bar/lib/progress-bar.js';
+import '../../../fixtures/lit/lib/expansion-panel.js';
+import '../../../fixtures/lit/lib/fancy-accordion.js';
+import '../../../fixtures/lit/lib/intl-currency.js';
+import '../../../fixtures/lit/lib/progress-bar.js';
 ```
 
 ```html preview-story
