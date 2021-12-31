@@ -8,19 +8,19 @@
   "author": "open-wc",
   "contributors": [
     {
-      "name" : "Serhii Kulykov",
-      "email" : "iamkulykov@gmail.com",
-      "url" : "https://twitter.com/serhiikulykov"
+      "name": "Serhii Kulykov",
+      "email": "iamkulykov@gmail.com",
+      "url": "https://twitter.com/serhiikulykov"
     },
     {
-      "name" : "Benny Powers",
-      "email" : "web@bennypowers.com",
-      "url" : "https://twitter.com/PowersBenny"
+      "name": "Benny Powers",
+      "email": "web@bennypowers.com",
+      "url": "https://twitter.com/PowersBenny"
     },
     {
-      "name" : "Mikhail Bashkirov",
-      "email" : "bashmish@gmail.com",
-      "url" : "https://twitter.com/bashmish"
+      "name": "Mikhail Bashkirov",
+      "email": "bashmish@gmail.com",
+      "url": "https://twitter.com/bashmish"
     }
   ],
   "license": "MIT",
