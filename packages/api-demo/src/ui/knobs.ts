@@ -1,10 +1,10 @@
-import { ClassField, CssCustomProperty, SlotValue } from './manifest.js';
+import { ClassField, CssCustomProperty, SlotValue } from '@api-viewer/common';
 import {
   getTemplates,
   TemplateTypes,
   unquote,
   getTemplateNode
-} from './utils.js';
+} from '@api-viewer/common/lib/templates.js';
 
 export type KnobValue = string | number | boolean | null | undefined;
 

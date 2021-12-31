@@ -1,7 +1,7 @@
 import { css } from 'lit';
-import demoStyles from './demo-styles.js';
-import docsStyles from './docs-styles.js';
-import sharedStyles from './shared-styles.js';
+import sharedStyles from '@api-viewer/common/lib/shared-styles.js';
+import demoStyles from '@api-viewer/demo/lib/styles.js';
+import docsStyles from '@api-viewer/docs/lib/styles.js';
 
 export default css`
   ${sharedStyles}

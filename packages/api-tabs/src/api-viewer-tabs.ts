@@ -1,6 +1,7 @@
 import { LitElement, html, css, TemplateResult } from 'lit';
 import { ApiViewerTab } from './api-viewer-tab.js';
-import { ApiViewerPanel } from './api-viewer-panel.js';
+import type { ApiViewerPanel } from './api-viewer-panel.js';
+import './api-viewer-panel.js';
 
 const KEYCODE = {
   DOWN: 40,

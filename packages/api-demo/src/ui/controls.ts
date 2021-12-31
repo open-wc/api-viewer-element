@@ -1,7 +1,11 @@
 import { html, TemplateResult } from 'lit';
+import {
+  ClassField,
+  CssCustomPropertyValue,
+  getSlotContent,
+  SlotValue
+} from '@api-viewer/common';
 import { Knob, Knobable } from './knobs.js';
-import { ClassField, CssCustomPropertyValue, SlotValue } from './manifest.js';
-import { getSlotContent } from './utils.js';
 
 type InputRenderer = (item: Knobable, id: string) => TemplateResult;
 

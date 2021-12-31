@@ -1,23 +1,22 @@
 import { LitElement, html, TemplateResult } from 'lit';
-import { property } from 'lit/decorators/property.js';
 import { until } from 'lit/directives/until.js';
 import {
   CustomElement,
+  emptyDataWarning,
   getCustomElements,
   getElementData,
   getPublicFields,
   hasCustomElements,
+  ManifestMixin,
   Package
-} from './lib/manifest.js';
-import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';
-import './api-viewer-demo.js';
+} from '@api-viewer/common';
+import { parse } from './utils/markdown.js';
+import './api-viewer-docs.js';
 
-async function renderDemo(
+async function renderDocs(
   jsonFetched: Promise<Package | null>,
   onSelect: (e: CustomEvent) => void,
-  selected?: string,
-  id?: number,
-  exclude = ''
+  selected?: string
 ): Promise<TemplateResult> {
   const manifest = await jsonFetched;
 
@@ -48,44 +47,27 @@ async function renderDemo(
         </label>
       </nav>
     </header>
-    <api-viewer-demo
-      .tag=${data.name}
+    <div ?hidden=${data.description === ''} part="docs-description">
+      ${parse(data.description)}
+    </div>
+    <api-viewer-docs
+      .name=${data.name}
       .props=${props}
+      .attrs=${data.attributes ?? []}
       .events=${data.events ?? []}
       .slots=${data.slots ?? []}
+      .cssParts=${data.cssParts ?? []}
       .cssProps=${data.cssProperties ?? []}
-      .exclude=${exclude}
-      .vid=${id}
-      part="demo-container"
-    ></api-viewer-demo>
+      part="docs-container"
+    ></api-viewer-docs>
   `;
 }
 
-let id = 0;
-
-export class ApiDemoBase extends ApiViewerMixin(LitElement) {
-  @property({ type: String, attribute: 'exclude-knobs' }) excludeKnobs?: string;
-
-  protected _id?: number;
-
-  constructor() {
-    super();
-
-    this._id = id++;
-  }
-
+export class ApiDocsBase extends ManifestMixin(LitElement) {
   protected render(): TemplateResult {
-    return html`
-      ${until(
-        renderDemo(
-          this.jsonFetched,
-          this._onSelect,
-          this.selected,
-          this._id,
-          this.excludeKnobs
-        )
-      )}
-    `;
+    return html`${until(
+      renderDocs(this.jsonFetched, this._onSelect, this.selected)
+    )}`;
   }
 
   private _onSelect(e: Event): void {

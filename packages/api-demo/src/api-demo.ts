@@ -1,7 +1,7 @@
-import { ApiDemoBase } from './api-demo-base.js';
-import { setTemplates } from './lib/utils.js';
-import demoStyles from './styles/demo-styles.js';
-import sharedStyles from './styles/shared-styles.js';
+import sharedStyles from '@api-viewer/common/lib/shared-styles.js';
+import { setTemplates } from '@api-viewer/common/lib/templates.js';
+import { ApiDemoBase } from './base.js';
+import demoStyles from './styles.js';
 
 export class ApiDemo extends ApiDemoBase {
   static get styles() {

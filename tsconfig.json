@@ -5,16 +5,22 @@
   "files": [],
   "references": [
     {
-      "path": "./packages/api-docs/tsconfig.json"
+      "path": "./packages/api-tabs/tsconfig.json"
     },
     {
       "path": "./packages/api-demo/tsconfig.json"
     },
     {
-      "path": "./packages/api-viewer/tsconfig.json"
+      "path": "./packages/api-docs/tsconfig.json"
     },
     {
       "path": "./fixtures/expansion-panel/tsconfig.json"
+    },
+    {
+      "path": "./packages/api-common/tsconfig.json"
+    },
+    {
+      "path": "./packages/api-viewer/tsconfig.json"
     },
     {
       "path": "./fixtures/fancy-accordion/tsconfig.json"

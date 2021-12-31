@@ -2,11 +2,11 @@
 
 ```js script
 import { html } from '@mdjs/mdjs-preview';
-import '../../../lib/api-viewer.js';
-import '../../../lib/fixtures/expansion-panel.js';
-import '../../../lib/fixtures/fancy-accordion.js';
-import '../../../lib/fixtures/intl-currency.js';
-import '../../../lib/fixtures/progress-bar.js';
+import '../../../packages/api-viewer/lib/api-viewer.js';
+import '../../../fixtures/expansion-panel/lib/expansion-panel.js';
+import '../../../fixtures/fancy-accordion/lib/fancy-accordion.js';
+import '../../../fixtures/intl-currency/lib/intl-currency.js';
+import '../../../fixtures/progress-bar/lib/progress-bar.js';
 ```
 
 ```html preview-story

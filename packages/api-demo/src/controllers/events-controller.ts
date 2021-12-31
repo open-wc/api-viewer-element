@@ -1,6 +1,6 @@
 import { ReactiveController, ReactiveControllerHost } from 'lit';
-import { Event } from '../lib/manifest.js';
-import { HasKnobs } from '../lib/knobs.js';
+import { Event } from '@api-viewer/common';
+import { HasKnobs } from '../ui/knobs.js';
 
 type EventsHost = HTMLElement & ReactiveControllerHost & HasKnobs;
 

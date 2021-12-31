@@ -1,5 +1,5 @@
 {
-  "name": "@api-viewer/demo",
+  "name": "@api-viewer/common",
   "version": "0.1.0",
   "description": "Web Components API viewer element",
   "publishConfig": {
@@ -24,8 +24,8 @@
     }
   ],
   "license": "MIT",
-  "main": "lib/api-demo.js",
-  "module": "lib/api-demo.js",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
   "type": "module",
   "files": [
     "lib"
@@ -43,9 +43,7 @@
     "web-components"
   ],
   "dependencies": {
-    "@api-viewer/common": "^0.1.0",
-    "@api-viewer/tabs": "^0.1.0",
-    "highlight-ts": "9.12.1-2",
+    "custom-elements-manifest": "^1.0.0",
     "lit": "^2.0.0",
     "tslib": "^2.3.1"
   }

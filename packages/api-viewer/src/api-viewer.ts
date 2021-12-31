@@ -1,6 +1,6 @@
-import { ApiViewerBase } from './api-viewer-base.js';
-import { setTemplates } from './lib/utils.js';
-import styles from './styles/viewer-styles.js';
+import { setTemplates } from '@api-viewer/common/lib/templates.js';
+import { ApiViewerBase } from './base.js';
+import styles from './styles.js';
 
 export class ApiViewer extends ApiViewerBase {
   static get styles() {

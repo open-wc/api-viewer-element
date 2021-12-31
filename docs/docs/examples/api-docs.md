@@ -2,7 +2,7 @@
 
 ```js script
 import { html } from '@mdjs/mdjs-preview';
-import '../../../lib/api-docs.js';
+import '../../../packages/api-docs/lib/api-docs.js';
 ```
 
 ```html preview-story

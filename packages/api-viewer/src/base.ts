@@ -2,19 +2,20 @@ import { LitElement, html, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { cache } from 'lit/directives/cache.js';
 import { until } from 'lit/directives/until.js';
-import { parse } from './lib/markdown.js';
 import {
   CustomElement,
+  emptyDataWarning,
   getCustomElements,
   getElementData,
   getPublicFields,
   hasCustomElements,
+  ManifestMixin,
   Package
-} from './lib/manifest.js';
-import { setTemplates } from './lib/utils.js';
-import { ApiViewerMixin, emptyDataWarning } from './api-viewer-mixin.js';
-import './api-viewer-docs.js';
-import './api-viewer-demo.js';
+} from '@api-viewer/common';
+import '@api-viewer/demo/lib/layout.js';
+import '@api-viewer/docs/lib/layout.js';
+import { setTemplates } from '@api-viewer/common/lib/templates.js';
+import { parse } from '@api-viewer/docs/lib/utils/markdown.js';
 
 async function renderDocs(
   jsonFetched: Promise<Package | null>,
@@ -80,7 +81,7 @@ async function renderDocs(
             <div ?hidden=${data.description === ''} part="docs-description">
               ${parse(data.description)}
             </div>
-            <api-viewer-docs
+            <api-docs-layout
               .name=${data.name}
               .props=${props}
               .attrs=${data.attributes ?? []}
@@ -89,10 +90,10 @@ async function renderDocs(
               .cssParts=${data.cssParts ?? []}
               .cssProps=${data.cssProperties ?? []}
               part="docs-container"
-            ></api-viewer-docs>
+            ></api-docs-layout>
           `
         : html`
-            <api-viewer-demo
+            <api-demo-layout
               .tag=${data.name}
               .props=${props}
               .events=${data.events ?? []}
@@ -101,7 +102,7 @@ async function renderDocs(
               .exclude=${exclude}
               .vid=${id}
               part="demo-container"
-            ></api-viewer-demo>
+            ></api-demo-layout>
           `
     )}
   `;
@@ -109,7 +110,7 @@ async function renderDocs(
 
 let id = 0;
 
-export class ApiViewerBase extends ApiViewerMixin(LitElement) {
+export class ApiViewerBase extends ManifestMixin(LitElement) {
   @property() section = 'docs';
 
   @property({ type: String, attribute: 'exclude-knobs' }) excludeKnobs?: string;

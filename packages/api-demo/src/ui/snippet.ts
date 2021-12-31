@@ -4,15 +4,15 @@ import { htmlRender } from 'highlight-ts/es/render/html.js';
 import { registerLanguages } from 'highlight-ts/es/languages.js';
 import { XML } from 'highlight-ts/es/languages/xml.js';
 import { init, process } from 'highlight-ts/es/process.js';
-import { CssCustomPropertyValue, SlotValue } from './manifest.js';
-import { Knob } from './knobs.js';
-import { CSS } from './highlight-css.js';
+import { CssCustomPropertyValue, SlotValue } from '@api-viewer/common';
 import {
   getTemplate,
   getTemplateNode,
   isTemplate,
   TemplateTypes
-} from './utils.js';
+} from '@api-viewer/common/lib/templates.js';
+import { Knob } from './knobs.js';
+import { CSS } from './highlight-css.js';
 
 // register languages
 registerLanguages(CSS, XML);

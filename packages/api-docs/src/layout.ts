@@ -6,14 +6,11 @@ import {
   CssCustomProperty,
   CssPart,
   Event,
-  Slot
-} from './lib/manifest.js';
-import { unquote } from './lib/utils.js';
-import { parse } from './lib/markdown.js';
-
-import './api-viewer-panel.js';
-import './api-viewer-tab.js';
-import './api-viewer-tabs.js';
+  Slot,
+  unquote
+} from '@api-viewer/common';
+import '@api-viewer/tabs';
+import { parse } from './utils/markdown.js';
 
 const renderItem = (
   prefix: string,
@@ -80,7 +77,7 @@ const renderTab = (
   `;
 };
 
-class ApiViewerDocs extends LitElement {
+class ApiDocsLayout extends LitElement {
   @property() name = '';
 
   @property({ attribute: false })
@@ -211,10 +208,10 @@ class ApiViewerDocs extends LitElement {
   }
 }
 
-customElements.define('api-viewer-docs', ApiViewerDocs);
+customElements.define('api-docs-layout', ApiDocsLayout);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'api-viewer-docs': ApiViewerDocs;
+    'api-docs-layout': ApiDocsLayout;
   }
 }

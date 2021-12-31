@@ -1,11 +1,17 @@
 import { LitElement, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { cache } from 'lit/directives/cache.js';
+import { ClassField, CssCustomProperty, Event, Slot } from '@api-viewer/common';
+import {
+  hasTemplate,
+  TemplateTypes
+} from '@api-viewer/common/lib/templates.js';
+import '@api-viewer/tabs';
 import { EventsController } from './controllers/events-controller.js';
 import { SlotsController } from './controllers/slots-controller.js';
 import { StylesController } from './controllers/styles-controller.js';
-import { renderEvents } from './lib/demo-events.js';
-import { renderSnippet } from './lib/demo-snippet.js';
+import { renderEvents } from './ui/events.js';
+import { renderSnippet } from './ui/snippet.js';
 import {
   ComponentWithProps,
   getCustomKnobs,
@@ -13,21 +19,16 @@ import {
   getKnobs,
   Knob,
   KnobValue
-} from './lib/knobs.js';
-import { renderer } from './lib/renderer.js';
+} from './ui/knobs.js';
+import { renderer } from './ui/renderer.js';
 import {
   cssPropRenderer,
   propRenderer,
   renderKnobs,
   slotRenderer
-} from './lib/demo-controls.js';
-import { ClassField, CssCustomProperty, Event, Slot } from './lib/manifest.js';
-import { hasTemplate, TemplateTypes } from './lib/utils.js';
-import './api-viewer-panel.js';
-import './api-viewer-tab.js';
-import './api-viewer-tabs.js';
+} from './ui/controls.js';
 
-class ApiViewerDemo extends LitElement {
+class ApiDemoLayout extends LitElement {
   @property() copyBtnText = 'copy';
 
   @property({ attribute: false })
@@ -393,10 +394,10 @@ class ApiViewerDemo extends LitElement {
   }
 }
 
-customElements.define('api-viewer-demo', ApiViewerDemo);
+customElements.define('api-demo-layout', ApiDemoLayout);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'api-viewer-demo': ApiViewerDemo;
+    'api-demo-layout': ApiDemoLayout;
   }
 }

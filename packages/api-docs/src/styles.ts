@@ -21,7 +21,7 @@ export default css`
     white-space: pre-wrap;
   }
 
-  api-viewer-docs {
+  api-docs-layout {
     display: block;
   }
 

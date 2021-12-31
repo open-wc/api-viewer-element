@@ -1,6 +1,9 @@
 import { ReactiveController, ReactiveControllerHost } from 'lit';
-import { Slot, SlotValue } from '../lib/manifest.js';
-import { getSlotContent, hasTemplate, TemplateTypes } from '../lib/utils.js';
+import { getSlotContent, Slot, SlotValue } from '@api-viewer/common';
+import {
+  hasTemplate,
+  TemplateTypes
+} from '@api-viewer/common/lib/templates.js';
 
 export class SlotsController implements ReactiveController {
   host: ReactiveControllerHost;

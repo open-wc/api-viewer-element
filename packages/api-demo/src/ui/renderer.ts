@@ -2,13 +2,13 @@ import { ChildPart, html, noChange, nothing, TemplateResult } from 'lit';
 import { directive, Directive, PartInfo, PartType } from 'lit/directive.js';
 import { templateContent } from 'lit/directives/template-content.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { ComponentWithProps, Knob } from './knobs.js';
 import {
   getTemplate,
   getTemplateNode,
   isTemplate,
   TemplateTypes
-} from './utils.js';
+} from '@api-viewer/common/lib/templates.js';
+import { ComponentWithProps, Knob } from './knobs.js';
 
 export type ComponentRendererOptions = {
   id: number;

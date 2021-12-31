@@ -1,6 +1,9 @@
 import { ReactiveController, ReactiveControllerHost } from 'lit';
-import { CssCustomProperty, CssCustomPropertyValue } from '../lib/manifest.js';
-import { unquote } from '../lib/utils.js';
+import {
+  CssCustomProperty,
+  CssCustomPropertyValue,
+  unquote
+} from '@api-viewer/common';
 
 export class StylesController implements ReactiveController {
   host: HTMLElement & ReactiveControllerHost;

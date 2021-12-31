@@ -1,7 +1,7 @@
 node_modules
 /lib
-/fixtures/**/lib
-/packages/**/lib
+/fixtures/*/lib
+/packages/*/lib
 /**/*.tsbuildinfo
 /dist
 /custom-elements.json

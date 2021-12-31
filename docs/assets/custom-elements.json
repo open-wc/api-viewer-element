@@ -4,6 +4,188 @@
   "modules": [
     {
       "kind": "javascript-module",
+      "path": "fixtures/expansion-panel/lib/expansion-panel.d.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A custom element similar to the HTML5 `<details>` element.",
+          "name": "ExpansionPanel",
+          "cssProperties": [
+            {
+              "type": {
+                "text": "Background"
+              },
+              "description": "Default panel header background color.",
+              "name": "--panel-header-background",
+              "default": "#fff"
+            },
+            {
+              "description": "Panel header minimum height.",
+              "name": "--panel-header-min-height",
+              "default": "48px"
+            },
+            {
+              "type": {
+                "text": "Background"
+              },
+              "description": "Active toggle button ripple background.",
+              "name": "--panel-ripple-background",
+              "default": "rgba(0, 0, 0, 0.38)"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "An element wrapping the `header` slot.",
+              "name": "header"
+            },
+            {
+              "description": "A toggle button, child of the header part.",
+              "name": "toggle"
+            },
+            {
+              "description": "An element wrapping the `content` slot.",
+              "name": "content"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Slot fot panel content",
+              "name": ""
+            },
+            {
+              "description": "Slot for panel header",
+              "name": "header"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "opened",
+              "type": {
+                "text": "boolean | null | undefined"
+              },
+              "description": "When true, the panel content is expanded and visible"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Disabled panel can not be expanded or collapsed"
+            },
+            {
+              "kind": "field",
+              "name": "header",
+              "type": {
+                "text": "HTMLDivElement | undefined"
+              },
+              "privacy": "protected"
+            },
+            {
+              "kind": "field",
+              "name": "_isShiftTabbing",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected"
+            },
+            {
+              "kind": "field",
+              "name": "_tabPressed",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "protected"
+            },
+            {
+              "kind": "field",
+              "name": "_boundBodyKeydown",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_boundBodyKeyup",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "focus",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_setFocused",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_onToggleClick",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_onToggleKeyDown",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_onBodyKeydown",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_onBodyKeyup",
+              "privacy": "private"
+            }
+          ],
+          "events": [
+            {
+              "description": "Event fired when expanding / collapsing",
+              "name": "opened-changed"
+            }
+          ],
+          "attributes": [
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "State attribute set when element has focus.",
+              "name": "focused"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "State attribute set when focused from keyboard.",
+              "name": "focus-ring"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "expansion-panel",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ExpansionPanel",
+          "declaration": {
+            "name": "ExpansionPanel",
+            "module": "fixtures/expansion-panel/lib/expansion-panel.d.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "fixtures/expansion-panel/src/expansion-panel.ts",
       "declarations": [
         {
@@ -266,188 +448,6 @@
           "declaration": {
             "name": "ExpansionPanel",
             "module": "fixtures/expansion-panel/src/expansion-panel.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "fixtures/expansion-panel/lib/expansion-panel.d.ts",
-      "declarations": [
-        {
-          "kind": "class",
-          "description": "A custom element similar to the HTML5 `<details>` element.",
-          "name": "ExpansionPanel",
-          "cssProperties": [
-            {
-              "type": {
-                "text": "Background"
-              },
-              "description": "Default panel header background color.",
-              "name": "--panel-header-background",
-              "default": "#fff"
-            },
-            {
-              "description": "Panel header minimum height.",
-              "name": "--panel-header-min-height",
-              "default": "48px"
-            },
-            {
-              "type": {
-                "text": "Background"
-              },
-              "description": "Active toggle button ripple background.",
-              "name": "--panel-ripple-background",
-              "default": "rgba(0, 0, 0, 0.38)"
-            }
-          ],
-          "cssParts": [
-            {
-              "description": "An element wrapping the `header` slot.",
-              "name": "header"
-            },
-            {
-              "description": "A toggle button, child of the header part.",
-              "name": "toggle"
-            },
-            {
-              "description": "An element wrapping the `content` slot.",
-              "name": "content"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Slot fot panel content",
-              "name": ""
-            },
-            {
-              "description": "Slot for panel header",
-              "name": "header"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "opened",
-              "type": {
-                "text": "boolean | null | undefined"
-              },
-              "description": "When true, the panel content is expanded and visible"
-            },
-            {
-              "kind": "field",
-              "name": "disabled",
-              "type": {
-                "text": "boolean"
-              },
-              "description": "Disabled panel can not be expanded or collapsed"
-            },
-            {
-              "kind": "field",
-              "name": "header",
-              "type": {
-                "text": "HTMLDivElement | undefined"
-              },
-              "privacy": "protected"
-            },
-            {
-              "kind": "field",
-              "name": "_isShiftTabbing",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "protected"
-            },
-            {
-              "kind": "field",
-              "name": "_tabPressed",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "protected"
-            },
-            {
-              "kind": "field",
-              "name": "_boundBodyKeydown",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_boundBodyKeyup",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "focus",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_setFocused",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_onToggleClick",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_onToggleKeyDown",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_onBodyKeydown",
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_onBodyKeyup",
-              "privacy": "private"
-            }
-          ],
-          "events": [
-            {
-              "description": "Event fired when expanding / collapsing",
-              "name": "opened-changed"
-            }
-          ],
-          "attributes": [
-            {
-              "type": {
-                "text": "boolean"
-              },
-              "description": "State attribute set when element has focus.",
-              "name": "focused"
-            },
-            {
-              "type": {
-                "text": "boolean"
-              },
-              "description": "State attribute set when focused from keyboard.",
-              "name": "focus-ring"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "expansion-panel",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ExpansionPanel",
-          "declaration": {
-            "name": "ExpansionPanel",
-            "module": "fixtures/expansion-panel/lib/expansion-panel.d.ts"
           }
         }
       ]

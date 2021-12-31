@@ -44,6 +44,8 @@
     "web-components"
   ],
   "dependencies": {
+    "@api-viewer/common": "^0.1.0",
+    "@api-viewer/demo": "^0.1.0",
     "@api-viewer/docs": "^0.1.0",
     "lit": "^2.0.0",
     "tslib": "^2.3.1"

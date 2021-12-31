@@ -1,11 +1,11 @@
 import { LitElement, html } from 'lit';
 import { property } from 'lit/decorators/property.js';
-import { fetchManifest, hasCustomElements, Package } from './lib/manifest.js';
+import { fetchManifest, hasCustomElements, Package } from './manifest.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type Constructor<T = unknown> = new (...args: any[]) => T;
 
-export interface ApiViewerInterface {
+export interface ManifestMixinInterface {
   src?: string;
 
   manifest?: Package;
@@ -19,10 +19,10 @@ export const emptyDataWarning = html`
   <div part="warning">No custom elements found in the JSON file.</div>
 `;
 
-export const ApiViewerMixin = <T extends Constructor<LitElement>>(
+export const ManifestMixin = <T extends Constructor<LitElement>>(
   base: T
-): T & Constructor<ApiViewerInterface> => {
-  class ApiViewer extends base {
+): T & Constructor<ManifestMixinInterface> => {
+  class ManifestClass extends base {
     @property() src?: string;
 
     @property({ attribute: false })
@@ -51,5 +51,5 @@ export const ApiViewerMixin = <T extends Constructor<LitElement>>(
     }
   }
 
-  return ApiViewer;
+  return ManifestClass;
 };
