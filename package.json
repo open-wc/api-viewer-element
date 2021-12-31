@@ -12,7 +12,7 @@
     "build": "tsc --build",
     "copy": "cp docs/assets/* _site/assets",
     "dev": "npm run watch & npm run serve",
-    "dist": "npm run fixtures && npm run analyze && patch-package && rocket build && npm run copy",
+    "dist": "npm run fixtures && npm run analyze && rocket build && npm run copy",
     "fixtures": "node scripts/workspaces-scripts-bin.js analyze fixtures && cp fixtures/**/custom-elements.json docs/assets",
     "format": "npm-run-all --parallel format:*",
     "format:md": "prettier \"**/*.md\" --write",
