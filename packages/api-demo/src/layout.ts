@@ -1,7 +1,12 @@
 import { LitElement, html, PropertyValues, TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { cache } from 'lit/directives/cache.js';
-import { ClassField, CssCustomProperty, Event, Slot } from '@api-viewer/common';
+import {
+  ClassField,
+  CssCustomProperty,
+  Event,
+  Slot
+} from '@api-viewer/common/lib/index.js';
 import {
   hasTemplate,
   TemplateTypes

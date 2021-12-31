@@ -3,7 +3,7 @@ import {
   CssCustomProperty,
   CssCustomPropertyValue,
   unquote
-} from '@api-viewer/common';
+} from '@api-viewer/common/lib/index.js';
 
 export class StylesController implements ReactiveController {
   host: HTMLElement & ReactiveControllerHost;

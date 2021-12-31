@@ -4,7 +4,7 @@ import {
   CssCustomPropertyValue,
   getSlotContent,
   SlotValue
-} from '@api-viewer/common';
+} from '@api-viewer/common/lib/index.js';
 import { Knob, Knobable } from './knobs.js';
 
 type InputRenderer = (item: Knobable, id: string) => TemplateResult;

@@ -1,5 +1,9 @@
 import { ReactiveController, ReactiveControllerHost } from 'lit';
-import { getSlotContent, Slot, SlotValue } from '@api-viewer/common';
+import {
+  getSlotContent,
+  Slot,
+  SlotValue
+} from '@api-viewer/common/lib/index.js';
 import {
   hasTemplate,
   TemplateTypes

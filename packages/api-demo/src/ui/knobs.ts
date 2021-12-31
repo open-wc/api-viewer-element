@@ -1,4 +1,8 @@
-import { ClassField, CssCustomProperty, SlotValue } from '@api-viewer/common';
+import {
+  ClassField,
+  CssCustomProperty,
+  SlotValue
+} from '@api-viewer/common/lib/index.js';
 import {
   getTemplates,
   TemplateTypes,

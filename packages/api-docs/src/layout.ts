@@ -8,7 +8,7 @@ import {
   Event,
   Slot,
   unquote
-} from '@api-viewer/common';
+} from '@api-viewer/common/lib/index.js';
 import '@api-viewer/tabs';
 import { parse } from './utils/markdown.js';
 
