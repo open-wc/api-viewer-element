@@ -4,7 +4,7 @@
   "modules": [
     {
       "kind": "javascript-module",
-      "path": "src/fixtures/expansion-panel.ts",
+      "path": "src/expansion-panel.ts",
       "declarations": [
         {
           "kind": "class",
@@ -257,7 +257,7 @@
           "name": "ExpansionPanel",
           "declaration": {
             "name": "ExpansionPanel",
-            "module": "src/fixtures/expansion-panel.ts"
+            "module": "src/expansion-panel.ts"
           }
         },
         {
@@ -265,14 +265,14 @@
           "name": "expansion-panel",
           "declaration": {
             "name": "ExpansionPanel",
-            "module": "src/fixtures/expansion-panel.ts"
+            "module": "src/expansion-panel.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/fixtures/fancy-accordion.ts",
+      "path": "src/fancy-accordion.ts",
       "declarations": [
         {
           "kind": "class",
@@ -424,7 +424,7 @@
           "name": "FancyAccordion",
           "declaration": {
             "name": "FancyAccordion",
-            "module": "src/fixtures/fancy-accordion.ts"
+            "module": "src/fancy-accordion.ts"
           }
         },
         {
@@ -432,14 +432,14 @@
           "name": "fancy-accordion",
           "declaration": {
             "name": "FancyAccordion",
-            "module": "src/fixtures/fancy-accordion.ts"
+            "module": "src/fancy-accordion.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/fixtures/intl-currency.ts",
+      "path": "src/intl-currency.ts",
       "declarations": [
         {
           "kind": "class",
@@ -520,7 +520,7 @@
           "name": "IntlCurrency",
           "declaration": {
             "name": "IntlCurrency",
-            "module": "src/fixtures/intl-currency.ts"
+            "module": "src/intl-currency.ts"
           }
         },
         {
@@ -528,14 +528,14 @@
           "name": "intl-currency",
           "declaration": {
             "name": "IntlCurrency",
-            "module": "src/fixtures/intl-currency.ts"
+            "module": "src/intl-currency.ts"
           }
         }
       ]
     },
     {
       "kind": "javascript-module",
-      "path": "src/fixtures/progress-bar.ts",
+      "path": "src/progress-bar.ts",
       "declarations": [
         {
           "kind": "class",
@@ -745,7 +745,7 @@
           "name": "ProgressBar",
           "declaration": {
             "name": "ProgressBar",
-            "module": "src/fixtures/progress-bar.ts"
+            "module": "src/progress-bar.ts"
           }
         },
         {
@@ -753,7 +753,7 @@
           "name": "progress-bar",
           "declaration": {
             "name": "ProgressBar",
-            "module": "src/fixtures/progress-bar.ts"
+            "module": "src/progress-bar.ts"
           }
         }
       ]

@@ -1,0 +1,50 @@
+{
+  "name": "@api-viewer/tabs",
+  "version": "1.0.0-pre.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Tabs web component used by the API Viewer",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/open-wc/api-viewer-element.git",
+    "directory": "packages/api-tabs"
+  },
+  "author": "open-wc",
+  "bugs": {
+    "url": "https://github.com/open-wc/api-viewer-element/issues"
+  },
+  "main": "lib/api-viewer-tabs.js",
+  "module": "lib/api-viewer-tabs.js",
+  "type": "module",
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "API",
+    "documentation",
+    "web-components"
+  ],
+  "dependencies": {
+    "lit": "^2.0.0",
+    "tslib": "^2.3.1"
+  },
+  "contributors": [
+    {
+      "name": "Serhii Kulykov",
+      "email": "iamkulykov@gmail.com",
+      "url": "https://twitter.com/serhiikulykov"
+    },
+    {
+      "name": "Benny Powers",
+      "email": "web@bennypowers.com",
+      "url": "https://twitter.com/PowersBenny"
+    },
+    {
+      "name": "Mikhail Bashkirov",
+      "email": "bashmish@gmail.com",
+      "url": "https://twitter.com/bashmish"
+    }
+  ]
+}

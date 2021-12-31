@@ -1,0 +1,13 @@
+{
+  "mode": "pre",
+  "tag": "pre",
+  "initialVersions": {
+    "@api-viewer/common": "1.0.0-pre.0",
+    "@api-viewer/demo": "1.0.0-pre.0",
+    "@api-viewer/docs": "1.0.0-pre.0",
+    "@api-viewer/tabs": "1.0.0-pre.0",
+    "api-viewer-element": "1.0.0-pre.0",
+    "@api-viewer-fixtures/lit": "0.0.0"
+  },
+  "changesets": []
+}

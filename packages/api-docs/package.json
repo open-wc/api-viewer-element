@@ -1,0 +1,68 @@
+{
+  "name": "@api-viewer/docs",
+  "version": "1.0.0-pre.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "API documentation viewer for Web Components",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/open-wc/api-viewer-element.git",
+    "directory": "packages/api-docs"
+  },
+  "author": "open-wc",
+  "bugs": {
+    "url": "https://github.com/open-wc/api-viewer-element/issues"
+  },
+  "main": "lib/api-docs.js",
+  "module": "lib/api-docs.js",
+  "type": "module",
+  "scripts": {
+    "analyze": "cem analyze --litelement --globs 'src/*.ts'",
+    "size": "size-limit"
+  },
+  "files": [
+    "custom-elements.json",
+    "lib"
+  ],
+  "keywords": [
+    "API",
+    "documentation",
+    "web-components"
+  ],
+  "dependencies": {
+    "@api-viewer/common": "^1.0.0-pre.0",
+    "@api-viewer/tabs": "^1.0.0-pre.0",
+    "@types/dompurify": "^2.3.1",
+    "@types/marked": "^4.0.0",
+    "dompurify": "^2.3.3",
+    "lit": "^2.0.0",
+    "marked": "^4.0.0",
+    "tslib": "^2.3.1"
+  },
+  "contributors": [
+    {
+      "name": "Serhii Kulykov",
+      "email": "iamkulykov@gmail.com",
+      "url": "https://twitter.com/serhiikulykov"
+    },
+    {
+      "name": "Benny Powers",
+      "email": "web@bennypowers.com",
+      "url": "https://twitter.com/PowersBenny"
+    },
+    {
+      "name": "Mikhail Bashkirov",
+      "email": "bashmish@gmail.com",
+      "url": "https://twitter.com/bashmish"
+    }
+  ],
+  "customElements": "custom-elements.json",
+  "size-limit": [
+    {
+      "path": "lib/api-docs.js",
+      "limit": "30 KB"
+    }
+  ]
+}

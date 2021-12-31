@@ -24,7 +24,7 @@ import 'api-viewer-element';
 A custom element that only provides API docs (no live playground):
 
 ```js
-import 'api-viewer-element/lib/api-docs.js';
+import '@api-viewer/docs';
 ```
 
 ### `<api-demo>` element
@@ -32,7 +32,7 @@ import 'api-viewer-element/lib/api-docs.js';
 A custom element that only provides live playground (no API docs):
 
 ```js
-import 'api-viewer-element/lib/api-demo.js';
+import '@api-viewer/demo';
 ```
 
 Note: the default entrypoint shares most of the code with both `<api-docs>` and `<api-demo>`.
@@ -54,8 +54,8 @@ If you don't need [`<template>` support](../templates/) in the live demo, feel f
 API documentation does not use templates.
 
 ```js
-import { ApiViewerBase } from 'api-viewer-element/lib/api-viewer-base.js';
-import { setTemplates } from 'api-viewer-element/lib/lib/utils.js';
+import { ApiViewerBase } from 'api-viewer-element/lib/base.js';
+import { setTemplates } from '@api-viewer/common/lib/templates.js';
 import { css } from 'lit';
 
 class CustomViewer extends ApiViewerBase {
@@ -71,7 +71,10 @@ class CustomViewer extends ApiViewerBase {
   }
 
   setTemplates(templates) {
-    setTemplates(this._id, templates || Array.from(this.querySelectorAll('template')));
+    setTemplates(
+      this._id,
+      templates || Array.from(this.querySelectorAll('template'))
+    );
   }
 }
 
@@ -83,7 +86,7 @@ customElements.define('custom-viewer', CustomViewer);
 A class that you can use to create your own version of `<api-docs>`.
 
 ```js
-import { ApiDocsBase } from 'api-viewer-element/lib/api-docs-base.js';
+import { ApiDocsBase } from '@api-viewer/docs/lib/base.js';
 import { css } from 'lit';
 
 class CustomDocs extends ApiDocsBase {
@@ -102,8 +105,8 @@ customElements.define('custom-docs', CustomDocs);
 A class that you can use to create your own version of `<api-demo>`.
 
 ```js
-import { ApiDemoBase } from 'api-viewer-element/lib/api-demo-base.js';
-import { setTemplates } from 'api-viewer-element/lib/lib/utils.js';
+import { ApiDemoBase } from '@api-viewer/demo/lib/base.js';
+import { setTemplates } from '@api-viewer/common/lib/templates.js';
 import { css } from 'lit';
 
 class CustomDemo extends ApiDemoBase {
@@ -119,7 +122,10 @@ class CustomDemo extends ApiDemoBase {
   }
 
   setTemplates(templates) {
-    setTemplates(this._id, templates || Array.from(this.querySelectorAll('template')));
+    setTemplates(
+      this._id,
+      templates || Array.from(this.querySelectorAll('template'))
+    );
   }
 }
 
