@@ -18,6 +18,9 @@
   "main": "lib/api-viewer.js",
   "module": "lib/api-viewer.js",
   "type": "module",
+  "scripts": {
+    "size": "size-limit"
+  },
   "files": [
     "lib"
   ],
@@ -48,6 +51,12 @@
       "name": "Mikhail Bashkirov",
       "email": "bashmish@gmail.com",
       "url": "https://twitter.com/bashmish"
+    }
+  ],
+  "size-limit": [
+    {
+      "path": "lib/api-viewer.js",
+      "limit": "38.5 KB"
     }
   ]
 }

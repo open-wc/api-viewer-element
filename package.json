@@ -22,8 +22,7 @@
     "prepublishOnly": "run-s build analyze",
     "prestart": "patch-package",
     "serve": "web-dev-server --node-resolve",
-    "size": "size-limit",
-    "size:why": "size-limit --why",
+    "size": "node scripts/workspaces-scripts-bin.js size",
     "start": "rocket start",
     "update:tsconfigs": "node scripts/generate-ts-configs.js",
     "watch": "tsc-watch"
@@ -39,6 +38,7 @@
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
     "@web/dev-server": "^0.1.28",
+    "concurrently": "^6.5.1",
     "deepmerge": "^4.2.2",
     "eslint": "^8.4.0",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -99,20 +99,6 @@
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
   },
-  "size-limit": [
-    {
-      "path": "lib/api-docs.js",
-      "limit": "30 KB"
-    },
-    {
-      "path": "lib/api-demo.js",
-      "limit": "19 KB"
-    },
-    {
-      "path": "lib/api-viewer.js",
-      "limit": "38.5 KB"
-    }
-  ],
   "workspaces": [
     "packages/*",
     "fixtures/*"
