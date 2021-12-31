@@ -5,9 +5,9 @@ import {
   unquote
 } from '@api-viewer/common/lib/index.js';
 import {
+  getTemplateNode,
   getTemplates,
-  TemplateTypes,
-  getTemplateNode
+  TemplateTypes
 } from '@api-viewer/common/lib/templates.js';
 
 export type KnobValue = string | number | boolean | null | undefined;

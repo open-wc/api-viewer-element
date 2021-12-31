@@ -4,7 +4,10 @@ import { htmlRender } from 'highlight-ts/es/render/html.js';
 import { registerLanguages } from 'highlight-ts/es/languages.js';
 import { XML } from 'highlight-ts/es/languages/xml.js';
 import { init, process } from 'highlight-ts/es/process.js';
-import { CssCustomPropertyValue, SlotValue } from '@api-viewer/common';
+import {
+  CssCustomPropertyValue,
+  SlotValue
+} from '@api-viewer/common/lib/index.js';
 import {
   getTemplate,
   getTemplateNode,
