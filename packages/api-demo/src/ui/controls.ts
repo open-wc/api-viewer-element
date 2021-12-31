@@ -2,7 +2,6 @@ import { html, TemplateResult } from 'lit';
 import {
   ClassField,
   CssCustomPropertyValue,
-  getSlotContent,
   SlotValue
 } from '@api-viewer/common/lib/index.js';
 import { Knob, Knobable } from './knobs.js';
@@ -91,10 +90,9 @@ export const renderKnobs = (
   renderer: InputRenderer
 ): TemplateResult => {
   const rows = items.map((item: Knobable) => {
-    // NOTE: type cast is fine, as we default it on next line
-    const { name } = item as Knob<ClassField>;
+    const { name, content } = item as Knob<ClassField>;
     const id = `${type}-${name || 'default'}`;
-    const label = type === 'slot' ? getSlotContent(name) : name;
+    const label = type === 'slot' ? content : name;
     return html`
       <tr>
         <td>

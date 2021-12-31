@@ -1,13 +1,15 @@
 import { ReactiveController, ReactiveControllerHost } from 'lit';
-import {
-  getSlotContent,
-  Slot,
-  SlotValue
-} from '@api-viewer/common/lib/index.js';
+import { Slot, SlotValue } from '@api-viewer/common/lib/index.js';
 import {
   hasTemplate,
   TemplateTypes
 } from '@api-viewer/common/lib/templates.js';
+
+const capitalize = (name: string): string =>
+  name[0].toUpperCase() + name.slice(1);
+
+const getSlotContent = (name: string): string =>
+  capitalize(name === '' ? 'content' : name);
 
 export class SlotsController implements ReactiveController {
   host: ReactiveControllerHost;
