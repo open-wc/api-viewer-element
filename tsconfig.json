@@ -5,6 +5,9 @@
   "files": [],
   "references": [
     {
+      "path": "./packages/api-common/tsconfig.json"
+    },
+    {
       "path": "./packages/api-tabs/tsconfig.json"
     },
     {
@@ -15,9 +18,6 @@
     },
     {
       "path": "./fixtures/expansion-panel/tsconfig.json"
-    },
-    {
-      "path": "./packages/api-common/tsconfig.json"
     },
     {
       "path": "./packages/api-viewer/tsconfig.json"

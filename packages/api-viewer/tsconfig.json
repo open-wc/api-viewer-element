@@ -10,6 +10,9 @@
   },
   "references": [
     {
+      "path": "../api-common/tsconfig.json"
+    },
+    {
       "path": "../api-tabs/tsconfig.json"
     },
     {
