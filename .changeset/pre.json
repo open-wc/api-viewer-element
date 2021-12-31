@@ -9,5 +9,8 @@
     "api-viewer-element": "1.0.0-pre.0",
     "@api-viewer-fixtures/lit": "0.0.0"
   },
-  "changesets": []
+  "changesets": [
+    "gorgeous-trees-smash",
+    "rich-berries-prove"
+  ]
 }
