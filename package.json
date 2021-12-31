@@ -1,33 +1,43 @@
 {
   "name": "api-viewer-workspace",
-  "private": true,
   "version": "0.6.4",
+  "private": true,
   "description": "Web Components API viewer element",
-  "author": "open-wc",
-  "contributors": [
-    {
-      "name": "Serhii Kulykov",
-      "email": "iamkulykov@gmail.com",
-      "url": "https://twitter.com/serhiikulykov"
-    },
-    {
-      "name": "Benny Powers",
-      "email": "web@bennypowers.com",
-      "url": "https://twitter.com/PowersBenny"
-    },
-    {
-      "name": "Mikhail Bashkirov",
-      "email": "bashmish@gmail.com",
-      "url": "https://twitter.com/bashmish"
-    }
-  ],
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/open-wc/api-viewer-element.git"
   },
+  "author": "open-wc",
   "bugs": {
     "url": "https://github.com/open-wc/api-viewer-element/issues"
+  },
+  "main": "lib/api-viewer.js",
+  "module": "lib/api-viewer.js",
+  "type": "module",
+  "engines": {
+    "node": "^14.13.1 || >=16.0.0"
+  },
+  "scripts": {
+    "analyze": "cem analyze --litelement --globs 'packages/**/*.ts'",
+    "build": "tsc --build",
+    "copy": "cp docs/assets/* _site/assets",
+    "dev": "npm run watch & npm run serve",
+    "dist": "npm run fixtures && npm run analyze && patch-package && rocket build && npm run copy",
+    "fixtures": "cem analyze --litelement --outdir docs/assets --globs 'fixtures/**/*.ts'",
+    "format": "prettier \"**/*.{ts,md}\" \"**/package.json\" --write",
+    "lint": "npm-run-all --parallel lint:*",
+    "lint:css": "stylelint src/**/*.ts",
+    "lint:eslint": "eslint src scripts",
+    "lint:lit": "lit-analyzer src --strict",
+    "prepublishOnly": "run-s build analyze",
+    "prestart": "patch-package",
+    "serve": "web-dev-server --node-resolve",
+    "size": "size-limit",
+    "size:why": "size-limit --why",
+    "start": "rocket start",
+    "update:tsconfigs": "node scripts/generate-ts-configs.js",
+    "watch": "tsc-watch"
   },
   "keywords": [
     "API",
@@ -39,33 +49,6 @@
     "custom-elements",
     "lit-element"
   ],
-  "main": "lib/api-viewer.js",
-  "module": "lib/api-viewer.js",
-  "type": "module",
-  "engines": {
-    "node": "^14.13.1 || >=16.0.0"
-  },
-  "customElements": "custom-elements.json",
-  "scripts": {
-    "analyze": "cem analyze --litelement --globs 'packages/**/*.ts'",
-    "build": "tsc --build",
-    "copy": "cp docs/assets/* _site/assets",
-    "dev": "npm run watch & npm run serve",
-    "dist": "npm run fixtures && npm run analyze && patch-package && rocket build && npm run copy",
-    "fixtures": "cem analyze --litelement --outdir docs/assets --globs 'fixtures/**/*.ts'",
-    "lint:css": "stylelint src/**/*.ts",
-    "lint:eslint": "eslint src scripts",
-    "lint:lit": "lit-analyzer src --strict",
-    "lint": "npm-run-all --parallel lint:*",
-    "prestart": "patch-package",
-    "prepublishOnly": "run-s build analyze",
-    "serve": "web-dev-server --node-resolve",
-    "size": "size-limit",
-    "size:why": "size-limit --why",
-    "start": "rocket start",
-    "update:tsconfigs": "node scripts/generate-ts-configs.js",
-    "watch": "tsc-watch"
-  },
   "devDependencies": {
     "@changesets/cli": "^2.19.0",
     "@custom-elements-manifest/analyzer": "^0.5.7",
@@ -92,6 +75,7 @@
     "picocolors": "^1.0.0",
     "postcss-lit": "^0.1.2",
     "prettier": "^2.5.1",
+    "prettier-plugin-package": "^1.3.0",
     "rimraf": "^3.0.2",
     "simple-git-hooks": "^2.7.0",
     "size-limit": "^6.0.4",
@@ -109,14 +93,32 @@
     "prismjs": "^1.25.0",
     "pug": "^3.0.1"
   },
-  "simple-git-hooks": {
-    "pre-commit": "npx lint-staged"
-  },
+  "contributors": [
+    {
+      "name": "Serhii Kulykov",
+      "email": "iamkulykov@gmail.com",
+      "url": "https://twitter.com/serhiikulykov"
+    },
+    {
+      "name": "Benny Powers",
+      "email": "web@bennypowers.com",
+      "url": "https://twitter.com/PowersBenny"
+    },
+    {
+      "name": "Mikhail Bashkirov",
+      "email": "bashmish@gmail.com",
+      "url": "https://twitter.com/bashmish"
+    }
+  ],
+  "customElements": "custom-elements.json",
   "lint-staged": {
     "*.ts": [
       "eslint --fix",
       "prettier --write"
     ]
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
   },
   "size-limit": [
     {

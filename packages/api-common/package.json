@@ -1,11 +1,36 @@
 {
   "name": "@api-viewer/common",
   "version": "1.0.0-pre.0",
-  "description": "Web Components API viewer element",
   "publishConfig": {
     "access": "public"
   },
+  "description": "Web Components API viewer element",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/open-wc/api-viewer-element.git",
+    "directory": "packages/api-common"
+  },
   "author": "open-wc",
+  "bugs": {
+    "url": "https://github.com/open-wc/api-viewer-element/issues"
+  },
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "type": "module",
+  "files": [
+    "lib"
+  ],
+  "keywords": [
+    "API",
+    "documentation",
+    "web-components"
+  ],
+  "dependencies": {
+    "custom-elements-manifest": "^1.0.0",
+    "lit": "^2.0.0",
+    "tslib": "^2.3.1"
+  },
   "contributors": [
     {
       "name": "Serhii Kulykov",
@@ -22,30 +47,5 @@
       "email": "bashmish@gmail.com",
       "url": "https://twitter.com/bashmish"
     }
-  ],
-  "license": "MIT",
-  "main": "lib/index.js",
-  "module": "lib/index.js",
-  "type": "module",
-  "files": [
-    "lib"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/open-wc/api-viewer-element.git",
-    "directory": "packages/api-common"
-  },
-  "bugs": {
-    "url": "https://github.com/open-wc/api-viewer-element/issues"
-  },
-  "keywords": [
-    "API",
-    "documentation",
-    "web-components"
-  ],
-  "dependencies": {
-    "custom-elements-manifest": "^1.0.0",
-    "lit": "^2.0.0",
-    "tslib": "^2.3.1"
-  }
+  ]
 }
