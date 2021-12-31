@@ -1,55 +1,25 @@
-import { ReactiveController, ReactiveControllerHost } from 'lit';
 import {
   CssCustomProperty,
   CssCustomPropertyValue,
   unquote
 } from '@api-viewer/common/lib/index.js';
+import {
+  AbstractController,
+  AbstractControllerHost
+} from './abstract-controller.js';
 
-export class StylesController implements ReactiveController {
-  host: HTMLElement & ReactiveControllerHost;
-
-  el: HTMLElement;
-
-  private _css: CssCustomPropertyValue[] = [];
-
-  get css(): CssCustomPropertyValue[] {
-    return this._css;
-  }
-
-  set css(cssProps: CssCustomPropertyValue[]) {
-    this._css = cssProps;
-
-    if (cssProps.length) {
-      cssProps.forEach((prop) => {
-        const { name, value } = prop;
-        if (value) {
-          if (value === prop.default) {
-            this.el.style.removeProperty(name);
-          } else {
-            this.el.style.setProperty(name, value);
-          }
-        }
-      });
-    }
-
-    // Update the demo snippet
-    if (this.host.isConnected) {
-      this.host.requestUpdate();
-    }
-  }
-
+export class StylesController extends AbstractController<CssCustomPropertyValue> {
   constructor(
-    host: HTMLElement & ReactiveControllerHost,
+    host: AbstractControllerHost,
     component: HTMLElement,
     cssProps: CssCustomProperty[]
   ) {
-    (this.host = host).addController(this);
-    this.el = component;
+    super(host, component);
 
     if (cssProps.length) {
       const style = getComputedStyle(component);
 
-      this.css = cssProps.map((cssProp) => {
+      this.data = cssProps.map((cssProp) => {
         let value = cssProp.default
           ? unquote(cssProp.default)
           : style.getPropertyValue(cssProp.name);
@@ -66,12 +36,8 @@ export class StylesController implements ReactiveController {
     }
   }
 
-  hostDisconnected() {
-    this.css = [];
-  }
-
   setValue(name: string, value: string) {
-    this.css = this.css.map((prop) => {
+    this.data = this.data.map((prop) => {
       return prop.name === name
         ? {
             ...prop,
@@ -79,5 +45,22 @@ export class StylesController implements ReactiveController {
           }
         : prop;
     });
+  }
+
+  updateData(data: CssCustomPropertyValue[]) {
+    super.updateData(data);
+
+    if (data.length) {
+      data.forEach((prop) => {
+        const { name, value } = prop;
+        if (value) {
+          if (value === prop.default) {
+            this.el.style.removeProperty(name);
+          } else {
+            this.el.style.setProperty(name, value);
+          }
+        }
+      });
+    }
   }
 }
