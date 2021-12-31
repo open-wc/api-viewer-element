@@ -4,7 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "Web Components API viewer element",
+  "description": "Live demo playground for Web Components",
   "license": "MIT",
   "repository": {
     "type": "git",

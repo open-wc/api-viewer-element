@@ -4,7 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "Web Components API viewer element",
+  "description": "Tabs web component used by the API Viewer",
   "license": "MIT",
   "repository": {
     "type": "git",
