@@ -1,6 +1,6 @@
 {
   "name": "api-viewer-element",
-  "version": "1.0.0-pre.1",
+  "version": "1.0.0-pre.2",
   "publishConfig": {
     "access": "public"
   },
@@ -32,9 +32,9 @@
     "web-components"
   ],
   "dependencies": {
-    "@api-viewer/common": "^1.0.0-pre.1",
-    "@api-viewer/demo": "^1.0.0-pre.1",
-    "@api-viewer/docs": "^1.0.0-pre.1",
+    "@api-viewer/common": "^1.0.0-pre.2",
+    "@api-viewer/demo": "^1.0.0-pre.2",
+    "@api-viewer/docs": "^1.0.0-pre.2",
     "lit": "^2.0.0",
     "tslib": "^2.3.1"
   },
