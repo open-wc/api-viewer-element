@@ -26,13 +26,6 @@ export {
   Slot
 };
 
-export type CssCustomPropertyValue = CssCustomProperty & { value?: string };
-
-export interface SlotValue {
-  name: string;
-  content: string;
-}
-
 export function hasCustomElements(
   manifest?: Package | null
 ): manifest is Package {

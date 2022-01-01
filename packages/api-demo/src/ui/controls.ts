@@ -1,10 +1,10 @@
 import { html, TemplateResult } from 'lit';
 import {
-  ClassField,
   CssCustomPropertyValue,
+  Knobable,
+  PropertyKnob,
   SlotValue
-} from '@api-viewer/common/lib/index.js';
-import { Knob, Knobable } from './knobs.js';
+} from '../types.js';
 
 type InputRenderer = (item: Knobable, id: string) => TemplateResult;
 
@@ -29,7 +29,7 @@ export const propRenderer: InputRenderer = (
   knob: Knobable,
   id: string
 ): TemplateResult => {
-  const { name, knobType, value, options } = knob as Knob<ClassField>;
+  const { name, knobType, value, options } = knob as PropertyKnob;
   let input;
   if (knobType === 'select' && Array.isArray(options)) {
     input = html`
@@ -90,7 +90,7 @@ export const renderKnobs = (
   renderer: InputRenderer
 ): TemplateResult => {
   const rows = items.map((item: Knobable) => {
-    const { name, content } = item as Knob<ClassField>;
+    const { name, content } = item as PropertyKnob;
     const id = `${type}-${name || 'default'}`;
     const label = type === 'slot' ? content : name;
     return html`

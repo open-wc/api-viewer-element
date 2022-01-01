@@ -1,11 +1,7 @@
 import { html, nothing, TemplateResult } from 'lit';
-import { KnobValue } from './knobs.js';
+import { KnobValue } from '../types.js';
 
-interface EventDetail {
-  value: KnobValue;
-}
-
-const renderDetail = (detail: EventDetail): string => {
+const renderDetail = (detail: { value: KnobValue }): string => {
   const result = detail;
   const undef = 'undefined';
   if ('value' in detail && detail.value === undefined) {

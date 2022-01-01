@@ -1,38 +1,12 @@
-import {
-  ClassField,
-  CssCustomProperty,
-  SlotValue,
-  unquote
-} from '@api-viewer/common/lib/index.js';
+import { ClassField, unquote } from '@api-viewer/common/lib/index.js';
 import {
   getTemplateNode,
   getTemplates,
   TemplateTypes
 } from '@api-viewer/common/lib/templates.js';
+import { ComponentWithProps, KnobValue, PropertyKnob } from '../types.js';
 
-export type KnobValue = string | number | boolean | null | undefined;
-
-export type ComponentWithProps = {
-  [key: string]: KnobValue;
-};
-
-export type Knobable = unknown | (CssCustomProperty | ClassField | SlotValue);
-
-export type Knob<T extends Knobable = unknown> = T & {
-  attribute: string | undefined;
-  value: KnobValue;
-  custom?: boolean;
-  options?: string[];
-  knobType: string;
-  content?: string;
-};
-
-export interface HasKnobs {
-  getKnob(name: string): { knob: Knob<ClassField>; custom?: boolean };
-  syncKnob(component: Element, changed: Knob<ClassField>): void;
-}
-
-const getDefault = (prop: Knob<ClassField>): KnobValue => {
+const getDefault = (prop: PropertyKnob): KnobValue => {
   const { knobType, default: value } = prop;
   switch (knobType) {
     case 'boolean':
@@ -75,12 +49,12 @@ export const getKnobs = (
   tag: string,
   props: ClassField[],
   exclude = ''
-): Knob<ClassField>[] => {
+): PropertyKnob[] => {
   // Exclude getters and specific properties
   let propKnobs = props.filter(
     ({ name }) =>
       !exclude.includes(name) && !isGetter(customElements.get(tag), name)
-  ) as Knob<ClassField>[];
+  ) as PropertyKnob[];
 
   // Set knob types and default knobs values
   propKnobs = propKnobs.map((prop) => {
@@ -99,10 +73,7 @@ export const getKnobs = (
   return propKnobs;
 };
 
-export const getCustomKnobs = (
-  tag: string,
-  vid?: number
-): Knob<ClassField>[] => {
+export const getCustomKnobs = (tag: string, vid?: number): PropertyKnob[] => {
   return getTemplates(vid as number, tag, TemplateTypes.KNOB)
     .map((template) => {
       const { attr, type } = template.dataset;
@@ -134,15 +105,15 @@ export const getCustomKnobs = (
           };
         }
       }
-      return result as Knob<ClassField>;
+      return result as PropertyKnob;
     })
     .filter(Boolean);
 };
 
 export const getInitialKnobs = (
-  propKnobs: Knob<ClassField>[],
+  propKnobs: PropertyKnob[],
   component: HTMLElement
-): Knob<ClassField>[] => {
+): PropertyKnob[] => {
   return propKnobs.filter((prop) => {
     const { name, knobType } = prop;
     const defaultValue = getDefault(prop);

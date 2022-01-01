@@ -3,7 +3,7 @@ import {
   AbstractController,
   AbstractControllerHost
 } from './abstract-controller.js';
-import { HasKnobs } from '../ui/knobs.js';
+import { HasKnobs } from '../types.js';
 
 export class EventsController extends AbstractController<CustomEvent> {
   constructor(

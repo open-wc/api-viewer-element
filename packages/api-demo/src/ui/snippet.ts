@@ -5,17 +5,13 @@ import { registerLanguages } from 'highlight-ts/es/languages.js';
 import { XML } from 'highlight-ts/es/languages/xml.js';
 import { init, process } from 'highlight-ts/es/process.js';
 import {
-  CssCustomPropertyValue,
-  SlotValue
-} from '@api-viewer/common/lib/index.js';
-import {
   getTemplate,
   getTemplateNode,
   isTemplate,
   TemplateTypes
 } from '@api-viewer/common/lib/templates.js';
-import { Knob } from './knobs.js';
 import { CSS } from './highlight-css.js';
+import { CssCustomPropertyValue, Knob, SlotValue } from '../types.js';
 
 // register languages
 registerLanguages(CSS, XML);
