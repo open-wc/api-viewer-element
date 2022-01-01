@@ -1,4 +1,4 @@
-import { Slot, SlotValue } from '@api-viewer/common/lib/index.js';
+import { Slot } from '@api-viewer/common/lib/index.js';
 import {
   hasTemplate,
   TemplateTypes
@@ -7,6 +7,7 @@ import {
   AbstractController,
   AbstractControllerHost
 } from './abstract-controller.js';
+import { SlotValue } from '../types.js';
 
 const capitalize = (name: string): string =>
   name[0].toUpperCase() + name.slice(1);

@@ -17,14 +17,7 @@ import { SlotsController } from './controllers/slots-controller.js';
 import { StylesController } from './controllers/styles-controller.js';
 import { renderEvents } from './ui/events.js';
 import { renderSnippet } from './ui/snippet.js';
-import {
-  ComponentWithProps,
-  getCustomKnobs,
-  getInitialKnobs,
-  getKnobs,
-  Knob,
-  KnobValue
-} from './ui/knobs.js';
+import { getCustomKnobs, getInitialKnobs, getKnobs } from './ui/knobs.js';
 import { renderer } from './ui/renderer.js';
 import {
   cssPropRenderer,
@@ -32,6 +25,7 @@ import {
   renderKnobs,
   slotRenderer
 } from './ui/controls.js';
+import { ComponentWithProps, Knob, KnobValue, PropertyKnob } from './types.js';
 
 class ApiDemoLayout extends LitElement {
   @property() copyBtnText = 'copy';
@@ -55,13 +49,13 @@ class ApiDemoLayout extends LitElement {
   @property({ type: Number }) vid?: number;
 
   @property({ attribute: false })
-  customKnobs!: Knob<ClassField>[];
+  customKnobs!: PropertyKnob[];
 
   @property({ attribute: false })
   knobs!: Record<string, Knob>;
 
   @property({ attribute: false })
-  propKnobs!: Knob<ClassField>[];
+  propKnobs!: PropertyKnob[];
 
   private _whenDefined: Record<string, Promise<unknown>> = {};
 
@@ -310,15 +304,15 @@ class ApiDemoLayout extends LitElement {
   }
 
   getKnob(name: string): {
-    knob: Knob<ClassField>;
+    knob: PropertyKnob;
     custom?: boolean;
   } {
-    const isMatch = (prop: Knob<ClassField>): boolean =>
+    const isMatch = (prop: PropertyKnob): boolean =>
       prop.name === name || prop.attribute === name;
     let knob = this.propKnobs.find(isMatch);
     let custom = false;
     if (!knob) {
-      knob = this.customKnobs.find(isMatch) as Knob<ClassField>;
+      knob = this.customKnobs.find(isMatch) as PropertyKnob;
       custom = true;
     }
     return { knob, custom };
@@ -342,7 +336,7 @@ class ApiDemoLayout extends LitElement {
     };
   }
 
-  syncKnob(component: Element, changed: Knob<ClassField>): void {
+  syncKnob(component: Element, changed: PropertyKnob): void {
     const { name, knobType, attribute } = changed;
     const value = (component as unknown as ComponentWithProps)[name];
 

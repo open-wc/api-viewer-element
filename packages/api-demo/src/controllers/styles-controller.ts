@@ -1,12 +1,9 @@
-import {
-  CssCustomProperty,
-  CssCustomPropertyValue,
-  unquote
-} from '@api-viewer/common/lib/index.js';
+import { CssCustomProperty, unquote } from '@api-viewer/common/lib/index.js';
 import {
   AbstractController,
   AbstractControllerHost
 } from './abstract-controller.js';
+import { CssCustomPropertyValue } from '../types.js';
 
 export class StylesController extends AbstractController<CssCustomPropertyValue> {
   constructor(

@@ -8,7 +8,7 @@ import {
   isTemplate,
   TemplateTypes
 } from '@api-viewer/common/lib/templates.js';
-import { ComponentWithProps, Knob } from './knobs.js';
+import { ComponentWithProps, Knob } from '../types.js';
 
 export type ComponentRendererOptions = {
   id: number;
