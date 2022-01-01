@@ -8,6 +8,12 @@ import {
 
 type InputRenderer = (item: Knobable, id: string) => TemplateResult;
 
+const capitalize = (name: string): string =>
+  name[0].toUpperCase() + name.slice(1);
+
+export const formatSlot = (name: string): string =>
+  capitalize(name === '' ? 'content' : name);
+
 export const cssPropRenderer: InputRenderer = (
   knob: Knobable,
   id: string
@@ -90,9 +96,9 @@ export const renderKnobs = (
   renderer: InputRenderer
 ): TemplateResult => {
   const rows = items.map((item: Knobable) => {
-    const { name, content } = item as PropertyKnob;
+    const { name } = item as PropertyKnob;
     const id = `${type}-${name || 'default'}`;
-    const label = type === 'slot' ? content : name;
+    const label = type === 'slot' ? formatSlot(name) : name;
     return html`
       <tr>
         <td>
