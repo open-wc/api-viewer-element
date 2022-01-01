@@ -19,6 +19,7 @@ export class AbstractController<T> {
     this.updateData(data);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateData(_data: T[]) {
     if (this.host.isConnected) {
       this.host.requestUpdate();
