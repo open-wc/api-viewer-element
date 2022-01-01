@@ -7,13 +7,8 @@ import {
   AbstractController,
   AbstractControllerHost
 } from './abstract-controller.js';
+import { formatSlot } from '../ui/controls.js';
 import { SlotValue } from '../types.js';
-
-const capitalize = (name: string): string =>
-  name[0].toUpperCase() + name.slice(1);
-
-const getSlotContent = (name: string): string =>
-  capitalize(name === '' ? 'content' : name);
 
 export class SlotsController extends AbstractController<SlotValue> {
   enabled: boolean;
@@ -40,7 +35,7 @@ export class SlotsController extends AbstractController<SlotValue> {
       .map((slot) => {
         return {
           ...slot,
-          content: getSlotContent(slot.name)
+          content: formatSlot(slot.name)
         };
       }) as SlotValue[];
   }
