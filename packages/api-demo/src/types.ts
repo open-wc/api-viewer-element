@@ -21,7 +21,6 @@ export type Knob<T extends Knobable = unknown> = T & {
   custom?: boolean;
   options?: string[];
   knobType: string;
-  content?: string;
 };
 
 export type PropertyKnob = Knob<ClassField>;
