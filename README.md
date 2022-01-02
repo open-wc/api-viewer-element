@@ -78,8 +78,9 @@ yarn dist
 
 ## Acknowledgements
 
-- Big thanks to [@runem](http://github.com/runem) for creating Web Component Analyzer, which previous versions of this package were based on.
-- Thanks to [@bahrus](https://github.com/bahrus) for [wc-info](https://github.com/bahrus/wc-info) component which inspired me.
-- The visual appearance is largely inspired by [Vuetify](https://vuetifyjs.com/en/getting-started/quick-start) API docs.
-- The tabs component is based on the [howto-tabs](https://developers.google.com/web/fundamentals/web-components/examples/howto-tabs) example.
-- Thanks to [Modern Web](https://modern-web.dev) for [Web Dev Server](https://modern-web.dev/docs/dev-server/overview/) and [Rollup Plugin HTML](https://modern-web.dev/docs/building/rollup-plugin-html/).
+- Big thanks to [@thepassle](https://github.com/thepassle) for creating Custom Elements Manifest Analyzer, that this project is built upon.
+- Big thanks to [@runem](http://github.com/runem) for creating [Web Component Analyzer](https://github.com/runem/web-component-analyzer) used in older versions of API Viewer.
+- Big thanks to [Modern Web](https://modern-web.dev) for [Web Dev Server](https://modern-web.dev/docs/dev-server/overview/) and [Rocket](https://rocket.modern-web.dev) used for the documentation website.
+- Thanks to [@bahrus](https://github.com/bahrus) for [wc-info](https://github.com/bahrus/wc-info), a similar web component that served as a source of inspiration for me.
+- The `@api-viewer/tabs` web component is based on [tabs example](https://github.com/GoogleChromeLabs/howto-components/tree/master/elements/howto-tabs) from [HowTo: Components](https://developers.google.com/web/fundamentals/web-components/examples) project.
+- The visual appearance is largely inspired by older version of [Vuetify](https://vuetifyjs.com/en/getting-started/quick-start) API documentation.
