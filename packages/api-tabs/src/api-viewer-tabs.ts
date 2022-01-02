@@ -1,85 +1,62 @@
-import { LitElement, html, css, TemplateResult } from 'lit';
+import { html } from '@api-viewer/common/lib/utils.js';
 import { ApiViewerTab } from './api-viewer-tab.js';
 import type { ApiViewerPanel } from './api-viewer-panel.js';
 import './api-viewer-panel.js';
 
-const KEYCODE = {
-  DOWN: 40,
-  LEFT: 37,
-  RIGHT: 39,
-  UP: 38,
-  HOME: 36,
-  END: 35
-};
+const tpl = html`
+  <style>
+    :host {
+      display: flex;
+      border-bottom-left-radius: var(--ave-border-radius);
+      overflow: hidden;
+    }
 
-export class ApiViewerTabs extends LitElement {
-  private _boundSlotChange = this._onSlotChange.bind(this);
-
-  static get styles() {
-    return css`
+    @media (max-width: 600px) {
       :host {
-        display: flex;
-        border-bottom-left-radius: var(--ave-border-radius);
-        overflow: hidden;
+        flex-direction: column;
       }
 
       .tabs {
-        display: block;
+        display: flex;
+        flex-grow: 1;
+        align-self: stretch;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
       }
+    }
+  </style>
+  <div class="tabs">
+    <slot name="tab"></slot>
+  </div>
+  <slot name="panel"></slot>
+`;
 
-      @media (max-width: 600px) {
-        :host {
-          flex-direction: column;
-        }
+export class ApiViewerTabs extends HTMLElement {
+  constructor() {
+    super();
 
-        .tabs {
-          flex-grow: 1;
-          display: flex;
-          align-self: stretch;
-          overflow-x: auto;
-          -webkit-overflow-scrolling: touch;
-        }
-      }
-    `;
+    const root = this.attachShadow({ mode: 'open' });
+    root.appendChild(tpl.content.cloneNode(true));
+
+    const slots = root.querySelectorAll('slot');
+
+    slots[0].addEventListener('slotchange', () => this._linkPanels());
+    slots[1].addEventListener('slotchange', () => this._linkPanels());
+
+    this.addEventListener('keydown', this.handleEvent);
+    this.addEventListener('click', this.handleEvent);
   }
 
-  render(): TemplateResult {
-    return html`
-      <div class="tabs">
-        <slot name="tab"></slot>
-      </div>
-      <slot name="panel"></slot>
-    `;
-  }
-
-  firstUpdated(): void {
+  connectedCallback(): void {
     this.setAttribute('role', 'tablist');
 
-    this.addEventListener('keydown', this._onKeyDown);
-    this.addEventListener('click', this._onClick);
-
-    const [tabSlot, panelSlot] = Array.from(
-      this.renderRoot.querySelectorAll('slot')
-    );
-
-    if (tabSlot && panelSlot) {
-      tabSlot.addEventListener('slotchange', this._boundSlotChange);
-      panelSlot.addEventListener('slotchange', this._boundSlotChange);
-    }
-
-    Promise.all(
-      [...this._allTabs(), ...this._allPanels()].map((el) => el.updateComplete)
-    ).then(() => {
+    requestAnimationFrame(() => {
       this._linkPanels();
     });
   }
 
-  private _onSlotChange(): void {
-    this._linkPanels();
-  }
-
   private _linkPanels(): void {
-    const tabs = this._allTabs();
+    const { tabs } = this;
     tabs.forEach((tab) => {
       const panel = tab.nextElementSibling as ApiViewerPanel;
       tab.setAttribute('aria-controls', panel.id);
@@ -91,16 +68,12 @@ export class ApiViewerTabs extends LitElement {
     this._selectTab(selectedTab);
   }
 
-  private _allPanels(): ApiViewerPanel[] {
-    return Array.from(this.querySelectorAll('api-viewer-panel'));
-  }
-
-  private _allTabs(): ApiViewerTab[] {
+  get tabs(): ApiViewerTab[] {
     return Array.from(this.querySelectorAll('api-viewer-tab'));
   }
 
   private _getAvailableIndex(idx: number, increment: number): number {
-    const tabs = this._allTabs();
+    const { tabs } = this;
     const total = tabs.length;
     for (
       let i = 0;
@@ -120,13 +93,7 @@ export class ApiViewerTabs extends LitElement {
     return -1;
   }
 
-  private _panelForTab(tab: ApiViewerTab): ApiViewerPanel | null {
-    const panelId = tab.getAttribute('aria-controls');
-    return this.querySelector(`#${panelId}`);
-  }
-
-  private _prevTab(): ApiViewerTab {
-    const tabs = this._allTabs();
+  private _prevTab(tabs: ApiViewerTab[]): ApiViewerTab {
     const newIdx = this._getAvailableIndex(
       tabs.findIndex((tab) => tab.selected) - 1,
       -1
@@ -134,18 +101,7 @@ export class ApiViewerTabs extends LitElement {
     return tabs[(newIdx + tabs.length) % tabs.length];
   }
 
-  private _firstTab(): ApiViewerTab {
-    const tabs = this._allTabs();
-    return tabs[0];
-  }
-
-  private _lastTab(): ApiViewerTab {
-    const tabs = this._allTabs();
-    return tabs[tabs.length - 1];
-  }
-
-  private _nextTab(): ApiViewerTab {
-    const tabs = this._allTabs();
+  private _nextTab(tabs: ApiViewerTab[]): ApiViewerTab {
     const newIdx = this._getAvailableIndex(
       tabs.findIndex((tab) => tab.selected) + 1,
       1
@@ -157,14 +113,11 @@ export class ApiViewerTabs extends LitElement {
    * `reset()` marks all tabs as deselected and hides all the panels.
    */
   public reset(): void {
-    const tabs = this._allTabs();
-    const panels = this._allPanels();
-
-    tabs.forEach((tab) => {
+    this.tabs.forEach((tab) => {
       tab.selected = false;
     });
 
-    panels.forEach((panel) => {
+    this.querySelectorAll('api-viewer-panel').forEach((panel) => {
       panel.hidden = true;
     });
   }
@@ -173,61 +126,56 @@ export class ApiViewerTabs extends LitElement {
    * `selectFirst()` automatically selects first non-hidden tab.
    */
   public selectFirst(): void {
-    const tabs = this._allTabs();
     const idx = this._getAvailableIndex(0, 1);
-    this._selectTab(tabs[idx % tabs.length]);
+    this._selectTab(this.tabs[idx % this.tabs.length]);
   }
 
   private _selectTab(newTab: ApiViewerTab): void {
     this.reset();
 
-    const newPanel = this._panelForTab(newTab);
+    const panelId = newTab.getAttribute('aria-controls');
+    const newPanel = this.querySelector(`#${panelId}`) as ApiViewerPanel;
     if (newPanel) {
       newTab.selected = true;
       newPanel.hidden = false;
     }
   }
 
-  private _onKeyDown(event: KeyboardEvent): void {
-    const { target } = event;
-    if ((target && target instanceof ApiViewerTab) === false) {
-      return;
-    }
-
-    if (event.altKey) {
-      return;
-    }
-
-    let newTab;
-    switch (event.keyCode) {
-      case KEYCODE.LEFT:
-      case KEYCODE.UP:
-        newTab = this._prevTab();
-        break;
-      case KEYCODE.RIGHT:
-      case KEYCODE.DOWN:
-        newTab = this._nextTab();
-        break;
-      case KEYCODE.HOME:
-        newTab = this._firstTab();
-        break;
-      case KEYCODE.END:
-        newTab = this._lastTab();
-        break;
-      default:
-        return;
-    }
-
-    event.preventDefault();
-    this._selectTab(newTab);
-    newTab.focus();
-  }
-
-  private _onClick(event: MouseEvent): void {
+  handleEvent(event: KeyboardEvent | MouseEvent): void {
     const { target } = event;
     if (target && target instanceof ApiViewerTab) {
-      this._selectTab(target);
-      target.focus();
+      let newTab: ApiViewerTab;
+
+      if (event.type === 'keydown') {
+        const { tabs } = this;
+
+        switch ((event as KeyboardEvent).key) {
+          case 'ArrowLeft':
+          case 'ArrowUp':
+            newTab = this._prevTab(tabs);
+            break;
+          case 'ArrowDown':
+          case 'ArrowRight':
+            newTab = this._nextTab(tabs);
+            break;
+          case 'Home':
+            newTab = tabs[0];
+            break;
+          case 'End':
+            newTab = tabs[tabs.length - 1];
+            break;
+          default:
+            // Return to not prevent default.
+            return;
+        }
+
+        event.preventDefault();
+      } else {
+        newTab = target;
+      }
+
+      this._selectTab(newTab);
+      newTab.focus();
     }
   }
 }

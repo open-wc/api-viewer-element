@@ -1,28 +1,32 @@
-import { LitElement, html, css, TemplateResult } from 'lit';
+import { html } from '@api-viewer/common/lib/utils.js';
 
 let panelIdCounter = 0;
 
-export class ApiViewerPanel extends LitElement {
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-        box-sizing: border-box;
-        width: 100%;
-        overflow: hidden;
-      }
+const tpl = html`
+  <style>
+    :host {
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      overflow: hidden;
+    }
 
-      :host([hidden]) {
-        display: none !important;
-      }
-    `;
+    :host([hidden]) {
+      display: none !important;
+    }
+  </style>
+  <slot></slot>
+`;
+
+export class ApiViewerPanel extends HTMLElement {
+  constructor() {
+    super();
+
+    const root = this.attachShadow({ mode: 'open' });
+    root.appendChild(tpl.content.cloneNode(true));
   }
 
-  protected render(): TemplateResult {
-    return html`<slot></slot>`;
-  }
-
-  protected firstUpdated(): void {
+  connectedCallback(): void {
     this.setAttribute('role', 'tabpanel');
 
     if (!this.id) {
