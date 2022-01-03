@@ -8,7 +8,11 @@
     "rootDir": "./src",
     "composite": true
   },
-  "references": [],
+  "references": [
+    {
+      "path": "../api-common/tsconfig.json"
+    }
+  ],
   "include": [
     "src"
   ],

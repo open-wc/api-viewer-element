@@ -24,6 +24,7 @@
     "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
     "lit/no-template-map": "off",
+    "lit/prefer-static-styles": "off",
     "class-methods-use-this": [
       "error",
       {
@@ -33,7 +34,8 @@
     "no-console": ["error", { "allow": ["error"] }],
     "no-param-reassign": "off",
     "no-plusplus": "off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "prefer-destructuring": "off"
   },
   "overrides": [
     {
