@@ -65,12 +65,9 @@ const renderTab = (
 ): TemplateResult => {
   const hidden = array.length === 0;
   return html`
-    <api-viewer-tab
-      heading=${heading}
-      slot="tab"
-      part="tab"
-      ?hidden=${hidden}
-    ></api-viewer-tab>
+    <api-viewer-tab slot="tab" part="tab" ?hidden=${hidden}>
+      ${heading}
+    </api-viewer-tab>
     <api-viewer-panel slot="panel" part="tab-panel" ?hidden=${hidden}>
       ${content}
     </api-viewer-panel>
