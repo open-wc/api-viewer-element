@@ -1,5 +1,16 @@
 # api-viewer-element
 
+## 1.0.0-pre.3
+
+### Patch Changes
+
+- 24ada26: Use vanilla custom elements for tabs
+- Updated dependencies [24ada26]
+- Updated dependencies [8f1df74]
+  - @api-viewer/common@1.0.0-pre.3
+  - @api-viewer/demo@1.0.0-pre.3
+  - @api-viewer/docs@1.0.0-pre.3
+
 ## 1.0.0-pre.2
 
 ### Patch Changes
