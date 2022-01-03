@@ -72,4 +72,11 @@ export default css`
       margin-top: 0.5rem;
     }
   }
+
+  @media (prefers-color-scheme: dark) {
+    :host {
+      background: #fff;
+      color: #000;
+    }
+  }
 `;
