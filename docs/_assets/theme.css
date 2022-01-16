@@ -136,3 +136,7 @@ body[layout='home'] .markdown-body .call-to-action:nth-of-type(2) {
   --primary-color-lighter: #333;
   --primary-color-darker: #000;
 }
+
+mdjs-preview {
+  --primary-lines-color: transparent;
+}
