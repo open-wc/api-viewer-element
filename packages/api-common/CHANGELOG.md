@@ -1,5 +1,11 @@
 # @api-viewer/common
 
+## 1.0.0-pre.4
+
+### Patch Changes
+
+- 1e3dfe8: Update marked dependency to 4.0.10
+
 ## 1.0.0-pre.3
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@api-viewer/demo",
-  "version": "1.0.0-pre.3",
+  "version": "1.0.0-pre.4",
   "publishConfig": {
     "access": "public"
   },
@@ -32,8 +32,8 @@
     "web-components"
   ],
   "dependencies": {
-    "@api-viewer/common": "^1.0.0-pre.3",
-    "@api-viewer/tabs": "^1.0.0-pre.3",
+    "@api-viewer/common": "^1.0.0-pre.4",
+    "@api-viewer/tabs": "^1.0.0-pre.4",
     "highlight-ts": "9.12.1-2",
     "lit": "^2.0.0",
     "tslib": "^2.3.1"
