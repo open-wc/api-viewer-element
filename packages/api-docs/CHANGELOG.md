@@ -1,5 +1,14 @@
 # @api-viewer/docs
 
+## 1.0.0-pre.4
+
+### Patch Changes
+
+- 1e3dfe8: Update marked dependency to 4.0.10
+- Updated dependencies [1e3dfe8]
+  - @api-viewer/common@1.0.0-pre.4
+  - @api-viewer/tabs@1.0.0-pre.4
+
 ## 1.0.0-pre.3
 
 ### Patch Changes
