@@ -1,5 +1,4 @@
 import { LitElement, html, css, PropertyValues, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
 const normalizeValue = (value: number, min: number, max: number) => {
@@ -29,8 +28,7 @@ const normalizeValue = (value: number, min: number, max: number) => {
  * @csspart bar - A progress bar background.
  * @csspart value - A progress bar foreground.
  */
-@customElement('progress-bar')
-export class ProgressBar extends LitElement {
+class ProgressBar extends LitElement {
   /**
    * Current progress value.
    */
@@ -203,3 +201,5 @@ export class ProgressBar extends LitElement {
     this.setAttribute('aria-valuemax', `${max}`);
   }
 }
+
+customElements.define('progress-bar', ProgressBar);

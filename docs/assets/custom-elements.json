@@ -741,14 +741,6 @@
       ],
       "exports": [
         {
-          "kind": "js",
-          "name": "ProgressBar",
-          "declaration": {
-            "name": "ProgressBar",
-            "module": "src/progress-bar.ts"
-          }
-        },
-        {
           "kind": "custom-element-definition",
           "name": "progress-bar",
           "declaration": {
