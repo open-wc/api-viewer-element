@@ -10,12 +10,14 @@
     "@api-viewer-fixtures/lit": "0.0.0"
   },
   "changesets": [
+    "fast-candles-beam",
     "fifty-toes-confess",
     "gorgeous-trees-smash",
     "metal-games-tie",
     "neat-poets-thank",
     "nice-brooms-tell",
     "rich-berries-prove",
+    "smooth-avocados-move",
     "stale-teachers-develop"
   ]
 }

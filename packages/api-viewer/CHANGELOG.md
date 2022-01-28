@@ -1,5 +1,16 @@
 # api-viewer-element
 
+## 1.0.0-pre.5
+
+### Patch Changes
+
+- cc911b6: Add methods tab to API documentation
+- Updated dependencies [afd7ef1]
+- Updated dependencies [cc911b6]
+  - @api-viewer/docs@1.0.0-pre.5
+  - @api-viewer/common@1.0.0-pre.5
+  - @api-viewer/demo@1.0.0-pre.5
+
 ## 1.0.0-pre.4
 
 ### Patch Changes
