@@ -60,17 +60,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "opened",
-              "type": {
-                "text": "boolean | null | undefined"
-              },
-              "default": "false",
-              "description": "When true, the panel content is expanded and visible",
-              "attribute": "opened",
-              "reflects": true
-            },
-            {
-              "kind": "field",
               "name": "disabled",
               "type": {
                 "text": "boolean"
@@ -123,7 +112,8 @@
                 "type": {
                   "text": "void"
                 }
-              }
+              },
+              "privacy": "protected"
             },
             {
               "kind": "method",
@@ -198,6 +188,30 @@
                   "text": "void"
                 }
               }
+            },
+            {
+              "kind": "field",
+              "name": "opened",
+              "type": {
+                "text": "boolean | null | undefined"
+              },
+              "default": "false",
+              "description": "When true, the content is visible.",
+              "attribute": "opened",
+              "reflects": true,
+              "inheritedFrom": {
+                "name": "OpenedMixin",
+                "module": "src/opened-mixin.ts"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "toggle",
+              "description": "Toggle the opened property value.",
+              "inheritedFrom": {
+                "name": "OpenedMixin",
+                "module": "src/opened-mixin.ts"
+              }
             }
           ],
           "events": [
@@ -225,15 +239,6 @@
               "name": "focus-ring"
             },
             {
-              "name": "opened",
-              "type": {
-                "text": "boolean | null | undefined"
-              },
-              "default": "false",
-              "description": "When true, the panel content is expanded and visible",
-              "fieldName": "opened"
-            },
-            {
               "name": "disabled",
               "type": {
                 "text": "boolean"
@@ -241,6 +246,25 @@
               "default": "false",
               "description": "Disabled panel can not be expanded or collapsed",
               "fieldName": "disabled"
+            },
+            {
+              "name": "opened",
+              "type": {
+                "text": "boolean | null | undefined"
+              },
+              "default": "false",
+              "description": "When true, the content is visible.",
+              "fieldName": "opened",
+              "inheritedFrom": {
+                "name": "OpenedMixin",
+                "module": "src/opened-mixin.ts"
+              }
+            }
+          ],
+          "mixins": [
+            {
+              "name": "OpenedMixin",
+              "module": "/src/opened-mixin.js"
             }
           ],
           "superclass": {
@@ -529,6 +553,64 @@
           "declaration": {
             "name": "IntlCurrency",
             "module": "src/intl-currency.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/opened-mixin.ts",
+      "declarations": [
+        {
+          "kind": "mixin",
+          "description": "",
+          "name": "OpenedMixin",
+          "members": [
+            {
+              "kind": "field",
+              "name": "opened",
+              "type": {
+                "text": "boolean | null | undefined"
+              },
+              "default": "false",
+              "description": "When true, the content is visible.",
+              "attribute": "opened",
+              "reflects": true
+            },
+            {
+              "kind": "method",
+              "name": "toggle",
+              "description": "Toggle the opened property value."
+            }
+          ],
+          "attributes": [
+            {
+              "name": "opened",
+              "type": {
+                "text": "boolean | null | undefined"
+              },
+              "default": "false",
+              "description": "When true, the content is visible.",
+              "fieldName": "opened"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "base",
+              "type": {
+                "text": "T"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OpenedMixin",
+          "declaration": {
+            "name": "OpenedMixin",
+            "module": "src/opened-mixin.ts"
           }
         }
       ]

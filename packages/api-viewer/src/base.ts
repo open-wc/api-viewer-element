@@ -8,6 +8,7 @@ import {
   getCustomElements,
   getElementData,
   getPublicFields,
+  getPublicMethods,
   hasCustomElements,
   ManifestMixin,
   Package
@@ -36,6 +37,7 @@ async function renderDocs(
 
   const data = getElementData(manifest, selected) as CustomElement;
   const props = getPublicFields(data.members);
+  const methods = getPublicMethods(data.members);
 
   return html`
     <header part="header">
@@ -85,6 +87,7 @@ async function renderDocs(
               .name=${data.name}
               .props=${props}
               .attrs=${data.attributes ?? []}
+              .methods=${methods}
               .events=${data.events ?? []}
               .slots=${data.slots ?? []}
               .cssParts=${data.cssParts ?? []}

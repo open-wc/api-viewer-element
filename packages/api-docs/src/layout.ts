@@ -3,6 +3,7 @@ import { property } from 'lit/decorators/property.js';
 import {
   Attribute,
   ClassField,
+  ClassMethod,
   CssCustomProperty,
   CssPart,
   Event,
@@ -84,6 +85,9 @@ class ApiDocsLayout extends LitElement {
   attrs: Attribute[] = [];
 
   @property({ attribute: false })
+  methods: ClassMethod[] = [];
+
+  @property({ attribute: false })
   slots: Slot[] = [];
 
   @property({ attribute: false })
@@ -100,11 +104,17 @@ class ApiDocsLayout extends LitElement {
   }
 
   protected render(): TemplateResult {
-    const { slots, props, attrs, events, cssParts, cssProps } = this;
+    const { slots, props, attrs, methods, events, cssParts, cssProps } = this;
 
-    const emptyDocs = [props, attrs, slots, events, cssProps, cssParts].every(
-      (arr) => arr.length === 0
-    );
+    const emptyDocs = [
+      props,
+      attrs,
+      methods,
+      slots,
+      events,
+      cssProps,
+      cssParts
+    ].every((arr) => arr.length === 0);
 
     const attributes = (attrs || []).filter(
       (x) => !props.some((y) => y.name === x.fieldName)
@@ -145,6 +155,15 @@ class ApiDocsLayout extends LitElement {
               html`
                 ${attributes.map(({ name, description, type }) =>
                   renderItem('attr', name, description, type?.text)
+                )}
+              `
+            )}
+            ${renderTab(
+              'Methods',
+              methods,
+              html`
+                ${methods.map(({ name, description }) =>
+                  renderItem('method', `${name}()`, description)
                 )}
               `
             )}

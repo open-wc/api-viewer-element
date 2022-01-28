@@ -3,6 +3,7 @@ import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
 import { styleMap } from 'lit/directives/style-map.js';
+import { OpenedMixin } from './opened-mixin.js';
 
 /**
  * A custom element similar to the HTML5 `<details>` element.
@@ -26,12 +27,7 @@ import { styleMap } from 'lit/directives/style-map.js';
  * @fires opened-changed - Event fired when expanding / collapsing
  */
 @customElement('expansion-panel')
-export class ExpansionPanel extends LitElement {
-  /**
-   * When true, the panel content is expanded and visible
-   */
-  @property({ type: Boolean, reflect: true }) opened?: boolean | null = false;
-
+export class ExpansionPanel extends OpenedMixin(LitElement) {
   /**
    * Disabled panel can not be expanded or collapsed
    */
@@ -207,6 +203,7 @@ export class ExpansionPanel extends LitElement {
     document.body.removeEventListener('keyup', this._boundBodyKeyup, true);
   }
 
+  /** @protected */
   focus(): void {
     if (this.header) {
       this.header.focus();
@@ -280,13 +277,13 @@ export class ExpansionPanel extends LitElement {
   }
 
   private _onToggleClick(): void {
-    this.opened = !this.opened;
+    this.toggle();
   }
 
   private _onToggleKeyDown(e: KeyboardEvent): void {
     if ([13, 32].indexOf(e.keyCode) > -1) {
       e.preventDefault();
-      this.opened = !this.opened;
+      this.toggle();
     }
   }
 
