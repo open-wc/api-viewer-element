@@ -86,6 +86,14 @@ export default css`
     margin: 0.5rem 0;
   }
 
+  [part$='params'] {
+    color: var(--ave-item-color);
+  }
+
+  [part$='type'] {
+    color: var(--ave-secondary-color);
+  }
+
   .accent {
     color: var(--ave-accent-color);
   }

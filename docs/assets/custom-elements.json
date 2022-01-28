@@ -692,6 +692,32 @@
             },
             {
               "kind": "method",
+              "name": "setBounds",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "min",
+                  "type": {
+                    "text": "number"
+                  },
+                  "description": "minimum value"
+                },
+                {
+                  "name": "max",
+                  "type": {
+                    "text": "number"
+                  },
+                  "description": "maximum value"
+                }
+              ],
+              "description": "Set both minimum and maximum value."
+            },
+            {
+              "kind": "method",
               "name": "_normalizedValueChanged",
               "privacy": "private",
               "return": {

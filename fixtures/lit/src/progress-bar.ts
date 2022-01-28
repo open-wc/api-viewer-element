@@ -182,6 +182,17 @@ export class ProgressBar extends LitElement {
     }
   }
 
+  /**
+   * Set both minimum and maximum value.
+   *
+   * @param {number} min minimum value
+   * @param {number} max maximum value
+   */
+  setBounds(min: number, max: number): void {
+    this.min = min;
+    this.max = max;
+  }
+
   private _normalizedValueChanged(
     value: number,
     min: number,
