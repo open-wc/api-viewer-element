@@ -1,5 +1,11 @@
 # @api-viewer/common
 
+## 1.0.0-pre.5
+
+### Patch Changes
+
+- cc911b6: Add methods tab to API documentation
+
 ## 1.0.0-pre.4
 
 ### Patch Changes
