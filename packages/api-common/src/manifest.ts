@@ -3,6 +3,7 @@ import type {
   ClassField,
   ClassLike,
   ClassMember,
+  ClassMethod,
   CssCustomProperty,
   CssPart,
   CustomElement,
@@ -18,6 +19,7 @@ export {
   Attribute,
   ClassField,
   ClassMember,
+  ClassMethod,
   CssCustomProperty,
   CssPart,
   CustomElement,
@@ -46,8 +48,8 @@ const isCustomElementExport = (y: Export): y is CustomElementExport =>
 const isCustomElementDeclaration = (y: ClassLike): y is CustomElement =>
   (y as CustomElement).customElement;
 
-const isPublicProperty = (x: ClassMember): x is ClassField =>
-  x.kind === 'field' && !(x.privacy === 'private' || x.privacy === 'protected');
+const isPublic = (x: ClassMember): boolean =>
+  !(x.privacy === 'private' || x.privacy === 'protected');
 
 export async function fetchManifest(src: string): Promise<Package | null> {
   try {
@@ -112,5 +114,15 @@ export const getElementData = (
 };
 
 export const getPublicFields = (members: ClassMember[] = []): ClassField[] => {
-  return members.filter(isPublicProperty);
+  return members.filter(
+    (x: ClassMember): x is ClassField => x.kind === 'field' && isPublic(x)
+  );
+};
+
+export const getPublicMethods = (
+  members: ClassMember[] = []
+): ClassMethod[] => {
+  return members.filter(
+    (x: ClassMember): x is ClassMethod => x.kind === 'method' && isPublic(x)
+  );
 };
