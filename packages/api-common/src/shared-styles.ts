@@ -14,6 +14,7 @@ export default css`
     border-radius: var(--ave-border-radius);
 
     --ave-primary-color: #01579b;
+    --ave-secondary-color: rgba(0, 0, 0, 0.54);
     --ave-accent-color: #d63200;
     --ave-border-color: rgba(0, 0, 0, 0.12);
     --ave-border-radius: 4px;

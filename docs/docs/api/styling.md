@@ -6,7 +6,7 @@ The following custom CSS properties are available:
 
 | Property                         | Description                                     |
 | -------------------------------- | ----------------------------------------------- |
-| `--ave-accent-color`             | Accent color, used for property names           |
+| `--ave-accent-color`             | Accent color, used for property / method names  |
 | `--ave-border-color`             | Color used for borders and dividers             |
 | `--ave-border-radius`            | Border radius used for the outer border         |
 | `--ave-button-active-background` | Color of the `:focus` and `:hover` button       |
@@ -20,6 +20,7 @@ The following custom CSS properties are available:
 | `--ave-link-hover-color`         | API description links hover color               |
 | `--ave-monospace-font`           | Monospace font stack for the API items          |
 | `--ave-primary-color`            | Primary color, used for header and active tab   |
+| `--ave-secondary-color`          | Color used for method types in API docs         |
 | `--ave-tab-color`                | Inactive tabs color                             |
 | `--ave-tab-selected-color`       | Selected tab color                              |
 | `--ave-tab-indicator-size`       | Size of the selected tab indicator              |
@@ -47,8 +48,14 @@ The following CSS shadow parts are available:
 | `docs-column`            | Column, child of a `docs-row` part                      |
 | `docs-item`              | Item representing a single entry (property, event etc)  |
 | `docs-label`             | Label (name, attribute, type, description)              |
-| `docs-markdown`          | Iem description with parsed markdown content            |
+| `docs-markdown`          | Item description with parsed markdown content           |
+| `docs-method`            | Method name with its params and return type             |
+| `docs-method-params`     | Comma-separated list of method params their types       |
+| `docs-method-type`       | Return type of a method, or "void" if not specified     |
+| `docs-param-name`        | Name of a method parameter                              |
+| `docs-param-type`        | Type of a method parameter                              |
 | `docs-row`               | Row containing columns. Child of a `docs-item` part     |
+| `docs-value`             | Sibling of a `docs-label` part (name, attribute, type)  |
 | `docs-value`             | Sibling of a `docs-label` part (name, attribute, type)  |
 | `md-h1`                  | Markdown `<h1>` elements                                |
 | `md-h2`                  | Markdown `<h2>` elements                                |

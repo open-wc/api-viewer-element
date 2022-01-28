@@ -15,7 +15,7 @@ import { parse } from './utils/markdown.js';
 
 const renderItem = (
   prefix: string,
-  name: string,
+  name: string | TemplateResult,
   description?: string,
   valueType?: string,
   value?: unknown,
@@ -72,6 +72,26 @@ const renderTab = (
     <api-viewer-panel slot="panel" part="tab-panel" ?hidden=${hidden}>
       ${content}
     </api-viewer-panel>
+  `;
+};
+
+const renderMethod = (method: ClassMethod): TemplateResult => {
+  const params = method.parameters || [];
+  const type = method.return?.type?.text || 'void';
+
+  return html`
+    <span part="docs-method">
+      ${method.name}(<span part="docs-method-params"
+        >${params.map(
+          (param, idx) =>
+            html`<span part="docs-param-name">${param.name}</span>:
+              <span part="docs-param-type">${param.type?.text}</span>${idx ===
+              params.length - 1
+                ? ''
+                : ', '}`
+        )}</span
+      >)</span
+    ><span part="docs-method-type">: ${type}</span>
   `;
 };
 
@@ -162,8 +182,8 @@ class ApiDocsLayout extends LitElement {
               'Methods',
               methods,
               html`
-                ${methods.map(({ name, description }) =>
-                  renderItem('method', `${name}()`, description)
+                ${methods.map((method) =>
+                  renderItem('method', renderMethod(method), method.description)
                 )}
               `
             )}
