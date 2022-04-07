@@ -1,5 +1,11 @@
 # @api-viewer/common
 
+## 1.0.0-pre.6
+
+### Patch Changes
+
+- 3061534: Add only property to filter elements
+
 ## 1.0.0-pre.5
 
 ### Patch Changes
