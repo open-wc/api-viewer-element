@@ -17,6 +17,7 @@ import './layout.js';
 async function renderDocs(
   jsonFetched: Promise<Package | null>,
   onSelect: (e: CustomEvent) => void,
+  only?: string[],
   selected?: string
 ): Promise<TemplateResult> {
   const manifest = await jsonFetched;
@@ -25,7 +26,7 @@ async function renderDocs(
     return emptyDataWarning;
   }
 
-  const elements = getCustomElements(manifest);
+  const elements = getCustomElements(manifest, only);
 
   const data = getElementData(manifest, selected) as CustomElement;
   const props = getPublicFields(data.members);
@@ -69,7 +70,7 @@ async function renderDocs(
 export class ApiDocsBase extends ManifestMixin(LitElement) {
   protected render(): TemplateResult {
     return html`${until(
-      renderDocs(this.jsonFetched, this._onSelect, this.selected)
+      renderDocs(this.jsonFetched, this._onSelect, this.only, this.selected)
     )}`;
   }
 

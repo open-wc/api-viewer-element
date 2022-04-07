@@ -16,6 +16,7 @@ import './layout.js';
 async function renderDemo(
   jsonFetched: Promise<Package | null>,
   onSelect: (e: CustomEvent) => void,
+  only?: string[],
   selected?: string,
   id?: number,
   exclude = ''
@@ -26,7 +27,7 @@ async function renderDemo(
     return emptyDataWarning;
   }
 
-  const elements = getCustomElements(manifest);
+  const elements = getCustomElements(manifest, only);
 
   const data = getElementData(manifest, selected) as CustomElement;
   const props = getPublicFields(data.members);
@@ -81,6 +82,7 @@ export class ApiDemoBase extends ManifestMixin(LitElement) {
         renderDemo(
           this.jsonFetched,
           this._onSelect,
+          this.only,
           this.selected,
           this._id,
           this.excludeKnobs
