@@ -77,12 +77,14 @@ export function getCustomElements(
 
 export const getElementData = (
   manifest: Package,
+  elements: CustomElementExport[],
   selected?: string
 ): CustomElement | null => {
-  const exports = getCustomElements(manifest);
-  const index = selected ? exports.findIndex((el) => el?.name === selected) : 0;
+  const index = selected
+    ? elements.findIndex((el) => el?.name === selected)
+    : 0;
 
-  const element = exports[index];
+  const element = elements[index];
 
   if (!element) {
     return null;

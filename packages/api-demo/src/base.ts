@@ -29,7 +29,7 @@ async function renderDemo(
 
   const elements = getCustomElements(manifest, only);
 
-  const data = getElementData(manifest, selected) as CustomElement;
+  const data = getElementData(manifest, elements, selected) as CustomElement;
   const props = getPublicFields(data.members);
 
   return html`
