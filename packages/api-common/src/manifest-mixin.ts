@@ -10,6 +10,8 @@ export interface ManifestMixinInterface {
 
   manifest?: Package;
 
+  only?: string[];
+
   selected?: string;
 
   jsonFetched: Promise<Package | null>;
@@ -27,6 +29,15 @@ export const ManifestMixin = <T extends Constructor<LitElement>>(
 
     @property({ attribute: false })
     manifest?: Package;
+
+    @property({
+      reflect: true,
+      converter: {
+        fromAttribute: (value: string) => value.split(','),
+        toAttribute: (value: string[]) => value.join(',')
+      }
+    })
+    only?: string[];
 
     @property() selected?: string;
 

@@ -31,6 +31,14 @@ Use `manifest` property instead of `src` to pass manifest data directly:
 </script>
 ```
 
+### `only`
+
+Use `only` to display API only for one or a few elements in the scope of a certain documentation page and filter out the rest.
+
+```html
+<api-viewer src="./custom-elements.json" only="my-el,my-other-el"></api-viewer>
+```
+
 ### `selected`
 
 Use `selected` property to configure the displayed element.

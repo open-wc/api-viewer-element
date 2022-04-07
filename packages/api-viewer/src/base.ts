@@ -23,6 +23,7 @@ async function renderDocs(
   section: string,
   onSelect: (e: CustomEvent) => void,
   onToggle: (e: CustomEvent) => void,
+  only?: string[],
   selected?: string,
   id?: number,
   exclude = ''
@@ -33,7 +34,7 @@ async function renderDocs(
     return emptyDataWarning;
   }
 
-  const elements = getCustomElements(manifest);
+  const elements = getCustomElements(manifest, only);
 
   const data = getElementData(manifest, selected) as CustomElement;
   const props = getPublicFields(data.members);
@@ -134,6 +135,7 @@ export class ApiViewerBase extends ManifestMixin(LitElement) {
           this.section,
           this._onSelect,
           this._onToggle,
+          this.only,
           this.selected,
           this._id,
           this.excludeKnobs

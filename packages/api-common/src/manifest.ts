@@ -65,10 +65,14 @@ export async function fetchManifest(src: string): Promise<Package | null> {
   }
 }
 
-export function getCustomElements(manifest: Package): CustomElementExport[] {
-  return (manifest.modules ?? []).flatMap(
+export function getCustomElements(
+  manifest: Package,
+  only?: string[]
+): CustomElementExport[] {
+  const exports = (manifest.modules ?? []).flatMap(
     (x) => x.exports?.filter(isCustomElementExport) ?? []
   );
+  return only ? exports.filter((e) => only.includes(e.name)) : exports;
 }
 
 export const getElementData = (
