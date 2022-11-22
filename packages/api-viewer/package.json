@@ -59,7 +59,7 @@
   "size-limit": [
     {
       "path": "lib/api-viewer.js",
-      "limit": "38.7 KB"
+      "limit": "45 KB"
     }
   ]
 }
