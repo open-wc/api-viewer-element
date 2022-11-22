@@ -62,7 +62,7 @@
   "size-limit": [
     {
       "path": "lib/api-docs.js",
-      "limit": "30 KB"
+      "limit": "35 KB"
     }
   ]
 }

@@ -59,7 +59,7 @@
   "size-limit": [
     {
       "path": "lib/api-demo.js",
-      "limit": "19 KB"
+      "limit": "25 KB"
     }
   ]
 }
