@@ -1,6 +1,6 @@
 {
   "name": "@api-viewer/tabs",
-  "version": "1.0.0-pre.6",
+  "version": "1.0.0-pre.7",
   "publishConfig": {
     "access": "public"
   },
@@ -27,7 +27,7 @@
     "web-components"
   ],
   "dependencies": {
-    "@api-viewer/common": "^1.0.0-pre.6"
+    "@api-viewer/common": "^1.0.0-pre.7"
   },
   "contributors": [
     {

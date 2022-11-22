@@ -1,5 +1,11 @@
 # @api-viewer/common
 
+## 1.0.0-pre.7
+
+### Patch Changes
+
+- e39f213: Respect filtered elements when determining selected
+
 ## 1.0.0-pre.6
 
 ### Patch Changes
