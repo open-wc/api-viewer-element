@@ -8,26 +8,26 @@
     "node": "^14.13.1 || >=16.0.0"
   },
   "scripts": {
-    "analyze": "node scripts/workspaces-scripts-bin.js analyze",
-    "build": "tsc --build",
-    "copy": "cp docs/assets/* _site/assets",
-    "dev": "npm run watch & npm run serve",
-    "dist": "npm run fixtures && npm run analyze && rocket build && npm run copy",
-    "fixtures": "node scripts/workspaces-scripts-bin.js analyze fixtures && cp fixtures/**/custom-elements.json docs/assets",
-    "format": "npm-run-all --parallel format:*",
-    "format:md": "prettier \"**/*.md\" --write",
-    "format:package": "prettier \"**/package.json\" --write",
-    "format:ts": "prettier \"**/*.ts\" --write",
-    "lint": "npm-run-all --parallel lint:*",
-    "lint:css": "stylelint packages/**/src/*.ts fixtures/**/src/*.ts",
-    "lint:eslint": "eslint packages fixtures scripts",
-    "lint:lit": "lit-analyzer packages/**/src/*.ts fixtures/**/src/*.ts --strict",
+    "analyze": "wireit",
+    "analyze:fixtures": "wireit",
+    "build": "wireit",
+    "clean": "wireit",
+    "dev": "wireit",
+    "dist": "wireit",
+    "fixtures": "wireit",
+    "format": "wireit",
+    "format:md": "wireit",
+    "format:package": "wireit",
+    "format:ts": "wireit",
+    "lint": "wireit",
+    "lint:css": "wireit",
+    "lint:eslint": "wireit",
+    "lint:lit": "wireit",
     "release": "changeset publish && yarn format",
-    "serve": "web-dev-server --node-resolve",
-    "size": "node scripts/workspaces-scripts-bin.js size",
-    "start": "rocket start",
+    "size": "wireit",
+    "start": "wireit",
     "update:tsconfigs": "node scripts/generate-ts-configs.js",
-    "watch": "tsc-watch"
+    "watch": "wireit"
   },
   "devDependencies": {
     "@changesets/cli": "^2.25.2",
@@ -51,7 +51,6 @@
     "eslint-plugin-wc": "^1.3.2",
     "lint-staged": "^13.0.3",
     "lit-analyzer": "^1.2.1",
-    "npm-run-all": "^4.1.5",
     "picocolors": "^1.0.0",
     "postcss-lit": "^0.5.0",
     "prettier": "^2.7.1",
@@ -64,7 +63,8 @@
     "stylelint-config-prettier": "^9.0.4",
     "stylelint-config-standard": "^29.0.0",
     "tsc-watch": "^5.0.3",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.3",
+    "wireit": "^0.8.0"
   },
   "resolutions": {
     "@mdjs/core": "^0.9.0",
@@ -99,6 +99,85 @@
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
+  },
+  "wireit": {
+    "analyze": {
+      "command": "node scripts/workspaces-scripts-bin.js analyze"
+    },
+    "analyze:fixtures": {
+      "command": "node scripts/workspaces-scripts-bin.js analyze fixtures"
+    },
+    "build": {
+      "command": "tsc --build"
+    },
+    "clean": {
+      "command": "rimraf _site"
+    },
+    "dev": {
+      "command": "web-dev-server --node-resolve --open",
+      "dependencies": [
+        "watch"
+      ]
+    },
+    "dist": {
+      "command": "rocket build && cp docs/assets/* _site/assets",
+      "dependencies": [
+        "clean",
+        "analyze",
+        "fixtures"
+      ]
+    },
+    "fixtures": {
+      "command": "cp fixtures/**/custom-elements.json docs/assets",
+      "dependencies": [
+        "analyze:fixtures"
+      ]
+    },
+    "format:md": {
+      "command": "prettier \"**/*.md\" --write"
+    },
+    "format:package": {
+      "command": "prettier \"**/package.json\" --write"
+    },
+    "format:ts": {
+      "command": "prettier \"**/*.ts\" --write"
+    },
+    "format": {
+      "dependencies": [
+        "format:md",
+        "format:package",
+        "format:ts"
+      ]
+    },
+    "lint:css": {
+      "command": "stylelint packages/**/src/*.ts fixtures/**/src/*.ts"
+    },
+    "lint:eslint": {
+      "command": "eslint packages fixtures scripts"
+    },
+    "lint:lit": {
+      "command": "lit-analyzer packages/**/src/*.ts fixtures/**/src/*.ts --strict"
+    },
+    "lint": {
+      "dependencies": [
+        "lint:css",
+        "lint:eslint",
+        "lint:lit"
+      ]
+    },
+    "size": {
+      "command": "node scripts/workspaces-scripts-bin.js size",
+      "dependencies": [
+        "build"
+      ]
+    },
+    "start": {
+      "command": "rocket start"
+    },
+    "watch": {
+      "command": "tsc-watch",
+      "service": true
+    }
   },
   "workspaces": [
     "packages/*",
