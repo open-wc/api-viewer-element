@@ -57,7 +57,8 @@ class ApiDemoLayout extends LitElement {
   @property({ attribute: false })
   propKnobs!: PropertyKnob[];
 
-  private _whenDefined: Record<string, Promise<unknown>> = {};
+  @property({ type: Boolean })
+  private defined = false;
 
   private eventsController!: EventsController;
 
@@ -72,16 +73,7 @@ class ApiDemoLayout extends LitElement {
   protected render(): TemplateResult {
     const { tag } = this;
 
-    // Invoke `requestUpdate` to render demo once the component is imported lazily
-    // and becomes defined, but only it if matches the currently selected tag name.
-    if (!customElements.get(tag)) {
-      this._whenDefined[tag] = customElements.whenDefined(tag);
-      this._whenDefined[tag].then(() => {
-        if (this.tag === tag) {
-          this.requestUpdate();
-        }
-      });
-
+    if (!this.defined) {
       return html`
         <div part="warning">
           Element ${tag} is not defined. Have you imported it?
@@ -190,6 +182,19 @@ class ApiDemoLayout extends LitElement {
   willUpdate(props: PropertyValues) {
     // Reset state if tag changed
     if (props.has('tag')) {
+      const { tag } = this;
+      this.defined = !!customElements.get(tag);
+
+      if (!this.defined) {
+        // Change `defined` to render demo once the component is imported lazily
+        // and becomes defined, but only if the corresponding tag is selected.
+        customElements.whenDefined(tag).then(() => {
+          if (this.tag === tag) {
+            this.defined = true;
+          }
+        });
+      }
+
       this.knobs = {};
       this.propKnobs = getKnobs(this.tag, this.props, this.exclude);
       this.customKnobs = getCustomKnobs(this.tag, this.vid);
