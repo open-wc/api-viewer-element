@@ -20,5 +20,8 @@
     "allowSyntheticDefaultImports": true,
     "useDefineForClassFields": false,
     "importHelpers": true
-  }
+  },
+  "include": [
+    "scripts"
+  ]
 }

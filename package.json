@@ -37,13 +37,11 @@
     "@rocket/launch": "^0.6.0",
     "@rocket/search": "^0.5.1",
     "@size-limit/preset-small-lib": "^8.1.0",
-    "@typescript-eslint/eslint-plugin": "^5.46.0",
-    "@typescript-eslint/parser": "^5.46.0",
     "@web/dev-server": "^0.1.35",
     "concurrently": "^7.6.0",
     "deepmerge": "^4.2.2",
     "eslint": "^8.29.0",
-    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-vaadin": "^1.0.0-alpha.6",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-lit": "^1.7.0",
@@ -153,7 +151,7 @@
       "command": "stylelint packages/**/src/*.ts fixtures/**/src/*.ts"
     },
     "lint:eslint": {
-      "command": "eslint packages fixtures scripts"
+      "command": "eslint packages fixtures scripts **/*.js"
     },
     "lint:lit": {
       "command": "lit-analyzer packages/**/src/*.ts fixtures/**/src/*.ts --strict"
