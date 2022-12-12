@@ -50,7 +50,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-wc": "^1.4.0",
     "lint-staged": "^13.0.3",
-    "lit-analyzer": "^1.2.1",
+    "lit-analyzer": "^2.0.0-pre.2",
     "picocolors": "^1.0.0",
     "postcss": "^8.3.11",
     "postcss-lit": "^1.0.1",
