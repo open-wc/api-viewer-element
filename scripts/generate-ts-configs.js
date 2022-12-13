@@ -11,10 +11,15 @@ const packagesRoot = path.join(__dirname, '..', 'packages');
 const fixturesRoot = path.join(__dirname, '..', 'fixtures');
 
 const packageJSONMap = new Map();
+
+/** @type {Map<string,string>} */
 const packageDirnameMap = new Map();
+
+/** @type {Map<string,string>} */
 const internalDependencyMap = new Map();
 
-const isFixture = (str) => !str.includes('api') || str.includes('fixtures');
+const isFixture = (/** @type {string} */ str) =>
+  !str.includes('api') || str.includes('fixtures');
 
 // collect package json for all packages
 packages.forEach((pkg) => {
@@ -27,6 +32,7 @@ packages.forEach((pkg) => {
     process.exit(1);
   }
 
+  /** @type {Record<string,string>} */
   const packageJSONData = JSON.parse(
     fs.readFileSync(packageJSONPath).toString()
   );
@@ -57,6 +63,8 @@ function resolveInternalDependencies(dependencies) {
       childDeps.push(jdep);
     }
   }
+
+  /** @type {Array<string>} */
   const resolved = childDeps.concat(dependencies);
   // remove all duplicated after the first appearance
   return resolved.filter((item, idx) => resolved.indexOf(item) === idx);
@@ -78,6 +86,7 @@ packageDirnameMap.forEach((packageDirname, packageName) => {
   }
   const overwriteMerge = (destinationArray, sourceArray) => sourceArray;
 
+  /** @type {Array<string>} */
   const internalDependencies = resolveInternalDependencies(
     internalDependencyMap.get(packageName)
   );
@@ -94,7 +103,9 @@ packageDirnameMap.forEach((packageDirname, packageName) => {
         emitDeclarationOnly: pkg.type === 'js' ? true : undefined
       },
       references: internalDependencies.map((dep) => {
-        return { path: `../${packageDirnameMap.get(dep)}/tsconfig.json` };
+        /** @type {string} */
+        const name = packageDirnameMap.get(dep);
+        return { path: `../${name}/tsconfig.json` };
       }),
       include: ['src'],
       exclude: ['lib']
@@ -117,8 +128,10 @@ const projectLevelTsconfigData = {
     Array.from(packageDirnameMap.keys())
   ).map((packageName) => {
     const folder = isFixture(packageName) ? 'fixtures' : 'packages';
+    /** @type {string} */
+    const name = packageDirnameMap.get(packageName);
     return {
-      path: `./${folder}/${packageDirnameMap.get(packageName)}/tsconfig.json`
+      path: `./${folder}/${name}/tsconfig.json`
     };
   })
 };

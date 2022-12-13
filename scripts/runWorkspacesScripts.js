@@ -4,6 +4,17 @@ import { fileURLToPath } from 'url';
 import concurrently from 'concurrently';
 import pc from 'picocolors';
 
+/**
+ * @typedef {Object} ScriptConfig
+ * @property {string} script
+ * @property {number} concurrency
+ * @property {string} folder
+ * @property {Array<string>} filteredPackages
+ */
+
+/**
+ * @param {ScriptConfig} config
+ */
 export function runWorkspacesScripts({
   script,
   concurrency,
@@ -21,9 +32,10 @@ export function runWorkspacesScripts({
         const pkgJsonPath = join(pkgPath, 'package.json');
 
         if (fs.existsSync(pkgJsonPath)) {
+          /** @type {{ scripts: object | undefined }} */
           const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'));
 
-          if (pkgJson && pkgJson.scripts && pkgJson.scripts[script]) {
+          if (pkgJson.scripts && pkgJson.scripts[script]) {
             packages.push(pkgPath);
           }
         }
