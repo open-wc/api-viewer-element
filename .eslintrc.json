@@ -26,7 +26,8 @@
     "no-param-reassign": "off",
     "no-plusplus": "off",
     "no-underscore-dangle": "off",
-    "prefer-destructuring": "off"
+    "prefer-destructuring": "off",
+    "sort-keys": "off"
   },
   "overrides": [
     {
@@ -37,6 +38,9 @@
     },
     {
       "files": ["scripts/*.js"],
+      "env": {
+        "node": true
+      },
       "rules": {
         "import/no-extraneous-dependencies": "off",
         "no-console": "off",

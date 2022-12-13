@@ -1,0 +1,5 @@
+{
+  "parserOptions": {
+    "project": "./packages/api-demo/tsconfig.json"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "parserOptions": {
+    "project": "./fixtures/lit/tsconfig.json"
+  }
+}
