@@ -15,7 +15,7 @@ import type {
   Slot
 } from 'custom-elements-manifest/schema';
 
-export {
+export type {
   Attribute,
   ClassField,
   ClassMember,

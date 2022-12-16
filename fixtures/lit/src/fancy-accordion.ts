@@ -1,4 +1,10 @@
-import { LitElement, html, css, PropertyValues, TemplateResult } from 'lit';
+import {
+  css,
+  html,
+  LitElement,
+  type PropertyValues,
+  type TemplateResult
+} from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { ExpansionPanel } from './expansion-panel.js';

@@ -1,5 +1,16 @@
-import { ChildPart, html, noChange, nothing, TemplateResult } from 'lit';
-import { directive, Directive, PartInfo, PartType } from 'lit/directive.js';
+import {
+  html,
+  noChange,
+  nothing,
+  type ChildPart,
+  type TemplateResult
+} from 'lit';
+import {
+  directive,
+  Directive,
+  PartType,
+  type PartInfo
+} from 'lit/directive.js';
 import { templateContent } from 'lit/directives/template-content.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
@@ -8,7 +19,7 @@ import {
   isTemplate,
   TemplateTypes
 } from '@api-viewer/common/lib/templates.js';
-import { ComponentWithProps, Knob } from '../types.js';
+import type { ComponentWithProps, Knob } from '../types.js';
 
 export type ComponentRendererOptions = {
   id: number;

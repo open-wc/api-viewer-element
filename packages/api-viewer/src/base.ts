@@ -1,9 +1,8 @@
-import { LitElement, html, TemplateResult } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { cache } from 'lit/directives/cache.js';
 import { until } from 'lit/directives/until.js';
 import {
-  CustomElement,
   emptyDataWarning,
   getCustomElements,
   getElementData,
@@ -11,7 +10,8 @@ import {
   getPublicMethods,
   hasCustomElements,
   ManifestMixin,
-  Package
+  type CustomElement,
+  type Package
 } from '@api-viewer/common/lib/index.js';
 import { setTemplates } from '@api-viewer/common/lib/templates.js';
 import '@api-viewer/demo/lib/layout.js';

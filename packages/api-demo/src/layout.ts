@@ -1,7 +1,12 @@
-import { LitElement, html, PropertyValues, TemplateResult } from 'lit';
+import {
+  html,
+  LitElement,
+  type PropertyValues,
+  type TemplateResult
+} from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { cache } from 'lit/directives/cache.js';
-import {
+import type {
   ClassField,
   CssCustomProperty,
   Event,
@@ -25,7 +30,12 @@ import {
   renderKnobs,
   slotRenderer
 } from './ui/controls.js';
-import { ComponentWithProps, Knob, KnobValue, PropertyKnob } from './types.js';
+import type {
+  ComponentWithProps,
+  Knob,
+  KnobValue,
+  PropertyKnob
+} from './types.js';
 
 class ApiDemoLayout extends LitElement {
   @property() copyBtnText = 'copy';

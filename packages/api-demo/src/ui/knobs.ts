@@ -1,10 +1,10 @@
-import { ClassField, unquote } from '@api-viewer/common/lib/index.js';
+import { unquote, type ClassField } from '@api-viewer/common/lib/index.js';
 import {
   getTemplateNode,
   getTemplates,
   TemplateTypes
 } from '@api-viewer/common/lib/templates.js';
-import { ComponentWithProps, KnobValue, PropertyKnob } from '../types.js';
+import type { ComponentWithProps, KnobValue, PropertyKnob } from '../types.js';
 
 const getDefault = (prop: PropertyKnob): KnobValue => {
   const { knobType, default: value } = prop;

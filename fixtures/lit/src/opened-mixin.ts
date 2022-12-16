@@ -1,4 +1,4 @@
-import { LitElement } from 'lit';
+import type { LitElement } from 'lit';
 import { property } from 'lit/decorators/property.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */

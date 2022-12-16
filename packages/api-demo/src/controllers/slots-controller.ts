@@ -1,14 +1,14 @@
-import { Slot } from '@api-viewer/common/lib/index.js';
+import type { Slot } from '@api-viewer/common/lib/index.js';
 import {
   hasTemplate,
   TemplateTypes
 } from '@api-viewer/common/lib/templates.js';
 import {
   AbstractController,
-  AbstractControllerHost
+  type AbstractControllerHost
 } from './abstract-controller.js';
 import { formatSlot } from '../ui/controls.js';
-import { SlotValue } from '../types.js';
+import type { SlotValue } from '../types.js';
 
 export class SlotsController extends AbstractController<SlotValue> {
   enabled: boolean;

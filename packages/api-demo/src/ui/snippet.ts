@@ -1,4 +1,4 @@
-import { html, TemplateResult } from 'lit';
+import { html, type TemplateResult } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { htmlRender } from 'highlight-ts/es/render/html.js';
 import { registerLanguages } from 'highlight-ts/es/languages.js';
@@ -11,7 +11,7 @@ import {
   TemplateTypes
 } from '@api-viewer/common/lib/templates.js';
 import { CSS } from './highlight-css.js';
-import { CssCustomPropertyValue, Knob, SlotValue } from '../types.js';
+import type { CssCustomPropertyValue, Knob, SlotValue } from '../types.js';
 
 // register languages
 registerLanguages(CSS, XML);

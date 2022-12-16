@@ -1,4 +1,7 @@
-import { CssCustomProperty, ClassField } from '@api-viewer/common/lib/index.js';
+import type {
+  ClassField,
+  CssCustomProperty
+} from '@api-viewer/common/lib/index.js';
 
 export type CssCustomPropertyValue = CssCustomProperty & { value?: string };
 

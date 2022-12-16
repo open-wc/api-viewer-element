@@ -1,14 +1,20 @@
-import { LitElement, html, nothing, PropertyValues, TemplateResult } from 'lit';
+import {
+  html,
+  nothing,
+  LitElement,
+  type PropertyValues,
+  type TemplateResult
+} from 'lit';
 import { property } from 'lit/decorators/property.js';
 import {
-  Attribute,
-  ClassField,
-  ClassMethod,
-  CssCustomProperty,
-  CssPart,
-  Event,
-  Slot,
-  unquote
+  unquote,
+  type Attribute,
+  type ClassField,
+  type ClassMethod,
+  type CssCustomProperty,
+  type CssPart,
+  type Event,
+  type Slot
 } from '@api-viewer/common/lib/index.js';
 import '@api-viewer/tabs';
 import { parse } from './utils/markdown.js';

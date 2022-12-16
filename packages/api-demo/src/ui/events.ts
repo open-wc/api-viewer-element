@@ -1,5 +1,5 @@
-import { html, nothing, TemplateResult } from 'lit';
-import { KnobValue } from '../types.js';
+import { html, nothing, type TemplateResult } from 'lit';
+import type { KnobValue } from '../types.js';
 
 const renderDetail = (detail: { value: KnobValue }): string => {
   const result = detail;

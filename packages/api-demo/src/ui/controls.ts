@@ -1,5 +1,5 @@
-import { html, TemplateResult } from 'lit';
-import {
+import { html, type TemplateResult } from 'lit';
+import type {
   CssCustomPropertyValue,
   Knobable,
   PropertyKnob,

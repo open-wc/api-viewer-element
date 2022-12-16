@@ -1,9 +1,9 @@
-import { Event } from '@api-viewer/common/lib/manifest.js';
+import type { Event } from '@api-viewer/common/lib/manifest.js';
 import {
   AbstractController,
-  AbstractControllerHost
+  type AbstractControllerHost
 } from './abstract-controller.js';
-import { HasKnobs } from '../types.js';
+import type { HasKnobs } from '../types.js';
 
 export class EventsController extends AbstractController<CustomEvent> {
   constructor(
