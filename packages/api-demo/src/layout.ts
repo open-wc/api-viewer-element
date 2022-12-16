@@ -1,7 +1,12 @@
-import { LitElement, html, PropertyValues, TemplateResult } from 'lit';
+import {
+  html,
+  LitElement,
+  type PropertyValues,
+  type TemplateResult
+} from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { cache } from 'lit/directives/cache.js';
-import {
+import type {
   ClassField,
   CssCustomProperty,
   Event,
@@ -25,7 +30,12 @@ import {
   renderKnobs,
   slotRenderer
 } from './ui/controls.js';
-import { ComponentWithProps, Knob, KnobValue, PropertyKnob } from './types.js';
+import type {
+  ComponentWithProps,
+  Knob,
+  KnobValue,
+  PropertyKnob
+} from './types.js';
 
 class ApiDemoLayout extends LitElement {
   @property() copyBtnText = 'copy';
@@ -60,11 +70,11 @@ class ApiDemoLayout extends LitElement {
   @property({ type: Boolean })
   private defined = false;
 
-  private eventsController!: EventsController;
+  private eventsController?: EventsController;
 
-  private slotsController!: SlotsController;
+  private slotsController?: SlotsController;
 
-  private stylesController!: StylesController;
+  private stylesController?: StylesController;
 
   protected createRenderRoot(): this {
     return this;
@@ -89,7 +99,7 @@ class ApiDemoLayout extends LitElement {
       this.propKnobs
     ].map((arr) => arr.length === 0);
 
-    const id = this.vid as number;
+    const id = this.vid!;
     const log = this.eventsController?.data || [];
     const slots = this.slotsController?.data || [];
     const cssProps = this.stylesController?.data || [];
@@ -212,8 +222,8 @@ class ApiDemoLayout extends LitElement {
   }
 
   private _onLogClear(): void {
-    this.eventsController.clear();
-    const tab = this.querySelector('#events') as HTMLElement;
+    this.eventsController?.clear();
+    const tab = this.querySelector<HTMLElement>('#events');
     if (tab) {
       tab.focus();
     }
@@ -224,7 +234,7 @@ class ApiDemoLayout extends LitElement {
     if (source) {
       const range = document.createRange();
       range.selectNodeContents(source);
-      const selection = window.getSelection() as Selection;
+      const selection = window.getSelection()!;
       selection.removeAllRanges();
       selection.addRange(range);
       try {
@@ -267,7 +277,7 @@ class ApiDemoLayout extends LitElement {
   }
 
   private initKnobs(component: HTMLElement) {
-    if (hasTemplate(this.vid as number, this.tag, TemplateTypes.HOST)) {
+    if (hasTemplate(this.vid!, this.tag, TemplateTypes.HOST)) {
       // Apply property values from template
       const propKnobs = getInitialKnobs(this.propKnobs, component);
       propKnobs.forEach((prop) => {
@@ -285,7 +295,7 @@ class ApiDemoLayout extends LitElement {
     this.slotsController = new SlotsController(
       this,
       component,
-      this.vid as number,
+      this.vid!,
       this.slots
     );
   }
@@ -312,7 +322,7 @@ class ApiDemoLayout extends LitElement {
     let knob = this.propKnobs.find(isMatch);
     let custom = false;
     if (!knob) {
-      knob = this.customKnobs.find(isMatch) as PropertyKnob;
+      knob = this.customKnobs.find(isMatch)!;
       custom = true;
     }
     return { knob, custom };
@@ -343,19 +353,14 @@ class ApiDemoLayout extends LitElement {
     // update knobs to avoid duplicate event
     this.setKnobs(name, knobType, value, attribute);
 
-    this.propKnobs = this.propKnobs.map((prop) => {
-      return prop.name === name
-        ? {
-            ...prop,
-            value
-          }
-        : prop;
-    });
+    this.propKnobs = this.propKnobs.map((prop) =>
+      prop.name === name ? { ...prop } : prop
+    );
   }
 
   private _onCssChanged(e: CustomEvent): void {
     const target = e.composedPath()[0] as HTMLInputElement;
-    this.stylesController.setValue(target.dataset.name as string, target.value);
+    this.stylesController?.setValue(target.dataset.name!, target.value);
   }
 
   private _onPropChanged(e: CustomEvent): void {
@@ -374,21 +379,13 @@ class ApiDemoLayout extends LitElement {
         value = target.value;
     }
 
-    const { knob, custom } = this.getKnob(name as string);
-    if (knob) {
-      this.setKnobs(
-        name as string,
-        type as string,
-        value,
-        knob.attribute,
-        custom
-      );
-    }
+    const { knob, custom } = this.getKnob(name!);
+    this.setKnobs(name!, type!, value, knob.attribute, custom);
   }
 
   private _onSlotChanged(e: CustomEvent): void {
     const target = e.composedPath()[0] as HTMLInputElement;
-    this.slotsController.setValue(target.dataset.slot as string, target.value);
+    this.slotsController?.setValue(target.dataset.slot!, target.value);
   }
 }
 

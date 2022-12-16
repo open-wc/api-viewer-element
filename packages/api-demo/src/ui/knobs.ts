@@ -1,10 +1,10 @@
-import { ClassField, unquote } from '@api-viewer/common/lib/index.js';
+import { unquote, type ClassField } from '@api-viewer/common/lib/index.js';
 import {
   getTemplateNode,
   getTemplates,
   TemplateTypes
 } from '@api-viewer/common/lib/templates.js';
-import { ComponentWithProps, KnobValue, PropertyKnob } from '../types.js';
+import type { ComponentWithProps, KnobValue, PropertyKnob } from '../types.js';
 
 const getDefault = (prop: PropertyKnob): KnobValue => {
   const { knobType, default: value } = prop;
@@ -14,7 +14,7 @@ const getDefault = (prop: PropertyKnob): KnobValue => {
     case 'number':
       return Number(value);
     default:
-      return unquote(value as string);
+      return unquote(value);
   }
 };
 
@@ -73,8 +73,8 @@ export const getKnobs = (
   return propKnobs;
 };
 
-export const getCustomKnobs = (tag: string, vid?: number): PropertyKnob[] => {
-  return getTemplates(vid as number, tag, TemplateTypes.KNOB)
+export const getCustomKnobs = (tag: string, vid?: number): PropertyKnob[] =>
+  getTemplates(vid!, tag, TemplateTypes.KNOB)
     .map((template) => {
       const { attr, type } = template.dataset;
       let result = null;
@@ -108,13 +108,12 @@ export const getCustomKnobs = (tag: string, vid?: number): PropertyKnob[] => {
       return result as PropertyKnob;
     })
     .filter(Boolean);
-};
 
 export const getInitialKnobs = (
   propKnobs: PropertyKnob[],
   component: HTMLElement
-): PropertyKnob[] => {
-  return propKnobs.filter((prop) => {
+): PropertyKnob[] =>
+  propKnobs.filter((prop) => {
     const { name, knobType } = prop;
     const defaultValue = getDefault(prop);
     return (
@@ -122,4 +121,3 @@ export const getInitialKnobs = (
       (knobType === 'boolean' && defaultValue)
     );
   });
-};

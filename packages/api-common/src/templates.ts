@@ -1,6 +1,6 @@
-const templates: Array<HTMLTemplateElement[]> = [];
+const templates: HTMLTemplateElement[][] = [];
 
-export const setTemplates = (id: number, tpl: HTMLTemplateElement[]) => {
+export const setTemplates = (id: number, tpl: HTMLTemplateElement[]): void => {
   templates[id] = tpl;
 };
 

@@ -1,5 +1,16 @@
-import { ChildPart, html, noChange, nothing, TemplateResult } from 'lit';
-import { directive, Directive, PartInfo, PartType } from 'lit/directive.js';
+import {
+  html,
+  noChange,
+  nothing,
+  type ChildPart,
+  type TemplateResult
+} from 'lit';
+import {
+  directive,
+  Directive,
+  PartType,
+  type PartInfo
+} from 'lit/directive.js';
 import { templateContent } from 'lit/directives/template-content.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import {
@@ -8,7 +19,7 @@ import {
   isTemplate,
   TemplateTypes
 } from '@api-viewer/common/lib/templates.js';
-import { ComponentWithProps, Knob } from '../types.js';
+import type { ComponentWithProps, Knob } from '../types.js';
 
 export type ComponentRendererOptions = {
   id: number;
@@ -19,7 +30,7 @@ export type ComponentRendererOptions = {
 const { HOST, PREFIX, SLOT, SUFFIX, WRAPPER } = TemplateTypes;
 
 const updateComponent = (
-  component: HTMLElement,
+  component: Element,
   options: ComponentRendererOptions
 ): void => {
   const { knobs } = options;
@@ -54,9 +65,7 @@ interface PossiblyAsyncElement {
  *
  * If none of those Promise hooks are found, it will wait for `setTimeout`.
  */
-async function elementUpdated(
-  element: HTMLElement
-): Promise<PossiblyAsyncElement> {
+async function elementUpdated(element: Element): Promise<PossiblyAsyncElement> {
   let hasSpecificAwait = false;
   const el = element as PossiblyAsyncElement;
 
@@ -114,13 +123,13 @@ class Renderer extends Directive {
     const wrapTagName = wrapNode ? wrapNode.localName : '';
 
     // Update existing component, if any
-    let component = parent.querySelector(tag) as HTMLElement;
+    let component = parent.querySelector(tag);
     if (component) {
-      const output = parent.querySelector('[part="demo-output"]') as Element;
-      const outer = component.parentElement as Element;
+      const output = parent.querySelector('[part="demo-output"]');
+      const outer = component.parentElement;
       // Ensure the component isn't part of the other demo,
       // e.g. expansion-panel used in fancy-accordion etc.
-      if ((outer && outer === output) || outer.localName === wrapTagName) {
+      if (outer && (outer === output || outer.localName === wrapTagName)) {
         updateComponent(component, options);
         return noChange;
       }
@@ -162,19 +171,21 @@ class Renderer extends Directive {
 
     // Wait for rendering
     Promise.resolve().then(() => {
-      component = parent.querySelector(tag) as HTMLElement;
+      component = parent.querySelector(tag);
 
-      elementUpdated(component).then(() => {
-        component.dispatchEvent(
-          new CustomEvent('rendered', {
-            detail: {
-              component
-            },
-            bubbles: true,
-            composed: true
-          })
-        );
-      });
+      if (component) {
+        elementUpdated(component).then(() => {
+          component!.dispatchEvent(
+            new CustomEvent('rendered', {
+              detail: {
+                component
+              },
+              bubbles: true,
+              composed: true
+            })
+          );
+        });
+      }
     });
 
     return html`${result}`;

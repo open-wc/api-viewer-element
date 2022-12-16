@@ -1,9 +1,12 @@
-import { CssCustomProperty, unquote } from '@api-viewer/common/lib/index.js';
+import {
+  type CssCustomProperty,
+  unquote
+} from '@api-viewer/common/lib/index.js';
 import {
   AbstractController,
-  AbstractControllerHost
+  type AbstractControllerHost
 } from './abstract-controller.js';
-import { CssCustomPropertyValue } from '../types.js';
+import type { CssCustomPropertyValue } from '../types.js';
 
 export class StylesController extends AbstractController<CssCustomPropertyValue> {
   constructor(
@@ -33,18 +36,13 @@ export class StylesController extends AbstractController<CssCustomPropertyValue>
     }
   }
 
-  setValue(name: string, value: string) {
-    this.data = this.data.map((prop) => {
-      return prop.name === name
-        ? {
-            ...prop,
-            value
-          }
-        : prop;
-    });
+  setValue(name: string, value: string): void {
+    this.data = this.data.map((prop) =>
+      prop.name === name ? { ...prop, value } : prop
+    );
   }
 
-  updateData(data: CssCustomPropertyValue[]) {
+  updateData(data: CssCustomPropertyValue[]): void {
     super.updateData(data);
 
     if (data.length) {

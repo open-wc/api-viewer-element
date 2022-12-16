@@ -1,6 +1,6 @@
-import { LitElement, html } from 'lit';
+import { html, type LitElement } from 'lit';
 import { property } from 'lit/decorators/property.js';
-import { fetchManifest, hasCustomElements, Package } from './manifest.js';
+import { fetchManifest, hasCustomElements, type Package } from './manifest.js';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type Constructor<T = unknown> = new (...args: any[]) => T;

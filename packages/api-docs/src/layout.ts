@@ -1,14 +1,20 @@
-import { LitElement, html, nothing, PropertyValues, TemplateResult } from 'lit';
+import {
+  html,
+  nothing,
+  LitElement,
+  type PropertyValues,
+  type TemplateResult
+} from 'lit';
 import { property } from 'lit/decorators/property.js';
 import {
-  Attribute,
-  ClassField,
-  ClassMethod,
-  CssCustomProperty,
-  CssPart,
-  Event,
-  Slot,
-  unquote
+  unquote,
+  type Attribute,
+  type ClassField,
+  type ClassMethod,
+  type CssCustomProperty,
+  type CssPart,
+  type Event,
+  type Slot
 } from '@api-viewer/common/lib/index.js';
 import '@api-viewer/tabs';
 import { parse } from './utils/markdown.js';
@@ -20,44 +26,42 @@ const renderItem = (
   valueType?: string,
   value?: unknown,
   attribute?: string
-): TemplateResult => {
-  return html`
-    <div part="docs-item">
-      <div part="docs-row">
-        <div part="docs-column" class="column-name-${prefix}">
-          <div part="docs-label">Name</div>
-          <div part="docs-value" class="accent">${name}</div>
-        </div>
-        ${attribute === undefined
-          ? nothing
-          : html`
-              <div part="docs-column">
-                <div part="docs-label">Attribute</div>
-                <div part="docs-value">${attribute}</div>
-              </div>
-            `}
-        ${valueType === undefined && value === undefined
-          ? nothing
-          : html`
-              <div part="docs-column" class="column-type">
-                <div part="docs-label">Type</div>
-                <div part="docs-value">
-                  ${valueType ||
-                  (Number.isNaN(Number(value)) ? typeof value : 'number')}
-                  ${value === undefined
-                    ? nothing
-                    : html` = <span class="accent">${value}</span> `}
-                </div>
-              </div>
-            `}
+): TemplateResult => html`
+  <div part="docs-item">
+    <div part="docs-row">
+      <div part="docs-column" class="column-name-${prefix}">
+        <div part="docs-label">Name</div>
+        <div part="docs-value" class="accent">${name}</div>
       </div>
-      <div ?hidden=${description === undefined}>
-        <div part="docs-label">Description</div>
-        <div part="docs-markdown">${parse(description)}</div>
-      </div>
+      ${attribute === undefined
+        ? nothing
+        : html`
+            <div part="docs-column">
+              <div part="docs-label">Attribute</div>
+              <div part="docs-value">${attribute}</div>
+            </div>
+          `}
+      ${valueType === undefined && value === undefined
+        ? nothing
+        : html`
+            <div part="docs-column" class="column-type">
+              <div part="docs-label">Type</div>
+              <div part="docs-value">
+                ${valueType ||
+                (Number.isNaN(Number(value)) ? typeof value : 'number')}
+                ${value === undefined
+                  ? nothing
+                  : html` = <span class="accent">${value}</span> `}
+              </div>
+            </div>
+          `}
     </div>
-  `;
-};
+    <div ?hidden=${description === undefined}>
+      <div part="docs-label">Description</div>
+      <div part="docs-markdown">${parse(description)}</div>
+    </div>
+  </div>
+`;
 
 const renderTab = (
   heading: string,
@@ -136,7 +140,7 @@ class ApiDocsLayout extends LitElement {
       cssParts
     ].every((arr) => arr.length === 0);
 
-    const attributes = (attrs || []).filter(
+    const attributes = attrs.filter(
       (x) => !props.some((y) => y.name === x.fieldName)
     );
 
@@ -155,9 +159,7 @@ class ApiDocsLayout extends LitElement {
               html`
                 ${props.map((prop) => {
                   const { name, description, type } = prop;
-                  const attribute = (attrs || []).find(
-                    (x) => x.fieldName === name
-                  );
+                  const attribute = attrs.find((x) => x.fieldName === name);
                   return renderItem(
                     'prop',
                     name,

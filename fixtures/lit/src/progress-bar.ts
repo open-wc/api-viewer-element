@@ -1,4 +1,11 @@
-import { LitElement, html, css, PropertyValues, TemplateResult } from 'lit';
+import {
+  css,
+  html,
+  LitElement,
+  type CSSResult,
+  type PropertyValues,
+  type TemplateResult
+} from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
@@ -52,7 +59,7 @@ export class ProgressBar extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) indeterminate = false;
 
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       :host {
         display: block;

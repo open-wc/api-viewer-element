@@ -1,9 +1,8 @@
-import { LitElement, html, TemplateResult } from 'lit';
+import { LitElement, html, type TemplateResult } from 'lit';
 import { property } from 'lit/decorators/property.js';
 import { cache } from 'lit/directives/cache.js';
 import { until } from 'lit/directives/until.js';
 import {
-  CustomElement,
   emptyDataWarning,
   getCustomElements,
   getElementData,
@@ -11,7 +10,7 @@ import {
   getPublicMethods,
   hasCustomElements,
   ManifestMixin,
-  Package
+  type Package
 } from '@api-viewer/common/lib/index.js';
 import { setTemplates } from '@api-viewer/common/lib/templates.js';
 import '@api-viewer/demo/lib/layout.js';
@@ -36,7 +35,7 @@ async function renderDocs(
 
   const elements = getCustomElements(manifest, only);
 
-  const data = getElementData(manifest, elements, selected) as CustomElement;
+  const data = getElementData(manifest, elements, selected)!;
   const props = getPublicFields(data.members);
   const methods = getPublicMethods(data.members);
 
@@ -150,7 +149,7 @@ export class ApiViewerBase extends ManifestMixin(LitElement) {
 
   public setTemplates(templates?: HTMLTemplateElement[]): void {
     setTemplates(
-      this._id as number,
+      this._id!,
       templates || Array.from(this.querySelectorAll('template'))
     );
   }

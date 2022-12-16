@@ -1,4 +1,11 @@
-import { LitElement, html, css, PropertyValues, TemplateResult } from 'lit';
+import {
+  css,
+  html,
+  LitElement,
+  type CSSResult,
+  type PropertyValues,
+  type TemplateResult
+} from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 import { query } from 'lit/decorators/query.js';
@@ -44,7 +51,7 @@ export class ExpansionPanel extends OpenedMixin(LitElement) {
 
   private _boundBodyKeyup = this._onBodyKeyup.bind(this);
 
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       :host {
         display: block;

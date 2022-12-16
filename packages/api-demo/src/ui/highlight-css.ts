@@ -1,4 +1,4 @@
-import { LanguageDef } from 'highlight-ts/es/types.js';
+import type { LanguageDef } from 'highlight-ts/es/types.js';
 import {
   APOS_STRING_MODE,
   QUOTE_STRING_MODE,

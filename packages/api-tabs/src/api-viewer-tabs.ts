@@ -133,8 +133,8 @@ export class ApiViewerTabs extends HTMLElement {
   private _selectTab(newTab: ApiViewerTab): void {
     this.reset();
 
-    const panelId = newTab.getAttribute('aria-controls');
-    const newPanel = this.querySelector(`#${panelId}`) as ApiViewerPanel;
+    const panelId = newTab.getAttribute('aria-controls')!;
+    const newPanel = this.querySelector<ApiViewerPanel>(`#${panelId}`);
     if (newPanel) {
       newTab.selected = true;
       newPanel.hidden = false;

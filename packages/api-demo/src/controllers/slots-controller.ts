@@ -1,14 +1,14 @@
-import { Slot } from '@api-viewer/common/lib/index.js';
+import type { Slot } from '@api-viewer/common/lib/index.js';
 import {
   hasTemplate,
   TemplateTypes
 } from '@api-viewer/common/lib/templates.js';
 import {
   AbstractController,
-  AbstractControllerHost
+  type AbstractControllerHost
 } from './abstract-controller.js';
 import { formatSlot } from '../ui/controls.js';
-import { SlotValue } from '../types.js';
+import type { SlotValue } from '../types.js';
 
 export class SlotsController extends AbstractController<SlotValue> {
   enabled: boolean;
@@ -32,26 +32,19 @@ export class SlotsController extends AbstractController<SlotValue> {
         }
         return a.name.localeCompare(b.name);
       })
-      .map((slot) => {
-        return {
-          ...slot,
-          content: formatSlot(slot.name)
-        };
-      }) as SlotValue[];
+      .map((slot) => ({
+        ...slot,
+        content: formatSlot(slot.name)
+      })) as SlotValue[];
   }
 
-  setValue(name: string, content: string) {
-    this.data = this.data.map((slot) => {
-      return slot.name === name
-        ? {
-            ...slot,
-            content
-          }
-        : slot;
-    });
+  setValue(name: string, content: string): void {
+    this.data = this.data.map((slot) =>
+      slot.name === name ? { ...slot, content } : slot
+    );
   }
 
-  updateData(data: SlotValue[]) {
+  updateData(data: SlotValue[]): void {
     super.updateData(data);
 
     // Apply slots content by re-creating nodes

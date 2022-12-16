@@ -1,7 +1,6 @@
-import { LitElement, html, TemplateResult } from 'lit';
+import { html, LitElement, type TemplateResult } from 'lit';
 import { until } from 'lit/directives/until.js';
 import {
-  CustomElement,
   emptyDataWarning,
   getCustomElements,
   getElementData,
@@ -9,7 +8,7 @@ import {
   getPublicMethods,
   hasCustomElements,
   ManifestMixin,
-  Package
+  type Package
 } from '@api-viewer/common/lib/index.js';
 import { parse } from './utils/markdown.js';
 import './layout.js';
@@ -28,7 +27,7 @@ async function renderDocs(
 
   const elements = getCustomElements(manifest, only);
 
-  const data = getElementData(manifest, elements, selected) as CustomElement;
+  const data = getElementData(manifest, elements, selected)!;
   const props = getPublicFields(data.members);
   const methods = getPublicMethods(data.members);
 

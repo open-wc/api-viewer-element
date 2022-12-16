@@ -1,10 +1,11 @@
+import type { CSSResultArray } from 'lit';
 import sharedStyles from '@api-viewer/common/lib/shared-styles.js';
 import { setTemplates } from '@api-viewer/common/lib/templates.js';
 import { ApiDemoBase } from './base.js';
 import demoStyles from './styles.js';
 
 export class ApiDemo extends ApiDemoBase {
-  static get styles() {
+  static get styles(): CSSResultArray {
     return [sharedStyles, demoStyles];
   }
 
@@ -14,7 +15,7 @@ export class ApiDemo extends ApiDemoBase {
 
   public setTemplates(templates?: HTMLTemplateElement[]): void {
     setTemplates(
-      this._id as number,
+      this._id!,
       templates || Array.from(this.querySelectorAll('template'))
     );
   }
