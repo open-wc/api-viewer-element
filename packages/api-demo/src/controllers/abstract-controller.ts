@@ -20,7 +20,7 @@ export class AbstractController<T> {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  updateData(_data: T[]) {
+  updateData(_data: T[]): void {
     if (this.host.isConnected) {
       this.host.requestUpdate();
     }
@@ -31,11 +31,11 @@ export class AbstractController<T> {
     this.el = component;
   }
 
-  clear() {
+  clear(): void {
     this.data = [];
   }
 
-  destroy() {
+  destroy(): void {
     this.host.removeController(this as ReactiveController);
   }
 }

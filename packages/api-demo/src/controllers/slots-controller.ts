@@ -38,13 +38,13 @@ export class SlotsController extends AbstractController<SlotValue> {
       })) as SlotValue[];
   }
 
-  setValue(name: string, content: string) {
+  setValue(name: string, content: string): void {
     this.data = this.data.map((slot) =>
       slot.name === name ? { ...slot, content } : slot
     );
   }
 
-  updateData(data: SlotValue[]) {
+  updateData(data: SlotValue[]): void {
     super.updateData(data);
 
     // Apply slots content by re-creating nodes

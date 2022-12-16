@@ -36,13 +36,13 @@ export class StylesController extends AbstractController<CssCustomPropertyValue>
     }
   }
 
-  setValue(name: string, value: string) {
+  setValue(name: string, value: string): void {
     this.data = this.data.map((prop) =>
       prop.name === name ? { ...prop, value } : prop
     );
   }
 
-  updateData(data: CssCustomPropertyValue[]) {
+  updateData(data: CssCustomPropertyValue[]): void {
     super.updateData(data);
 
     if (data.length) {

@@ -1,9 +1,10 @@
+import type { CSSResultArray } from 'lit';
 import { setTemplates } from '@api-viewer/common/lib/templates.js';
 import { ApiViewerBase } from './base.js';
 import styles from './styles.js';
 
 export class ApiViewer extends ApiViewerBase {
-  static get styles() {
+  static get styles(): CSSResultArray {
     return styles;
   }
 
