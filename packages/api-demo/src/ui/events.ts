@@ -12,14 +12,14 @@ const renderDetail = (detail: { value: KnobValue }): string => {
 
 export const renderEvents = (log: CustomEvent[]): TemplateResult =>
   html`
-    ${log.map((event) => {
-      return html`
+    ${log.map(
+      (event) => html`
         <p part="event-record">
           event:
           ${event.type}.${event.detail == null
             ? nothing
             : renderDetail(event.detail)}
         </p>
-      `;
-    })}
+      `
+    )}
   `;
