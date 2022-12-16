@@ -99,7 +99,7 @@ class ApiDemoLayout extends LitElement {
       this.propKnobs
     ].map((arr) => arr.length === 0);
 
-    const id = this.vid as number;
+    const id = this.vid!;
     const log = this.eventsController?.data || [];
     const slots = this.slotsController?.data || [];
     const cssProps = this.stylesController?.data || [];
@@ -223,7 +223,7 @@ class ApiDemoLayout extends LitElement {
 
   private _onLogClear(): void {
     this.eventsController.clear();
-    const tab = this.querySelector('#events') as HTMLElement;
+    const tab = this.querySelector<HTMLElement>('#events');
     if (tab) {
       tab.focus();
     }
@@ -234,7 +234,7 @@ class ApiDemoLayout extends LitElement {
     if (source) {
       const range = document.createRange();
       range.selectNodeContents(source);
-      const selection = window.getSelection() as Selection;
+      const selection = window.getSelection()!;
       selection.removeAllRanges();
       selection.addRange(range);
       try {
@@ -277,7 +277,7 @@ class ApiDemoLayout extends LitElement {
   }
 
   private initKnobs(component: HTMLElement) {
-    if (hasTemplate(this.vid as number, this.tag, TemplateTypes.HOST)) {
+    if (hasTemplate(this.vid!, this.tag, TemplateTypes.HOST)) {
       // Apply property values from template
       const propKnobs = getInitialKnobs(this.propKnobs, component);
       propKnobs.forEach((prop) => {
@@ -295,7 +295,7 @@ class ApiDemoLayout extends LitElement {
     this.slotsController = new SlotsController(
       this,
       component,
-      this.vid as number,
+      this.vid!,
       this.slots
     );
   }
@@ -322,7 +322,7 @@ class ApiDemoLayout extends LitElement {
     let knob = this.propKnobs.find(isMatch);
     let custom = false;
     if (!knob) {
-      knob = this.customKnobs.find(isMatch) as PropertyKnob;
+      knob = this.customKnobs.find(isMatch)!;
       custom = true;
     }
     return { knob, custom };
