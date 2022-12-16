@@ -380,15 +380,13 @@ class ApiDemoLayout extends LitElement {
     }
 
     const { knob, custom } = this.getKnob(name as string);
-    if (knob) {
-      this.setKnobs(
-        name as string,
-        type as string,
-        value,
-        knob.attribute,
-        custom
-      );
-    }
+    this.setKnobs(
+      name as string,
+      type as string,
+      value,
+      knob.attribute,
+      custom
+    );
   }
 
   private _onSlotChanged(e: CustomEvent): void {

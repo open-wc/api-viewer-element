@@ -18,9 +18,7 @@ export class EventsController extends AbstractController<CustomEvent> {
         const s = '-changed';
         if (name.endsWith(s)) {
           const { knob } = host.getKnob(name.replace(s, ''));
-          if (knob) {
-            host.syncKnob(component, knob);
-          }
+          host.syncKnob(component, knob);
         }
 
         this.data = [...this.data, evt];

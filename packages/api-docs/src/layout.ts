@@ -140,7 +140,7 @@ class ApiDocsLayout extends LitElement {
       cssParts
     ].every((arr) => arr.length === 0);
 
-    const attributes = (attrs || []).filter(
+    const attributes = attrs.filter(
       (x) => !props.some((y) => y.name === x.fieldName)
     );
 
@@ -159,9 +159,7 @@ class ApiDocsLayout extends LitElement {
               html`
                 ${props.map((prop) => {
                   const { name, description, type } = prop;
-                  const attribute = (attrs || []).find(
-                    (x) => x.fieldName === name
-                  );
+                  const attribute = attrs.find((x) => x.fieldName === name);
                   return renderItem(
                     'prop',
                     name,
