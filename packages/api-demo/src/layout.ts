@@ -70,11 +70,11 @@ class ApiDemoLayout extends LitElement {
   @property({ type: Boolean })
   private defined = false;
 
-  private eventsController!: EventsController;
+  private eventsController?: EventsController;
 
-  private slotsController!: SlotsController;
+  private slotsController?: SlotsController;
 
-  private stylesController!: StylesController;
+  private stylesController?: StylesController;
 
   protected createRenderRoot(): this {
     return this;
@@ -222,7 +222,7 @@ class ApiDemoLayout extends LitElement {
   }
 
   private _onLogClear(): void {
-    this.eventsController.clear();
+    this.eventsController?.clear();
     const tab = this.querySelector<HTMLElement>('#events');
     if (tab) {
       tab.focus();
@@ -360,7 +360,7 @@ class ApiDemoLayout extends LitElement {
 
   private _onCssChanged(e: CustomEvent): void {
     const target = e.composedPath()[0] as HTMLInputElement;
-    this.stylesController.setValue(target.dataset.name!, target.value);
+    this.stylesController?.setValue(target.dataset.name!, target.value);
   }
 
   private _onPropChanged(e: CustomEvent): void {
@@ -385,7 +385,7 @@ class ApiDemoLayout extends LitElement {
 
   private _onSlotChanged(e: CustomEvent): void {
     const target = e.composedPath()[0] as HTMLInputElement;
-    this.slotsController.setValue(target.dataset.slot!, target.value);
+    this.slotsController?.setValue(target.dataset.slot!, target.value);
   }
 }
 
