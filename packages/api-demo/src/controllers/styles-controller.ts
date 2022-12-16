@@ -34,14 +34,9 @@ export class StylesController extends AbstractController<CssCustomPropertyValue>
   }
 
   setValue(name: string, value: string) {
-    this.data = this.data.map((prop) => {
-      return prop.name === name
-        ? {
-            ...prop,
-            value
-          }
-        : prop;
-    });
+    this.data = this.data.map((prop) =>
+      prop.name === name ? { ...prop, value } : prop
+    );
   }
 
   updateData(data: CssCustomPropertyValue[]) {

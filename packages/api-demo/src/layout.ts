@@ -343,14 +343,9 @@ class ApiDemoLayout extends LitElement {
     // update knobs to avoid duplicate event
     this.setKnobs(name, knobType, value, attribute);
 
-    this.propKnobs = this.propKnobs.map((prop) => {
-      return prop.name === name
-        ? {
-            ...prop,
-            value
-          }
-        : prop;
-    });
+    this.propKnobs = this.propKnobs.map((prop) =>
+      prop.name === name ? { ...prop } : prop
+    );
   }
 
   private _onCssChanged(e: CustomEvent): void {

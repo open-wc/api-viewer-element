@@ -32,23 +32,16 @@ export class SlotsController extends AbstractController<SlotValue> {
         }
         return a.name.localeCompare(b.name);
       })
-      .map((slot) => {
-        return {
-          ...slot,
-          content: formatSlot(slot.name)
-        };
-      }) as SlotValue[];
+      .map((slot) => ({
+        ...slot,
+        content: formatSlot(slot.name)
+      })) as SlotValue[];
   }
 
   setValue(name: string, content: string) {
-    this.data = this.data.map((slot) => {
-      return slot.name === name
-        ? {
-            ...slot,
-            content
-          }
-        : slot;
-    });
+    this.data = this.data.map((slot) =>
+      slot.name === name ? { ...slot, content } : slot
+    );
   }
 
   updateData(data: SlotValue[]) {

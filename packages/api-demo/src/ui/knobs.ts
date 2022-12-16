@@ -73,8 +73,8 @@ export const getKnobs = (
   return propKnobs;
 };
 
-export const getCustomKnobs = (tag: string, vid?: number): PropertyKnob[] => {
-  return getTemplates(vid as number, tag, TemplateTypes.KNOB)
+export const getCustomKnobs = (tag: string, vid?: number): PropertyKnob[] =>
+  getTemplates(vid as number, tag, TemplateTypes.KNOB)
     .map((template) => {
       const { attr, type } = template.dataset;
       let result = null;
@@ -108,13 +108,12 @@ export const getCustomKnobs = (tag: string, vid?: number): PropertyKnob[] => {
       return result as PropertyKnob;
     })
     .filter(Boolean);
-};
 
 export const getInitialKnobs = (
   propKnobs: PropertyKnob[],
   component: HTMLElement
-): PropertyKnob[] => {
-  return propKnobs.filter((prop) => {
+): PropertyKnob[] =>
+  propKnobs.filter((prop) => {
     const { name, knobType } = prop;
     const defaultValue = getDefault(prop);
     return (
@@ -122,4 +121,3 @@ export const getInitialKnobs = (
       (knobType === 'boolean' && defaultValue)
     );
   });
-};

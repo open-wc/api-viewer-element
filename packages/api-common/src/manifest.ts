@@ -119,16 +119,12 @@ export const getElementData = (
   };
 };
 
-export const getPublicFields = (members: ClassMember[] = []): ClassField[] => {
-  return members.filter(
+export const getPublicFields = (members: ClassMember[] = []): ClassField[] =>
+  members.filter(
     (x: ClassMember): x is ClassField => x.kind === 'field' && isPublic(x)
   );
-};
 
-export const getPublicMethods = (
-  members: ClassMember[] = []
-): ClassMethod[] => {
-  return members.filter(
+export const getPublicMethods = (members: ClassMember[] = []): ClassMethod[] =>
+  members.filter(
     (x: ClassMember): x is ClassMethod => x.kind === 'method' && isPublic(x)
   );
-};

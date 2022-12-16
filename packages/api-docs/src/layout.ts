@@ -20,44 +20,42 @@ const renderItem = (
   valueType?: string,
   value?: unknown,
   attribute?: string
-): TemplateResult => {
-  return html`
-    <div part="docs-item">
-      <div part="docs-row">
-        <div part="docs-column" class="column-name-${prefix}">
-          <div part="docs-label">Name</div>
-          <div part="docs-value" class="accent">${name}</div>
-        </div>
-        ${attribute === undefined
-          ? nothing
-          : html`
-              <div part="docs-column">
-                <div part="docs-label">Attribute</div>
-                <div part="docs-value">${attribute}</div>
-              </div>
-            `}
-        ${valueType === undefined && value === undefined
-          ? nothing
-          : html`
-              <div part="docs-column" class="column-type">
-                <div part="docs-label">Type</div>
-                <div part="docs-value">
-                  ${valueType ||
-                  (Number.isNaN(Number(value)) ? typeof value : 'number')}
-                  ${value === undefined
-                    ? nothing
-                    : html` = <span class="accent">${value}</span> `}
-                </div>
-              </div>
-            `}
+): TemplateResult => html`
+  <div part="docs-item">
+    <div part="docs-row">
+      <div part="docs-column" class="column-name-${prefix}">
+        <div part="docs-label">Name</div>
+        <div part="docs-value" class="accent">${name}</div>
       </div>
-      <div ?hidden=${description === undefined}>
-        <div part="docs-label">Description</div>
-        <div part="docs-markdown">${parse(description)}</div>
-      </div>
+      ${attribute === undefined
+        ? nothing
+        : html`
+            <div part="docs-column">
+              <div part="docs-label">Attribute</div>
+              <div part="docs-value">${attribute}</div>
+            </div>
+          `}
+      ${valueType === undefined && value === undefined
+        ? nothing
+        : html`
+            <div part="docs-column" class="column-type">
+              <div part="docs-label">Type</div>
+              <div part="docs-value">
+                ${valueType ||
+                (Number.isNaN(Number(value)) ? typeof value : 'number')}
+                ${value === undefined
+                  ? nothing
+                  : html` = <span class="accent">${value}</span> `}
+              </div>
+            </div>
+          `}
     </div>
-  `;
-};
+    <div ?hidden=${description === undefined}>
+      <div part="docs-label">Description</div>
+      <div part="docs-markdown">${parse(description)}</div>
+    </div>
+  </div>
+`;
 
 const renderTab = (
   heading: string,
