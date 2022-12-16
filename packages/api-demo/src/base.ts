@@ -8,7 +8,6 @@ import {
   getPublicFields,
   hasCustomElements,
   ManifestMixin,
-  type CustomElement,
   type Package
 } from '@api-viewer/common/lib/index.js';
 import './layout.js';
@@ -29,7 +28,7 @@ async function renderDemo(
 
   const elements = getCustomElements(manifest, only);
 
-  const data = getElementData(manifest, elements, selected) as CustomElement;
+  const data = getElementData(manifest, elements, selected)!;
   const props = getPublicFields(data.members);
 
   return html`

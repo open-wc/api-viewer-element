@@ -14,7 +14,7 @@ const getDefault = (prop: PropertyKnob): KnobValue => {
     case 'number':
       return Number(value);
     default:
-      return unquote(value as string);
+      return unquote(value);
   }
 };
 

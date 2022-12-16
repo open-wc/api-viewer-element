@@ -8,7 +8,6 @@ import {
   getPublicMethods,
   hasCustomElements,
   ManifestMixin,
-  type CustomElement,
   type Package
 } from '@api-viewer/common/lib/index.js';
 import { parse } from './utils/markdown.js';
@@ -28,7 +27,7 @@ async function renderDocs(
 
   const elements = getCustomElements(manifest, only);
 
-  const data = getElementData(manifest, elements, selected) as CustomElement;
+  const data = getElementData(manifest, elements, selected)!;
   const props = getPublicFields(data.members);
   const methods = getPublicMethods(data.members);
 

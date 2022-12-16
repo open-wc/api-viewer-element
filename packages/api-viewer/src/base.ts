@@ -10,7 +10,6 @@ import {
   getPublicMethods,
   hasCustomElements,
   ManifestMixin,
-  type CustomElement,
   type Package
 } from '@api-viewer/common/lib/index.js';
 import { setTemplates } from '@api-viewer/common/lib/templates.js';
@@ -36,7 +35,7 @@ async function renderDocs(
 
   const elements = getCustomElements(manifest, only);
 
-  const data = getElementData(manifest, elements, selected) as CustomElement;
+  const data = getElementData(manifest, elements, selected)!;
   const props = getPublicFields(data.members);
   const methods = getPublicMethods(data.members);
 
@@ -150,7 +149,7 @@ export class ApiViewerBase extends ManifestMixin(LitElement) {
 
   public setTemplates(templates?: HTMLTemplateElement[]): void {
     setTemplates(
-      this._id as number,
+      this._id!,
       templates || Array.from(this.querySelectorAll('template'))
     );
   }

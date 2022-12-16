@@ -360,7 +360,7 @@ class ApiDemoLayout extends LitElement {
 
   private _onCssChanged(e: CustomEvent): void {
     const target = e.composedPath()[0] as HTMLInputElement;
-    this.stylesController.setValue(target.dataset.name as string, target.value);
+    this.stylesController.setValue(target.dataset.name!, target.value);
   }
 
   private _onPropChanged(e: CustomEvent): void {
@@ -379,19 +379,13 @@ class ApiDemoLayout extends LitElement {
         value = target.value;
     }
 
-    const { knob, custom } = this.getKnob(name as string);
-    this.setKnobs(
-      name as string,
-      type as string,
-      value,
-      knob.attribute,
-      custom
-    );
+    const { knob, custom } = this.getKnob(name!);
+    this.setKnobs(name!, type!, value, knob.attribute, custom);
   }
 
   private _onSlotChanged(e: CustomEvent): void {
     const target = e.composedPath()[0] as HTMLInputElement;
-    this.slotsController.setValue(target.dataset.slot as string, target.value);
+    this.slotsController.setValue(target.dataset.slot!, target.value);
   }
 }
 

@@ -13,7 +13,7 @@ export class ApiViewer extends ApiViewerBase {
 
   public setTemplates(templates?: HTMLTemplateElement[]): void {
     setTemplates(
-      this._id as number,
+      this._id!,
       templates || Array.from(this.querySelectorAll('template'))
     );
   }
