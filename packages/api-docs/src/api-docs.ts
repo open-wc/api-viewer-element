@@ -1,9 +1,10 @@
+import { CSSResultArray } from 'lit';
 import sharedStyles from '@api-viewer/common/lib/shared-styles.js';
 import { ApiDocsBase } from './base.js';
 import docsStyles from './styles.js';
 
 export class ApiDocs extends ApiDocsBase {
-  static get styles() {
+  static get styles(): CSSResultArray {
     return [sharedStyles, docsStyles];
   }
 }

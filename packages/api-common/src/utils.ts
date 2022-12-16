@@ -3,7 +3,10 @@ export const unquote = (value?: string): string | undefined =>
     ? value.slice(1, value.length - 1)
     : value;
 
-export function html(strings: TemplateStringsArray, ...values: string[]) {
+export function html(
+  strings: TemplateStringsArray,
+  ...values: string[]
+): HTMLTemplateElement {
   const template = document.createElement('template');
   template.innerHTML = values.reduce(
     (acc, v, idx) => acc + v + strings[idx + 1],

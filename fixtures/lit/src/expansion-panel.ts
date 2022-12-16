@@ -2,6 +2,7 @@ import {
   css,
   html,
   LitElement,
+  type CSSResult,
   type PropertyValues,
   type TemplateResult
 } from 'lit';
@@ -50,7 +51,7 @@ export class ExpansionPanel extends OpenedMixin(LitElement) {
 
   private _boundBodyKeyup = this._onBodyKeyup.bind(this);
 
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       :host {
         display: block;

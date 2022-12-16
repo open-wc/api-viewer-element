@@ -1,4 +1,10 @@
-import { css, html, LitElement, type TemplateResult } from 'lit';
+import {
+  css,
+  html,
+  LitElement,
+  type CSSResult,
+  type TemplateResult
+} from 'lit';
 import { customElement } from 'lit/decorators/custom-element.js';
 import { property } from 'lit/decorators/property.js';
 
@@ -38,7 +44,7 @@ export class IntlCurrency extends LitElement {
    */
   @property() locale: string | null | undefined = 'en-GB';
 
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       :host {
         all: inherit;

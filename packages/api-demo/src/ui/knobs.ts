@@ -74,7 +74,7 @@ export const getKnobs = (
 };
 
 export const getCustomKnobs = (tag: string, vid?: number): PropertyKnob[] =>
-  getTemplates(vid as number, tag, TemplateTypes.KNOB)
+  getTemplates(vid!, tag, TemplateTypes.KNOB)
     .map((template) => {
       const { attr, type } = template.dataset;
       let result = null;

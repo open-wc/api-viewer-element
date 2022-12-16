@@ -2,6 +2,7 @@ import {
   css,
   html,
   LitElement,
+  type CSSResult,
   type PropertyValues,
   type TemplateResult
 } from 'lit';
@@ -40,7 +41,7 @@ export class FancyAccordion extends LitElement {
 
   private _boundOnOpened = this._onOpened.bind(this) as EventListener;
 
-  static get styles() {
+  static get styles(): CSSResult {
     return css`
       :host {
         display: block;
