@@ -354,7 +354,7 @@ class ApiDemoLayout extends LitElement {
     this.setKnobs(name, knobType, value, attribute);
 
     this.propKnobs = this.propKnobs.map((prop) =>
-      prop.name === name ? { ...prop } : prop
+      prop.name === name ? { ...prop, value } : prop
     );
   }
 
