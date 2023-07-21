@@ -27,7 +27,7 @@
     "web-components"
   ],
   "dependencies": {
-    "custom-elements-manifest": "^1.0.0",
+    "custom-elements-manifest": "^2.0.0",
     "lit": "^2.0.0",
     "tslib": "^2.3.1"
   },

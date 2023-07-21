@@ -18,42 +18,13 @@ const getDefault = (prop: PropertyKnob): KnobValue => {
   }
 };
 
-// TODO: remove when analyzer outputs "readOnly" to JSON
-const isGetter = (
-  ctor: CustomElementConstructor | undefined,
-  prop: string
-): boolean => {
-  function getDescriptor(
-    obj: CustomElementConstructor
-  ): PropertyDescriptor | undefined {
-    return obj === HTMLElement
-      ? undefined
-      : Object.getOwnPropertyDescriptor(obj.prototype, prop) ||
-          getDescriptor(Object.getPrototypeOf(obj));
-  }
-
-  let result = false;
-  if (ctor) {
-    const descriptor = getDescriptor(ctor);
-    result = Boolean(
-      descriptor && descriptor.get && descriptor.set === undefined
-    );
-  }
-  return result;
-};
-
 const normalizeType = (type: string | undefined = ''): string =>
   type.replace(' | undefined', '').replace(' | null', '');
 
-export const getKnobs = (
-  tag: string,
-  props: ClassField[],
-  exclude = ''
-): PropertyKnob[] => {
+export const getKnobs = (props: ClassField[], exclude = ''): PropertyKnob[] => {
   // Exclude getters and specific properties
   let propKnobs = props.filter(
-    ({ name }) =>
-      !exclude.includes(name) && !isGetter(customElements.get(tag), name)
+    ({ name, readonly }) => !exclude.includes(name) && !readonly
   ) as PropertyKnob[];
 
   // Set knob types and default knobs values
