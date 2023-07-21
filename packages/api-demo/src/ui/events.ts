@@ -10,16 +10,15 @@ const renderDetail = (detail: { value: KnobValue }): string => {
   return ` detail: ${JSON.stringify(detail).replace(`"${undef}"`, undef)}`;
 };
 
-export const renderEvents = (log: CustomEvent[]): TemplateResult =>
-  html`
-    ${log.map(
-      (event) => html`
-        <p part="event-record">
-          event:
-          ${event.type}.${event.detail == null
-            ? nothing
-            : renderDetail(event.detail)}
-        </p>
-      `
-    )}
-  `;
+export const renderEvents = (log: CustomEvent[]): TemplateResult => html`
+  ${log.map(
+    (event) => html`
+      <p part="event-record">
+        event:
+        ${event.type}.${event.detail == null
+          ? nothing
+          : renderDetail(event.detail)}
+      </p>
+    `
+  )}
+`;

@@ -57,8 +57,10 @@ export class ExpansionPanel extends OpenedMixin(LitElement) {
         display: block;
         outline: none;
         color: rgba(0, 0, 0, 0.87);
-        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
-          0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+        box-shadow:
+          0 2px 2px 0 rgba(0, 0, 0, 0.14),
+          0 1px 5px 0 rgba(0, 0, 0, 0.12),
+          0 3px 1px -2px rgba(0, 0, 0, 0.2);
 
         --panel-header-background: #fff;
         --panel-header-min-height: 48px;
@@ -149,7 +151,9 @@ export class ExpansionPanel extends OpenedMixin(LitElement) {
         background: var(--panel-ripple-background);
         transform: scale(0);
         opacity: 0;
-        transition: transform 0s 0.8s, opacity 0.8s;
+        transition:
+          transform 0s 0.8s,
+          opacity 0.8s;
         will-change: transform, opacity;
       }
 
