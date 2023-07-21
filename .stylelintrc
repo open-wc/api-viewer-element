@@ -1,15 +1,12 @@
 {
   "customSyntax": "postcss-lit",
   "extends": [
-    "stylelint-config-standard",
-    "stylelint-config-prettier"
+    "stylelint-config-standard"
   ],
   "rules": {
     "alpha-value-notation": ["number"],
-    "comment-empty-line-before": null,
     "color-function-notation": ["legacy"],
-    "comment-whitespace-inside": null,
-    "font-family-name-quotes": "always-where-recommended",
+    "media-feature-range-notation": "prefix",
     "number-max-precision": [4, {
       "ignoreProperties": ["animation-timing-function", "transform"]
     }],
@@ -17,9 +14,6 @@
       "ignoreProperties": ["user-select"]
     }],
     "selector-class-pattern": null,
-    "selector-type-no-unknown": [true, {
-      "ignoreTypes": ["/^[a-zA-Z]([a-zA-Z0-9]*-[a-zA-Z0-9]+)+/"]
-    }],
     "value-keyword-case": null
   }
 }
