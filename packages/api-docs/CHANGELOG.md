@@ -1,5 +1,14 @@
 # @api-viewer/docs
 
+## 1.0.0-pre.8
+
+### Patch Changes
+
+- 289741e: Update custom-elements-manifest to v2.0.0, add readonly support
+- Updated dependencies [289741e]
+  - @api-viewer/common@1.0.0-pre.8
+  - @api-viewer/tabs@1.0.0-pre.8
+
 ## 1.0.0-pre.7
 
 ### Patch Changes
