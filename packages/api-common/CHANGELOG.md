@@ -1,5 +1,11 @@
 # @api-viewer/common
 
+## 1.0.0-pre.8
+
+### Patch Changes
+
+- 289741e: Update custom-elements-manifest to v2.0.0, add readonly support
+
 ## 1.0.0-pre.7
 
 ### Patch Changes
