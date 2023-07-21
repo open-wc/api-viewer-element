@@ -206,7 +206,7 @@ class ApiDemoLayout extends LitElement {
       }
 
       this.knobs = {};
-      this.propKnobs = getKnobs(this.tag, this.props, this.exclude);
+      this.propKnobs = getKnobs(this.props, this.exclude);
       this.customKnobs = getCustomKnobs(this.tag, this.vid);
     }
   }

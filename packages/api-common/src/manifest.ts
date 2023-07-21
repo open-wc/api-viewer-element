@@ -1,6 +1,6 @@
 import type {
   Attribute,
-  ClassField,
+  ClassField as ManifestClassField,
   ClassLike,
   ClassMember,
   ClassMethod,
@@ -14,6 +14,15 @@ import type {
   Package,
   Slot
 } from 'custom-elements-manifest/schema';
+
+// FIXME: remove once new custom-elements-manifest version is released
+// https://github.com/webcomponents/custom-elements-manifest/pull/118
+type ClassField = ManifestClassField & {
+  /**
+   * Whether the property is read-only.
+   */
+  readonly?: boolean;
+};
 
 export type {
   Attribute,

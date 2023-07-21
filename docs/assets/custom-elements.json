@@ -339,7 +339,8 @@
               "name": "focused",
               "type": {
                 "text": "Element | null"
-              }
+              },
+              "readonly": true
             },
             {
               "kind": "method",
