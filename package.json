@@ -54,7 +54,7 @@
     "lint-staged": "^13.2.3",
     "lit-analyzer": "^2.0.0-pre.3",
     "picocolors": "^1.0.0",
-    "postcss": "^8.4.27",
+    "postcss": "^8.4.31",
     "postcss-lit": "^1.1.0",
     "prettier": "^3.0.0",
     "rimraf": "^5.0.1",
