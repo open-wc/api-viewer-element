@@ -144,6 +144,8 @@ class ApiDocsLayout extends LitElement {
       cssParts
     ].every((arr) => arr.length === 0);
 
+    props.sort((p) => (p.static ? -1 : 1));
+
     const attributes = attrs.filter(
       (x) => !props.some((y) => y.name === x.fieldName)
     );
