@@ -24,6 +24,9 @@ The following custom CSS properties are available:
 | `--ave-tab-color`                | Inactive tabs color                             |
 | `--ave-tab-selected-color`       | Selected tab color                              |
 | `--ave-tab-indicator-size`       | Size of the selected tab indicator              |
+| `--ave-tag-background-color`     | Background color of tags (e.g., `static`)       |
+| `--ave-tag-border-color`         | Color of tag borders                            |
+| `--ave-tag-color`                | Color of tags                                   |
 
 ## CSS shadow parts
 

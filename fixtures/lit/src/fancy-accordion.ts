@@ -41,6 +41,11 @@ export class FancyAccordion extends LitElement {
 
   private _boundOnOpened = this._onOpened.bind(this) as EventListener;
 
+  /**
+   * Version of the component
+   */
+  static version = '1.0.0';
+
   static get styles(): CSSResult {
     return css`
       :host {

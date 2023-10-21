@@ -51,6 +51,11 @@ export class ExpansionPanel extends OpenedMixin(LitElement) {
 
   private _boundBodyKeyup = this._onBodyKeyup.bind(this);
 
+  /**
+   * Version of the component
+   */
+  static version = '1.0.0';
+
   static get styles(): CSSResult {
     return css`
       :host {

@@ -106,6 +106,16 @@
               "privacy": "private"
             },
             {
+              "kind": "field",
+              "name": "version",
+              "type": {
+                "text": "string"
+              },
+              "static": true,
+              "default": "'1.0.0'",
+              "description": "Version of the component"
+            },
+            {
               "kind": "method",
               "name": "focus",
               "return": {
@@ -336,6 +346,16 @@
             },
             {
               "kind": "field",
+              "name": "version",
+              "type": {
+                "text": "string"
+              },
+              "static": true,
+              "default": "'1.0.0'",
+              "description": "Version of the component"
+            },
+            {
+              "kind": "field",
               "name": "focused",
               "type": {
                 "text": "Element | null"
@@ -500,6 +520,16 @@
               "default": "'en-GB'",
               "description": "Locale code used for formatting.",
               "attribute": "locale"
+            },
+            {
+              "kind": "field",
+              "name": "version",
+              "type": {
+                "text": "string"
+              },
+              "static": true,
+              "default": "'1.0.0'",
+              "description": "Version of the component"
             }
           ],
           "attributes": [
@@ -690,6 +720,16 @@
               "description": "Indeterminate state of the progress bar.\nThis property takes precedence over other state properties (min, max, value).",
               "attribute": "indeterminate",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "version",
+              "type": {
+                "text": "string"
+              },
+              "static": true,
+              "default": "'1.0.0'",
+              "description": "Version of the component"
             },
             {
               "kind": "method",
