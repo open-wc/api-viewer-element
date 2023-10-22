@@ -1,6 +1,5 @@
 import type {
   Attribute,
-  ClassField as ManifestClassField,
   ClassLike,
   ClassMember,
   ClassMethod,
@@ -12,12 +11,13 @@ import type {
   Event,
   Export,
   Package,
-  Slot
+  Slot,
+  CustomElementField
 } from 'custom-elements-manifest/schema';
 
 // FIXME: remove once new custom-elements-manifest version is released
 // https://github.com/webcomponents/custom-elements-manifest/pull/118
-type ClassField = ManifestClassField & {
+type ClassField = CustomElementField & {
   /**
    * Whether the property is read-only.
    */
