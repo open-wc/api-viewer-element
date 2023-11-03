@@ -26,11 +26,15 @@ const renderItem = (
   valueType?: string,
   value?: unknown,
   attribute?: string,
-  isStatic?: boolean
+  isStatic?: boolean,
+  reflects?: boolean
 ): TemplateResult => html`
   <div part="docs-item">
-    ${isStatic
-      ? html`<div part="docs-row"><div part="docs-tag">static</div></div>`
+    ${isStatic || reflects
+      ? html`<div part="docs-row">
+          ${isStatic ? html`<div part="docs-tag">static</div>` : nothing}
+          ${reflects ? html`<div part="docs-tag">reflected</div>` : nothing}
+        </div>`
       : nothing}
     <div part="docs-row">
       <div part="docs-column" class="column-name-${prefix}">
@@ -164,7 +168,13 @@ class ApiDocsLayout extends LitElement {
               props,
               html`
                 ${props.map((prop) => {
-                  const { name, description, type, static: isStatic } = prop;
+                  const {
+                    name,
+                    description,
+                    type,
+                    static: isStatic,
+                    reflects
+                  } = prop;
                   const attribute = attrs.find((x) => x.fieldName === name);
                   return renderItem(
                     'prop',
@@ -173,7 +183,8 @@ class ApiDocsLayout extends LitElement {
                     type?.text,
                     prop.default,
                     attribute?.name,
-                    isStatic
+                    isStatic,
+                    reflects
                   );
                 })}
               `
