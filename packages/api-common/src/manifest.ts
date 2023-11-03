@@ -8,11 +8,11 @@ import type {
   CustomElement,
   CustomElementDeclaration,
   CustomElementExport,
+  CustomElementField,
   Event,
   Export,
   Package,
-  Slot,
-  CustomElementField
+  Slot
 } from 'custom-elements-manifest/schema';
 
 // FIXME: remove once new custom-elements-manifest version is released
