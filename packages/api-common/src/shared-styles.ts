@@ -25,6 +25,9 @@ export default css`
     --ave-link-hover-color: #d63200;
     --ave-tab-indicator-size: 2px;
     --ave-tab-color: rgba(0, 0, 0, 0.54);
+    --ave-tag-background-color: #e2e3e5;
+    --ave-tag-border-color: #d6d8db;
+    --ave-tag-color: #383d41;
     --ave-monospace-font: Menlo, 'DejaVu Sans Mono', 'Liberation Mono', Consolas,
       'Courier New', monospace;
   }

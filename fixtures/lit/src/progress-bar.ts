@@ -59,6 +59,11 @@ export class ProgressBar extends LitElement {
    */
   @property({ type: Boolean, reflect: true }) indeterminate = false;
 
+  /**
+   * Version of the component
+   */
+  static version = '1.0.0';
+
   static get styles(): CSSResult {
     return css`
       :host {

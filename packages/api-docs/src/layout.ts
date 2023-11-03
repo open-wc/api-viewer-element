@@ -25,9 +25,13 @@ const renderItem = (
   description?: string,
   valueType?: string,
   value?: unknown,
-  attribute?: string
+  attribute?: string,
+  isStatic?: boolean
 ): TemplateResult => html`
   <div part="docs-item">
+    ${isStatic
+      ? html`<div part="docs-row"><div part="docs-tag">static</div></div>`
+      : nothing}
     <div part="docs-row">
       <div part="docs-column" class="column-name-${prefix}">
         <div part="docs-label">Name</div>
@@ -140,6 +144,8 @@ class ApiDocsLayout extends LitElement {
       cssParts
     ].every((arr) => arr.length === 0);
 
+    props.sort((p) => (p.static ? -1 : 1));
+
     const attributes = attrs.filter(
       (x) => !props.some((y) => y.name === x.fieldName)
     );
@@ -158,7 +164,7 @@ class ApiDocsLayout extends LitElement {
               props,
               html`
                 ${props.map((prop) => {
-                  const { name, description, type } = prop;
+                  const { name, description, type, static: isStatic } = prop;
                   const attribute = attrs.find((x) => x.fieldName === name);
                   return renderItem(
                     'prop',
@@ -166,7 +172,8 @@ class ApiDocsLayout extends LitElement {
                     description,
                     type?.text,
                     prop.default,
-                    attribute?.name
+                    attribute?.name,
+                    isStatic
                   );
                 })}
               `

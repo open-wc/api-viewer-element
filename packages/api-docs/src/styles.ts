@@ -40,6 +40,16 @@ export default css`
     border-top: solid 1px var(--ave-border-color);
   }
 
+  [part='docs-tag'] {
+    background-color: var(--ave-tag-background-color);
+    border: 1px solid var(--ave-tag-border-color);
+    border-radius: 3px;
+    color: var(--ave-tag-color);
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 1px 5px;
+  }
+
   [part='docs-description'] {
     display: block;
     padding: 0 1rem;

@@ -44,6 +44,11 @@ export class IntlCurrency extends LitElement {
    */
   @property() locale: string | null | undefined = 'en-GB';
 
+  /**
+   * Version of the component
+   */
+  static version = '1.0.0';
+
   static get styles(): CSSResult {
     return css`
       :host {
