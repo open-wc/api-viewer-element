@@ -1,5 +1,16 @@
 # @api-viewer/docs
 
+## 1.0.0-pre.9
+
+### Patch Changes
+
+- 5f7183f: Added the ability to show whether a property is static
+- 1d3a419: Show whether a property reflects to attribute
+- Updated dependencies [5f7183f]
+- Updated dependencies [1d3a419]
+  - @api-viewer/common@1.0.0-pre.9
+  - @api-viewer/tabs@1.0.0-pre.9
+
 ## 1.0.0-pre.8
 
 ### Patch Changes
