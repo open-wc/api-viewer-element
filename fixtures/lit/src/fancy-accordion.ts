@@ -23,7 +23,7 @@ import { ExpansionPanel } from './expansion-panel.js';
  *
  * @element fancy-accordion
  *
- * @slot - Slot fot panel elements.
+ * @slot - Slot for panel elements.
  *
  * @fires opened-index-changed - Event fired when changing currently opened panel.
  */
