@@ -49,7 +49,7 @@
           ],
           "slots": [
             {
-              "description": "Slot fot panel content",
+              "description": "Slot for panel content",
               "name": ""
             },
             {
@@ -280,7 +280,7 @@
           "name": "FancyAccordion",
           "slots": [
             {
-              "description": "Slot fot panel elements.",
+              "description": "Slot for panel elements.",
               "name": ""
             }
           ],
