@@ -17,7 +17,7 @@ import { OpenedMixin } from './opened-mixin.js';
  *
  * @element expansion-panel
  *
- * @slot - Slot fot panel content
+ * @slot - Slot for panel content
  * @slot header - Slot for panel header
  *
  * @attr {boolean} focused - State attribute set when element has focus.
