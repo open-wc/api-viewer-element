@@ -1,6 +1,6 @@
 {
   "name": "@api-viewer/common",
-  "version": "1.0.0-pre.9",
+  "version": "1.0.0-pre.10",
   "publishConfig": {
     "access": "public"
   },
