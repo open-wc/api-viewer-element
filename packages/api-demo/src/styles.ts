@@ -60,7 +60,7 @@ const highlightTheme = css`
 `;
 
 const demoStyles = css`
-  button {
+  [part='button'] {
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
@@ -72,8 +72,8 @@ const demoStyles = css`
     color: var(--ave-button-color, #fff);
   }
 
-  button:focus,
-  button:hover {
+  [part='button']:focus,
+  [part='button']:hover {
     background: var(--ave-button-active-background, rgba(0, 0, 0, 0.6));
   }
 
