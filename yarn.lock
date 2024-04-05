@@ -1548,12 +1548,12 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@lion/accordion@^0.11.1", "@lion/accordion@^0.7.2":
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/@lion/accordion/-/accordion-0.11.1.tgz#4f6a59d249e4bce35b6b9a3cc319d43959325ed8"
-  integrity sha512-r+p+/39mhS+bRILu2VMebfEtu6qV5z/tdl/6ROW7IKAx4FOlQo8sXgTl7HuAZztq3HisxCcBTjdqcTnnjAdMDg==
+"@lion/accordion@^0.7.2", "@lion/accordion@~0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@lion/accordion/-/accordion-0.9.0.tgz#eafc074c11e928c1bb5af42ba88fc522cecdbb1c"
+  integrity sha512-ReFron+V7Uvrtuzb8H/qqvALmDJJNJu54uOcHuhU3AZvwZaQhe3q1A2Uo/gs+U4udYv20oeI3dsNPV6GnB+RTg==
   dependencies:
-    "@lion/core" "^0.24.0"
+    "@lion/core" "^0.22.0"
 
 "@lion/combobox@^0.11.1", "@lion/combobox@^0.9.0":
   version "0.11.1"
@@ -1565,7 +1565,7 @@
     "@lion/listbox" "^0.14.1"
     "@lion/overlays" "^0.33.2"
 
-"@lion/core@^0.21.0", "@lion/core@^0.24.0":
+"@lion/core@^0.21.0", "@lion/core@^0.22.0", "@lion/core@^0.24.0":
   version "0.24.0"
   resolved "https://registry.yarnpkg.com/@lion/core/-/core-0.24.0.tgz#e58c280bbd95e4694bad9f9aae4c2da6dba43e5c"
   integrity sha512-hC5Fpi5U3PY0HOVycSev1jzoE8DYHFSN42s5gt6g6RlvvRYN5Pou0wtKnDOkOYf1UfjuL+T/4r8W99UFD1r/Eg==
