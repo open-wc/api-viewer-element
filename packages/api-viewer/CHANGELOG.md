@@ -1,5 +1,15 @@
 # api-viewer-element
 
+## 1.0.0-pre.10
+
+### Patch Changes
+
+- 91c394a: Use proper selector for demo copy button styles
+- Updated dependencies [91c394a]
+  - @api-viewer/demo@1.0.0-pre.10
+  - @api-viewer/common@1.0.0-pre.10
+  - @api-viewer/docs@1.0.0-pre.10
+
 ## 1.0.0-pre.9
 
 ### Patch Changes
