@@ -15,7 +15,7 @@ git clone git@github.com:YOUR_USERNAME/api-viewer-element.git
 Once cloning is complete, change directory to the repository and add the upstream project as a remote.
 
 ```sh
-cd web
+cd api-viewer-element
 git remote add upstream git@github.com:open-wc/api-viewer-element.git
 ```
 
