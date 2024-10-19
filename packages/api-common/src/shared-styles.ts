@@ -21,6 +21,7 @@ export default css`
     --ave-header-color: #fff;
     --ave-item-color: rgba(0, 0, 0, 0.87);
     --ave-label-color: #424242;
+    --ave-deprecated-background-color: #fcc7c7;
     --ave-link-color: #01579b;
     --ave-link-hover-color: #d63200;
     --ave-tab-indicator-size: 2px;
