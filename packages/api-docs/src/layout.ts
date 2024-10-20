@@ -72,7 +72,7 @@ const renderItem = (
     </div>
     <div
       ?hidden=${deprecated === undefined || deprecated === false}
-      part="docs-deprecated"
+      part="docs-deprecated-item"
     >
       ${deprecated === true ? 'Deprecated' : deprecated}
     </div>

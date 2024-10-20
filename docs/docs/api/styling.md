@@ -45,40 +45,41 @@ The following CSS shadow parts are available:
 
 ### API docs
 
-| Part                     | Description                                             |
-| -------------------------| --------------------------------------------------------|
-| `docs-description`       | Custom element description placed under the header      |
-| `docs-container`         | The wrapper element placed under the description        |
-| `docs-column`            | Column, child of a `docs-row` part                      |
-| `docs-item`              | Item representing a single entry (property, event etc)  |
-| `docs-label`             | Label (name, attribute, type, description)              |
-| `docs-markdown`          | Item description with parsed markdown content           |
-| `docs-method`            | Method name with its params and return type             |
-| `docs-method-params`     | Comma-separated list of method params their types       |
-| `docs-method-type`       | Return type of a method, or "void" if not specified     |
-| `docs-param-name`        | Name of a method parameter                              |
-| `docs-param-type`        | Type of a method parameter                              |
-| `docs-row`               | Row containing columns. Child of a `docs-item` part     |
-| `docs-value`             | Sibling of a `docs-label` part (name, attribute, type)  |
-| `docs-value`             | Sibling of a `docs-label` part (name, attribute, type)  |
-| `docs-deprecated`        | Description for deprecated item                         |
-| `md-h1`                  | Markdown `<h1>` elements                                |
-| `md-h2`                  | Markdown `<h2>` elements                                |
-| `md-h3`                  | Markdown `<h3>` elements                                |
-| `md-h4`                  | Markdown `<h4>` elements                                |
-| `md-h5`                  | Markdown `<h5>` elements                                |
-| `md-h6`                  | Markdown `<h6>` elements                                |
-| `md-a`                   | Markdown `<a>` elements                                 |
-| `md-p`                   | Markdown `<p>` elements                                 |
-| `md-ul`                  | Markdown `<ul>` elements                                |
-| `md-ol`                  | Markdown `<ol>` elements                                |
-| `md-li`                  | Markdown `<li>` elements                                |
-| `md-pre`                 | Markdown `<pre>` elements                               |
-| `md-code`                | Markdown `<code>` elements                              |
-| `md-strong`              | Markdown `<strong>` elements                            |
-| `md-em`                  | Markdown `<em>` elements                                |
-| `md-blockquote`          | Markdown `<blockquote>` elements                        |
-| `md-del`                 | Markdown `<del>` elements                               |
+| Part                        | Description                                            |
+| --------------------------- | ------------------------------------------------------ |
+| `docs-description`          | Custom element description placed under the header     |
+| `docs-container`            | The wrapper element placed under the description       |
+| `docs-column`               | Column, child of a `docs-row` part                     |
+| `docs-item`                 | Item representing a single entry (property, event etc) |
+| `docs-label`                | Label (name, attribute, type, description)             |
+| `docs-markdown`             | Item description with parsed markdown content          |
+| `docs-method`               | Method name with its params and return type            |
+| `docs-method-params`        | Comma-separated list of method params their types      |
+| `docs-method-type`          | Return type of a method, or "void" if not specified    |
+| `docs-param-name`           | Name of a method parameter                             |
+| `docs-param-type`           | Type of a method parameter                             |
+| `docs-row`                  | Row containing columns. Child of a `docs-item` part    |
+| `docs-value`                | Sibling of a `docs-label` part (name, attribute, type) |
+| `docs-value`                | Sibling of a `docs-label` part (name, attribute, type) |
+| `docs-deprecated-item`      | Description for deprecated item                        |
+| `docs-deprecated-component` | Description for deprecated component                   |
+| `md-h1`                     | Markdown `<h1>` elements                               |
+| `md-h2`                     | Markdown `<h2>` elements                               |
+| `md-h3`                     | Markdown `<h3>` elements                               |
+| `md-h4`                     | Markdown `<h4>` elements                               |
+| `md-h5`                     | Markdown `<h5>` elements                               |
+| `md-h6`                     | Markdown `<h6>` elements                               |
+| `md-a`                      | Markdown `<a>` elements                                |
+| `md-p`                      | Markdown `<p>` elements                                |
+| `md-ul`                     | Markdown `<ul>` elements                               |
+| `md-ol`                     | Markdown `<ol>` elements                               |
+| `md-li`                     | Markdown `<li>` elements                               |
+| `md-pre`                    | Markdown `<pre>` elements                              |
+| `md-code`                   | Markdown `<code>` elements                             |
+| `md-strong`                 | Markdown `<strong>` elements                           |
+| `md-em`                     | Markdown `<em>` elements                               |
+| `md-blockquote`             | Markdown `<blockquote>` elements                       |
+| `md-del`                    | Markdown `<del>` elements                              |
 
 ### Live demo
 

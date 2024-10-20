@@ -6,4 +6,4 @@
 'api-viewer-element': patch
 ---
 
-Support deprecated props, slots, events, methods and css
+Support deprecated components, props, slots, events, methods and css
