@@ -124,7 +124,8 @@ export const getElementData = (
     // TODO: analyzer should sort CSS custom properties
     cssProperties: [...(decl.cssProperties ?? [])].sort((a, b) =>
       a.name > b.name ? 1 : -1
-    )
+    ),
+    deprecated: decl.deprecated
   };
 };
 
