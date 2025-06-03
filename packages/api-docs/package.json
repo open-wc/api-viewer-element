@@ -36,7 +36,7 @@
     "@api-viewer/tabs": "^1.0.0-pre.10",
     "@types/dompurify": "^2.3.1",
     "@types/marked": "^4.0.0",
-    "dompurify": "^2.5.4",
+    "dompurify": "^3.2.4",
     "lit": "^2.0.0",
     "marked": "^4.0.10",
     "tslib": "^2.3.1"
