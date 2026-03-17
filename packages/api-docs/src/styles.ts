@@ -96,6 +96,20 @@ export default css`
     margin: 0.5rem 0;
   }
 
+  [part='docs-deprecated-item'] {
+    font-style: italic;
+  }
+
+  [part='docs-deprecated-component'] {
+    font-style: italic;
+    display: block;
+    padding: 0.5rem 1rem;
+  }
+
+  .deprecated {
+    background: var(--ave-deprecated-background-color);
+  }
+
   [part$='params'] {
     color: var(--ave-item-color);
   }
