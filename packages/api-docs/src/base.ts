@@ -10,6 +10,7 @@ import {
   ManifestMixin,
   type Package
 } from '@api-viewer/common/lib/index.js';
+import { classMap } from 'lit/directives/class-map.js';
 import { parse } from './utils/markdown.js';
 import './layout.js';
 
@@ -49,8 +50,16 @@ async function renderDocs(
         </label>
       </nav>
     </header>
-    <div ?hidden=${data.description === ''} part="docs-description">
-      ${parse(data.description)}
+    <div class=${classMap({ deprecated: !!data.deprecated })}>
+      <div
+        ?hidden=${data.deprecated === undefined || data.deprecated === false}
+        part="docs-deprecated-component"
+      >
+        ${data.deprecated === true ? 'Deprecated' : data.deprecated}
+      </div>
+      <div ?hidden=${data.description === ''} part="docs-description">
+        ${parse(data.description)}
+      </div>
     </div>
     <api-docs-layout
       .name=${data.name}
