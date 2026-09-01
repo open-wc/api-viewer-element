@@ -6,6 +6,7 @@ import {
   type TemplateResult
 } from 'lit';
 import { property } from 'lit/decorators/property.js';
+import { classMap } from 'lit/directives/class-map.js';
 import {
   unquote,
   type Attribute,
@@ -27,9 +28,10 @@ const renderItem = (
   value?: unknown,
   attribute?: string,
   isStatic?: boolean,
-  reflects?: boolean
+  reflects?: boolean,
+  deprecated?: boolean | string
 ): TemplateResult => html`
-  <div part="docs-item">
+  <div part="docs-item" class=${classMap({ deprecated: !!deprecated })}>
     ${isStatic || reflects
       ? html`<div part="docs-row">
           ${isStatic ? html`<div part="docs-tag">static</div>` : nothing}
@@ -67,6 +69,12 @@ const renderItem = (
     <div ?hidden=${description === undefined}>
       <div part="docs-label">Description</div>
       <div part="docs-markdown">${parse(description)}</div>
+    </div>
+    <div
+      ?hidden=${deprecated === undefined || deprecated === false}
+      part="docs-deprecated-item"
+    >
+      ${deprecated === true ? 'Deprecated' : deprecated}
     </div>
   </div>
 `;
@@ -173,7 +181,8 @@ class ApiDocsLayout extends LitElement {
                     description,
                     type,
                     static: isStatic,
-                    reflects
+                    reflects,
+                    deprecated
                   } = prop;
                   const attribute = attrs.find((x) => x.fieldName === name);
                   return renderItem(
@@ -184,7 +193,8 @@ class ApiDocsLayout extends LitElement {
                     prop.default,
                     attribute?.name,
                     isStatic,
-                    reflects
+                    reflects,
+                    deprecated
                   );
                 })}
               `
@@ -203,7 +213,17 @@ class ApiDocsLayout extends LitElement {
               methods,
               html`
                 ${methods.map((method) =>
-                  renderItem('method', renderMethod(method), method.description)
+                  renderItem(
+                    'method',
+                    renderMethod(method),
+                    method.description,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    method.deprecated
+                  )
                 )}
               `
             )}
@@ -211,8 +231,18 @@ class ApiDocsLayout extends LitElement {
               'Slots',
               slots,
               html`
-                ${slots.map(({ name, description }) =>
-                  renderItem('slot', name, description)
+                ${slots.map(({ name, description, deprecated }) =>
+                  renderItem(
+                    'slot',
+                    name,
+                    description,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    deprecated
+                  )
                 )}
               `
             )}
@@ -220,8 +250,18 @@ class ApiDocsLayout extends LitElement {
               'Events',
               events,
               html`
-                ${events.map(({ name, description }) =>
-                  renderItem('event', name, description)
+                ${events.map(({ name, description, deprecated }) =>
+                  renderItem(
+                    'event',
+                    name,
+                    description,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    deprecated
+                  )
                 )}
               `
             )}
@@ -230,13 +270,17 @@ class ApiDocsLayout extends LitElement {
               cssProps,
               html`
                 ${cssProps.map((prop) => {
-                  const { name, description } = prop;
+                  const { name, description, deprecated } = prop;
                   return renderItem(
                     'css',
                     name,
                     description,
                     '', // TODO: manifest does not provide type for CSS custom properties
-                    unquote(prop.default)
+                    unquote(prop.default),
+                    undefined,
+                    undefined,
+                    undefined,
+                    deprecated
                   );
                 })}
               `
@@ -245,8 +289,18 @@ class ApiDocsLayout extends LitElement {
               'CSS Shadow Parts',
               cssParts,
               html`
-                ${cssParts.map(({ name, description }) =>
-                  renderItem('part', name, description)
+                ${cssParts.map(({ name, description, deprecated }) =>
+                  renderItem(
+                    'part',
+                    name,
+                    description,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    deprecated
+                  )
                 )}
               `
             )}
