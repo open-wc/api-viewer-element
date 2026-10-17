@@ -4,29 +4,30 @@
 
 The following custom CSS properties are available:
 
-| Property                         | Description                                     |
-| -------------------------------- | ----------------------------------------------- |
-| `--ave-accent-color`             | Accent color, used for property / method names  |
-| `--ave-border-color`             | Color used for borders and dividers             |
-| `--ave-border-radius`            | Border radius used for the outer border         |
-| `--ave-button-active-background` | Color of the `:focus` and `:hover` button       |
-| `--ave-button-background`        | Background of the button (code snippet, events) |
-| `--ave-button-color`             | Color of the button (code snippet, events)      |
-| `--ave-header-background`        | Background of the header used for tag name      |
-| `--ave-header-color`             | Header text color used for tag name             |
-| `--ave-item-color`               | API items content color (main text)             |
-| `--ave-label-color`              | API items labels color                          |
-| `--ave-link-color`               | API description links default color             |
-| `--ave-link-hover-color`         | API description links hover color               |
-| `--ave-monospace-font`           | Monospace font stack for the API items          |
-| `--ave-primary-color`            | Primary color, used for header and active tab   |
-| `--ave-secondary-color`          | Color used for method types in API docs         |
-| `--ave-tab-color`                | Inactive tabs color                             |
-| `--ave-tab-selected-color`       | Selected tab color                              |
-| `--ave-tab-indicator-size`       | Size of the selected tab indicator              |
-| `--ave-tag-background-color`     | Background color of tags (e.g., `static`)       |
-| `--ave-tag-border-color`         | Color of tag borders                            |
-| `--ave-tag-color`                | Color of tags                                   |
+| Property                            | Description                                     |
+| ----------------------------------- | ----------------------------------------------- |
+| `--ave-accent-color`                | Accent color, used for property / method names  |
+| `--ave-border-color`                | Color used for borders and dividers             |
+| `--ave-border-radius`               | Border radius used for the outer border         |
+| `--ave-button-active-background`    | Color of the `:focus` and `:hover` button       |
+| `--ave-button-background`           | Background of the button (code snippet, events) |
+| `--ave-button-color`                | Color of the button (code snippet, events)      |
+| `--ave-header-background`           | Background of the header used for tag name      |
+| `--ave-header-color`                | Header text color used for tag name             |
+| `--ave-item-color`                  | API items content color (main text)             |
+| `--ave-deprecated-background-color` | API items deprecated background color           |
+| `--ave-label-color`                 | API items labels color                          |
+| `--ave-link-color`                  | API description links default color             |
+| `--ave-link-hover-color`            | API description links hover color               |
+| `--ave-monospace-font`              | Monospace font stack for the API items          |
+| `--ave-primary-color`               | Primary color, used for header and active tab   |
+| `--ave-secondary-color`             | Color used for method types in API docs         |
+| `--ave-tab-color`                   | Inactive tabs color                             |
+| `--ave-tab-selected-color`          | Selected tab color                              |
+| `--ave-tab-indicator-size`          | Size of the selected tab indicator              |
+| `--ave-tag-background-color`        | Background color of tags (e.g., `static`)       |
+| `--ave-tag-border-color`            | Color of tag borders                            |
+| `--ave-tag-color`                   | Color of tags                                   |
 
 ## CSS shadow parts
 
@@ -44,39 +45,41 @@ The following CSS shadow parts are available:
 
 ### API docs
 
-| Part                     | Description                                             |
-| -------------------------| --------------------------------------------------------|
-| `docs-description`       | Custom element description placed under the header      |
-| `docs-container`         | The wrapper element placed under the description        |
-| `docs-column`            | Column, child of a `docs-row` part                      |
-| `docs-item`              | Item representing a single entry (property, event etc)  |
-| `docs-label`             | Label (name, attribute, type, description)              |
-| `docs-markdown`          | Item description with parsed markdown content           |
-| `docs-method`            | Method name with its params and return type             |
-| `docs-method-params`     | Comma-separated list of method params their types       |
-| `docs-method-type`       | Return type of a method, or "void" if not specified     |
-| `docs-param-name`        | Name of a method parameter                              |
-| `docs-param-type`        | Type of a method parameter                              |
-| `docs-row`               | Row containing columns. Child of a `docs-item` part     |
-| `docs-value`             | Sibling of a `docs-label` part (name, attribute, type)  |
-| `docs-value`             | Sibling of a `docs-label` part (name, attribute, type)  |
-| `md-h1`                  | Markdown `<h1>` elements                                |
-| `md-h2`                  | Markdown `<h2>` elements                                |
-| `md-h3`                  | Markdown `<h3>` elements                                |
-| `md-h4`                  | Markdown `<h4>` elements                                |
-| `md-h5`                  | Markdown `<h5>` elements                                |
-| `md-h6`                  | Markdown `<h6>` elements                                |
-| `md-a`                   | Markdown `<a>` elements                                 |
-| `md-p`                   | Markdown `<p>` elements                                 |
-| `md-ul`                  | Markdown `<ul>` elements                                |
-| `md-ol`                  | Markdown `<ol>` elements                                |
-| `md-li`                  | Markdown `<li>` elements                                |
-| `md-pre`                 | Markdown `<pre>` elements                               |
-| `md-code`                | Markdown `<code>` elements                              |
-| `md-strong`              | Markdown `<strong>` elements                            |
-| `md-em`                  | Markdown `<em>` elements                                |
-| `md-blockquote`          | Markdown `<blockquote>` elements                        |
-| `md-del`                 | Markdown `<del>` elements                               |
+| Part                        | Description                                            |
+| --------------------------- | ------------------------------------------------------ |
+| `docs-description`          | Custom element description placed under the header     |
+| `docs-container`            | The wrapper element placed under the description       |
+| `docs-column`               | Column, child of a `docs-row` part                     |
+| `docs-item`                 | Item representing a single entry (property, event etc) |
+| `docs-label`                | Label (name, attribute, type, description)             |
+| `docs-markdown`             | Item description with parsed markdown content          |
+| `docs-method`               | Method name with its params and return type            |
+| `docs-method-params`        | Comma-separated list of method params their types      |
+| `docs-method-type`          | Return type of a method, or "void" if not specified    |
+| `docs-param-name`           | Name of a method parameter                             |
+| `docs-param-type`           | Type of a method parameter                             |
+| `docs-row`                  | Row containing columns. Child of a `docs-item` part    |
+| `docs-value`                | Sibling of a `docs-label` part (name, attribute, type) |
+| `docs-value`                | Sibling of a `docs-label` part (name, attribute, type) |
+| `docs-deprecated-item`      | Description for deprecated item                        |
+| `docs-deprecated-component` | Description for deprecated component                   |
+| `md-h1`                     | Markdown `<h1>` elements                               |
+| `md-h2`                     | Markdown `<h2>` elements                               |
+| `md-h3`                     | Markdown `<h3>` elements                               |
+| `md-h4`                     | Markdown `<h4>` elements                               |
+| `md-h5`                     | Markdown `<h5>` elements                               |
+| `md-h6`                     | Markdown `<h6>` elements                               |
+| `md-a`                      | Markdown `<a>` elements                                |
+| `md-p`                      | Markdown `<p>` elements                                |
+| `md-ul`                     | Markdown `<ul>` elements                               |
+| `md-ol`                     | Markdown `<ol>` elements                               |
+| `md-li`                     | Markdown `<li>` elements                               |
+| `md-pre`                    | Markdown `<pre>` elements                              |
+| `md-code`                   | Markdown `<code>` elements                             |
+| `md-strong`                 | Markdown `<strong>` elements                           |
+| `md-em`                     | Markdown `<em>` elements                               |
+| `md-blockquote`             | Markdown `<blockquote>` elements                       |
+| `md-del`                    | Markdown `<del>` elements                              |
 
 ### Live demo
 

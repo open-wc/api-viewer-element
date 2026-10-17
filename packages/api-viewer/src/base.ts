@@ -1,4 +1,5 @@
 import { LitElement, html, type TemplateResult } from 'lit';
+import { classMap } from 'lit/directives/class-map.js';
 import { property } from 'lit/decorators/property.js';
 import { cache } from 'lit/directives/cache.js';
 import { until } from 'lit/directives/until.js';
@@ -80,8 +81,17 @@ async function renderDocs(
     ${cache(
       section === 'docs'
         ? html`
-            <div ?hidden=${data.description === ''} part="docs-description">
-              ${parse(data.description)}
+            <div class=${classMap({ deprecated: !!data.deprecated })}>
+              <div
+                ?hidden=${data.deprecated === undefined ||
+                data.deprecated === false}
+                part="docs-deprecated-component"
+              >
+                ${data.deprecated === true ? 'Deprecated' : data.deprecated}
+              </div>
+              <div ?hidden=${data.description === ''} part="docs-description">
+                ${parse(data.description)}
+              </div>
             </div>
             <api-docs-layout
               .name=${data.name}
